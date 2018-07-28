@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LagoVista.Client.Core">
-      <Version>1.2.435-alpha1011</Version>
+      <Version>1.2.437-alpha1746</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core">
       <Version>2.1.435-beta1758</Version>
@@ -156,16 +156,16 @@
       <Version>2.1.435-beta1758</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core.UWP">
-      <Version>1.2.435-alpha1011</Version>
+      <Version>1.2.437-alpha1746</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.UserAdmin.Models">
       <Version>2.1.435-beta1758</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.UWP.UI">
-      <Version>1.2.435-alpha1011</Version>
+      <Version>1.2.437-alpha1746</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.XPlat">
-      <Version>1.2.435-alpha1011</Version>
+      <Version>1.2.437-alpha1746</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter">
       <Version>1.8.0</Version>

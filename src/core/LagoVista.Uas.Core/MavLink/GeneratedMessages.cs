@@ -3571,7 +3571,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHeartbeat()
         {
-            mMessageId = 0;
+            _messageId = UasMessages.Heartbeat;
             CrcExtra = 50;
         }
 
@@ -3587,12 +3587,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCustomMode = s.ReadUInt32();
-            this.mType = s.ReadByte();
-            this.mAutopilot = s.ReadByte();
-            this.mBaseMode = s.ReadByte();
-            this.mSystemStatus = s.ReadByte();
-            this.mMavlinkVersion = s.ReadByte();
+             this.mCustomMode = s.ReadUInt32();
+             this.mType = s.ReadByte();
+             this.mAutopilot = s.ReadByte();
+             this.mBaseMode = s.ReadByte();
+             this.mSystemStatus = s.ReadByte();
+             this.mMavlinkVersion = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -3762,7 +3762,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSysStatus()
         {
-            mMessageId = 1;
+            _messageId = UasMessages.SysStatus;
             CrcExtra = 124;
         }
 
@@ -3785,19 +3785,19 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mOnboardControlSensorsPresent = s.ReadUInt32();
-            this.mOnboardControlSensorsEnabled = s.ReadUInt32();
-            this.mOnboardControlSensorsHealth = s.ReadUInt32();
-            this.mLoad = s.ReadUInt16();
-            this.mVoltageBattery = s.ReadUInt16();
-            this.mCurrentBattery = s.ReadInt16();
-            this.mDropRateComm = s.ReadUInt16();
-            this.mErrorsComm = s.ReadUInt16();
-            this.mErrorsCount1 = s.ReadUInt16();
-            this.mErrorsCount2 = s.ReadUInt16();
-            this.mErrorsCount3 = s.ReadUInt16();
-            this.mErrorsCount4 = s.ReadUInt16();
-            this.mBatteryRemaining = s.ReadSByte();
+             this.mOnboardControlSensorsPresent = s.ReadUInt32();
+             this.mOnboardControlSensorsEnabled = s.ReadUInt32();
+             this.mOnboardControlSensorsHealth = s.ReadUInt32();
+             this.mLoad = s.ReadUInt16();
+             this.mVoltageBattery = s.ReadUInt16();
+             this.mCurrentBattery = s.ReadInt16();
+             this.mDropRateComm = s.ReadUInt16();
+             this.mErrorsComm = s.ReadUInt16();
+             this.mErrorsCount1 = s.ReadUInt16();
+             this.mErrorsCount2 = s.ReadUInt16();
+             this.mErrorsCount3 = s.ReadUInt16();
+             this.mErrorsCount4 = s.ReadUInt16();
+             this.mBatteryRemaining = s.ReadSByte();
         }
 
         protected override void InitMetadata()
@@ -3928,7 +3928,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSystemTime()
         {
-            mMessageId = 2;
+            _messageId = UasMessages.SystemTime;
             CrcExtra = 137;
         }
 
@@ -3940,8 +3940,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUnixUsec = s.ReadUInt64();
-            this.mTimeBootMs = s.ReadUInt32();
+             this.mTimeUnixUsec = s.ReadUInt64();
+             this.mTimeBootMs = s.ReadUInt32();
         }
 
         protected override void InitMetadata()
@@ -4011,7 +4011,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasPing()
         {
-            mMessageId = 4;
+            _messageId = UasMessages.Ping;
             CrcExtra = 237;
         }
 
@@ -4025,10 +4025,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mSeq = s.ReadUInt32();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mSeq = s.ReadUInt32();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -4112,7 +4112,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasChangeOperatorControl()
         {
-            mMessageId = 5;
+            _messageId = UasMessages.ChangeOperatorControl;
             CrcExtra = 217;
         }
 
@@ -4150,34 +4150,34 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mControlRequest = s.ReadByte();
-            this.mVersion = s.ReadByte();
-            this.mPasskey[0] = s.ReadChar();
-            this.mPasskey[1] = s.ReadChar();
-            this.mPasskey[2] = s.ReadChar();
-            this.mPasskey[3] = s.ReadChar();
-            this.mPasskey[4] = s.ReadChar();
-            this.mPasskey[5] = s.ReadChar();
-            this.mPasskey[6] = s.ReadChar();
-            this.mPasskey[7] = s.ReadChar();
-            this.mPasskey[8] = s.ReadChar();
-            this.mPasskey[9] = s.ReadChar();
-            this.mPasskey[10] = s.ReadChar();
-            this.mPasskey[11] = s.ReadChar();
-            this.mPasskey[12] = s.ReadChar();
-            this.mPasskey[13] = s.ReadChar();
-            this.mPasskey[14] = s.ReadChar();
-            this.mPasskey[15] = s.ReadChar();
-            this.mPasskey[16] = s.ReadChar();
-            this.mPasskey[17] = s.ReadChar();
-            this.mPasskey[18] = s.ReadChar();
-            this.mPasskey[19] = s.ReadChar();
-            this.mPasskey[20] = s.ReadChar();
-            this.mPasskey[21] = s.ReadChar();
-            this.mPasskey[22] = s.ReadChar();
-            this.mPasskey[23] = s.ReadChar();
-            this.mPasskey[24] = s.ReadChar();
+             this.mTargetSystem = s.ReadByte();
+             this.mControlRequest = s.ReadByte();
+             this.mVersion = s.ReadByte();
+              this.mPasskey[0] = s.ReadChar();
+              this.mPasskey[1] = s.ReadChar();
+              this.mPasskey[2] = s.ReadChar();
+              this.mPasskey[3] = s.ReadChar();
+              this.mPasskey[4] = s.ReadChar();
+              this.mPasskey[5] = s.ReadChar();
+              this.mPasskey[6] = s.ReadChar();
+              this.mPasskey[7] = s.ReadChar();
+              this.mPasskey[8] = s.ReadChar();
+              this.mPasskey[9] = s.ReadChar();
+              this.mPasskey[10] = s.ReadChar();
+              this.mPasskey[11] = s.ReadChar();
+              this.mPasskey[12] = s.ReadChar();
+              this.mPasskey[13] = s.ReadChar();
+              this.mPasskey[14] = s.ReadChar();
+              this.mPasskey[15] = s.ReadChar();
+              this.mPasskey[16] = s.ReadChar();
+              this.mPasskey[17] = s.ReadChar();
+              this.mPasskey[18] = s.ReadChar();
+              this.mPasskey[19] = s.ReadChar();
+              this.mPasskey[20] = s.ReadChar();
+              this.mPasskey[21] = s.ReadChar();
+              this.mPasskey[22] = s.ReadChar();
+              this.mPasskey[23] = s.ReadChar();
+              this.mPasskey[24] = s.ReadChar();
         }
 
         protected override void InitMetadata()
@@ -4253,7 +4253,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasChangeOperatorControlAck()
         {
-            mMessageId = 6;
+            _messageId = UasMessages.ChangeOperatorControlAck;
             CrcExtra = 104;
         }
 
@@ -4266,9 +4266,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mGcsSystemId = s.ReadByte();
-            this.mControlRequest = s.ReadByte();
-            this.mAck = s.ReadByte();
+             this.mGcsSystemId = s.ReadByte();
+             this.mControlRequest = s.ReadByte();
+             this.mAck = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -4321,7 +4321,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAuthKey()
         {
-            mMessageId = 7;
+            _messageId = UasMessages.AuthKey;
             CrcExtra = 119;
         }
 
@@ -4363,38 +4363,38 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mKey[0] = s.ReadChar();
-            this.mKey[1] = s.ReadChar();
-            this.mKey[2] = s.ReadChar();
-            this.mKey[3] = s.ReadChar();
-            this.mKey[4] = s.ReadChar();
-            this.mKey[5] = s.ReadChar();
-            this.mKey[6] = s.ReadChar();
-            this.mKey[7] = s.ReadChar();
-            this.mKey[8] = s.ReadChar();
-            this.mKey[9] = s.ReadChar();
-            this.mKey[10] = s.ReadChar();
-            this.mKey[11] = s.ReadChar();
-            this.mKey[12] = s.ReadChar();
-            this.mKey[13] = s.ReadChar();
-            this.mKey[14] = s.ReadChar();
-            this.mKey[15] = s.ReadChar();
-            this.mKey[16] = s.ReadChar();
-            this.mKey[17] = s.ReadChar();
-            this.mKey[18] = s.ReadChar();
-            this.mKey[19] = s.ReadChar();
-            this.mKey[20] = s.ReadChar();
-            this.mKey[21] = s.ReadChar();
-            this.mKey[22] = s.ReadChar();
-            this.mKey[23] = s.ReadChar();
-            this.mKey[24] = s.ReadChar();
-            this.mKey[25] = s.ReadChar();
-            this.mKey[26] = s.ReadChar();
-            this.mKey[27] = s.ReadChar();
-            this.mKey[28] = s.ReadChar();
-            this.mKey[29] = s.ReadChar();
-            this.mKey[30] = s.ReadChar();
-            this.mKey[31] = s.ReadChar();
+              this.mKey[0] = s.ReadChar();
+              this.mKey[1] = s.ReadChar();
+              this.mKey[2] = s.ReadChar();
+              this.mKey[3] = s.ReadChar();
+              this.mKey[4] = s.ReadChar();
+              this.mKey[5] = s.ReadChar();
+              this.mKey[6] = s.ReadChar();
+              this.mKey[7] = s.ReadChar();
+              this.mKey[8] = s.ReadChar();
+              this.mKey[9] = s.ReadChar();
+              this.mKey[10] = s.ReadChar();
+              this.mKey[11] = s.ReadChar();
+              this.mKey[12] = s.ReadChar();
+              this.mKey[13] = s.ReadChar();
+              this.mKey[14] = s.ReadChar();
+              this.mKey[15] = s.ReadChar();
+              this.mKey[16] = s.ReadChar();
+              this.mKey[17] = s.ReadChar();
+              this.mKey[18] = s.ReadChar();
+              this.mKey[19] = s.ReadChar();
+              this.mKey[20] = s.ReadChar();
+              this.mKey[21] = s.ReadChar();
+              this.mKey[22] = s.ReadChar();
+              this.mKey[23] = s.ReadChar();
+              this.mKey[24] = s.ReadChar();
+              this.mKey[25] = s.ReadChar();
+              this.mKey[26] = s.ReadChar();
+              this.mKey[27] = s.ReadChar();
+              this.mKey[28] = s.ReadChar();
+              this.mKey[29] = s.ReadChar();
+              this.mKey[30] = s.ReadChar();
+              this.mKey[31] = s.ReadChar();
         }
 
         protected override void InitMetadata()
@@ -4449,7 +4449,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSetMode()
         {
-            mMessageId = 11;
+            _messageId = UasMessages.SetMode;
             CrcExtra = 89;
         }
 
@@ -4462,9 +4462,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCustomMode = s.ReadUInt32();
-            this.mTargetSystem = s.ReadByte();
-            this.mBaseMode = s.ReadByte();
+             this.mCustomMode = s.ReadUInt32();
+             this.mTargetSystem = s.ReadByte();
+             this.mBaseMode = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -4541,7 +4541,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasParamRequestRead()
         {
-            mMessageId = 20;
+            _messageId = UasMessages.ParamRequestRead;
             CrcExtra = 214;
         }
 
@@ -4570,25 +4570,25 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mParamIndex = s.ReadInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mParamId[0] = s.ReadChar();
-            this.mParamId[1] = s.ReadChar();
-            this.mParamId[2] = s.ReadChar();
-            this.mParamId[3] = s.ReadChar();
-            this.mParamId[4] = s.ReadChar();
-            this.mParamId[5] = s.ReadChar();
-            this.mParamId[6] = s.ReadChar();
-            this.mParamId[7] = s.ReadChar();
-            this.mParamId[8] = s.ReadChar();
-            this.mParamId[9] = s.ReadChar();
-            this.mParamId[10] = s.ReadChar();
-            this.mParamId[11] = s.ReadChar();
-            this.mParamId[12] = s.ReadChar();
-            this.mParamId[13] = s.ReadChar();
-            this.mParamId[14] = s.ReadChar();
-            this.mParamId[15] = s.ReadChar();
+             this.mParamIndex = s.ReadInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+              this.mParamId[0] = s.ReadChar();
+              this.mParamId[1] = s.ReadChar();
+              this.mParamId[2] = s.ReadChar();
+              this.mParamId[3] = s.ReadChar();
+              this.mParamId[4] = s.ReadChar();
+              this.mParamId[5] = s.ReadChar();
+              this.mParamId[6] = s.ReadChar();
+              this.mParamId[7] = s.ReadChar();
+              this.mParamId[8] = s.ReadChar();
+              this.mParamId[9] = s.ReadChar();
+              this.mParamId[10] = s.ReadChar();
+              this.mParamId[11] = s.ReadChar();
+              this.mParamId[12] = s.ReadChar();
+              this.mParamId[13] = s.ReadChar();
+              this.mParamId[14] = s.ReadChar();
+              this.mParamId[15] = s.ReadChar();
         }
 
         protected override void InitMetadata()
@@ -4656,7 +4656,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasParamRequestList()
         {
-            mMessageId = 21;
+            _messageId = UasMessages.ParamRequestList;
             CrcExtra = 159;
         }
 
@@ -4668,8 +4668,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -4747,7 +4747,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasParamValue()
         {
-            mMessageId = 22;
+            _messageId = UasMessages.ParamValue;
             CrcExtra = 220;
         }
 
@@ -4777,26 +4777,26 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mParamValue = s.ReadSingle();
-            this.mParamCount = s.ReadUInt16();
-            this.mParamIndex = s.ReadUInt16();
-            this.mParamId[0] = s.ReadChar();
-            this.mParamId[1] = s.ReadChar();
-            this.mParamId[2] = s.ReadChar();
-            this.mParamId[3] = s.ReadChar();
-            this.mParamId[4] = s.ReadChar();
-            this.mParamId[5] = s.ReadChar();
-            this.mParamId[6] = s.ReadChar();
-            this.mParamId[7] = s.ReadChar();
-            this.mParamId[8] = s.ReadChar();
-            this.mParamId[9] = s.ReadChar();
-            this.mParamId[10] = s.ReadChar();
-            this.mParamId[11] = s.ReadChar();
-            this.mParamId[12] = s.ReadChar();
-            this.mParamId[13] = s.ReadChar();
-            this.mParamId[14] = s.ReadChar();
-            this.mParamId[15] = s.ReadChar();
-            this.mParamType = s.ReadByte();
+             this.mParamValue = s.ReadSingle();
+             this.mParamCount = s.ReadUInt16();
+             this.mParamIndex = s.ReadUInt16();
+              this.mParamId[0] = s.ReadChar();
+              this.mParamId[1] = s.ReadChar();
+              this.mParamId[2] = s.ReadChar();
+              this.mParamId[3] = s.ReadChar();
+              this.mParamId[4] = s.ReadChar();
+              this.mParamId[5] = s.ReadChar();
+              this.mParamId[6] = s.ReadChar();
+              this.mParamId[7] = s.ReadChar();
+              this.mParamId[8] = s.ReadChar();
+              this.mParamId[9] = s.ReadChar();
+              this.mParamId[10] = s.ReadChar();
+              this.mParamId[11] = s.ReadChar();
+              this.mParamId[12] = s.ReadChar();
+              this.mParamId[13] = s.ReadChar();
+              this.mParamId[14] = s.ReadChar();
+              this.mParamId[15] = s.ReadChar();
+             this.mParamType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -4895,7 +4895,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasParamSet()
         {
-            mMessageId = 23;
+            _messageId = UasMessages.ParamSet;
             CrcExtra = 168;
         }
 
@@ -4925,26 +4925,26 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mParamValue = s.ReadSingle();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mParamId[0] = s.ReadChar();
-            this.mParamId[1] = s.ReadChar();
-            this.mParamId[2] = s.ReadChar();
-            this.mParamId[3] = s.ReadChar();
-            this.mParamId[4] = s.ReadChar();
-            this.mParamId[5] = s.ReadChar();
-            this.mParamId[6] = s.ReadChar();
-            this.mParamId[7] = s.ReadChar();
-            this.mParamId[8] = s.ReadChar();
-            this.mParamId[9] = s.ReadChar();
-            this.mParamId[10] = s.ReadChar();
-            this.mParamId[11] = s.ReadChar();
-            this.mParamId[12] = s.ReadChar();
-            this.mParamId[13] = s.ReadChar();
-            this.mParamId[14] = s.ReadChar();
-            this.mParamId[15] = s.ReadChar();
-            this.mParamType = s.ReadByte();
+             this.mParamValue = s.ReadSingle();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+              this.mParamId[0] = s.ReadChar();
+              this.mParamId[1] = s.ReadChar();
+              this.mParamId[2] = s.ReadChar();
+              this.mParamId[3] = s.ReadChar();
+              this.mParamId[4] = s.ReadChar();
+              this.mParamId[5] = s.ReadChar();
+              this.mParamId[6] = s.ReadChar();
+              this.mParamId[7] = s.ReadChar();
+              this.mParamId[8] = s.ReadChar();
+              this.mParamId[9] = s.ReadChar();
+              this.mParamId[10] = s.ReadChar();
+              this.mParamId[11] = s.ReadChar();
+              this.mParamId[12] = s.ReadChar();
+              this.mParamId[13] = s.ReadChar();
+              this.mParamId[14] = s.ReadChar();
+              this.mParamId[15] = s.ReadChar();
+             this.mParamType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -5123,8 +5123,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGpsRawInt()
         {
-            mMessageId = 24;
-            CrcExtra = 111;
+            _messageId = UasMessages.GpsRawInt;
+            CrcExtra = 24;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -5148,21 +5148,21 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadInt32();
-            this.mAltEllipsoid = s.ReadInt32();
-            this.mHAcc = s.ReadUInt32();
-            this.mVAcc = s.ReadUInt32();
-            this.mVelAcc = s.ReadUInt32();
-            this.mHdgAcc = s.ReadUInt32();
-            this.mEph = s.ReadUInt16();
-            this.mEpv = s.ReadUInt16();
-            this.mVel = s.ReadUInt16();
-            this.mCog = s.ReadUInt16();
-            this.mFixType = s.ReadByte();
-            this.mSatellitesVisible = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadInt32();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mAltEllipsoid = s.ReadInt32();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mHAcc = s.ReadUInt32();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mVAcc = s.ReadUInt32();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mVelAcc = s.ReadUInt32();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mHdgAcc = s.ReadUInt32();
+             this.mEph = s.ReadUInt16();
+             this.mEpv = s.ReadUInt16();
+             this.mVel = s.ReadUInt16();
+             this.mCog = s.ReadUInt16();
+             this.mFixType = s.ReadByte();
+             this.mSatellitesVisible = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -5339,7 +5339,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGpsStatus()
         {
-            mMessageId = 25;
+            _messageId = UasMessages.GpsStatus;
             CrcExtra = 23;
         }
 
@@ -5450,107 +5450,107 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSatellitesVisible = s.ReadByte();
-            this.mSatellitePrn[0] = s.ReadByte();
-            this.mSatellitePrn[1] = s.ReadByte();
-            this.mSatellitePrn[2] = s.ReadByte();
-            this.mSatellitePrn[3] = s.ReadByte();
-            this.mSatellitePrn[4] = s.ReadByte();
-            this.mSatellitePrn[5] = s.ReadByte();
-            this.mSatellitePrn[6] = s.ReadByte();
-            this.mSatellitePrn[7] = s.ReadByte();
-            this.mSatellitePrn[8] = s.ReadByte();
-            this.mSatellitePrn[9] = s.ReadByte();
-            this.mSatellitePrn[10] = s.ReadByte();
-            this.mSatellitePrn[11] = s.ReadByte();
-            this.mSatellitePrn[12] = s.ReadByte();
-            this.mSatellitePrn[13] = s.ReadByte();
-            this.mSatellitePrn[14] = s.ReadByte();
-            this.mSatellitePrn[15] = s.ReadByte();
-            this.mSatellitePrn[16] = s.ReadByte();
-            this.mSatellitePrn[17] = s.ReadByte();
-            this.mSatellitePrn[18] = s.ReadByte();
-            this.mSatellitePrn[19] = s.ReadByte();
-            this.mSatelliteUsed[0] = s.ReadByte();
-            this.mSatelliteUsed[1] = s.ReadByte();
-            this.mSatelliteUsed[2] = s.ReadByte();
-            this.mSatelliteUsed[3] = s.ReadByte();
-            this.mSatelliteUsed[4] = s.ReadByte();
-            this.mSatelliteUsed[5] = s.ReadByte();
-            this.mSatelliteUsed[6] = s.ReadByte();
-            this.mSatelliteUsed[7] = s.ReadByte();
-            this.mSatelliteUsed[8] = s.ReadByte();
-            this.mSatelliteUsed[9] = s.ReadByte();
-            this.mSatelliteUsed[10] = s.ReadByte();
-            this.mSatelliteUsed[11] = s.ReadByte();
-            this.mSatelliteUsed[12] = s.ReadByte();
-            this.mSatelliteUsed[13] = s.ReadByte();
-            this.mSatelliteUsed[14] = s.ReadByte();
-            this.mSatelliteUsed[15] = s.ReadByte();
-            this.mSatelliteUsed[16] = s.ReadByte();
-            this.mSatelliteUsed[17] = s.ReadByte();
-            this.mSatelliteUsed[18] = s.ReadByte();
-            this.mSatelliteUsed[19] = s.ReadByte();
-            this.mSatelliteElevation[0] = s.ReadByte();
-            this.mSatelliteElevation[1] = s.ReadByte();
-            this.mSatelliteElevation[2] = s.ReadByte();
-            this.mSatelliteElevation[3] = s.ReadByte();
-            this.mSatelliteElevation[4] = s.ReadByte();
-            this.mSatelliteElevation[5] = s.ReadByte();
-            this.mSatelliteElevation[6] = s.ReadByte();
-            this.mSatelliteElevation[7] = s.ReadByte();
-            this.mSatelliteElevation[8] = s.ReadByte();
-            this.mSatelliteElevation[9] = s.ReadByte();
-            this.mSatelliteElevation[10] = s.ReadByte();
-            this.mSatelliteElevation[11] = s.ReadByte();
-            this.mSatelliteElevation[12] = s.ReadByte();
-            this.mSatelliteElevation[13] = s.ReadByte();
-            this.mSatelliteElevation[14] = s.ReadByte();
-            this.mSatelliteElevation[15] = s.ReadByte();
-            this.mSatelliteElevation[16] = s.ReadByte();
-            this.mSatelliteElevation[17] = s.ReadByte();
-            this.mSatelliteElevation[18] = s.ReadByte();
-            this.mSatelliteElevation[19] = s.ReadByte();
-            this.mSatelliteAzimuth[0] = s.ReadByte();
-            this.mSatelliteAzimuth[1] = s.ReadByte();
-            this.mSatelliteAzimuth[2] = s.ReadByte();
-            this.mSatelliteAzimuth[3] = s.ReadByte();
-            this.mSatelliteAzimuth[4] = s.ReadByte();
-            this.mSatelliteAzimuth[5] = s.ReadByte();
-            this.mSatelliteAzimuth[6] = s.ReadByte();
-            this.mSatelliteAzimuth[7] = s.ReadByte();
-            this.mSatelliteAzimuth[8] = s.ReadByte();
-            this.mSatelliteAzimuth[9] = s.ReadByte();
-            this.mSatelliteAzimuth[10] = s.ReadByte();
-            this.mSatelliteAzimuth[11] = s.ReadByte();
-            this.mSatelliteAzimuth[12] = s.ReadByte();
-            this.mSatelliteAzimuth[13] = s.ReadByte();
-            this.mSatelliteAzimuth[14] = s.ReadByte();
-            this.mSatelliteAzimuth[15] = s.ReadByte();
-            this.mSatelliteAzimuth[16] = s.ReadByte();
-            this.mSatelliteAzimuth[17] = s.ReadByte();
-            this.mSatelliteAzimuth[18] = s.ReadByte();
-            this.mSatelliteAzimuth[19] = s.ReadByte();
-            this.mSatelliteSnr[0] = s.ReadByte();
-            this.mSatelliteSnr[1] = s.ReadByte();
-            this.mSatelliteSnr[2] = s.ReadByte();
-            this.mSatelliteSnr[3] = s.ReadByte();
-            this.mSatelliteSnr[4] = s.ReadByte();
-            this.mSatelliteSnr[5] = s.ReadByte();
-            this.mSatelliteSnr[6] = s.ReadByte();
-            this.mSatelliteSnr[7] = s.ReadByte();
-            this.mSatelliteSnr[8] = s.ReadByte();
-            this.mSatelliteSnr[9] = s.ReadByte();
-            this.mSatelliteSnr[10] = s.ReadByte();
-            this.mSatelliteSnr[11] = s.ReadByte();
-            this.mSatelliteSnr[12] = s.ReadByte();
-            this.mSatelliteSnr[13] = s.ReadByte();
-            this.mSatelliteSnr[14] = s.ReadByte();
-            this.mSatelliteSnr[15] = s.ReadByte();
-            this.mSatelliteSnr[16] = s.ReadByte();
-            this.mSatelliteSnr[17] = s.ReadByte();
-            this.mSatelliteSnr[18] = s.ReadByte();
-            this.mSatelliteSnr[19] = s.ReadByte();
+             this.mSatellitesVisible = s.ReadByte();
+              this.mSatellitePrn[0] = s.ReadByte();
+              this.mSatellitePrn[1] = s.ReadByte();
+              this.mSatellitePrn[2] = s.ReadByte();
+              this.mSatellitePrn[3] = s.ReadByte();
+              this.mSatellitePrn[4] = s.ReadByte();
+              this.mSatellitePrn[5] = s.ReadByte();
+              this.mSatellitePrn[6] = s.ReadByte();
+              this.mSatellitePrn[7] = s.ReadByte();
+              this.mSatellitePrn[8] = s.ReadByte();
+              this.mSatellitePrn[9] = s.ReadByte();
+              this.mSatellitePrn[10] = s.ReadByte();
+              this.mSatellitePrn[11] = s.ReadByte();
+              this.mSatellitePrn[12] = s.ReadByte();
+              this.mSatellitePrn[13] = s.ReadByte();
+              this.mSatellitePrn[14] = s.ReadByte();
+              this.mSatellitePrn[15] = s.ReadByte();
+              this.mSatellitePrn[16] = s.ReadByte();
+              this.mSatellitePrn[17] = s.ReadByte();
+              this.mSatellitePrn[18] = s.ReadByte();
+              this.mSatellitePrn[19] = s.ReadByte();
+              this.mSatelliteUsed[0] = s.ReadByte();
+              this.mSatelliteUsed[1] = s.ReadByte();
+              this.mSatelliteUsed[2] = s.ReadByte();
+              this.mSatelliteUsed[3] = s.ReadByte();
+              this.mSatelliteUsed[4] = s.ReadByte();
+              this.mSatelliteUsed[5] = s.ReadByte();
+              this.mSatelliteUsed[6] = s.ReadByte();
+              this.mSatelliteUsed[7] = s.ReadByte();
+              this.mSatelliteUsed[8] = s.ReadByte();
+              this.mSatelliteUsed[9] = s.ReadByte();
+              this.mSatelliteUsed[10] = s.ReadByte();
+              this.mSatelliteUsed[11] = s.ReadByte();
+              this.mSatelliteUsed[12] = s.ReadByte();
+              this.mSatelliteUsed[13] = s.ReadByte();
+              this.mSatelliteUsed[14] = s.ReadByte();
+              this.mSatelliteUsed[15] = s.ReadByte();
+              this.mSatelliteUsed[16] = s.ReadByte();
+              this.mSatelliteUsed[17] = s.ReadByte();
+              this.mSatelliteUsed[18] = s.ReadByte();
+              this.mSatelliteUsed[19] = s.ReadByte();
+              this.mSatelliteElevation[0] = s.ReadByte();
+              this.mSatelliteElevation[1] = s.ReadByte();
+              this.mSatelliteElevation[2] = s.ReadByte();
+              this.mSatelliteElevation[3] = s.ReadByte();
+              this.mSatelliteElevation[4] = s.ReadByte();
+              this.mSatelliteElevation[5] = s.ReadByte();
+              this.mSatelliteElevation[6] = s.ReadByte();
+              this.mSatelliteElevation[7] = s.ReadByte();
+              this.mSatelliteElevation[8] = s.ReadByte();
+              this.mSatelliteElevation[9] = s.ReadByte();
+              this.mSatelliteElevation[10] = s.ReadByte();
+              this.mSatelliteElevation[11] = s.ReadByte();
+              this.mSatelliteElevation[12] = s.ReadByte();
+              this.mSatelliteElevation[13] = s.ReadByte();
+              this.mSatelliteElevation[14] = s.ReadByte();
+              this.mSatelliteElevation[15] = s.ReadByte();
+              this.mSatelliteElevation[16] = s.ReadByte();
+              this.mSatelliteElevation[17] = s.ReadByte();
+              this.mSatelliteElevation[18] = s.ReadByte();
+              this.mSatelliteElevation[19] = s.ReadByte();
+              this.mSatelliteAzimuth[0] = s.ReadByte();
+              this.mSatelliteAzimuth[1] = s.ReadByte();
+              this.mSatelliteAzimuth[2] = s.ReadByte();
+              this.mSatelliteAzimuth[3] = s.ReadByte();
+              this.mSatelliteAzimuth[4] = s.ReadByte();
+              this.mSatelliteAzimuth[5] = s.ReadByte();
+              this.mSatelliteAzimuth[6] = s.ReadByte();
+              this.mSatelliteAzimuth[7] = s.ReadByte();
+              this.mSatelliteAzimuth[8] = s.ReadByte();
+              this.mSatelliteAzimuth[9] = s.ReadByte();
+              this.mSatelliteAzimuth[10] = s.ReadByte();
+              this.mSatelliteAzimuth[11] = s.ReadByte();
+              this.mSatelliteAzimuth[12] = s.ReadByte();
+              this.mSatelliteAzimuth[13] = s.ReadByte();
+              this.mSatelliteAzimuth[14] = s.ReadByte();
+              this.mSatelliteAzimuth[15] = s.ReadByte();
+              this.mSatelliteAzimuth[16] = s.ReadByte();
+              this.mSatelliteAzimuth[17] = s.ReadByte();
+              this.mSatelliteAzimuth[18] = s.ReadByte();
+              this.mSatelliteAzimuth[19] = s.ReadByte();
+              this.mSatelliteSnr[0] = s.ReadByte();
+              this.mSatelliteSnr[1] = s.ReadByte();
+              this.mSatelliteSnr[2] = s.ReadByte();
+              this.mSatelliteSnr[3] = s.ReadByte();
+              this.mSatelliteSnr[4] = s.ReadByte();
+              this.mSatelliteSnr[5] = s.ReadByte();
+              this.mSatelliteSnr[6] = s.ReadByte();
+              this.mSatelliteSnr[7] = s.ReadByte();
+              this.mSatelliteSnr[8] = s.ReadByte();
+              this.mSatelliteSnr[9] = s.ReadByte();
+              this.mSatelliteSnr[10] = s.ReadByte();
+              this.mSatelliteSnr[11] = s.ReadByte();
+              this.mSatelliteSnr[12] = s.ReadByte();
+              this.mSatelliteSnr[13] = s.ReadByte();
+              this.mSatelliteSnr[14] = s.ReadByte();
+              this.mSatelliteSnr[15] = s.ReadByte();
+              this.mSatelliteSnr[16] = s.ReadByte();
+              this.mSatelliteSnr[17] = s.ReadByte();
+              this.mSatelliteSnr[18] = s.ReadByte();
+              this.mSatelliteSnr[19] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -5696,7 +5696,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasScaledImu()
         {
-            mMessageId = 26;
+            _messageId = UasMessages.ScaledImu;
             CrcExtra = 170;
         }
 
@@ -5716,16 +5716,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mXacc = s.ReadInt16();
-            this.mYacc = s.ReadInt16();
-            this.mZacc = s.ReadInt16();
-            this.mXgyro = s.ReadInt16();
-            this.mYgyro = s.ReadInt16();
-            this.mZgyro = s.ReadInt16();
-            this.mXmag = s.ReadInt16();
-            this.mYmag = s.ReadInt16();
-            this.mZmag = s.ReadInt16();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mXacc = s.ReadInt16();
+             this.mYacc = s.ReadInt16();
+             this.mZacc = s.ReadInt16();
+             this.mXgyro = s.ReadInt16();
+             this.mYgyro = s.ReadInt16();
+             this.mZgyro = s.ReadInt16();
+             this.mXmag = s.ReadInt16();
+             this.mYmag = s.ReadInt16();
+             this.mZmag = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -5899,7 +5899,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRawImu()
         {
-            mMessageId = 27;
+            _messageId = UasMessages.RawImu;
             CrcExtra = 144;
         }
 
@@ -5919,16 +5919,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mXacc = s.ReadInt16();
-            this.mYacc = s.ReadInt16();
-            this.mZacc = s.ReadInt16();
-            this.mXgyro = s.ReadInt16();
-            this.mYgyro = s.ReadInt16();
-            this.mZgyro = s.ReadInt16();
-            this.mXmag = s.ReadInt16();
-            this.mYmag = s.ReadInt16();
-            this.mZmag = s.ReadInt16();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mXacc = s.ReadInt16();
+             this.mYacc = s.ReadInt16();
+             this.mZacc = s.ReadInt16();
+             this.mXgyro = s.ReadInt16();
+             this.mYgyro = s.ReadInt16();
+             this.mZgyro = s.ReadInt16();
+             this.mXmag = s.ReadInt16();
+             this.mYmag = s.ReadInt16();
+             this.mZmag = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -6062,7 +6062,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRawPressure()
         {
-            mMessageId = 28;
+            _messageId = UasMessages.RawPressure;
             CrcExtra = 67;
         }
 
@@ -6077,11 +6077,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mPressAbs = s.ReadInt16();
-            this.mPressDiff1 = s.ReadInt16();
-            this.mPressDiff2 = s.ReadInt16();
-            this.mTemperature = s.ReadInt16();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mPressAbs = s.ReadInt16();
+             this.mPressDiff1 = s.ReadInt16();
+             this.mPressDiff2 = s.ReadInt16();
+             this.mTemperature = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -6172,7 +6172,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasScaledPressure()
         {
-            mMessageId = 29;
+            _messageId = UasMessages.ScaledPressure;
             CrcExtra = 115;
         }
 
@@ -6186,10 +6186,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mPressAbs = s.ReadSingle();
-            this.mPressDiff = s.ReadSingle();
-            this.mTemperature = s.ReadInt16();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mPressAbs = s.ReadSingle();
+             this.mPressDiff = s.ReadSingle();
+             this.mTemperature = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -6297,7 +6297,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAttitude()
         {
-            mMessageId = 30;
+            _messageId = UasMessages.Attitude;
             CrcExtra = 39;
         }
 
@@ -6314,13 +6314,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mRollspeed = s.ReadSingle();
-            this.mPitchspeed = s.ReadSingle();
-            this.mYawspeed = s.ReadSingle();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mRollspeed = s.ReadSingle();
+             this.mPitchspeed = s.ReadSingle();
+             this.mYawspeed = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -6457,7 +6457,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAttitudeQuaternion()
         {
-            mMessageId = 31;
+            _messageId = UasMessages.AttitudeQuaternion;
             CrcExtra = 246;
         }
 
@@ -6475,14 +6475,14 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mQ1 = s.ReadSingle();
-            this.mQ2 = s.ReadSingle();
-            this.mQ3 = s.ReadSingle();
-            this.mQ4 = s.ReadSingle();
-            this.mRollspeed = s.ReadSingle();
-            this.mPitchspeed = s.ReadSingle();
-            this.mYawspeed = s.ReadSingle();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mQ1 = s.ReadSingle();
+             this.mQ2 = s.ReadSingle();
+             this.mQ3 = s.ReadSingle();
+             this.mQ4 = s.ReadSingle();
+             this.mRollspeed = s.ReadSingle();
+             this.mPitchspeed = s.ReadSingle();
+             this.mYawspeed = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -6618,7 +6618,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLocalPositionNed()
         {
-            mMessageId = 32;
+            _messageId = UasMessages.LocalPositionNed;
             CrcExtra = 185;
         }
 
@@ -6635,13 +6635,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mVx = s.ReadSingle();
-            this.mVy = s.ReadSingle();
-            this.mVz = s.ReadSingle();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mVx = s.ReadSingle();
+             this.mVy = s.ReadSingle();
+             this.mVz = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -6786,7 +6786,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGlobalPositionInt()
         {
-            mMessageId = 33;
+            _messageId = UasMessages.GlobalPositionInt;
             CrcExtra = 104;
         }
 
@@ -6805,15 +6805,15 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadInt32();
-            this.mRelativeAlt = s.ReadInt32();
-            this.mVx = s.ReadInt16();
-            this.mVy = s.ReadInt16();
-            this.mVz = s.ReadInt16();
-            this.mHdg = s.ReadUInt16();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadInt32();
+             this.mRelativeAlt = s.ReadInt32();
+             this.mVx = s.ReadInt16();
+             this.mVy = s.ReadInt16();
+             this.mVz = s.ReadInt16();
+             this.mHdg = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -6988,7 +6988,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRcChannelsScaled()
         {
-            mMessageId = 34;
+            _messageId = UasMessages.RcChannelsScaled;
             CrcExtra = 237;
         }
 
@@ -7009,17 +7009,17 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mChan1Scaled = s.ReadInt16();
-            this.mChan2Scaled = s.ReadInt16();
-            this.mChan3Scaled = s.ReadInt16();
-            this.mChan4Scaled = s.ReadInt16();
-            this.mChan5Scaled = s.ReadInt16();
-            this.mChan6Scaled = s.ReadInt16();
-            this.mChan7Scaled = s.ReadInt16();
-            this.mChan8Scaled = s.ReadInt16();
-            this.mPort = s.ReadByte();
-            this.mRssi = s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mChan1Scaled = s.ReadInt16();
+             this.mChan2Scaled = s.ReadInt16();
+             this.mChan3Scaled = s.ReadInt16();
+             this.mChan4Scaled = s.ReadInt16();
+             this.mChan5Scaled = s.ReadInt16();
+             this.mChan6Scaled = s.ReadInt16();
+             this.mChan7Scaled = s.ReadInt16();
+             this.mChan8Scaled = s.ReadInt16();
+             this.mPort = s.ReadByte();
+             this.mRssi = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -7208,7 +7208,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRcChannelsRaw()
         {
-            mMessageId = 35;
+            _messageId = UasMessages.RcChannelsRaw;
             CrcExtra = 244;
         }
 
@@ -7229,17 +7229,17 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mChan1Raw = s.ReadUInt16();
-            this.mChan2Raw = s.ReadUInt16();
-            this.mChan3Raw = s.ReadUInt16();
-            this.mChan4Raw = s.ReadUInt16();
-            this.mChan5Raw = s.ReadUInt16();
-            this.mChan6Raw = s.ReadUInt16();
-            this.mChan7Raw = s.ReadUInt16();
-            this.mChan8Raw = s.ReadUInt16();
-            this.mPort = s.ReadByte();
-            this.mRssi = s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mChan1Raw = s.ReadUInt16();
+             this.mChan2Raw = s.ReadUInt16();
+             this.mChan3Raw = s.ReadUInt16();
+             this.mChan4Raw = s.ReadUInt16();
+             this.mChan5Raw = s.ReadUInt16();
+             this.mChan6Raw = s.ReadUInt16();
+             this.mChan7Raw = s.ReadUInt16();
+             this.mChan8Raw = s.ReadUInt16();
+             this.mPort = s.ReadByte();
+             this.mRssi = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -7484,8 +7484,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasServoOutputRaw()
         {
-            mMessageId = 36;
-            CrcExtra = 175;
+            _messageId = UasMessages.ServoOutputRaw;
+            CrcExtra = 222;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -7512,24 +7512,24 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt32();
-            this.mServo1Raw = s.ReadUInt16();
-            this.mServo2Raw = s.ReadUInt16();
-            this.mServo3Raw = s.ReadUInt16();
-            this.mServo4Raw = s.ReadUInt16();
-            this.mServo5Raw = s.ReadUInt16();
-            this.mServo6Raw = s.ReadUInt16();
-            this.mServo7Raw = s.ReadUInt16();
-            this.mServo8Raw = s.ReadUInt16();
-            this.mServo9Raw = s.ReadUInt16();
-            this.mServo10Raw = s.ReadUInt16();
-            this.mServo11Raw = s.ReadUInt16();
-            this.mServo12Raw = s.ReadUInt16();
-            this.mServo13Raw = s.ReadUInt16();
-            this.mServo14Raw = s.ReadUInt16();
-            this.mServo15Raw = s.ReadUInt16();
-            this.mServo16Raw = s.ReadUInt16();
-            this.mPort = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt32();
+             this.mServo1Raw = s.ReadUInt16();
+             this.mServo2Raw = s.ReadUInt16();
+             this.mServo3Raw = s.ReadUInt16();
+             this.mServo4Raw = s.ReadUInt16();
+             this.mServo5Raw = s.ReadUInt16();
+             this.mServo6Raw = s.ReadUInt16();
+             this.mServo7Raw = s.ReadUInt16();
+             this.mServo8Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mServo9Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mServo10Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mServo11Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mServo12Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mServo13Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mServo14Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mServo15Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mServo16Raw = s.ReadUInt16();
+             this.mPort = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -7719,8 +7719,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionRequestPartialList()
         {
-            mMessageId = 37;
-            CrcExtra = 4;
+            _messageId = UasMessages.MissionRequestPartialList;
+            CrcExtra = 212;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -7734,11 +7734,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mStartIndex = s.ReadInt16();
-            this.mEndIndex = s.ReadInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mStartIndex = s.ReadInt16();
+             this.mEndIndex = s.ReadInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -7837,8 +7837,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionWritePartialList()
         {
-            mMessageId = 38;
-            CrcExtra = 168;
+            _messageId = UasMessages.MissionWritePartialList;
+            CrcExtra = 9;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -7852,11 +7852,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mStartIndex = s.ReadInt16();
-            this.mEndIndex = s.ReadInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mStartIndex = s.ReadInt16();
+             this.mEndIndex = s.ReadInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -8035,8 +8035,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionItem()
         {
-            mMessageId = 39;
-            CrcExtra = 95;
+            _messageId = UasMessages.MissionItem;
+            CrcExtra = 254;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -8060,21 +8060,21 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mParam1 = s.ReadSingle();
-            this.mParam2 = s.ReadSingle();
-            this.mParam3 = s.ReadSingle();
-            this.mParam4 = s.ReadSingle();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mSeq = s.ReadUInt16();
-            this.mCommand = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mFrame = s.ReadByte();
-            this.mCurrent = s.ReadByte();
-            this.mAutocontinue = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mParam1 = s.ReadSingle();
+             this.mParam2 = s.ReadSingle();
+             this.mParam3 = s.ReadSingle();
+             this.mParam4 = s.ReadSingle();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mSeq = s.ReadUInt16();
+             this.mCommand = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mFrame = s.ReadByte();
+             this.mCurrent = s.ReadByte();
+             this.mAutocontinue = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -8235,8 +8235,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionRequest()
         {
-            mMessageId = 40;
-            CrcExtra = 177;
+            _messageId = UasMessages.MissionRequest;
+            CrcExtra = 230;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -8249,10 +8249,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeq = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mSeq = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -8328,7 +8328,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionSetCurrent()
         {
-            mMessageId = 41;
+            _messageId = UasMessages.MissionSetCurrent;
             CrcExtra = 28;
         }
 
@@ -8341,9 +8341,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeq = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mSeq = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -8396,7 +8396,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionCurrent()
         {
-            mMessageId = 42;
+            _messageId = UasMessages.MissionCurrent;
             CrcExtra = 28;
         }
 
@@ -8407,7 +8407,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeq = s.ReadUInt16();
+             this.mSeq = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -8462,8 +8462,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionRequestList()
         {
-            mMessageId = 43;
-            CrcExtra = 148;
+            _messageId = UasMessages.MissionRequestList;
+            CrcExtra = 132;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -8475,9 +8475,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -8554,8 +8554,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionCount()
         {
-            mMessageId = 44;
-            CrcExtra = 52;
+            _messageId = UasMessages.MissionCount;
+            CrcExtra = 221;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -8568,10 +8568,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCount = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mCount = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -8647,8 +8647,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionClearAll()
         {
-            mMessageId = 45;
-            CrcExtra = 25;
+            _messageId = UasMessages.MissionClearAll;
+            CrcExtra = 232;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -8660,9 +8660,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -8715,7 +8715,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionItemReached()
         {
-            mMessageId = 46;
+            _messageId = UasMessages.MissionItemReached;
             CrcExtra = 11;
         }
 
@@ -8726,7 +8726,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeq = s.ReadUInt16();
+             this.mSeq = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -8789,8 +8789,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionAck()
         {
-            mMessageId = 47;
-            CrcExtra = 146;
+            _messageId = UasMessages.MissionAck;
+            CrcExtra = 153;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -8803,10 +8803,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mType = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mType = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -8898,8 +8898,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSetGpsGlobalOrigin()
         {
-            mMessageId = 48;
-            CrcExtra = 62;
+            _messageId = UasMessages.SetGpsGlobalOrigin;
+            CrcExtra = 41;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -8913,11 +8913,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLatitude = s.ReadInt32();
-            this.mLongitude = s.ReadInt32();
-            this.mAltitude = s.ReadInt32();
-            this.mTargetSystem = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mTimeUsec = s.ReadUInt64();
+             this.mLatitude = s.ReadInt32();
+             this.mLongitude = s.ReadInt32();
+             this.mAltitude = s.ReadInt32();
+             this.mTargetSystem = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -9008,8 +9008,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGpsGlobalOrigin()
         {
-            mMessageId = 49;
-            CrcExtra = 95;
+            _messageId = UasMessages.GpsGlobalOrigin;
+            CrcExtra = 39;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -9022,10 +9022,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLatitude = s.ReadInt32();
-            this.mLongitude = s.ReadInt32();
-            this.mAltitude = s.ReadInt32();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mTimeUsec = s.ReadUInt64();
+             this.mLatitude = s.ReadInt32();
+             this.mLongitude = s.ReadInt32();
+             this.mAltitude = s.ReadInt32();
         }
 
         protected override void InitMetadata()
@@ -9149,7 +9149,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasParamMapRc()
         {
-            mMessageId = 50;
+            _messageId = UasMessages.ParamMapRc;
             CrcExtra = 78;
         }
 
@@ -9183,30 +9183,30 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mParamValue0 = s.ReadSingle();
-            this.mScale = s.ReadSingle();
-            this.mParamValueMin = s.ReadSingle();
-            this.mParamValueMax = s.ReadSingle();
-            this.mParamIndex = s.ReadInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mParamId[0] = s.ReadChar();
-            this.mParamId[1] = s.ReadChar();
-            this.mParamId[2] = s.ReadChar();
-            this.mParamId[3] = s.ReadChar();
-            this.mParamId[4] = s.ReadChar();
-            this.mParamId[5] = s.ReadChar();
-            this.mParamId[6] = s.ReadChar();
-            this.mParamId[7] = s.ReadChar();
-            this.mParamId[8] = s.ReadChar();
-            this.mParamId[9] = s.ReadChar();
-            this.mParamId[10] = s.ReadChar();
-            this.mParamId[11] = s.ReadChar();
-            this.mParamId[12] = s.ReadChar();
-            this.mParamId[13] = s.ReadChar();
-            this.mParamId[14] = s.ReadChar();
-            this.mParamId[15] = s.ReadChar();
-            this.mParameterRcChannelIndex = s.ReadByte();
+             this.mParamValue0 = s.ReadSingle();
+             this.mScale = s.ReadSingle();
+             this.mParamValueMin = s.ReadSingle();
+             this.mParamValueMax = s.ReadSingle();
+             this.mParamIndex = s.ReadInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+              this.mParamId[0] = s.ReadChar();
+              this.mParamId[1] = s.ReadChar();
+              this.mParamId[2] = s.ReadChar();
+              this.mParamId[3] = s.ReadChar();
+              this.mParamId[4] = s.ReadChar();
+              this.mParamId[5] = s.ReadChar();
+              this.mParamId[6] = s.ReadChar();
+              this.mParamId[7] = s.ReadChar();
+              this.mParamId[8] = s.ReadChar();
+              this.mParamId[9] = s.ReadChar();
+              this.mParamId[10] = s.ReadChar();
+              this.mParamId[11] = s.ReadChar();
+              this.mParamId[12] = s.ReadChar();
+              this.mParamId[13] = s.ReadChar();
+              this.mParamId[14] = s.ReadChar();
+              this.mParamId[15] = s.ReadChar();
+             this.mParameterRcChannelIndex = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -9325,8 +9325,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionRequestInt()
         {
-            mMessageId = 51;
-            CrcExtra = 129;
+            _messageId = UasMessages.MissionRequestInt;
+            CrcExtra = 196;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -9339,10 +9339,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeq = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mSeq = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -9466,7 +9466,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSafetySetAllowedArea()
         {
-            mMessageId = 54;
+            _messageId = UasMessages.SafetySetAllowedArea;
             CrcExtra = 15;
         }
 
@@ -9485,15 +9485,15 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mP1x = s.ReadSingle();
-            this.mP1y = s.ReadSingle();
-            this.mP1z = s.ReadSingle();
-            this.mP2x = s.ReadSingle();
-            this.mP2y = s.ReadSingle();
-            this.mP2z = s.ReadSingle();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mFrame = s.ReadByte();
+             this.mP1x = s.ReadSingle();
+             this.mP1y = s.ReadSingle();
+             this.mP1z = s.ReadSingle();
+             this.mP2x = s.ReadSingle();
+             this.mP2y = s.ReadSingle();
+             this.mP2z = s.ReadSingle();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mFrame = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -9636,7 +9636,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSafetyAllowedArea()
         {
-            mMessageId = 55;
+            _messageId = UasMessages.SafetyAllowedArea;
             CrcExtra = 3;
         }
 
@@ -9653,13 +9653,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mP1x = s.ReadSingle();
-            this.mP1y = s.ReadSingle();
-            this.mP1z = s.ReadSingle();
-            this.mP2x = s.ReadSingle();
-            this.mP2y = s.ReadSingle();
-            this.mP2z = s.ReadSingle();
-            this.mFrame = s.ReadByte();
+             this.mP1x = s.ReadSingle();
+             this.mP1y = s.ReadSingle();
+             this.mP1z = s.ReadSingle();
+             this.mP2x = s.ReadSingle();
+             this.mP2y = s.ReadSingle();
+             this.mP2z = s.ReadSingle();
+             this.mFrame = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -9780,7 +9780,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAttitudeQuaternionCov()
         {
-            mMessageId = 61;
+            _messageId = UasMessages.AttitudeQuaternionCov;
             CrcExtra = 167;
         }
 
@@ -9807,23 +9807,23 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mQ[0] = s.ReadSingle();
-            this.mQ[1] = s.ReadSingle();
-            this.mQ[2] = s.ReadSingle();
-            this.mQ[3] = s.ReadSingle();
-            this.mRollspeed = s.ReadSingle();
-            this.mPitchspeed = s.ReadSingle();
-            this.mYawspeed = s.ReadSingle();
-            this.mCovariance[0] = s.ReadSingle();
-            this.mCovariance[1] = s.ReadSingle();
-            this.mCovariance[2] = s.ReadSingle();
-            this.mCovariance[3] = s.ReadSingle();
-            this.mCovariance[4] = s.ReadSingle();
-            this.mCovariance[5] = s.ReadSingle();
-            this.mCovariance[6] = s.ReadSingle();
-            this.mCovariance[7] = s.ReadSingle();
-            this.mCovariance[8] = s.ReadSingle();
+             this.mTimeUsec = s.ReadUInt64();
+              this.mQ[0] = s.ReadSingle();
+              this.mQ[1] = s.ReadSingle();
+              this.mQ[2] = s.ReadSingle();
+              this.mQ[3] = s.ReadSingle();
+             this.mRollspeed = s.ReadSingle();
+             this.mPitchspeed = s.ReadSingle();
+             this.mYawspeed = s.ReadSingle();
+              this.mCovariance[0] = s.ReadSingle();
+              this.mCovariance[1] = s.ReadSingle();
+              this.mCovariance[2] = s.ReadSingle();
+              this.mCovariance[3] = s.ReadSingle();
+              this.mCovariance[4] = s.ReadSingle();
+              this.mCovariance[5] = s.ReadSingle();
+              this.mCovariance[6] = s.ReadSingle();
+              this.mCovariance[7] = s.ReadSingle();
+              this.mCovariance[8] = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -9953,7 +9953,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasNavControllerOutput()
         {
-            mMessageId = 62;
+            _messageId = UasMessages.NavControllerOutput;
             CrcExtra = 183;
         }
 
@@ -9971,14 +9971,14 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mNavRoll = s.ReadSingle();
-            this.mNavPitch = s.ReadSingle();
-            this.mAltError = s.ReadSingle();
-            this.mAspdError = s.ReadSingle();
-            this.mXtrackError = s.ReadSingle();
-            this.mNavBearing = s.ReadInt16();
-            this.mTargetBearing = s.ReadInt16();
-            this.mWpDist = s.ReadUInt16();
+             this.mNavRoll = s.ReadSingle();
+             this.mNavPitch = s.ReadSingle();
+             this.mAltError = s.ReadSingle();
+             this.mAspdError = s.ReadSingle();
+             this.mXtrackError = s.ReadSingle();
+             this.mNavBearing = s.ReadInt16();
+             this.mTargetBearing = s.ReadInt16();
+             this.mWpDist = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -10138,7 +10138,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGlobalPositionIntCov()
         {
-            mMessageId = 63;
+            _messageId = UasMessages.GlobalPositionIntCov;
             CrcExtra = 119;
         }
 
@@ -10193,51 +10193,51 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadInt32();
-            this.mRelativeAlt = s.ReadInt32();
-            this.mVx = s.ReadSingle();
-            this.mVy = s.ReadSingle();
-            this.mVz = s.ReadSingle();
-            this.mCovariance[0] = s.ReadSingle();
-            this.mCovariance[1] = s.ReadSingle();
-            this.mCovariance[2] = s.ReadSingle();
-            this.mCovariance[3] = s.ReadSingle();
-            this.mCovariance[4] = s.ReadSingle();
-            this.mCovariance[5] = s.ReadSingle();
-            this.mCovariance[6] = s.ReadSingle();
-            this.mCovariance[7] = s.ReadSingle();
-            this.mCovariance[8] = s.ReadSingle();
-            this.mCovariance[9] = s.ReadSingle();
-            this.mCovariance[10] = s.ReadSingle();
-            this.mCovariance[11] = s.ReadSingle();
-            this.mCovariance[12] = s.ReadSingle();
-            this.mCovariance[13] = s.ReadSingle();
-            this.mCovariance[14] = s.ReadSingle();
-            this.mCovariance[15] = s.ReadSingle();
-            this.mCovariance[16] = s.ReadSingle();
-            this.mCovariance[17] = s.ReadSingle();
-            this.mCovariance[18] = s.ReadSingle();
-            this.mCovariance[19] = s.ReadSingle();
-            this.mCovariance[20] = s.ReadSingle();
-            this.mCovariance[21] = s.ReadSingle();
-            this.mCovariance[22] = s.ReadSingle();
-            this.mCovariance[23] = s.ReadSingle();
-            this.mCovariance[24] = s.ReadSingle();
-            this.mCovariance[25] = s.ReadSingle();
-            this.mCovariance[26] = s.ReadSingle();
-            this.mCovariance[27] = s.ReadSingle();
-            this.mCovariance[28] = s.ReadSingle();
-            this.mCovariance[29] = s.ReadSingle();
-            this.mCovariance[30] = s.ReadSingle();
-            this.mCovariance[31] = s.ReadSingle();
-            this.mCovariance[32] = s.ReadSingle();
-            this.mCovariance[33] = s.ReadSingle();
-            this.mCovariance[34] = s.ReadSingle();
-            this.mCovariance[35] = s.ReadSingle();
-            this.mEstimatorType = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadInt32();
+             this.mRelativeAlt = s.ReadInt32();
+             this.mVx = s.ReadSingle();
+             this.mVy = s.ReadSingle();
+             this.mVz = s.ReadSingle();
+              this.mCovariance[0] = s.ReadSingle();
+              this.mCovariance[1] = s.ReadSingle();
+              this.mCovariance[2] = s.ReadSingle();
+              this.mCovariance[3] = s.ReadSingle();
+              this.mCovariance[4] = s.ReadSingle();
+              this.mCovariance[5] = s.ReadSingle();
+              this.mCovariance[6] = s.ReadSingle();
+              this.mCovariance[7] = s.ReadSingle();
+              this.mCovariance[8] = s.ReadSingle();
+              this.mCovariance[9] = s.ReadSingle();
+              this.mCovariance[10] = s.ReadSingle();
+              this.mCovariance[11] = s.ReadSingle();
+              this.mCovariance[12] = s.ReadSingle();
+              this.mCovariance[13] = s.ReadSingle();
+              this.mCovariance[14] = s.ReadSingle();
+              this.mCovariance[15] = s.ReadSingle();
+              this.mCovariance[16] = s.ReadSingle();
+              this.mCovariance[17] = s.ReadSingle();
+              this.mCovariance[18] = s.ReadSingle();
+              this.mCovariance[19] = s.ReadSingle();
+              this.mCovariance[20] = s.ReadSingle();
+              this.mCovariance[21] = s.ReadSingle();
+              this.mCovariance[22] = s.ReadSingle();
+              this.mCovariance[23] = s.ReadSingle();
+              this.mCovariance[24] = s.ReadSingle();
+              this.mCovariance[25] = s.ReadSingle();
+              this.mCovariance[26] = s.ReadSingle();
+              this.mCovariance[27] = s.ReadSingle();
+              this.mCovariance[28] = s.ReadSingle();
+              this.mCovariance[29] = s.ReadSingle();
+              this.mCovariance[30] = s.ReadSingle();
+              this.mCovariance[31] = s.ReadSingle();
+              this.mCovariance[32] = s.ReadSingle();
+              this.mCovariance[33] = s.ReadSingle();
+              this.mCovariance[34] = s.ReadSingle();
+              this.mCovariance[35] = s.ReadSingle();
+             this.mEstimatorType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -10427,7 +10427,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLocalPositionNedCov()
         {
-            mMessageId = 64;
+            _messageId = UasMessages.LocalPositionNedCov;
             CrcExtra = 191;
         }
 
@@ -10493,62 +10493,62 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mVx = s.ReadSingle();
-            this.mVy = s.ReadSingle();
-            this.mVz = s.ReadSingle();
-            this.mAx = s.ReadSingle();
-            this.mAy = s.ReadSingle();
-            this.mAz = s.ReadSingle();
-            this.mCovariance[0] = s.ReadSingle();
-            this.mCovariance[1] = s.ReadSingle();
-            this.mCovariance[2] = s.ReadSingle();
-            this.mCovariance[3] = s.ReadSingle();
-            this.mCovariance[4] = s.ReadSingle();
-            this.mCovariance[5] = s.ReadSingle();
-            this.mCovariance[6] = s.ReadSingle();
-            this.mCovariance[7] = s.ReadSingle();
-            this.mCovariance[8] = s.ReadSingle();
-            this.mCovariance[9] = s.ReadSingle();
-            this.mCovariance[10] = s.ReadSingle();
-            this.mCovariance[11] = s.ReadSingle();
-            this.mCovariance[12] = s.ReadSingle();
-            this.mCovariance[13] = s.ReadSingle();
-            this.mCovariance[14] = s.ReadSingle();
-            this.mCovariance[15] = s.ReadSingle();
-            this.mCovariance[16] = s.ReadSingle();
-            this.mCovariance[17] = s.ReadSingle();
-            this.mCovariance[18] = s.ReadSingle();
-            this.mCovariance[19] = s.ReadSingle();
-            this.mCovariance[20] = s.ReadSingle();
-            this.mCovariance[21] = s.ReadSingle();
-            this.mCovariance[22] = s.ReadSingle();
-            this.mCovariance[23] = s.ReadSingle();
-            this.mCovariance[24] = s.ReadSingle();
-            this.mCovariance[25] = s.ReadSingle();
-            this.mCovariance[26] = s.ReadSingle();
-            this.mCovariance[27] = s.ReadSingle();
-            this.mCovariance[28] = s.ReadSingle();
-            this.mCovariance[29] = s.ReadSingle();
-            this.mCovariance[30] = s.ReadSingle();
-            this.mCovariance[31] = s.ReadSingle();
-            this.mCovariance[32] = s.ReadSingle();
-            this.mCovariance[33] = s.ReadSingle();
-            this.mCovariance[34] = s.ReadSingle();
-            this.mCovariance[35] = s.ReadSingle();
-            this.mCovariance[36] = s.ReadSingle();
-            this.mCovariance[37] = s.ReadSingle();
-            this.mCovariance[38] = s.ReadSingle();
-            this.mCovariance[39] = s.ReadSingle();
-            this.mCovariance[40] = s.ReadSingle();
-            this.mCovariance[41] = s.ReadSingle();
-            this.mCovariance[42] = s.ReadSingle();
-            this.mCovariance[43] = s.ReadSingle();
-            this.mCovariance[44] = s.ReadSingle();
-            this.mEstimatorType = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mVx = s.ReadSingle();
+             this.mVy = s.ReadSingle();
+             this.mVz = s.ReadSingle();
+             this.mAx = s.ReadSingle();
+             this.mAy = s.ReadSingle();
+             this.mAz = s.ReadSingle();
+              this.mCovariance[0] = s.ReadSingle();
+              this.mCovariance[1] = s.ReadSingle();
+              this.mCovariance[2] = s.ReadSingle();
+              this.mCovariance[3] = s.ReadSingle();
+              this.mCovariance[4] = s.ReadSingle();
+              this.mCovariance[5] = s.ReadSingle();
+              this.mCovariance[6] = s.ReadSingle();
+              this.mCovariance[7] = s.ReadSingle();
+              this.mCovariance[8] = s.ReadSingle();
+              this.mCovariance[9] = s.ReadSingle();
+              this.mCovariance[10] = s.ReadSingle();
+              this.mCovariance[11] = s.ReadSingle();
+              this.mCovariance[12] = s.ReadSingle();
+              this.mCovariance[13] = s.ReadSingle();
+              this.mCovariance[14] = s.ReadSingle();
+              this.mCovariance[15] = s.ReadSingle();
+              this.mCovariance[16] = s.ReadSingle();
+              this.mCovariance[17] = s.ReadSingle();
+              this.mCovariance[18] = s.ReadSingle();
+              this.mCovariance[19] = s.ReadSingle();
+              this.mCovariance[20] = s.ReadSingle();
+              this.mCovariance[21] = s.ReadSingle();
+              this.mCovariance[22] = s.ReadSingle();
+              this.mCovariance[23] = s.ReadSingle();
+              this.mCovariance[24] = s.ReadSingle();
+              this.mCovariance[25] = s.ReadSingle();
+              this.mCovariance[26] = s.ReadSingle();
+              this.mCovariance[27] = s.ReadSingle();
+              this.mCovariance[28] = s.ReadSingle();
+              this.mCovariance[29] = s.ReadSingle();
+              this.mCovariance[30] = s.ReadSingle();
+              this.mCovariance[31] = s.ReadSingle();
+              this.mCovariance[32] = s.ReadSingle();
+              this.mCovariance[33] = s.ReadSingle();
+              this.mCovariance[34] = s.ReadSingle();
+              this.mCovariance[35] = s.ReadSingle();
+              this.mCovariance[36] = s.ReadSingle();
+              this.mCovariance[37] = s.ReadSingle();
+              this.mCovariance[38] = s.ReadSingle();
+              this.mCovariance[39] = s.ReadSingle();
+              this.mCovariance[40] = s.ReadSingle();
+              this.mCovariance[41] = s.ReadSingle();
+              this.mCovariance[42] = s.ReadSingle();
+              this.mCovariance[43] = s.ReadSingle();
+              this.mCovariance[44] = s.ReadSingle();
+             this.mEstimatorType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -10824,7 +10824,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRcChannels()
         {
-            mMessageId = 65;
+            _messageId = UasMessages.RcChannels;
             CrcExtra = 118;
         }
 
@@ -10855,27 +10855,27 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mChan1Raw = s.ReadUInt16();
-            this.mChan2Raw = s.ReadUInt16();
-            this.mChan3Raw = s.ReadUInt16();
-            this.mChan4Raw = s.ReadUInt16();
-            this.mChan5Raw = s.ReadUInt16();
-            this.mChan6Raw = s.ReadUInt16();
-            this.mChan7Raw = s.ReadUInt16();
-            this.mChan8Raw = s.ReadUInt16();
-            this.mChan9Raw = s.ReadUInt16();
-            this.mChan10Raw = s.ReadUInt16();
-            this.mChan11Raw = s.ReadUInt16();
-            this.mChan12Raw = s.ReadUInt16();
-            this.mChan13Raw = s.ReadUInt16();
-            this.mChan14Raw = s.ReadUInt16();
-            this.mChan15Raw = s.ReadUInt16();
-            this.mChan16Raw = s.ReadUInt16();
-            this.mChan17Raw = s.ReadUInt16();
-            this.mChan18Raw = s.ReadUInt16();
-            this.mChancount = s.ReadByte();
-            this.mRssi = s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mChan1Raw = s.ReadUInt16();
+             this.mChan2Raw = s.ReadUInt16();
+             this.mChan3Raw = s.ReadUInt16();
+             this.mChan4Raw = s.ReadUInt16();
+             this.mChan5Raw = s.ReadUInt16();
+             this.mChan6Raw = s.ReadUInt16();
+             this.mChan7Raw = s.ReadUInt16();
+             this.mChan8Raw = s.ReadUInt16();
+             this.mChan9Raw = s.ReadUInt16();
+             this.mChan10Raw = s.ReadUInt16();
+             this.mChan11Raw = s.ReadUInt16();
+             this.mChan12Raw = s.ReadUInt16();
+             this.mChan13Raw = s.ReadUInt16();
+             this.mChan14Raw = s.ReadUInt16();
+             this.mChan15Raw = s.ReadUInt16();
+             this.mChan16Raw = s.ReadUInt16();
+             this.mChan17Raw = s.ReadUInt16();
+             this.mChan18Raw = s.ReadUInt16();
+             this.mChancount = s.ReadByte();
+             this.mRssi = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -11083,7 +11083,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRequestDataStream()
         {
-            mMessageId = 66;
+            _messageId = UasMessages.RequestDataStream;
             CrcExtra = 148;
         }
 
@@ -11098,11 +11098,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mReqMessageRate = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mReqStreamId = s.ReadByte();
-            this.mStartStop = s.ReadByte();
+             this.mReqMessageRate = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mReqStreamId = s.ReadByte();
+             this.mStartStop = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -11182,7 +11182,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasDataStream()
         {
-            mMessageId = 67;
+            _messageId = UasMessages.DataStream;
             CrcExtra = 21;
         }
 
@@ -11195,9 +11195,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mMessageRate = s.ReadUInt16();
-            this.mStreamId = s.ReadByte();
-            this.mOnOff = s.ReadByte();
+             this.mMessageRate = s.ReadUInt16();
+             this.mStreamId = s.ReadByte();
+             this.mOnOff = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -11290,7 +11290,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasManualControl()
         {
-            mMessageId = 69;
+            _messageId = UasMessages.ManualControl;
             CrcExtra = 243;
         }
 
@@ -11306,12 +11306,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mX = s.ReadInt16();
-            this.mY = s.ReadInt16();
-            this.mZ = s.ReadInt16();
-            this.mR = s.ReadInt16();
-            this.mButtons = s.ReadUInt16();
-            this.mTarget = s.ReadByte();
+             this.mX = s.ReadInt16();
+             this.mY = s.ReadInt16();
+             this.mZ = s.ReadInt16();
+             this.mR = s.ReadInt16();
+             this.mButtons = s.ReadUInt16();
+             this.mTarget = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -11537,8 +11537,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRcChannelsOverride()
         {
-            mMessageId = 70;
-            CrcExtra = 140;
+            _messageId = UasMessages.RcChannelsOverride;
+            CrcExtra = 124;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -11567,26 +11567,26 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mChan1Raw = s.ReadUInt16();
-            this.mChan2Raw = s.ReadUInt16();
-            this.mChan3Raw = s.ReadUInt16();
-            this.mChan4Raw = s.ReadUInt16();
-            this.mChan5Raw = s.ReadUInt16();
-            this.mChan6Raw = s.ReadUInt16();
-            this.mChan7Raw = s.ReadUInt16();
-            this.mChan8Raw = s.ReadUInt16();
-            this.mChan9Raw = s.ReadUInt16();
-            this.mChan10Raw = s.ReadUInt16();
-            this.mChan11Raw = s.ReadUInt16();
-            this.mChan12Raw = s.ReadUInt16();
-            this.mChan13Raw = s.ReadUInt16();
-            this.mChan14Raw = s.ReadUInt16();
-            this.mChan15Raw = s.ReadUInt16();
-            this.mChan16Raw = s.ReadUInt16();
-            this.mChan17Raw = s.ReadUInt16();
-            this.mChan18Raw = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mChan1Raw = s.ReadUInt16();
+             this.mChan2Raw = s.ReadUInt16();
+             this.mChan3Raw = s.ReadUInt16();
+             this.mChan4Raw = s.ReadUInt16();
+             this.mChan5Raw = s.ReadUInt16();
+             this.mChan6Raw = s.ReadUInt16();
+             this.mChan7Raw = s.ReadUInt16();
+             this.mChan8Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan9Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan10Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan11Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan12Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan13Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan14Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan15Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan16Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan17Raw = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChan18Raw = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -11870,8 +11870,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMissionItemInt()
         {
-            mMessageId = 73;
-            CrcExtra = 209;
+            _messageId = UasMessages.MissionItemInt;
+            CrcExtra = 38;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -11895,21 +11895,21 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mParam1 = s.ReadSingle();
-            this.mParam2 = s.ReadSingle();
-            this.mParam3 = s.ReadSingle();
-            this.mParam4 = s.ReadSingle();
-            this.mX = s.ReadInt32();
-            this.mY = s.ReadInt32();
-            this.mZ = s.ReadSingle();
-            this.mSeq = s.ReadUInt16();
-            this.mCommand = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mFrame = s.ReadByte();
-            this.mCurrent = s.ReadByte();
-            this.mAutocontinue = s.ReadByte();
-            this.mMissionType = s.ReadByte();
+             this.mParam1 = s.ReadSingle();
+             this.mParam2 = s.ReadSingle();
+             this.mParam3 = s.ReadSingle();
+             this.mParam4 = s.ReadSingle();
+             this.mX = s.ReadInt32();
+             this.mY = s.ReadInt32();
+             this.mZ = s.ReadSingle();
+             this.mSeq = s.ReadUInt16();
+             this.mCommand = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mFrame = s.ReadByte();
+             this.mCurrent = s.ReadByte();
+             this.mAutocontinue = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mMissionType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -12086,7 +12086,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasVfrHud()
         {
-            mMessageId = 74;
+            _messageId = UasMessages.VfrHud;
             CrcExtra = 20;
         }
 
@@ -12102,12 +12102,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mAirspeed = s.ReadSingle();
-            this.mGroundspeed = s.ReadSingle();
-            this.mAlt = s.ReadSingle();
-            this.mClimb = s.ReadSingle();
-            this.mHeading = s.ReadInt16();
-            this.mThrottle = s.ReadUInt16();
+             this.mAirspeed = s.ReadSingle();
+             this.mGroundspeed = s.ReadSingle();
+             this.mAlt = s.ReadSingle();
+             this.mClimb = s.ReadSingle();
+             this.mHeading = s.ReadInt16();
+             this.mThrottle = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -12277,7 +12277,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasCommandInt()
         {
-            mMessageId = 75;
+            _messageId = UasMessages.CommandInt;
             CrcExtra = 158;
         }
 
@@ -12300,19 +12300,19 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mParam1 = s.ReadSingle();
-            this.mParam2 = s.ReadSingle();
-            this.mParam3 = s.ReadSingle();
-            this.mParam4 = s.ReadSingle();
-            this.mX = s.ReadInt32();
-            this.mY = s.ReadInt32();
-            this.mZ = s.ReadSingle();
-            this.mCommand = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mFrame = s.ReadByte();
-            this.mCurrent = s.ReadByte();
-            this.mAutocontinue = s.ReadByte();
+             this.mParam1 = s.ReadSingle();
+             this.mParam2 = s.ReadSingle();
+             this.mParam3 = s.ReadSingle();
+             this.mParam4 = s.ReadSingle();
+             this.mX = s.ReadInt32();
+             this.mY = s.ReadInt32();
+             this.mZ = s.ReadSingle();
+             this.mCommand = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mFrame = s.ReadByte();
+             this.mCurrent = s.ReadByte();
+             this.mAutocontinue = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -12515,7 +12515,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasCommandLong()
         {
-            mMessageId = 76;
+            _messageId = UasMessages.CommandLong;
             CrcExtra = 152;
         }
 
@@ -12536,17 +12536,17 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mParam1 = s.ReadSingle();
-            this.mParam2 = s.ReadSingle();
-            this.mParam3 = s.ReadSingle();
-            this.mParam4 = s.ReadSingle();
-            this.mParam5 = s.ReadSingle();
-            this.mParam6 = s.ReadSingle();
-            this.mParam7 = s.ReadSingle();
-            this.mCommand = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mConfirmation = s.ReadByte();
+             this.mParam1 = s.ReadSingle();
+             this.mParam2 = s.ReadSingle();
+             this.mParam3 = s.ReadSingle();
+             this.mParam4 = s.ReadSingle();
+             this.mParam5 = s.ReadSingle();
+             this.mParam6 = s.ReadSingle();
+             this.mParam7 = s.ReadSingle();
+             this.mCommand = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mConfirmation = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -12695,8 +12695,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasCommandAck()
         {
-            mMessageId = 77;
-            CrcExtra = 205;
+            _messageId = UasMessages.CommandAck;
+            CrcExtra = 143;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -12711,12 +12711,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mResultParam2 = (MavCmd)s.ReadInt32();
-            this.mCommand = s.ReadUInt16();
-            this.mResult = s.ReadByte();
-            this.mProgress = (MavResult)s.ReadByte();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mResultParam2 = (MavCmd)s.ReadInt32();
+             this.mCommand = s.ReadUInt16();
+             this.mResult = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mProgress = (MavResult)s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mTargetSystem = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -12840,7 +12840,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasManualSetpoint()
         {
-            mMessageId = 81;
+            _messageId = UasMessages.ManualSetpoint;
             CrcExtra = 106;
         }
 
@@ -12857,13 +12857,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mThrust = s.ReadSingle();
-            this.mModeSwitch = s.ReadByte();
-            this.mManualOverrideSwitch = s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mThrust = s.ReadSingle();
+             this.mModeSwitch = s.ReadByte();
+             this.mManualOverrideSwitch = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -13008,7 +13008,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSetAttitudeTarget()
         {
-            mMessageId = 82;
+            _messageId = UasMessages.SetAttitudeTarget;
             CrcExtra = 49;
         }
 
@@ -13030,18 +13030,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mQ[0] = s.ReadSingle();
-            this.mQ[1] = s.ReadSingle();
-            this.mQ[2] = s.ReadSingle();
-            this.mQ[3] = s.ReadSingle();
-            this.mBodyRollRate = s.ReadSingle();
-            this.mBodyPitchRate = s.ReadSingle();
-            this.mBodyYawRate = s.ReadSingle();
-            this.mThrust = s.ReadSingle();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mTypeMask = s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+              this.mQ[0] = s.ReadSingle();
+              this.mQ[1] = s.ReadSingle();
+              this.mQ[2] = s.ReadSingle();
+              this.mQ[3] = s.ReadSingle();
+             this.mBodyRollRate = s.ReadSingle();
+             this.mBodyPitchRate = s.ReadSingle();
+             this.mBodyYawRate = s.ReadSingle();
+             this.mThrust = s.ReadSingle();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mTypeMask = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -13184,7 +13184,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAttitudeTarget()
         {
-            mMessageId = 83;
+            _messageId = UasMessages.AttitudeTarget;
             CrcExtra = 22;
         }
 
@@ -13204,16 +13204,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mQ[0] = s.ReadSingle();
-            this.mQ[1] = s.ReadSingle();
-            this.mQ[2] = s.ReadSingle();
-            this.mQ[3] = s.ReadSingle();
-            this.mBodyRollRate = s.ReadSingle();
-            this.mBodyPitchRate = s.ReadSingle();
-            this.mBodyYawRate = s.ReadSingle();
-            this.mThrust = s.ReadSingle();
-            this.mTypeMask = s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+              this.mQ[0] = s.ReadSingle();
+              this.mQ[1] = s.ReadSingle();
+              this.mQ[2] = s.ReadSingle();
+              this.mQ[3] = s.ReadSingle();
+             this.mBodyRollRate = s.ReadSingle();
+             this.mBodyPitchRate = s.ReadSingle();
+             this.mBodyYawRate = s.ReadSingle();
+             this.mThrust = s.ReadSingle();
+             this.mTypeMask = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -13414,7 +13414,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSetPositionTargetLocalNed()
         {
-            mMessageId = 84;
+            _messageId = UasMessages.SetPositionTargetLocalNed;
             CrcExtra = 143;
         }
 
@@ -13440,22 +13440,22 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mVx = s.ReadSingle();
-            this.mVy = s.ReadSingle();
-            this.mVz = s.ReadSingle();
-            this.mAfx = s.ReadSingle();
-            this.mAfy = s.ReadSingle();
-            this.mAfz = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mYawRate = s.ReadSingle();
-            this.mTypeMask = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mCoordinateFrame = (MavFrame)s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mVx = s.ReadSingle();
+             this.mVy = s.ReadSingle();
+             this.mVz = s.ReadSingle();
+             this.mAfx = s.ReadSingle();
+             this.mAfy = s.ReadSingle();
+             this.mAfz = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mYawRate = s.ReadSingle();
+             this.mTypeMask = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mCoordinateFrame = (MavFrame)s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -13704,7 +13704,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasPositionTargetLocalNed()
         {
-            mMessageId = 85;
+            _messageId = UasMessages.PositionTargetLocalNed;
             CrcExtra = 140;
         }
 
@@ -13728,20 +13728,20 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mVx = s.ReadSingle();
-            this.mVy = s.ReadSingle();
-            this.mVz = s.ReadSingle();
-            this.mAfx = s.ReadSingle();
-            this.mAfy = s.ReadSingle();
-            this.mAfz = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mYawRate = s.ReadSingle();
-            this.mTypeMask = s.ReadUInt16();
-            this.mCoordinateFrame = (MavFrame)s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mVx = s.ReadSingle();
+             this.mVy = s.ReadSingle();
+             this.mVz = s.ReadSingle();
+             this.mAfx = s.ReadSingle();
+             this.mAfy = s.ReadSingle();
+             this.mAfz = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mYawRate = s.ReadSingle();
+             this.mTypeMask = s.ReadUInt16();
+             this.mCoordinateFrame = (MavFrame)s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -13992,7 +13992,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSetPositionTargetGlobalInt()
         {
-            mMessageId = 86;
+            _messageId = UasMessages.SetPositionTargetGlobalInt;
             CrcExtra = 5;
         }
 
@@ -14018,22 +14018,22 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mLatInt = s.ReadInt32();
-            this.mLonInt = s.ReadInt32();
-            this.mAlt = s.ReadSingle();
-            this.mVx = s.ReadSingle();
-            this.mVy = s.ReadSingle();
-            this.mVz = s.ReadSingle();
-            this.mAfx = s.ReadSingle();
-            this.mAfy = s.ReadSingle();
-            this.mAfz = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mYawRate = s.ReadSingle();
-            this.mTypeMask = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mCoordinateFrame = (MavFrame)s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mLatInt = s.ReadInt32();
+             this.mLonInt = s.ReadInt32();
+             this.mAlt = s.ReadSingle();
+             this.mVx = s.ReadSingle();
+             this.mVy = s.ReadSingle();
+             this.mVz = s.ReadSingle();
+             this.mAfx = s.ReadSingle();
+             this.mAfy = s.ReadSingle();
+             this.mAfz = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mYawRate = s.ReadSingle();
+             this.mTypeMask = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mCoordinateFrame = (MavFrame)s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -14282,7 +14282,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasPositionTargetGlobalInt()
         {
-            mMessageId = 87;
+            _messageId = UasMessages.PositionTargetGlobalInt;
             CrcExtra = 150;
         }
 
@@ -14306,20 +14306,20 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mLatInt = s.ReadInt32();
-            this.mLonInt = s.ReadInt32();
-            this.mAlt = s.ReadSingle();
-            this.mVx = s.ReadSingle();
-            this.mVy = s.ReadSingle();
-            this.mVz = s.ReadSingle();
-            this.mAfx = s.ReadSingle();
-            this.mAfy = s.ReadSingle();
-            this.mAfz = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mYawRate = s.ReadSingle();
-            this.mTypeMask = s.ReadUInt16();
-            this.mCoordinateFrame = (MavFrame)s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mLatInt = s.ReadInt32();
+             this.mLonInt = s.ReadInt32();
+             this.mAlt = s.ReadSingle();
+             this.mVx = s.ReadSingle();
+             this.mVy = s.ReadSingle();
+             this.mVz = s.ReadSingle();
+             this.mAfx = s.ReadSingle();
+             this.mAfy = s.ReadSingle();
+             this.mAfz = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mYawRate = s.ReadSingle();
+             this.mTypeMask = s.ReadUInt16();
+             this.mCoordinateFrame = (MavFrame)s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -14498,7 +14498,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLocalPositionNedSystemGlobalOffset()
         {
-            mMessageId = 89;
+            _messageId = UasMessages.LocalPositionNedSystemGlobalOffset;
             CrcExtra = 231;
         }
 
@@ -14515,13 +14515,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -14722,7 +14722,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHilState()
         {
-            mMessageId = 90;
+            _messageId = UasMessages.HilState;
             CrcExtra = 183;
         }
 
@@ -14748,22 +14748,22 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mRollspeed = s.ReadSingle();
-            this.mPitchspeed = s.ReadSingle();
-            this.mYawspeed = s.ReadSingle();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadInt32();
-            this.mVx = s.ReadInt16();
-            this.mVy = s.ReadInt16();
-            this.mVz = s.ReadInt16();
-            this.mXacc = s.ReadInt16();
-            this.mYacc = s.ReadInt16();
-            this.mZacc = s.ReadInt16();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mRollspeed = s.ReadSingle();
+             this.mPitchspeed = s.ReadSingle();
+             this.mYawspeed = s.ReadSingle();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadInt32();
+             this.mVx = s.ReadInt16();
+             this.mVy = s.ReadInt16();
+             this.mVz = s.ReadInt16();
+             this.mXacc = s.ReadInt16();
+             this.mYacc = s.ReadInt16();
+             this.mZacc = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -14987,7 +14987,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHilControls()
         {
-            mMessageId = 91;
+            _messageId = UasMessages.HilControls;
             CrcExtra = 63;
         }
 
@@ -15008,17 +15008,17 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mRollAilerons = s.ReadSingle();
-            this.mPitchElevator = s.ReadSingle();
-            this.mYawRudder = s.ReadSingle();
-            this.mThrottle = s.ReadSingle();
-            this.mAux1 = s.ReadSingle();
-            this.mAux2 = s.ReadSingle();
-            this.mAux3 = s.ReadSingle();
-            this.mAux4 = s.ReadSingle();
-            this.mMode = s.ReadByte();
-            this.mNavMode = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mRollAilerons = s.ReadSingle();
+             this.mPitchElevator = s.ReadSingle();
+             this.mYawRudder = s.ReadSingle();
+             this.mThrottle = s.ReadSingle();
+             this.mAux1 = s.ReadSingle();
+             this.mAux2 = s.ReadSingle();
+             this.mAux3 = s.ReadSingle();
+             this.mAux4 = s.ReadSingle();
+             this.mMode = s.ReadByte();
+             this.mNavMode = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -15231,7 +15231,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHilRcInputsRaw()
         {
-            mMessageId = 92;
+            _messageId = UasMessages.HilRcInputsRaw;
             CrcExtra = 54;
         }
 
@@ -15255,20 +15255,20 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mChan1Raw = s.ReadUInt16();
-            this.mChan2Raw = s.ReadUInt16();
-            this.mChan3Raw = s.ReadUInt16();
-            this.mChan4Raw = s.ReadUInt16();
-            this.mChan5Raw = s.ReadUInt16();
-            this.mChan6Raw = s.ReadUInt16();
-            this.mChan7Raw = s.ReadUInt16();
-            this.mChan8Raw = s.ReadUInt16();
-            this.mChan9Raw = s.ReadUInt16();
-            this.mChan10Raw = s.ReadUInt16();
-            this.mChan11Raw = s.ReadUInt16();
-            this.mChan12Raw = s.ReadUInt16();
-            this.mRssi = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mChan1Raw = s.ReadUInt16();
+             this.mChan2Raw = s.ReadUInt16();
+             this.mChan3Raw = s.ReadUInt16();
+             this.mChan4Raw = s.ReadUInt16();
+             this.mChan5Raw = s.ReadUInt16();
+             this.mChan6Raw = s.ReadUInt16();
+             this.mChan7Raw = s.ReadUInt16();
+             this.mChan8Raw = s.ReadUInt16();
+             this.mChan9Raw = s.ReadUInt16();
+             this.mChan10Raw = s.ReadUInt16();
+             this.mChan11Raw = s.ReadUInt16();
+             this.mChan12Raw = s.ReadUInt16();
+             this.mRssi = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -15422,7 +15422,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHilActuatorControls()
         {
-            mMessageId = 93;
+            _messageId = UasMessages.HilActuatorControls;
             CrcExtra = 47;
         }
 
@@ -15451,25 +15451,25 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mFlags = s.ReadUInt64();
-            this.mControls[0] = s.ReadSingle();
-            this.mControls[1] = s.ReadSingle();
-            this.mControls[2] = s.ReadSingle();
-            this.mControls[3] = s.ReadSingle();
-            this.mControls[4] = s.ReadSingle();
-            this.mControls[5] = s.ReadSingle();
-            this.mControls[6] = s.ReadSingle();
-            this.mControls[7] = s.ReadSingle();
-            this.mControls[8] = s.ReadSingle();
-            this.mControls[9] = s.ReadSingle();
-            this.mControls[10] = s.ReadSingle();
-            this.mControls[11] = s.ReadSingle();
-            this.mControls[12] = s.ReadSingle();
-            this.mControls[13] = s.ReadSingle();
-            this.mControls[14] = s.ReadSingle();
-            this.mControls[15] = s.ReadSingle();
-            this.mMode = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mFlags = s.ReadUInt64();
+              this.mControls[0] = s.ReadSingle();
+              this.mControls[1] = s.ReadSingle();
+              this.mControls[2] = s.ReadSingle();
+              this.mControls[3] = s.ReadSingle();
+              this.mControls[4] = s.ReadSingle();
+              this.mControls[5] = s.ReadSingle();
+              this.mControls[6] = s.ReadSingle();
+              this.mControls[7] = s.ReadSingle();
+              this.mControls[8] = s.ReadSingle();
+              this.mControls[9] = s.ReadSingle();
+              this.mControls[10] = s.ReadSingle();
+              this.mControls[11] = s.ReadSingle();
+              this.mControls[12] = s.ReadSingle();
+              this.mControls[13] = s.ReadSingle();
+              this.mControls[14] = s.ReadSingle();
+              this.mControls[15] = s.ReadSingle();
+             this.mMode = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -15601,8 +15601,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasOpticalFlow()
         {
-            mMessageId = 100;
-            CrcExtra = 145;
+            _messageId = UasMessages.OpticalFlow;
+            CrcExtra = 175;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -15621,16 +15621,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mFlowCompMX = s.ReadSingle();
-            this.mFlowCompMY = s.ReadSingle();
-            this.mGroundDistance = s.ReadSingle();
-            this.mFlowRateX = s.ReadSingle();
-            this.mFlowRateY = s.ReadSingle();
-            this.mFlowX = s.ReadInt16();
-            this.mFlowY = s.ReadInt16();
-            this.mSensorId = s.ReadByte();
-            this.mQuality = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mFlowCompMX = s.ReadSingle();
+             this.mFlowCompMY = s.ReadSingle();
+             this.mGroundDistance = s.ReadSingle();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mFlowRateX = s.ReadSingle();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mFlowRateY = s.ReadSingle();
+             this.mFlowX = s.ReadInt16();
+             this.mFlowY = s.ReadInt16();
+             this.mSensorId = s.ReadByte();
+             this.mQuality = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -15785,8 +15785,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGlobalVisionPositionEstimate()
         {
-            mMessageId = 101;
-            CrcExtra = 10;
+            _messageId = UasMessages.GlobalVisionPositionEstimate;
+            CrcExtra = 102;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -15823,34 +15823,34 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mUsec = s.ReadUInt64();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mCovariance[0] = s.ReadSingle();
-            this.mCovariance[1] = s.ReadSingle();
-            this.mCovariance[2] = s.ReadSingle();
-            this.mCovariance[3] = s.ReadSingle();
-            this.mCovariance[4] = s.ReadSingle();
-            this.mCovariance[5] = s.ReadSingle();
-            this.mCovariance[6] = s.ReadSingle();
-            this.mCovariance[7] = s.ReadSingle();
-            this.mCovariance[8] = s.ReadSingle();
-            this.mCovariance[9] = s.ReadSingle();
-            this.mCovariance[10] = s.ReadSingle();
-            this.mCovariance[11] = s.ReadSingle();
-            this.mCovariance[12] = s.ReadSingle();
-            this.mCovariance[13] = s.ReadSingle();
-            this.mCovariance[14] = s.ReadSingle();
-            this.mCovariance[15] = s.ReadSingle();
-            this.mCovariance[16] = s.ReadSingle();
-            this.mCovariance[17] = s.ReadSingle();
-            this.mCovariance[18] = s.ReadSingle();
-            this.mCovariance[19] = s.ReadSingle();
-            this.mCovariance[20] = s.ReadSingle();
+             this.mUsec = s.ReadUInt64();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[0] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[1] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[2] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[3] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[4] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[5] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[6] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[7] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[8] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[9] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[10] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[11] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[12] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[13] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[14] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[15] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[16] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[17] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[18] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[19] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[20] = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -15991,8 +15991,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasVisionPositionEstimate()
         {
-            mMessageId = 102;
-            CrcExtra = 185;
+            _messageId = UasMessages.VisionPositionEstimate;
+            CrcExtra = 158;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -16029,34 +16029,34 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mUsec = s.ReadUInt64();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mCovariance[0] = s.ReadSingle();
-            this.mCovariance[1] = s.ReadSingle();
-            this.mCovariance[2] = s.ReadSingle();
-            this.mCovariance[3] = s.ReadSingle();
-            this.mCovariance[4] = s.ReadSingle();
-            this.mCovariance[5] = s.ReadSingle();
-            this.mCovariance[6] = s.ReadSingle();
-            this.mCovariance[7] = s.ReadSingle();
-            this.mCovariance[8] = s.ReadSingle();
-            this.mCovariance[9] = s.ReadSingle();
-            this.mCovariance[10] = s.ReadSingle();
-            this.mCovariance[11] = s.ReadSingle();
-            this.mCovariance[12] = s.ReadSingle();
-            this.mCovariance[13] = s.ReadSingle();
-            this.mCovariance[14] = s.ReadSingle();
-            this.mCovariance[15] = s.ReadSingle();
-            this.mCovariance[16] = s.ReadSingle();
-            this.mCovariance[17] = s.ReadSingle();
-            this.mCovariance[18] = s.ReadSingle();
-            this.mCovariance[19] = s.ReadSingle();
-            this.mCovariance[20] = s.ReadSingle();
+             this.mUsec = s.ReadUInt64();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[0] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[1] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[2] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[3] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[4] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[5] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[6] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[7] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[8] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[9] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[10] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[11] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[12] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[13] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[14] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[15] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[16] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[17] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[18] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[19] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[20] = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -16173,8 +16173,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasVisionSpeedEstimate()
         {
-            mMessageId = 103;
-            CrcExtra = 27;
+            _messageId = UasMessages.VisionSpeedEstimate;
+            CrcExtra = 208;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -16196,19 +16196,19 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mUsec = s.ReadUInt64();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mCovariance[0] = s.ReadSingle();
-            this.mCovariance[1] = s.ReadSingle();
-            this.mCovariance[2] = s.ReadSingle();
-            this.mCovariance[3] = s.ReadSingle();
-            this.mCovariance[4] = s.ReadSingle();
-            this.mCovariance[5] = s.ReadSingle();
-            this.mCovariance[6] = s.ReadSingle();
-            this.mCovariance[7] = s.ReadSingle();
-            this.mCovariance[8] = s.ReadSingle();
+             this.mUsec = s.ReadUInt64();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[0] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[1] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[2] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[3] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[4] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[5] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[6] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[7] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[8] = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -16328,8 +16328,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasViconPositionEstimate()
         {
-            mMessageId = 104;
-            CrcExtra = 176;
+            _messageId = UasMessages.ViconPositionEstimate;
+            CrcExtra = 56;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -16366,34 +16366,34 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mUsec = s.ReadUInt64();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mCovariance[0] = s.ReadSingle();
-            this.mCovariance[1] = s.ReadSingle();
-            this.mCovariance[2] = s.ReadSingle();
-            this.mCovariance[3] = s.ReadSingle();
-            this.mCovariance[4] = s.ReadSingle();
-            this.mCovariance[5] = s.ReadSingle();
-            this.mCovariance[6] = s.ReadSingle();
-            this.mCovariance[7] = s.ReadSingle();
-            this.mCovariance[8] = s.ReadSingle();
-            this.mCovariance[9] = s.ReadSingle();
-            this.mCovariance[10] = s.ReadSingle();
-            this.mCovariance[11] = s.ReadSingle();
-            this.mCovariance[12] = s.ReadSingle();
-            this.mCovariance[13] = s.ReadSingle();
-            this.mCovariance[14] = s.ReadSingle();
-            this.mCovariance[15] = s.ReadSingle();
-            this.mCovariance[16] = s.ReadSingle();
-            this.mCovariance[17] = s.ReadSingle();
-            this.mCovariance[18] = s.ReadSingle();
-            this.mCovariance[19] = s.ReadSingle();
-            this.mCovariance[20] = s.ReadSingle();
+             this.mUsec = s.ReadUInt64();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[0] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[1] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[2] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[3] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[4] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[5] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[6] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[7] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[8] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[9] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[10] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[11] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[12] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[13] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[14] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[15] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[16] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[17] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[18] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[19] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[20] = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -16593,7 +16593,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHighresImu()
         {
-            mMessageId = 105;
+            _messageId = UasMessages.HighresImu;
             CrcExtra = 93;
         }
 
@@ -16618,21 +16618,21 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mXacc = s.ReadSingle();
-            this.mYacc = s.ReadSingle();
-            this.mZacc = s.ReadSingle();
-            this.mXgyro = s.ReadSingle();
-            this.mYgyro = s.ReadSingle();
-            this.mZgyro = s.ReadSingle();
-            this.mXmag = s.ReadSingle();
-            this.mYmag = s.ReadSingle();
-            this.mZmag = s.ReadSingle();
-            this.mAbsPressure = s.ReadSingle();
-            this.mDiffPressure = s.ReadSingle();
-            this.mPressureAlt = s.ReadSingle();
-            this.mTemperature = s.ReadSingle();
-            this.mFieldsUpdated = s.ReadUInt16();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mXacc = s.ReadSingle();
+             this.mYacc = s.ReadSingle();
+             this.mZacc = s.ReadSingle();
+             this.mXgyro = s.ReadSingle();
+             this.mYgyro = s.ReadSingle();
+             this.mZgyro = s.ReadSingle();
+             this.mXmag = s.ReadSingle();
+             this.mYmag = s.ReadSingle();
+             this.mZmag = s.ReadSingle();
+             this.mAbsPressure = s.ReadSingle();
+             this.mDiffPressure = s.ReadSingle();
+             this.mPressureAlt = s.ReadSingle();
+             this.mTemperature = s.ReadSingle();
+             this.mFieldsUpdated = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -16857,7 +16857,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasOpticalFlowRad()
         {
-            mMessageId = 106;
+            _messageId = UasMessages.OpticalFlowRad;
             CrcExtra = 138;
         }
 
@@ -16879,18 +16879,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mIntegrationTimeUs = s.ReadUInt32();
-            this.mIntegratedX = s.ReadSingle();
-            this.mIntegratedY = s.ReadSingle();
-            this.mIntegratedXgyro = s.ReadSingle();
-            this.mIntegratedYgyro = s.ReadSingle();
-            this.mIntegratedZgyro = s.ReadSingle();
-            this.mTimeDeltaDistanceUs = s.ReadUInt32();
-            this.mDistance = s.ReadSingle();
-            this.mTemperature = s.ReadInt16();
-            this.mSensorId = s.ReadByte();
-            this.mQuality = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mIntegrationTimeUs = s.ReadUInt32();
+             this.mIntegratedX = s.ReadSingle();
+             this.mIntegratedY = s.ReadSingle();
+             this.mIntegratedXgyro = s.ReadSingle();
+             this.mIntegratedYgyro = s.ReadSingle();
+             this.mIntegratedZgyro = s.ReadSingle();
+             this.mTimeDeltaDistanceUs = s.ReadUInt32();
+             this.mDistance = s.ReadSingle();
+             this.mTemperature = s.ReadInt16();
+             this.mSensorId = s.ReadByte();
+             this.mQuality = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -17118,7 +17118,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHilSensor()
         {
-            mMessageId = 107;
+            _messageId = UasMessages.HilSensor;
             CrcExtra = 108;
         }
 
@@ -17143,21 +17143,21 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mXacc = s.ReadSingle();
-            this.mYacc = s.ReadSingle();
-            this.mZacc = s.ReadSingle();
-            this.mXgyro = s.ReadSingle();
-            this.mYgyro = s.ReadSingle();
-            this.mZgyro = s.ReadSingle();
-            this.mXmag = s.ReadSingle();
-            this.mYmag = s.ReadSingle();
-            this.mZmag = s.ReadSingle();
-            this.mAbsPressure = s.ReadSingle();
-            this.mDiffPressure = s.ReadSingle();
-            this.mPressureAlt = s.ReadSingle();
-            this.mTemperature = s.ReadSingle();
-            this.mFieldsUpdated = s.ReadUInt32();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mXacc = s.ReadSingle();
+             this.mYacc = s.ReadSingle();
+             this.mZacc = s.ReadSingle();
+             this.mXgyro = s.ReadSingle();
+             this.mYgyro = s.ReadSingle();
+             this.mZgyro = s.ReadSingle();
+             this.mXmag = s.ReadSingle();
+             this.mYmag = s.ReadSingle();
+             this.mZmag = s.ReadSingle();
+             this.mAbsPressure = s.ReadSingle();
+             this.mDiffPressure = s.ReadSingle();
+             this.mPressureAlt = s.ReadSingle();
+             this.mTemperature = s.ReadSingle();
+             this.mFieldsUpdated = s.ReadUInt32();
         }
 
         protected override void InitMetadata()
@@ -17454,7 +17454,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSimState()
         {
-            mMessageId = 108;
+            _messageId = UasMessages.SimState;
             CrcExtra = 32;
         }
 
@@ -17485,27 +17485,27 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mQ1 = s.ReadSingle();
-            this.mQ2 = s.ReadSingle();
-            this.mQ3 = s.ReadSingle();
-            this.mQ4 = s.ReadSingle();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mXacc = s.ReadSingle();
-            this.mYacc = s.ReadSingle();
-            this.mZacc = s.ReadSingle();
-            this.mXgyro = s.ReadSingle();
-            this.mYgyro = s.ReadSingle();
-            this.mZgyro = s.ReadSingle();
-            this.mLat = s.ReadSingle();
-            this.mLon = s.ReadSingle();
-            this.mAlt = s.ReadSingle();
-            this.mStdDevHorz = s.ReadSingle();
-            this.mStdDevVert = s.ReadSingle();
-            this.mVn = s.ReadSingle();
-            this.mVe = s.ReadSingle();
-            this.mVd = s.ReadSingle();
+             this.mQ1 = s.ReadSingle();
+             this.mQ2 = s.ReadSingle();
+             this.mQ3 = s.ReadSingle();
+             this.mQ4 = s.ReadSingle();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mXacc = s.ReadSingle();
+             this.mYacc = s.ReadSingle();
+             this.mZacc = s.ReadSingle();
+             this.mXgyro = s.ReadSingle();
+             this.mYgyro = s.ReadSingle();
+             this.mZgyro = s.ReadSingle();
+             this.mLat = s.ReadSingle();
+             this.mLon = s.ReadSingle();
+             this.mAlt = s.ReadSingle();
+             this.mStdDevHorz = s.ReadSingle();
+             this.mStdDevVert = s.ReadSingle();
+             this.mVn = s.ReadSingle();
+             this.mVe = s.ReadSingle();
+             this.mVd = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -17732,7 +17732,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRadioStatus()
         {
-            mMessageId = 109;
+            _messageId = UasMessages.RadioStatus;
             CrcExtra = 185;
         }
 
@@ -17749,13 +17749,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mRxerrors = s.ReadUInt16();
-            this.mFixed = s.ReadUInt16();
-            this.mRssi = s.ReadByte();
-            this.mRemrssi = s.ReadByte();
-            this.mTxbuf = s.ReadByte();
-            this.mNoise = s.ReadByte();
-            this.mRemnoise = s.ReadByte();
+             this.mRxerrors = s.ReadUInt16();
+             this.mFixed = s.ReadUInt16();
+             this.mRssi = s.ReadByte();
+             this.mRemrssi = s.ReadByte();
+             this.mTxbuf = s.ReadByte();
+             this.mNoise = s.ReadByte();
+             this.mRemnoise = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -17860,7 +17860,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasFileTransferProtocol()
         {
-            mMessageId = 110;
+            _messageId = UasMessages.FileTransferProtocol;
             CrcExtra = 84;
         }
 
@@ -18124,260 +18124,260 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetNetwork = s.ReadByte();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mPayload[0] = s.ReadByte();
-            this.mPayload[1] = s.ReadByte();
-            this.mPayload[2] = s.ReadByte();
-            this.mPayload[3] = s.ReadByte();
-            this.mPayload[4] = s.ReadByte();
-            this.mPayload[5] = s.ReadByte();
-            this.mPayload[6] = s.ReadByte();
-            this.mPayload[7] = s.ReadByte();
-            this.mPayload[8] = s.ReadByte();
-            this.mPayload[9] = s.ReadByte();
-            this.mPayload[10] = s.ReadByte();
-            this.mPayload[11] = s.ReadByte();
-            this.mPayload[12] = s.ReadByte();
-            this.mPayload[13] = s.ReadByte();
-            this.mPayload[14] = s.ReadByte();
-            this.mPayload[15] = s.ReadByte();
-            this.mPayload[16] = s.ReadByte();
-            this.mPayload[17] = s.ReadByte();
-            this.mPayload[18] = s.ReadByte();
-            this.mPayload[19] = s.ReadByte();
-            this.mPayload[20] = s.ReadByte();
-            this.mPayload[21] = s.ReadByte();
-            this.mPayload[22] = s.ReadByte();
-            this.mPayload[23] = s.ReadByte();
-            this.mPayload[24] = s.ReadByte();
-            this.mPayload[25] = s.ReadByte();
-            this.mPayload[26] = s.ReadByte();
-            this.mPayload[27] = s.ReadByte();
-            this.mPayload[28] = s.ReadByte();
-            this.mPayload[29] = s.ReadByte();
-            this.mPayload[30] = s.ReadByte();
-            this.mPayload[31] = s.ReadByte();
-            this.mPayload[32] = s.ReadByte();
-            this.mPayload[33] = s.ReadByte();
-            this.mPayload[34] = s.ReadByte();
-            this.mPayload[35] = s.ReadByte();
-            this.mPayload[36] = s.ReadByte();
-            this.mPayload[37] = s.ReadByte();
-            this.mPayload[38] = s.ReadByte();
-            this.mPayload[39] = s.ReadByte();
-            this.mPayload[40] = s.ReadByte();
-            this.mPayload[41] = s.ReadByte();
-            this.mPayload[42] = s.ReadByte();
-            this.mPayload[43] = s.ReadByte();
-            this.mPayload[44] = s.ReadByte();
-            this.mPayload[45] = s.ReadByte();
-            this.mPayload[46] = s.ReadByte();
-            this.mPayload[47] = s.ReadByte();
-            this.mPayload[48] = s.ReadByte();
-            this.mPayload[49] = s.ReadByte();
-            this.mPayload[50] = s.ReadByte();
-            this.mPayload[51] = s.ReadByte();
-            this.mPayload[52] = s.ReadByte();
-            this.mPayload[53] = s.ReadByte();
-            this.mPayload[54] = s.ReadByte();
-            this.mPayload[55] = s.ReadByte();
-            this.mPayload[56] = s.ReadByte();
-            this.mPayload[57] = s.ReadByte();
-            this.mPayload[58] = s.ReadByte();
-            this.mPayload[59] = s.ReadByte();
-            this.mPayload[60] = s.ReadByte();
-            this.mPayload[61] = s.ReadByte();
-            this.mPayload[62] = s.ReadByte();
-            this.mPayload[63] = s.ReadByte();
-            this.mPayload[64] = s.ReadByte();
-            this.mPayload[65] = s.ReadByte();
-            this.mPayload[66] = s.ReadByte();
-            this.mPayload[67] = s.ReadByte();
-            this.mPayload[68] = s.ReadByte();
-            this.mPayload[69] = s.ReadByte();
-            this.mPayload[70] = s.ReadByte();
-            this.mPayload[71] = s.ReadByte();
-            this.mPayload[72] = s.ReadByte();
-            this.mPayload[73] = s.ReadByte();
-            this.mPayload[74] = s.ReadByte();
-            this.mPayload[75] = s.ReadByte();
-            this.mPayload[76] = s.ReadByte();
-            this.mPayload[77] = s.ReadByte();
-            this.mPayload[78] = s.ReadByte();
-            this.mPayload[79] = s.ReadByte();
-            this.mPayload[80] = s.ReadByte();
-            this.mPayload[81] = s.ReadByte();
-            this.mPayload[82] = s.ReadByte();
-            this.mPayload[83] = s.ReadByte();
-            this.mPayload[84] = s.ReadByte();
-            this.mPayload[85] = s.ReadByte();
-            this.mPayload[86] = s.ReadByte();
-            this.mPayload[87] = s.ReadByte();
-            this.mPayload[88] = s.ReadByte();
-            this.mPayload[89] = s.ReadByte();
-            this.mPayload[90] = s.ReadByte();
-            this.mPayload[91] = s.ReadByte();
-            this.mPayload[92] = s.ReadByte();
-            this.mPayload[93] = s.ReadByte();
-            this.mPayload[94] = s.ReadByte();
-            this.mPayload[95] = s.ReadByte();
-            this.mPayload[96] = s.ReadByte();
-            this.mPayload[97] = s.ReadByte();
-            this.mPayload[98] = s.ReadByte();
-            this.mPayload[99] = s.ReadByte();
-            this.mPayload[100] = s.ReadByte();
-            this.mPayload[101] = s.ReadByte();
-            this.mPayload[102] = s.ReadByte();
-            this.mPayload[103] = s.ReadByte();
-            this.mPayload[104] = s.ReadByte();
-            this.mPayload[105] = s.ReadByte();
-            this.mPayload[106] = s.ReadByte();
-            this.mPayload[107] = s.ReadByte();
-            this.mPayload[108] = s.ReadByte();
-            this.mPayload[109] = s.ReadByte();
-            this.mPayload[110] = s.ReadByte();
-            this.mPayload[111] = s.ReadByte();
-            this.mPayload[112] = s.ReadByte();
-            this.mPayload[113] = s.ReadByte();
-            this.mPayload[114] = s.ReadByte();
-            this.mPayload[115] = s.ReadByte();
-            this.mPayload[116] = s.ReadByte();
-            this.mPayload[117] = s.ReadByte();
-            this.mPayload[118] = s.ReadByte();
-            this.mPayload[119] = s.ReadByte();
-            this.mPayload[120] = s.ReadByte();
-            this.mPayload[121] = s.ReadByte();
-            this.mPayload[122] = s.ReadByte();
-            this.mPayload[123] = s.ReadByte();
-            this.mPayload[124] = s.ReadByte();
-            this.mPayload[125] = s.ReadByte();
-            this.mPayload[126] = s.ReadByte();
-            this.mPayload[127] = s.ReadByte();
-            this.mPayload[128] = s.ReadByte();
-            this.mPayload[129] = s.ReadByte();
-            this.mPayload[130] = s.ReadByte();
-            this.mPayload[131] = s.ReadByte();
-            this.mPayload[132] = s.ReadByte();
-            this.mPayload[133] = s.ReadByte();
-            this.mPayload[134] = s.ReadByte();
-            this.mPayload[135] = s.ReadByte();
-            this.mPayload[136] = s.ReadByte();
-            this.mPayload[137] = s.ReadByte();
-            this.mPayload[138] = s.ReadByte();
-            this.mPayload[139] = s.ReadByte();
-            this.mPayload[140] = s.ReadByte();
-            this.mPayload[141] = s.ReadByte();
-            this.mPayload[142] = s.ReadByte();
-            this.mPayload[143] = s.ReadByte();
-            this.mPayload[144] = s.ReadByte();
-            this.mPayload[145] = s.ReadByte();
-            this.mPayload[146] = s.ReadByte();
-            this.mPayload[147] = s.ReadByte();
-            this.mPayload[148] = s.ReadByte();
-            this.mPayload[149] = s.ReadByte();
-            this.mPayload[150] = s.ReadByte();
-            this.mPayload[151] = s.ReadByte();
-            this.mPayload[152] = s.ReadByte();
-            this.mPayload[153] = s.ReadByte();
-            this.mPayload[154] = s.ReadByte();
-            this.mPayload[155] = s.ReadByte();
-            this.mPayload[156] = s.ReadByte();
-            this.mPayload[157] = s.ReadByte();
-            this.mPayload[158] = s.ReadByte();
-            this.mPayload[159] = s.ReadByte();
-            this.mPayload[160] = s.ReadByte();
-            this.mPayload[161] = s.ReadByte();
-            this.mPayload[162] = s.ReadByte();
-            this.mPayload[163] = s.ReadByte();
-            this.mPayload[164] = s.ReadByte();
-            this.mPayload[165] = s.ReadByte();
-            this.mPayload[166] = s.ReadByte();
-            this.mPayload[167] = s.ReadByte();
-            this.mPayload[168] = s.ReadByte();
-            this.mPayload[169] = s.ReadByte();
-            this.mPayload[170] = s.ReadByte();
-            this.mPayload[171] = s.ReadByte();
-            this.mPayload[172] = s.ReadByte();
-            this.mPayload[173] = s.ReadByte();
-            this.mPayload[174] = s.ReadByte();
-            this.mPayload[175] = s.ReadByte();
-            this.mPayload[176] = s.ReadByte();
-            this.mPayload[177] = s.ReadByte();
-            this.mPayload[178] = s.ReadByte();
-            this.mPayload[179] = s.ReadByte();
-            this.mPayload[180] = s.ReadByte();
-            this.mPayload[181] = s.ReadByte();
-            this.mPayload[182] = s.ReadByte();
-            this.mPayload[183] = s.ReadByte();
-            this.mPayload[184] = s.ReadByte();
-            this.mPayload[185] = s.ReadByte();
-            this.mPayload[186] = s.ReadByte();
-            this.mPayload[187] = s.ReadByte();
-            this.mPayload[188] = s.ReadByte();
-            this.mPayload[189] = s.ReadByte();
-            this.mPayload[190] = s.ReadByte();
-            this.mPayload[191] = s.ReadByte();
-            this.mPayload[192] = s.ReadByte();
-            this.mPayload[193] = s.ReadByte();
-            this.mPayload[194] = s.ReadByte();
-            this.mPayload[195] = s.ReadByte();
-            this.mPayload[196] = s.ReadByte();
-            this.mPayload[197] = s.ReadByte();
-            this.mPayload[198] = s.ReadByte();
-            this.mPayload[199] = s.ReadByte();
-            this.mPayload[200] = s.ReadByte();
-            this.mPayload[201] = s.ReadByte();
-            this.mPayload[202] = s.ReadByte();
-            this.mPayload[203] = s.ReadByte();
-            this.mPayload[204] = s.ReadByte();
-            this.mPayload[205] = s.ReadByte();
-            this.mPayload[206] = s.ReadByte();
-            this.mPayload[207] = s.ReadByte();
-            this.mPayload[208] = s.ReadByte();
-            this.mPayload[209] = s.ReadByte();
-            this.mPayload[210] = s.ReadByte();
-            this.mPayload[211] = s.ReadByte();
-            this.mPayload[212] = s.ReadByte();
-            this.mPayload[213] = s.ReadByte();
-            this.mPayload[214] = s.ReadByte();
-            this.mPayload[215] = s.ReadByte();
-            this.mPayload[216] = s.ReadByte();
-            this.mPayload[217] = s.ReadByte();
-            this.mPayload[218] = s.ReadByte();
-            this.mPayload[219] = s.ReadByte();
-            this.mPayload[220] = s.ReadByte();
-            this.mPayload[221] = s.ReadByte();
-            this.mPayload[222] = s.ReadByte();
-            this.mPayload[223] = s.ReadByte();
-            this.mPayload[224] = s.ReadByte();
-            this.mPayload[225] = s.ReadByte();
-            this.mPayload[226] = s.ReadByte();
-            this.mPayload[227] = s.ReadByte();
-            this.mPayload[228] = s.ReadByte();
-            this.mPayload[229] = s.ReadByte();
-            this.mPayload[230] = s.ReadByte();
-            this.mPayload[231] = s.ReadByte();
-            this.mPayload[232] = s.ReadByte();
-            this.mPayload[233] = s.ReadByte();
-            this.mPayload[234] = s.ReadByte();
-            this.mPayload[235] = s.ReadByte();
-            this.mPayload[236] = s.ReadByte();
-            this.mPayload[237] = s.ReadByte();
-            this.mPayload[238] = s.ReadByte();
-            this.mPayload[239] = s.ReadByte();
-            this.mPayload[240] = s.ReadByte();
-            this.mPayload[241] = s.ReadByte();
-            this.mPayload[242] = s.ReadByte();
-            this.mPayload[243] = s.ReadByte();
-            this.mPayload[244] = s.ReadByte();
-            this.mPayload[245] = s.ReadByte();
-            this.mPayload[246] = s.ReadByte();
-            this.mPayload[247] = s.ReadByte();
-            this.mPayload[248] = s.ReadByte();
-            this.mPayload[249] = s.ReadByte();
-            this.mPayload[250] = s.ReadByte();
+             this.mTargetNetwork = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+              this.mPayload[0] = s.ReadByte();
+              this.mPayload[1] = s.ReadByte();
+              this.mPayload[2] = s.ReadByte();
+              this.mPayload[3] = s.ReadByte();
+              this.mPayload[4] = s.ReadByte();
+              this.mPayload[5] = s.ReadByte();
+              this.mPayload[6] = s.ReadByte();
+              this.mPayload[7] = s.ReadByte();
+              this.mPayload[8] = s.ReadByte();
+              this.mPayload[9] = s.ReadByte();
+              this.mPayload[10] = s.ReadByte();
+              this.mPayload[11] = s.ReadByte();
+              this.mPayload[12] = s.ReadByte();
+              this.mPayload[13] = s.ReadByte();
+              this.mPayload[14] = s.ReadByte();
+              this.mPayload[15] = s.ReadByte();
+              this.mPayload[16] = s.ReadByte();
+              this.mPayload[17] = s.ReadByte();
+              this.mPayload[18] = s.ReadByte();
+              this.mPayload[19] = s.ReadByte();
+              this.mPayload[20] = s.ReadByte();
+              this.mPayload[21] = s.ReadByte();
+              this.mPayload[22] = s.ReadByte();
+              this.mPayload[23] = s.ReadByte();
+              this.mPayload[24] = s.ReadByte();
+              this.mPayload[25] = s.ReadByte();
+              this.mPayload[26] = s.ReadByte();
+              this.mPayload[27] = s.ReadByte();
+              this.mPayload[28] = s.ReadByte();
+              this.mPayload[29] = s.ReadByte();
+              this.mPayload[30] = s.ReadByte();
+              this.mPayload[31] = s.ReadByte();
+              this.mPayload[32] = s.ReadByte();
+              this.mPayload[33] = s.ReadByte();
+              this.mPayload[34] = s.ReadByte();
+              this.mPayload[35] = s.ReadByte();
+              this.mPayload[36] = s.ReadByte();
+              this.mPayload[37] = s.ReadByte();
+              this.mPayload[38] = s.ReadByte();
+              this.mPayload[39] = s.ReadByte();
+              this.mPayload[40] = s.ReadByte();
+              this.mPayload[41] = s.ReadByte();
+              this.mPayload[42] = s.ReadByte();
+              this.mPayload[43] = s.ReadByte();
+              this.mPayload[44] = s.ReadByte();
+              this.mPayload[45] = s.ReadByte();
+              this.mPayload[46] = s.ReadByte();
+              this.mPayload[47] = s.ReadByte();
+              this.mPayload[48] = s.ReadByte();
+              this.mPayload[49] = s.ReadByte();
+              this.mPayload[50] = s.ReadByte();
+              this.mPayload[51] = s.ReadByte();
+              this.mPayload[52] = s.ReadByte();
+              this.mPayload[53] = s.ReadByte();
+              this.mPayload[54] = s.ReadByte();
+              this.mPayload[55] = s.ReadByte();
+              this.mPayload[56] = s.ReadByte();
+              this.mPayload[57] = s.ReadByte();
+              this.mPayload[58] = s.ReadByte();
+              this.mPayload[59] = s.ReadByte();
+              this.mPayload[60] = s.ReadByte();
+              this.mPayload[61] = s.ReadByte();
+              this.mPayload[62] = s.ReadByte();
+              this.mPayload[63] = s.ReadByte();
+              this.mPayload[64] = s.ReadByte();
+              this.mPayload[65] = s.ReadByte();
+              this.mPayload[66] = s.ReadByte();
+              this.mPayload[67] = s.ReadByte();
+              this.mPayload[68] = s.ReadByte();
+              this.mPayload[69] = s.ReadByte();
+              this.mPayload[70] = s.ReadByte();
+              this.mPayload[71] = s.ReadByte();
+              this.mPayload[72] = s.ReadByte();
+              this.mPayload[73] = s.ReadByte();
+              this.mPayload[74] = s.ReadByte();
+              this.mPayload[75] = s.ReadByte();
+              this.mPayload[76] = s.ReadByte();
+              this.mPayload[77] = s.ReadByte();
+              this.mPayload[78] = s.ReadByte();
+              this.mPayload[79] = s.ReadByte();
+              this.mPayload[80] = s.ReadByte();
+              this.mPayload[81] = s.ReadByte();
+              this.mPayload[82] = s.ReadByte();
+              this.mPayload[83] = s.ReadByte();
+              this.mPayload[84] = s.ReadByte();
+              this.mPayload[85] = s.ReadByte();
+              this.mPayload[86] = s.ReadByte();
+              this.mPayload[87] = s.ReadByte();
+              this.mPayload[88] = s.ReadByte();
+              this.mPayload[89] = s.ReadByte();
+              this.mPayload[90] = s.ReadByte();
+              this.mPayload[91] = s.ReadByte();
+              this.mPayload[92] = s.ReadByte();
+              this.mPayload[93] = s.ReadByte();
+              this.mPayload[94] = s.ReadByte();
+              this.mPayload[95] = s.ReadByte();
+              this.mPayload[96] = s.ReadByte();
+              this.mPayload[97] = s.ReadByte();
+              this.mPayload[98] = s.ReadByte();
+              this.mPayload[99] = s.ReadByte();
+              this.mPayload[100] = s.ReadByte();
+              this.mPayload[101] = s.ReadByte();
+              this.mPayload[102] = s.ReadByte();
+              this.mPayload[103] = s.ReadByte();
+              this.mPayload[104] = s.ReadByte();
+              this.mPayload[105] = s.ReadByte();
+              this.mPayload[106] = s.ReadByte();
+              this.mPayload[107] = s.ReadByte();
+              this.mPayload[108] = s.ReadByte();
+              this.mPayload[109] = s.ReadByte();
+              this.mPayload[110] = s.ReadByte();
+              this.mPayload[111] = s.ReadByte();
+              this.mPayload[112] = s.ReadByte();
+              this.mPayload[113] = s.ReadByte();
+              this.mPayload[114] = s.ReadByte();
+              this.mPayload[115] = s.ReadByte();
+              this.mPayload[116] = s.ReadByte();
+              this.mPayload[117] = s.ReadByte();
+              this.mPayload[118] = s.ReadByte();
+              this.mPayload[119] = s.ReadByte();
+              this.mPayload[120] = s.ReadByte();
+              this.mPayload[121] = s.ReadByte();
+              this.mPayload[122] = s.ReadByte();
+              this.mPayload[123] = s.ReadByte();
+              this.mPayload[124] = s.ReadByte();
+              this.mPayload[125] = s.ReadByte();
+              this.mPayload[126] = s.ReadByte();
+              this.mPayload[127] = s.ReadByte();
+              this.mPayload[128] = s.ReadByte();
+              this.mPayload[129] = s.ReadByte();
+              this.mPayload[130] = s.ReadByte();
+              this.mPayload[131] = s.ReadByte();
+              this.mPayload[132] = s.ReadByte();
+              this.mPayload[133] = s.ReadByte();
+              this.mPayload[134] = s.ReadByte();
+              this.mPayload[135] = s.ReadByte();
+              this.mPayload[136] = s.ReadByte();
+              this.mPayload[137] = s.ReadByte();
+              this.mPayload[138] = s.ReadByte();
+              this.mPayload[139] = s.ReadByte();
+              this.mPayload[140] = s.ReadByte();
+              this.mPayload[141] = s.ReadByte();
+              this.mPayload[142] = s.ReadByte();
+              this.mPayload[143] = s.ReadByte();
+              this.mPayload[144] = s.ReadByte();
+              this.mPayload[145] = s.ReadByte();
+              this.mPayload[146] = s.ReadByte();
+              this.mPayload[147] = s.ReadByte();
+              this.mPayload[148] = s.ReadByte();
+              this.mPayload[149] = s.ReadByte();
+              this.mPayload[150] = s.ReadByte();
+              this.mPayload[151] = s.ReadByte();
+              this.mPayload[152] = s.ReadByte();
+              this.mPayload[153] = s.ReadByte();
+              this.mPayload[154] = s.ReadByte();
+              this.mPayload[155] = s.ReadByte();
+              this.mPayload[156] = s.ReadByte();
+              this.mPayload[157] = s.ReadByte();
+              this.mPayload[158] = s.ReadByte();
+              this.mPayload[159] = s.ReadByte();
+              this.mPayload[160] = s.ReadByte();
+              this.mPayload[161] = s.ReadByte();
+              this.mPayload[162] = s.ReadByte();
+              this.mPayload[163] = s.ReadByte();
+              this.mPayload[164] = s.ReadByte();
+              this.mPayload[165] = s.ReadByte();
+              this.mPayload[166] = s.ReadByte();
+              this.mPayload[167] = s.ReadByte();
+              this.mPayload[168] = s.ReadByte();
+              this.mPayload[169] = s.ReadByte();
+              this.mPayload[170] = s.ReadByte();
+              this.mPayload[171] = s.ReadByte();
+              this.mPayload[172] = s.ReadByte();
+              this.mPayload[173] = s.ReadByte();
+              this.mPayload[174] = s.ReadByte();
+              this.mPayload[175] = s.ReadByte();
+              this.mPayload[176] = s.ReadByte();
+              this.mPayload[177] = s.ReadByte();
+              this.mPayload[178] = s.ReadByte();
+              this.mPayload[179] = s.ReadByte();
+              this.mPayload[180] = s.ReadByte();
+              this.mPayload[181] = s.ReadByte();
+              this.mPayload[182] = s.ReadByte();
+              this.mPayload[183] = s.ReadByte();
+              this.mPayload[184] = s.ReadByte();
+              this.mPayload[185] = s.ReadByte();
+              this.mPayload[186] = s.ReadByte();
+              this.mPayload[187] = s.ReadByte();
+              this.mPayload[188] = s.ReadByte();
+              this.mPayload[189] = s.ReadByte();
+              this.mPayload[190] = s.ReadByte();
+              this.mPayload[191] = s.ReadByte();
+              this.mPayload[192] = s.ReadByte();
+              this.mPayload[193] = s.ReadByte();
+              this.mPayload[194] = s.ReadByte();
+              this.mPayload[195] = s.ReadByte();
+              this.mPayload[196] = s.ReadByte();
+              this.mPayload[197] = s.ReadByte();
+              this.mPayload[198] = s.ReadByte();
+              this.mPayload[199] = s.ReadByte();
+              this.mPayload[200] = s.ReadByte();
+              this.mPayload[201] = s.ReadByte();
+              this.mPayload[202] = s.ReadByte();
+              this.mPayload[203] = s.ReadByte();
+              this.mPayload[204] = s.ReadByte();
+              this.mPayload[205] = s.ReadByte();
+              this.mPayload[206] = s.ReadByte();
+              this.mPayload[207] = s.ReadByte();
+              this.mPayload[208] = s.ReadByte();
+              this.mPayload[209] = s.ReadByte();
+              this.mPayload[210] = s.ReadByte();
+              this.mPayload[211] = s.ReadByte();
+              this.mPayload[212] = s.ReadByte();
+              this.mPayload[213] = s.ReadByte();
+              this.mPayload[214] = s.ReadByte();
+              this.mPayload[215] = s.ReadByte();
+              this.mPayload[216] = s.ReadByte();
+              this.mPayload[217] = s.ReadByte();
+              this.mPayload[218] = s.ReadByte();
+              this.mPayload[219] = s.ReadByte();
+              this.mPayload[220] = s.ReadByte();
+              this.mPayload[221] = s.ReadByte();
+              this.mPayload[222] = s.ReadByte();
+              this.mPayload[223] = s.ReadByte();
+              this.mPayload[224] = s.ReadByte();
+              this.mPayload[225] = s.ReadByte();
+              this.mPayload[226] = s.ReadByte();
+              this.mPayload[227] = s.ReadByte();
+              this.mPayload[228] = s.ReadByte();
+              this.mPayload[229] = s.ReadByte();
+              this.mPayload[230] = s.ReadByte();
+              this.mPayload[231] = s.ReadByte();
+              this.mPayload[232] = s.ReadByte();
+              this.mPayload[233] = s.ReadByte();
+              this.mPayload[234] = s.ReadByte();
+              this.mPayload[235] = s.ReadByte();
+              this.mPayload[236] = s.ReadByte();
+              this.mPayload[237] = s.ReadByte();
+              this.mPayload[238] = s.ReadByte();
+              this.mPayload[239] = s.ReadByte();
+              this.mPayload[240] = s.ReadByte();
+              this.mPayload[241] = s.ReadByte();
+              this.mPayload[242] = s.ReadByte();
+              this.mPayload[243] = s.ReadByte();
+              this.mPayload[244] = s.ReadByte();
+              this.mPayload[245] = s.ReadByte();
+              this.mPayload[246] = s.ReadByte();
+              this.mPayload[247] = s.ReadByte();
+              this.mPayload[248] = s.ReadByte();
+              this.mPayload[249] = s.ReadByte();
+              this.mPayload[250] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -18445,7 +18445,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasTimesync()
         {
-            mMessageId = 111;
+            _messageId = UasMessages.Timesync;
             CrcExtra = 34;
         }
 
@@ -18457,8 +18457,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTc1 = s.ReadInt64();
-            this.mTs1 = s.ReadInt64();
+             this.mTc1 = s.ReadInt64();
+             this.mTs1 = s.ReadInt64();
         }
 
         protected override void InitMetadata()
@@ -18512,7 +18512,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasCameraTrigger()
         {
-            mMessageId = 112;
+            _messageId = UasMessages.CameraTrigger;
             CrcExtra = 174;
         }
 
@@ -18524,8 +18524,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mSeq = s.ReadUInt32();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mSeq = s.ReadUInt32();
         }
 
         protected override void InitMetadata()
@@ -18667,7 +18667,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHilGps()
         {
-            mMessageId = 113;
+            _messageId = UasMessages.HilGps;
             CrcExtra = 124;
         }
 
@@ -18690,19 +18690,19 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadInt32();
-            this.mEph = s.ReadUInt16();
-            this.mEpv = s.ReadUInt16();
-            this.mVel = s.ReadUInt16();
-            this.mVn = s.ReadInt16();
-            this.mVe = s.ReadInt16();
-            this.mVd = s.ReadInt16();
-            this.mCog = s.ReadUInt16();
-            this.mFixType = s.ReadByte();
-            this.mSatellitesVisible = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadInt32();
+             this.mEph = s.ReadUInt16();
+             this.mEpv = s.ReadUInt16();
+             this.mVel = s.ReadUInt16();
+             this.mVn = s.ReadInt16();
+             this.mVe = s.ReadInt16();
+             this.mVd = s.ReadInt16();
+             this.mCog = s.ReadUInt16();
+             this.mFixType = s.ReadByte();
+             this.mSatellitesVisible = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -18913,7 +18913,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHilOpticalFlow()
         {
-            mMessageId = 114;
+            _messageId = UasMessages.HilOpticalFlow;
             CrcExtra = 237;
         }
 
@@ -18935,18 +18935,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mIntegrationTimeUs = s.ReadUInt32();
-            this.mIntegratedX = s.ReadSingle();
-            this.mIntegratedY = s.ReadSingle();
-            this.mIntegratedXgyro = s.ReadSingle();
-            this.mIntegratedYgyro = s.ReadSingle();
-            this.mIntegratedZgyro = s.ReadSingle();
-            this.mTimeDeltaDistanceUs = s.ReadUInt32();
-            this.mDistance = s.ReadSingle();
-            this.mTemperature = s.ReadInt16();
-            this.mSensorId = s.ReadByte();
-            this.mQuality = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mIntegrationTimeUs = s.ReadUInt32();
+             this.mIntegratedX = s.ReadSingle();
+             this.mIntegratedY = s.ReadSingle();
+             this.mIntegratedXgyro = s.ReadSingle();
+             this.mIntegratedYgyro = s.ReadSingle();
+             this.mIntegratedZgyro = s.ReadSingle();
+             this.mTimeDeltaDistanceUs = s.ReadUInt32();
+             this.mDistance = s.ReadSingle();
+             this.mTemperature = s.ReadInt16();
+             this.mSensorId = s.ReadByte();
+             this.mQuality = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -19182,7 +19182,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHilStateQuaternion()
         {
-            mMessageId = 115;
+            _messageId = UasMessages.HilStateQuaternion;
             CrcExtra = 4;
         }
 
@@ -19211,25 +19211,25 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mAttitudeQuaternion[0] = s.ReadSingle();
-            this.mAttitudeQuaternion[1] = s.ReadSingle();
-            this.mAttitudeQuaternion[2] = s.ReadSingle();
-            this.mAttitudeQuaternion[3] = s.ReadSingle();
-            this.mRollspeed = s.ReadSingle();
-            this.mPitchspeed = s.ReadSingle();
-            this.mYawspeed = s.ReadSingle();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadInt32();
-            this.mVx = s.ReadInt16();
-            this.mVy = s.ReadInt16();
-            this.mVz = s.ReadInt16();
-            this.mIndAirspeed = s.ReadUInt16();
-            this.mTrueAirspeed = s.ReadUInt16();
-            this.mXacc = s.ReadInt16();
-            this.mYacc = s.ReadInt16();
-            this.mZacc = s.ReadInt16();
+             this.mTimeUsec = s.ReadUInt64();
+              this.mAttitudeQuaternion[0] = s.ReadSingle();
+              this.mAttitudeQuaternion[1] = s.ReadSingle();
+              this.mAttitudeQuaternion[2] = s.ReadSingle();
+              this.mAttitudeQuaternion[3] = s.ReadSingle();
+             this.mRollspeed = s.ReadSingle();
+             this.mPitchspeed = s.ReadSingle();
+             this.mYawspeed = s.ReadSingle();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadInt32();
+             this.mVx = s.ReadInt16();
+             this.mVy = s.ReadInt16();
+             this.mVz = s.ReadInt16();
+             this.mIndAirspeed = s.ReadUInt16();
+             this.mTrueAirspeed = s.ReadUInt16();
+             this.mXacc = s.ReadInt16();
+             this.mYacc = s.ReadInt16();
+             this.mZacc = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -19445,7 +19445,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasScaledImu2()
         {
-            mMessageId = 116;
+            _messageId = UasMessages.ScaledImu2;
             CrcExtra = 76;
         }
 
@@ -19465,16 +19465,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mXacc = s.ReadInt16();
-            this.mYacc = s.ReadInt16();
-            this.mZacc = s.ReadInt16();
-            this.mXgyro = s.ReadInt16();
-            this.mYgyro = s.ReadInt16();
-            this.mZgyro = s.ReadInt16();
-            this.mXmag = s.ReadInt16();
-            this.mYmag = s.ReadInt16();
-            this.mZmag = s.ReadInt16();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mXacc = s.ReadInt16();
+             this.mYacc = s.ReadInt16();
+             this.mZacc = s.ReadInt16();
+             this.mXgyro = s.ReadInt16();
+             this.mYgyro = s.ReadInt16();
+             this.mZgyro = s.ReadInt16();
+             this.mXmag = s.ReadInt16();
+             this.mYmag = s.ReadInt16();
+             this.mZmag = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -19600,7 +19600,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLogRequestList()
         {
-            mMessageId = 117;
+            _messageId = UasMessages.LogRequestList;
             CrcExtra = 128;
         }
 
@@ -19614,10 +19614,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mStart = s.ReadUInt16();
-            this.mEnd = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mStart = s.ReadUInt16();
+             this.mEnd = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -19709,7 +19709,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLogEntry()
         {
-            mMessageId = 118;
+            _messageId = UasMessages.LogEntry;
             CrcExtra = 56;
         }
 
@@ -19724,11 +19724,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUtc = s.ReadUInt32();
-            this.mSize = s.ReadUInt32();
-            this.mId = s.ReadUInt16();
-            this.mNumLogs = s.ReadUInt16();
-            this.mLastLogNum = s.ReadUInt16();
+             this.mTimeUtc = s.ReadUInt32();
+             this.mSize = s.ReadUInt32();
+             this.mId = s.ReadUInt16();
+             this.mNumLogs = s.ReadUInt16();
+             this.mLastLogNum = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -19827,7 +19827,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLogRequestData()
         {
-            mMessageId = 119;
+            _messageId = UasMessages.LogRequestData;
             CrcExtra = 116;
         }
 
@@ -19842,11 +19842,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mOfs = s.ReadUInt32();
-            this.mCount = s.ReadUInt32();
-            this.mId = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mOfs = s.ReadUInt32();
+             this.mCount = s.ReadUInt32();
+             this.mId = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -19937,7 +19937,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLogData()
         {
-            mMessageId = 120;
+            _messageId = UasMessages.LogData;
             CrcExtra = 134;
         }
 
@@ -20040,99 +20040,99 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mOfs = s.ReadUInt32();
-            this.mId = s.ReadUInt16();
-            this.mCount = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
-            this.mData[32] = s.ReadByte();
-            this.mData[33] = s.ReadByte();
-            this.mData[34] = s.ReadByte();
-            this.mData[35] = s.ReadByte();
-            this.mData[36] = s.ReadByte();
-            this.mData[37] = s.ReadByte();
-            this.mData[38] = s.ReadByte();
-            this.mData[39] = s.ReadByte();
-            this.mData[40] = s.ReadByte();
-            this.mData[41] = s.ReadByte();
-            this.mData[42] = s.ReadByte();
-            this.mData[43] = s.ReadByte();
-            this.mData[44] = s.ReadByte();
-            this.mData[45] = s.ReadByte();
-            this.mData[46] = s.ReadByte();
-            this.mData[47] = s.ReadByte();
-            this.mData[48] = s.ReadByte();
-            this.mData[49] = s.ReadByte();
-            this.mData[50] = s.ReadByte();
-            this.mData[51] = s.ReadByte();
-            this.mData[52] = s.ReadByte();
-            this.mData[53] = s.ReadByte();
-            this.mData[54] = s.ReadByte();
-            this.mData[55] = s.ReadByte();
-            this.mData[56] = s.ReadByte();
-            this.mData[57] = s.ReadByte();
-            this.mData[58] = s.ReadByte();
-            this.mData[59] = s.ReadByte();
-            this.mData[60] = s.ReadByte();
-            this.mData[61] = s.ReadByte();
-            this.mData[62] = s.ReadByte();
-            this.mData[63] = s.ReadByte();
-            this.mData[64] = s.ReadByte();
-            this.mData[65] = s.ReadByte();
-            this.mData[66] = s.ReadByte();
-            this.mData[67] = s.ReadByte();
-            this.mData[68] = s.ReadByte();
-            this.mData[69] = s.ReadByte();
-            this.mData[70] = s.ReadByte();
-            this.mData[71] = s.ReadByte();
-            this.mData[72] = s.ReadByte();
-            this.mData[73] = s.ReadByte();
-            this.mData[74] = s.ReadByte();
-            this.mData[75] = s.ReadByte();
-            this.mData[76] = s.ReadByte();
-            this.mData[77] = s.ReadByte();
-            this.mData[78] = s.ReadByte();
-            this.mData[79] = s.ReadByte();
-            this.mData[80] = s.ReadByte();
-            this.mData[81] = s.ReadByte();
-            this.mData[82] = s.ReadByte();
-            this.mData[83] = s.ReadByte();
-            this.mData[84] = s.ReadByte();
-            this.mData[85] = s.ReadByte();
-            this.mData[86] = s.ReadByte();
-            this.mData[87] = s.ReadByte();
-            this.mData[88] = s.ReadByte();
-            this.mData[89] = s.ReadByte();
+             this.mOfs = s.ReadUInt32();
+             this.mId = s.ReadUInt16();
+             this.mCount = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
+              this.mData[32] = s.ReadByte();
+              this.mData[33] = s.ReadByte();
+              this.mData[34] = s.ReadByte();
+              this.mData[35] = s.ReadByte();
+              this.mData[36] = s.ReadByte();
+              this.mData[37] = s.ReadByte();
+              this.mData[38] = s.ReadByte();
+              this.mData[39] = s.ReadByte();
+              this.mData[40] = s.ReadByte();
+              this.mData[41] = s.ReadByte();
+              this.mData[42] = s.ReadByte();
+              this.mData[43] = s.ReadByte();
+              this.mData[44] = s.ReadByte();
+              this.mData[45] = s.ReadByte();
+              this.mData[46] = s.ReadByte();
+              this.mData[47] = s.ReadByte();
+              this.mData[48] = s.ReadByte();
+              this.mData[49] = s.ReadByte();
+              this.mData[50] = s.ReadByte();
+              this.mData[51] = s.ReadByte();
+              this.mData[52] = s.ReadByte();
+              this.mData[53] = s.ReadByte();
+              this.mData[54] = s.ReadByte();
+              this.mData[55] = s.ReadByte();
+              this.mData[56] = s.ReadByte();
+              this.mData[57] = s.ReadByte();
+              this.mData[58] = s.ReadByte();
+              this.mData[59] = s.ReadByte();
+              this.mData[60] = s.ReadByte();
+              this.mData[61] = s.ReadByte();
+              this.mData[62] = s.ReadByte();
+              this.mData[63] = s.ReadByte();
+              this.mData[64] = s.ReadByte();
+              this.mData[65] = s.ReadByte();
+              this.mData[66] = s.ReadByte();
+              this.mData[67] = s.ReadByte();
+              this.mData[68] = s.ReadByte();
+              this.mData[69] = s.ReadByte();
+              this.mData[70] = s.ReadByte();
+              this.mData[71] = s.ReadByte();
+              this.mData[72] = s.ReadByte();
+              this.mData[73] = s.ReadByte();
+              this.mData[74] = s.ReadByte();
+              this.mData[75] = s.ReadByte();
+              this.mData[76] = s.ReadByte();
+              this.mData[77] = s.ReadByte();
+              this.mData[78] = s.ReadByte();
+              this.mData[79] = s.ReadByte();
+              this.mData[80] = s.ReadByte();
+              this.mData[81] = s.ReadByte();
+              this.mData[82] = s.ReadByte();
+              this.mData[83] = s.ReadByte();
+              this.mData[84] = s.ReadByte();
+              this.mData[85] = s.ReadByte();
+              this.mData[86] = s.ReadByte();
+              this.mData[87] = s.ReadByte();
+              this.mData[88] = s.ReadByte();
+              this.mData[89] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -20200,7 +20200,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLogErase()
         {
-            mMessageId = 121;
+            _messageId = UasMessages.LogErase;
             CrcExtra = 237;
         }
 
@@ -20212,8 +20212,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -20267,7 +20267,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLogRequestEnd()
         {
-            mMessageId = 122;
+            _messageId = UasMessages.LogRequestEnd;
             CrcExtra = 203;
         }
 
@@ -20279,8 +20279,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -20350,7 +20350,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGpsInjectData()
         {
-            mMessageId = 123;
+            _messageId = UasMessages.GpsInjectData;
             CrcExtra = 250;
         }
 
@@ -20473,119 +20473,119 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mLen = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
-            this.mData[32] = s.ReadByte();
-            this.mData[33] = s.ReadByte();
-            this.mData[34] = s.ReadByte();
-            this.mData[35] = s.ReadByte();
-            this.mData[36] = s.ReadByte();
-            this.mData[37] = s.ReadByte();
-            this.mData[38] = s.ReadByte();
-            this.mData[39] = s.ReadByte();
-            this.mData[40] = s.ReadByte();
-            this.mData[41] = s.ReadByte();
-            this.mData[42] = s.ReadByte();
-            this.mData[43] = s.ReadByte();
-            this.mData[44] = s.ReadByte();
-            this.mData[45] = s.ReadByte();
-            this.mData[46] = s.ReadByte();
-            this.mData[47] = s.ReadByte();
-            this.mData[48] = s.ReadByte();
-            this.mData[49] = s.ReadByte();
-            this.mData[50] = s.ReadByte();
-            this.mData[51] = s.ReadByte();
-            this.mData[52] = s.ReadByte();
-            this.mData[53] = s.ReadByte();
-            this.mData[54] = s.ReadByte();
-            this.mData[55] = s.ReadByte();
-            this.mData[56] = s.ReadByte();
-            this.mData[57] = s.ReadByte();
-            this.mData[58] = s.ReadByte();
-            this.mData[59] = s.ReadByte();
-            this.mData[60] = s.ReadByte();
-            this.mData[61] = s.ReadByte();
-            this.mData[62] = s.ReadByte();
-            this.mData[63] = s.ReadByte();
-            this.mData[64] = s.ReadByte();
-            this.mData[65] = s.ReadByte();
-            this.mData[66] = s.ReadByte();
-            this.mData[67] = s.ReadByte();
-            this.mData[68] = s.ReadByte();
-            this.mData[69] = s.ReadByte();
-            this.mData[70] = s.ReadByte();
-            this.mData[71] = s.ReadByte();
-            this.mData[72] = s.ReadByte();
-            this.mData[73] = s.ReadByte();
-            this.mData[74] = s.ReadByte();
-            this.mData[75] = s.ReadByte();
-            this.mData[76] = s.ReadByte();
-            this.mData[77] = s.ReadByte();
-            this.mData[78] = s.ReadByte();
-            this.mData[79] = s.ReadByte();
-            this.mData[80] = s.ReadByte();
-            this.mData[81] = s.ReadByte();
-            this.mData[82] = s.ReadByte();
-            this.mData[83] = s.ReadByte();
-            this.mData[84] = s.ReadByte();
-            this.mData[85] = s.ReadByte();
-            this.mData[86] = s.ReadByte();
-            this.mData[87] = s.ReadByte();
-            this.mData[88] = s.ReadByte();
-            this.mData[89] = s.ReadByte();
-            this.mData[90] = s.ReadByte();
-            this.mData[91] = s.ReadByte();
-            this.mData[92] = s.ReadByte();
-            this.mData[93] = s.ReadByte();
-            this.mData[94] = s.ReadByte();
-            this.mData[95] = s.ReadByte();
-            this.mData[96] = s.ReadByte();
-            this.mData[97] = s.ReadByte();
-            this.mData[98] = s.ReadByte();
-            this.mData[99] = s.ReadByte();
-            this.mData[100] = s.ReadByte();
-            this.mData[101] = s.ReadByte();
-            this.mData[102] = s.ReadByte();
-            this.mData[103] = s.ReadByte();
-            this.mData[104] = s.ReadByte();
-            this.mData[105] = s.ReadByte();
-            this.mData[106] = s.ReadByte();
-            this.mData[107] = s.ReadByte();
-            this.mData[108] = s.ReadByte();
-            this.mData[109] = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mLen = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
+              this.mData[32] = s.ReadByte();
+              this.mData[33] = s.ReadByte();
+              this.mData[34] = s.ReadByte();
+              this.mData[35] = s.ReadByte();
+              this.mData[36] = s.ReadByte();
+              this.mData[37] = s.ReadByte();
+              this.mData[38] = s.ReadByte();
+              this.mData[39] = s.ReadByte();
+              this.mData[40] = s.ReadByte();
+              this.mData[41] = s.ReadByte();
+              this.mData[42] = s.ReadByte();
+              this.mData[43] = s.ReadByte();
+              this.mData[44] = s.ReadByte();
+              this.mData[45] = s.ReadByte();
+              this.mData[46] = s.ReadByte();
+              this.mData[47] = s.ReadByte();
+              this.mData[48] = s.ReadByte();
+              this.mData[49] = s.ReadByte();
+              this.mData[50] = s.ReadByte();
+              this.mData[51] = s.ReadByte();
+              this.mData[52] = s.ReadByte();
+              this.mData[53] = s.ReadByte();
+              this.mData[54] = s.ReadByte();
+              this.mData[55] = s.ReadByte();
+              this.mData[56] = s.ReadByte();
+              this.mData[57] = s.ReadByte();
+              this.mData[58] = s.ReadByte();
+              this.mData[59] = s.ReadByte();
+              this.mData[60] = s.ReadByte();
+              this.mData[61] = s.ReadByte();
+              this.mData[62] = s.ReadByte();
+              this.mData[63] = s.ReadByte();
+              this.mData[64] = s.ReadByte();
+              this.mData[65] = s.ReadByte();
+              this.mData[66] = s.ReadByte();
+              this.mData[67] = s.ReadByte();
+              this.mData[68] = s.ReadByte();
+              this.mData[69] = s.ReadByte();
+              this.mData[70] = s.ReadByte();
+              this.mData[71] = s.ReadByte();
+              this.mData[72] = s.ReadByte();
+              this.mData[73] = s.ReadByte();
+              this.mData[74] = s.ReadByte();
+              this.mData[75] = s.ReadByte();
+              this.mData[76] = s.ReadByte();
+              this.mData[77] = s.ReadByte();
+              this.mData[78] = s.ReadByte();
+              this.mData[79] = s.ReadByte();
+              this.mData[80] = s.ReadByte();
+              this.mData[81] = s.ReadByte();
+              this.mData[82] = s.ReadByte();
+              this.mData[83] = s.ReadByte();
+              this.mData[84] = s.ReadByte();
+              this.mData[85] = s.ReadByte();
+              this.mData[86] = s.ReadByte();
+              this.mData[87] = s.ReadByte();
+              this.mData[88] = s.ReadByte();
+              this.mData[89] = s.ReadByte();
+              this.mData[90] = s.ReadByte();
+              this.mData[91] = s.ReadByte();
+              this.mData[92] = s.ReadByte();
+              this.mData[93] = s.ReadByte();
+              this.mData[94] = s.ReadByte();
+              this.mData[95] = s.ReadByte();
+              this.mData[96] = s.ReadByte();
+              this.mData[97] = s.ReadByte();
+              this.mData[98] = s.ReadByte();
+              this.mData[99] = s.ReadByte();
+              this.mData[100] = s.ReadByte();
+              this.mData[101] = s.ReadByte();
+              this.mData[102] = s.ReadByte();
+              this.mData[103] = s.ReadByte();
+              this.mData[104] = s.ReadByte();
+              this.mData[105] = s.ReadByte();
+              this.mData[106] = s.ReadByte();
+              this.mData[107] = s.ReadByte();
+              this.mData[108] = s.ReadByte();
+              this.mData[109] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -20733,7 +20733,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGps2Raw()
         {
-            mMessageId = 124;
+            _messageId = UasMessages.Gps2Raw;
             CrcExtra = 87;
         }
 
@@ -20755,18 +20755,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadInt32();
-            this.mDgpsAge = s.ReadUInt32();
-            this.mEph = s.ReadUInt16();
-            this.mEpv = s.ReadUInt16();
-            this.mVel = s.ReadUInt16();
-            this.mCog = s.ReadUInt16();
-            this.mFixType = s.ReadByte();
-            this.mSatellitesVisible = s.ReadByte();
-            this.mDgpsNumch = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadInt32();
+             this.mDgpsAge = s.ReadUInt32();
+             this.mEph = s.ReadUInt16();
+             this.mEpv = s.ReadUInt16();
+             this.mVel = s.ReadUInt16();
+             this.mCog = s.ReadUInt16();
+             this.mFixType = s.ReadByte();
+             this.mSatellitesVisible = s.ReadByte();
+             this.mDgpsNumch = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -20898,7 +20898,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasPowerStatus()
         {
-            mMessageId = 125;
+            _messageId = UasMessages.PowerStatus;
             CrcExtra = 203;
         }
 
@@ -20911,9 +20911,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mVcc = s.ReadUInt16();
-            this.mVservo = s.ReadUInt16();
-            this.mFlags = s.ReadUInt16();
+             this.mVcc = s.ReadUInt16();
+             this.mVservo = s.ReadUInt16();
+             this.mFlags = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -21006,7 +21006,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSerialControl()
         {
-            mMessageId = 126;
+            _messageId = UasMessages.SerialControl;
             CrcExtra = 220;
         }
 
@@ -21091,81 +21091,81 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mBaudrate = s.ReadUInt32();
-            this.mTimeout = s.ReadUInt16();
-            this.mDevice = s.ReadByte();
-            this.mFlags = s.ReadByte();
-            this.mCount = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
-            this.mData[32] = s.ReadByte();
-            this.mData[33] = s.ReadByte();
-            this.mData[34] = s.ReadByte();
-            this.mData[35] = s.ReadByte();
-            this.mData[36] = s.ReadByte();
-            this.mData[37] = s.ReadByte();
-            this.mData[38] = s.ReadByte();
-            this.mData[39] = s.ReadByte();
-            this.mData[40] = s.ReadByte();
-            this.mData[41] = s.ReadByte();
-            this.mData[42] = s.ReadByte();
-            this.mData[43] = s.ReadByte();
-            this.mData[44] = s.ReadByte();
-            this.mData[45] = s.ReadByte();
-            this.mData[46] = s.ReadByte();
-            this.mData[47] = s.ReadByte();
-            this.mData[48] = s.ReadByte();
-            this.mData[49] = s.ReadByte();
-            this.mData[50] = s.ReadByte();
-            this.mData[51] = s.ReadByte();
-            this.mData[52] = s.ReadByte();
-            this.mData[53] = s.ReadByte();
-            this.mData[54] = s.ReadByte();
-            this.mData[55] = s.ReadByte();
-            this.mData[56] = s.ReadByte();
-            this.mData[57] = s.ReadByte();
-            this.mData[58] = s.ReadByte();
-            this.mData[59] = s.ReadByte();
-            this.mData[60] = s.ReadByte();
-            this.mData[61] = s.ReadByte();
-            this.mData[62] = s.ReadByte();
-            this.mData[63] = s.ReadByte();
-            this.mData[64] = s.ReadByte();
-            this.mData[65] = s.ReadByte();
-            this.mData[66] = s.ReadByte();
-            this.mData[67] = s.ReadByte();
-            this.mData[68] = s.ReadByte();
-            this.mData[69] = s.ReadByte();
+             this.mBaudrate = s.ReadUInt32();
+             this.mTimeout = s.ReadUInt16();
+             this.mDevice = s.ReadByte();
+             this.mFlags = s.ReadByte();
+             this.mCount = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
+              this.mData[32] = s.ReadByte();
+              this.mData[33] = s.ReadByte();
+              this.mData[34] = s.ReadByte();
+              this.mData[35] = s.ReadByte();
+              this.mData[36] = s.ReadByte();
+              this.mData[37] = s.ReadByte();
+              this.mData[38] = s.ReadByte();
+              this.mData[39] = s.ReadByte();
+              this.mData[40] = s.ReadByte();
+              this.mData[41] = s.ReadByte();
+              this.mData[42] = s.ReadByte();
+              this.mData[43] = s.ReadByte();
+              this.mData[44] = s.ReadByte();
+              this.mData[45] = s.ReadByte();
+              this.mData[46] = s.ReadByte();
+              this.mData[47] = s.ReadByte();
+              this.mData[48] = s.ReadByte();
+              this.mData[49] = s.ReadByte();
+              this.mData[50] = s.ReadByte();
+              this.mData[51] = s.ReadByte();
+              this.mData[52] = s.ReadByte();
+              this.mData[53] = s.ReadByte();
+              this.mData[54] = s.ReadByte();
+              this.mData[55] = s.ReadByte();
+              this.mData[56] = s.ReadByte();
+              this.mData[57] = s.ReadByte();
+              this.mData[58] = s.ReadByte();
+              this.mData[59] = s.ReadByte();
+              this.mData[60] = s.ReadByte();
+              this.mData[61] = s.ReadByte();
+              this.mData[62] = s.ReadByte();
+              this.mData[63] = s.ReadByte();
+              this.mData[64] = s.ReadByte();
+              this.mData[65] = s.ReadByte();
+              this.mData[66] = s.ReadByte();
+              this.mData[67] = s.ReadByte();
+              this.mData[68] = s.ReadByte();
+              this.mData[69] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -21335,7 +21335,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGpsRtk()
         {
-            mMessageId = 127;
+            _messageId = UasMessages.GpsRtk;
             CrcExtra = 25;
         }
 
@@ -21358,19 +21358,19 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeLastBaselineMs = s.ReadUInt32();
-            this.mTow = s.ReadUInt32();
-            this.mBaselineAMm = s.ReadInt32();
-            this.mBaselineBMm = s.ReadInt32();
-            this.mBaselineCMm = s.ReadInt32();
-            this.mAccuracy = s.ReadUInt32();
-            this.mIarNumHypotheses = s.ReadInt32();
-            this.mWn = s.ReadUInt16();
-            this.mRtkReceiverId = s.ReadByte();
-            this.mRtkHealth = s.ReadByte();
-            this.mRtkRate = s.ReadByte();
-            this.mNsats = s.ReadByte();
-            this.mBaselineCoordsType = s.ReadByte();
+             this.mTimeLastBaselineMs = s.ReadUInt32();
+             this.mTow = s.ReadUInt32();
+             this.mBaselineAMm = s.ReadInt32();
+             this.mBaselineBMm = s.ReadInt32();
+             this.mBaselineCMm = s.ReadInt32();
+             this.mAccuracy = s.ReadUInt32();
+             this.mIarNumHypotheses = s.ReadInt32();
+             this.mWn = s.ReadUInt16();
+             this.mRtkReceiverId = s.ReadByte();
+             this.mRtkHealth = s.ReadByte();
+             this.mRtkRate = s.ReadByte();
+             this.mNsats = s.ReadByte();
+             this.mBaselineCoordsType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -21589,7 +21589,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGps2Rtk()
         {
-            mMessageId = 128;
+            _messageId = UasMessages.Gps2Rtk;
             CrcExtra = 226;
         }
 
@@ -21612,19 +21612,19 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeLastBaselineMs = s.ReadUInt32();
-            this.mTow = s.ReadUInt32();
-            this.mBaselineAMm = s.ReadInt32();
-            this.mBaselineBMm = s.ReadInt32();
-            this.mBaselineCMm = s.ReadInt32();
-            this.mAccuracy = s.ReadUInt32();
-            this.mIarNumHypotheses = s.ReadInt32();
-            this.mWn = s.ReadUInt16();
-            this.mRtkReceiverId = s.ReadByte();
-            this.mRtkHealth = s.ReadByte();
-            this.mRtkRate = s.ReadByte();
-            this.mNsats = s.ReadByte();
-            this.mBaselineCoordsType = s.ReadByte();
+             this.mTimeLastBaselineMs = s.ReadUInt32();
+             this.mTow = s.ReadUInt32();
+             this.mBaselineAMm = s.ReadInt32();
+             this.mBaselineBMm = s.ReadInt32();
+             this.mBaselineCMm = s.ReadInt32();
+             this.mAccuracy = s.ReadUInt32();
+             this.mIarNumHypotheses = s.ReadInt32();
+             this.mWn = s.ReadUInt16();
+             this.mRtkReceiverId = s.ReadByte();
+             this.mRtkHealth = s.ReadByte();
+             this.mRtkRate = s.ReadByte();
+             this.mNsats = s.ReadByte();
+             this.mBaselineCoordsType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -21819,7 +21819,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasScaledImu3()
         {
-            mMessageId = 129;
+            _messageId = UasMessages.ScaledImu3;
             CrcExtra = 46;
         }
 
@@ -21839,16 +21839,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mXacc = s.ReadInt16();
-            this.mYacc = s.ReadInt16();
-            this.mZacc = s.ReadInt16();
-            this.mXgyro = s.ReadInt16();
-            this.mYgyro = s.ReadInt16();
-            this.mZgyro = s.ReadInt16();
-            this.mXmag = s.ReadInt16();
-            this.mYmag = s.ReadInt16();
-            this.mZmag = s.ReadInt16();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mXacc = s.ReadInt16();
+             this.mYacc = s.ReadInt16();
+             this.mZacc = s.ReadInt16();
+             this.mXgyro = s.ReadInt16();
+             this.mYgyro = s.ReadInt16();
+             this.mZgyro = s.ReadInt16();
+             this.mXmag = s.ReadInt16();
+             this.mYmag = s.ReadInt16();
+             this.mZmag = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -21995,7 +21995,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasDataTransmissionHandshake()
         {
-            mMessageId = 130;
+            _messageId = UasMessages.DataTransmissionHandshake;
             CrcExtra = 29;
         }
 
@@ -22012,13 +22012,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSize = s.ReadUInt32();
-            this.mWidth = s.ReadUInt16();
-            this.mHeight = s.ReadUInt16();
-            this.mPackets = s.ReadUInt16();
-            this.mType = s.ReadByte();
-            this.mPayload = s.ReadByte();
-            this.mJpgQuality = s.ReadByte();
+             this.mSize = s.ReadUInt32();
+             this.mWidth = s.ReadUInt16();
+             this.mHeight = s.ReadUInt16();
+             this.mPackets = s.ReadUInt16();
+             this.mType = s.ReadByte();
+             this.mPayload = s.ReadByte();
+             this.mJpgQuality = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -22104,7 +22104,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasEncapsulatedData()
         {
-            mMessageId = 131;
+            _messageId = UasMessages.EncapsulatedData;
             CrcExtra = 223;
         }
 
@@ -22368,260 +22368,260 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeqnr = s.ReadUInt16();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
-            this.mData[32] = s.ReadByte();
-            this.mData[33] = s.ReadByte();
-            this.mData[34] = s.ReadByte();
-            this.mData[35] = s.ReadByte();
-            this.mData[36] = s.ReadByte();
-            this.mData[37] = s.ReadByte();
-            this.mData[38] = s.ReadByte();
-            this.mData[39] = s.ReadByte();
-            this.mData[40] = s.ReadByte();
-            this.mData[41] = s.ReadByte();
-            this.mData[42] = s.ReadByte();
-            this.mData[43] = s.ReadByte();
-            this.mData[44] = s.ReadByte();
-            this.mData[45] = s.ReadByte();
-            this.mData[46] = s.ReadByte();
-            this.mData[47] = s.ReadByte();
-            this.mData[48] = s.ReadByte();
-            this.mData[49] = s.ReadByte();
-            this.mData[50] = s.ReadByte();
-            this.mData[51] = s.ReadByte();
-            this.mData[52] = s.ReadByte();
-            this.mData[53] = s.ReadByte();
-            this.mData[54] = s.ReadByte();
-            this.mData[55] = s.ReadByte();
-            this.mData[56] = s.ReadByte();
-            this.mData[57] = s.ReadByte();
-            this.mData[58] = s.ReadByte();
-            this.mData[59] = s.ReadByte();
-            this.mData[60] = s.ReadByte();
-            this.mData[61] = s.ReadByte();
-            this.mData[62] = s.ReadByte();
-            this.mData[63] = s.ReadByte();
-            this.mData[64] = s.ReadByte();
-            this.mData[65] = s.ReadByte();
-            this.mData[66] = s.ReadByte();
-            this.mData[67] = s.ReadByte();
-            this.mData[68] = s.ReadByte();
-            this.mData[69] = s.ReadByte();
-            this.mData[70] = s.ReadByte();
-            this.mData[71] = s.ReadByte();
-            this.mData[72] = s.ReadByte();
-            this.mData[73] = s.ReadByte();
-            this.mData[74] = s.ReadByte();
-            this.mData[75] = s.ReadByte();
-            this.mData[76] = s.ReadByte();
-            this.mData[77] = s.ReadByte();
-            this.mData[78] = s.ReadByte();
-            this.mData[79] = s.ReadByte();
-            this.mData[80] = s.ReadByte();
-            this.mData[81] = s.ReadByte();
-            this.mData[82] = s.ReadByte();
-            this.mData[83] = s.ReadByte();
-            this.mData[84] = s.ReadByte();
-            this.mData[85] = s.ReadByte();
-            this.mData[86] = s.ReadByte();
-            this.mData[87] = s.ReadByte();
-            this.mData[88] = s.ReadByte();
-            this.mData[89] = s.ReadByte();
-            this.mData[90] = s.ReadByte();
-            this.mData[91] = s.ReadByte();
-            this.mData[92] = s.ReadByte();
-            this.mData[93] = s.ReadByte();
-            this.mData[94] = s.ReadByte();
-            this.mData[95] = s.ReadByte();
-            this.mData[96] = s.ReadByte();
-            this.mData[97] = s.ReadByte();
-            this.mData[98] = s.ReadByte();
-            this.mData[99] = s.ReadByte();
-            this.mData[100] = s.ReadByte();
-            this.mData[101] = s.ReadByte();
-            this.mData[102] = s.ReadByte();
-            this.mData[103] = s.ReadByte();
-            this.mData[104] = s.ReadByte();
-            this.mData[105] = s.ReadByte();
-            this.mData[106] = s.ReadByte();
-            this.mData[107] = s.ReadByte();
-            this.mData[108] = s.ReadByte();
-            this.mData[109] = s.ReadByte();
-            this.mData[110] = s.ReadByte();
-            this.mData[111] = s.ReadByte();
-            this.mData[112] = s.ReadByte();
-            this.mData[113] = s.ReadByte();
-            this.mData[114] = s.ReadByte();
-            this.mData[115] = s.ReadByte();
-            this.mData[116] = s.ReadByte();
-            this.mData[117] = s.ReadByte();
-            this.mData[118] = s.ReadByte();
-            this.mData[119] = s.ReadByte();
-            this.mData[120] = s.ReadByte();
-            this.mData[121] = s.ReadByte();
-            this.mData[122] = s.ReadByte();
-            this.mData[123] = s.ReadByte();
-            this.mData[124] = s.ReadByte();
-            this.mData[125] = s.ReadByte();
-            this.mData[126] = s.ReadByte();
-            this.mData[127] = s.ReadByte();
-            this.mData[128] = s.ReadByte();
-            this.mData[129] = s.ReadByte();
-            this.mData[130] = s.ReadByte();
-            this.mData[131] = s.ReadByte();
-            this.mData[132] = s.ReadByte();
-            this.mData[133] = s.ReadByte();
-            this.mData[134] = s.ReadByte();
-            this.mData[135] = s.ReadByte();
-            this.mData[136] = s.ReadByte();
-            this.mData[137] = s.ReadByte();
-            this.mData[138] = s.ReadByte();
-            this.mData[139] = s.ReadByte();
-            this.mData[140] = s.ReadByte();
-            this.mData[141] = s.ReadByte();
-            this.mData[142] = s.ReadByte();
-            this.mData[143] = s.ReadByte();
-            this.mData[144] = s.ReadByte();
-            this.mData[145] = s.ReadByte();
-            this.mData[146] = s.ReadByte();
-            this.mData[147] = s.ReadByte();
-            this.mData[148] = s.ReadByte();
-            this.mData[149] = s.ReadByte();
-            this.mData[150] = s.ReadByte();
-            this.mData[151] = s.ReadByte();
-            this.mData[152] = s.ReadByte();
-            this.mData[153] = s.ReadByte();
-            this.mData[154] = s.ReadByte();
-            this.mData[155] = s.ReadByte();
-            this.mData[156] = s.ReadByte();
-            this.mData[157] = s.ReadByte();
-            this.mData[158] = s.ReadByte();
-            this.mData[159] = s.ReadByte();
-            this.mData[160] = s.ReadByte();
-            this.mData[161] = s.ReadByte();
-            this.mData[162] = s.ReadByte();
-            this.mData[163] = s.ReadByte();
-            this.mData[164] = s.ReadByte();
-            this.mData[165] = s.ReadByte();
-            this.mData[166] = s.ReadByte();
-            this.mData[167] = s.ReadByte();
-            this.mData[168] = s.ReadByte();
-            this.mData[169] = s.ReadByte();
-            this.mData[170] = s.ReadByte();
-            this.mData[171] = s.ReadByte();
-            this.mData[172] = s.ReadByte();
-            this.mData[173] = s.ReadByte();
-            this.mData[174] = s.ReadByte();
-            this.mData[175] = s.ReadByte();
-            this.mData[176] = s.ReadByte();
-            this.mData[177] = s.ReadByte();
-            this.mData[178] = s.ReadByte();
-            this.mData[179] = s.ReadByte();
-            this.mData[180] = s.ReadByte();
-            this.mData[181] = s.ReadByte();
-            this.mData[182] = s.ReadByte();
-            this.mData[183] = s.ReadByte();
-            this.mData[184] = s.ReadByte();
-            this.mData[185] = s.ReadByte();
-            this.mData[186] = s.ReadByte();
-            this.mData[187] = s.ReadByte();
-            this.mData[188] = s.ReadByte();
-            this.mData[189] = s.ReadByte();
-            this.mData[190] = s.ReadByte();
-            this.mData[191] = s.ReadByte();
-            this.mData[192] = s.ReadByte();
-            this.mData[193] = s.ReadByte();
-            this.mData[194] = s.ReadByte();
-            this.mData[195] = s.ReadByte();
-            this.mData[196] = s.ReadByte();
-            this.mData[197] = s.ReadByte();
-            this.mData[198] = s.ReadByte();
-            this.mData[199] = s.ReadByte();
-            this.mData[200] = s.ReadByte();
-            this.mData[201] = s.ReadByte();
-            this.mData[202] = s.ReadByte();
-            this.mData[203] = s.ReadByte();
-            this.mData[204] = s.ReadByte();
-            this.mData[205] = s.ReadByte();
-            this.mData[206] = s.ReadByte();
-            this.mData[207] = s.ReadByte();
-            this.mData[208] = s.ReadByte();
-            this.mData[209] = s.ReadByte();
-            this.mData[210] = s.ReadByte();
-            this.mData[211] = s.ReadByte();
-            this.mData[212] = s.ReadByte();
-            this.mData[213] = s.ReadByte();
-            this.mData[214] = s.ReadByte();
-            this.mData[215] = s.ReadByte();
-            this.mData[216] = s.ReadByte();
-            this.mData[217] = s.ReadByte();
-            this.mData[218] = s.ReadByte();
-            this.mData[219] = s.ReadByte();
-            this.mData[220] = s.ReadByte();
-            this.mData[221] = s.ReadByte();
-            this.mData[222] = s.ReadByte();
-            this.mData[223] = s.ReadByte();
-            this.mData[224] = s.ReadByte();
-            this.mData[225] = s.ReadByte();
-            this.mData[226] = s.ReadByte();
-            this.mData[227] = s.ReadByte();
-            this.mData[228] = s.ReadByte();
-            this.mData[229] = s.ReadByte();
-            this.mData[230] = s.ReadByte();
-            this.mData[231] = s.ReadByte();
-            this.mData[232] = s.ReadByte();
-            this.mData[233] = s.ReadByte();
-            this.mData[234] = s.ReadByte();
-            this.mData[235] = s.ReadByte();
-            this.mData[236] = s.ReadByte();
-            this.mData[237] = s.ReadByte();
-            this.mData[238] = s.ReadByte();
-            this.mData[239] = s.ReadByte();
-            this.mData[240] = s.ReadByte();
-            this.mData[241] = s.ReadByte();
-            this.mData[242] = s.ReadByte();
-            this.mData[243] = s.ReadByte();
-            this.mData[244] = s.ReadByte();
-            this.mData[245] = s.ReadByte();
-            this.mData[246] = s.ReadByte();
-            this.mData[247] = s.ReadByte();
-            this.mData[248] = s.ReadByte();
-            this.mData[249] = s.ReadByte();
-            this.mData[250] = s.ReadByte();
-            this.mData[251] = s.ReadByte();
-            this.mData[252] = s.ReadByte();
+             this.mSeqnr = s.ReadUInt16();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
+              this.mData[32] = s.ReadByte();
+              this.mData[33] = s.ReadByte();
+              this.mData[34] = s.ReadByte();
+              this.mData[35] = s.ReadByte();
+              this.mData[36] = s.ReadByte();
+              this.mData[37] = s.ReadByte();
+              this.mData[38] = s.ReadByte();
+              this.mData[39] = s.ReadByte();
+              this.mData[40] = s.ReadByte();
+              this.mData[41] = s.ReadByte();
+              this.mData[42] = s.ReadByte();
+              this.mData[43] = s.ReadByte();
+              this.mData[44] = s.ReadByte();
+              this.mData[45] = s.ReadByte();
+              this.mData[46] = s.ReadByte();
+              this.mData[47] = s.ReadByte();
+              this.mData[48] = s.ReadByte();
+              this.mData[49] = s.ReadByte();
+              this.mData[50] = s.ReadByte();
+              this.mData[51] = s.ReadByte();
+              this.mData[52] = s.ReadByte();
+              this.mData[53] = s.ReadByte();
+              this.mData[54] = s.ReadByte();
+              this.mData[55] = s.ReadByte();
+              this.mData[56] = s.ReadByte();
+              this.mData[57] = s.ReadByte();
+              this.mData[58] = s.ReadByte();
+              this.mData[59] = s.ReadByte();
+              this.mData[60] = s.ReadByte();
+              this.mData[61] = s.ReadByte();
+              this.mData[62] = s.ReadByte();
+              this.mData[63] = s.ReadByte();
+              this.mData[64] = s.ReadByte();
+              this.mData[65] = s.ReadByte();
+              this.mData[66] = s.ReadByte();
+              this.mData[67] = s.ReadByte();
+              this.mData[68] = s.ReadByte();
+              this.mData[69] = s.ReadByte();
+              this.mData[70] = s.ReadByte();
+              this.mData[71] = s.ReadByte();
+              this.mData[72] = s.ReadByte();
+              this.mData[73] = s.ReadByte();
+              this.mData[74] = s.ReadByte();
+              this.mData[75] = s.ReadByte();
+              this.mData[76] = s.ReadByte();
+              this.mData[77] = s.ReadByte();
+              this.mData[78] = s.ReadByte();
+              this.mData[79] = s.ReadByte();
+              this.mData[80] = s.ReadByte();
+              this.mData[81] = s.ReadByte();
+              this.mData[82] = s.ReadByte();
+              this.mData[83] = s.ReadByte();
+              this.mData[84] = s.ReadByte();
+              this.mData[85] = s.ReadByte();
+              this.mData[86] = s.ReadByte();
+              this.mData[87] = s.ReadByte();
+              this.mData[88] = s.ReadByte();
+              this.mData[89] = s.ReadByte();
+              this.mData[90] = s.ReadByte();
+              this.mData[91] = s.ReadByte();
+              this.mData[92] = s.ReadByte();
+              this.mData[93] = s.ReadByte();
+              this.mData[94] = s.ReadByte();
+              this.mData[95] = s.ReadByte();
+              this.mData[96] = s.ReadByte();
+              this.mData[97] = s.ReadByte();
+              this.mData[98] = s.ReadByte();
+              this.mData[99] = s.ReadByte();
+              this.mData[100] = s.ReadByte();
+              this.mData[101] = s.ReadByte();
+              this.mData[102] = s.ReadByte();
+              this.mData[103] = s.ReadByte();
+              this.mData[104] = s.ReadByte();
+              this.mData[105] = s.ReadByte();
+              this.mData[106] = s.ReadByte();
+              this.mData[107] = s.ReadByte();
+              this.mData[108] = s.ReadByte();
+              this.mData[109] = s.ReadByte();
+              this.mData[110] = s.ReadByte();
+              this.mData[111] = s.ReadByte();
+              this.mData[112] = s.ReadByte();
+              this.mData[113] = s.ReadByte();
+              this.mData[114] = s.ReadByte();
+              this.mData[115] = s.ReadByte();
+              this.mData[116] = s.ReadByte();
+              this.mData[117] = s.ReadByte();
+              this.mData[118] = s.ReadByte();
+              this.mData[119] = s.ReadByte();
+              this.mData[120] = s.ReadByte();
+              this.mData[121] = s.ReadByte();
+              this.mData[122] = s.ReadByte();
+              this.mData[123] = s.ReadByte();
+              this.mData[124] = s.ReadByte();
+              this.mData[125] = s.ReadByte();
+              this.mData[126] = s.ReadByte();
+              this.mData[127] = s.ReadByte();
+              this.mData[128] = s.ReadByte();
+              this.mData[129] = s.ReadByte();
+              this.mData[130] = s.ReadByte();
+              this.mData[131] = s.ReadByte();
+              this.mData[132] = s.ReadByte();
+              this.mData[133] = s.ReadByte();
+              this.mData[134] = s.ReadByte();
+              this.mData[135] = s.ReadByte();
+              this.mData[136] = s.ReadByte();
+              this.mData[137] = s.ReadByte();
+              this.mData[138] = s.ReadByte();
+              this.mData[139] = s.ReadByte();
+              this.mData[140] = s.ReadByte();
+              this.mData[141] = s.ReadByte();
+              this.mData[142] = s.ReadByte();
+              this.mData[143] = s.ReadByte();
+              this.mData[144] = s.ReadByte();
+              this.mData[145] = s.ReadByte();
+              this.mData[146] = s.ReadByte();
+              this.mData[147] = s.ReadByte();
+              this.mData[148] = s.ReadByte();
+              this.mData[149] = s.ReadByte();
+              this.mData[150] = s.ReadByte();
+              this.mData[151] = s.ReadByte();
+              this.mData[152] = s.ReadByte();
+              this.mData[153] = s.ReadByte();
+              this.mData[154] = s.ReadByte();
+              this.mData[155] = s.ReadByte();
+              this.mData[156] = s.ReadByte();
+              this.mData[157] = s.ReadByte();
+              this.mData[158] = s.ReadByte();
+              this.mData[159] = s.ReadByte();
+              this.mData[160] = s.ReadByte();
+              this.mData[161] = s.ReadByte();
+              this.mData[162] = s.ReadByte();
+              this.mData[163] = s.ReadByte();
+              this.mData[164] = s.ReadByte();
+              this.mData[165] = s.ReadByte();
+              this.mData[166] = s.ReadByte();
+              this.mData[167] = s.ReadByte();
+              this.mData[168] = s.ReadByte();
+              this.mData[169] = s.ReadByte();
+              this.mData[170] = s.ReadByte();
+              this.mData[171] = s.ReadByte();
+              this.mData[172] = s.ReadByte();
+              this.mData[173] = s.ReadByte();
+              this.mData[174] = s.ReadByte();
+              this.mData[175] = s.ReadByte();
+              this.mData[176] = s.ReadByte();
+              this.mData[177] = s.ReadByte();
+              this.mData[178] = s.ReadByte();
+              this.mData[179] = s.ReadByte();
+              this.mData[180] = s.ReadByte();
+              this.mData[181] = s.ReadByte();
+              this.mData[182] = s.ReadByte();
+              this.mData[183] = s.ReadByte();
+              this.mData[184] = s.ReadByte();
+              this.mData[185] = s.ReadByte();
+              this.mData[186] = s.ReadByte();
+              this.mData[187] = s.ReadByte();
+              this.mData[188] = s.ReadByte();
+              this.mData[189] = s.ReadByte();
+              this.mData[190] = s.ReadByte();
+              this.mData[191] = s.ReadByte();
+              this.mData[192] = s.ReadByte();
+              this.mData[193] = s.ReadByte();
+              this.mData[194] = s.ReadByte();
+              this.mData[195] = s.ReadByte();
+              this.mData[196] = s.ReadByte();
+              this.mData[197] = s.ReadByte();
+              this.mData[198] = s.ReadByte();
+              this.mData[199] = s.ReadByte();
+              this.mData[200] = s.ReadByte();
+              this.mData[201] = s.ReadByte();
+              this.mData[202] = s.ReadByte();
+              this.mData[203] = s.ReadByte();
+              this.mData[204] = s.ReadByte();
+              this.mData[205] = s.ReadByte();
+              this.mData[206] = s.ReadByte();
+              this.mData[207] = s.ReadByte();
+              this.mData[208] = s.ReadByte();
+              this.mData[209] = s.ReadByte();
+              this.mData[210] = s.ReadByte();
+              this.mData[211] = s.ReadByte();
+              this.mData[212] = s.ReadByte();
+              this.mData[213] = s.ReadByte();
+              this.mData[214] = s.ReadByte();
+              this.mData[215] = s.ReadByte();
+              this.mData[216] = s.ReadByte();
+              this.mData[217] = s.ReadByte();
+              this.mData[218] = s.ReadByte();
+              this.mData[219] = s.ReadByte();
+              this.mData[220] = s.ReadByte();
+              this.mData[221] = s.ReadByte();
+              this.mData[222] = s.ReadByte();
+              this.mData[223] = s.ReadByte();
+              this.mData[224] = s.ReadByte();
+              this.mData[225] = s.ReadByte();
+              this.mData[226] = s.ReadByte();
+              this.mData[227] = s.ReadByte();
+              this.mData[228] = s.ReadByte();
+              this.mData[229] = s.ReadByte();
+              this.mData[230] = s.ReadByte();
+              this.mData[231] = s.ReadByte();
+              this.mData[232] = s.ReadByte();
+              this.mData[233] = s.ReadByte();
+              this.mData[234] = s.ReadByte();
+              this.mData[235] = s.ReadByte();
+              this.mData[236] = s.ReadByte();
+              this.mData[237] = s.ReadByte();
+              this.mData[238] = s.ReadByte();
+              this.mData[239] = s.ReadByte();
+              this.mData[240] = s.ReadByte();
+              this.mData[241] = s.ReadByte();
+              this.mData[242] = s.ReadByte();
+              this.mData[243] = s.ReadByte();
+              this.mData[244] = s.ReadByte();
+              this.mData[245] = s.ReadByte();
+              this.mData[246] = s.ReadByte();
+              this.mData[247] = s.ReadByte();
+              this.mData[248] = s.ReadByte();
+              this.mData[249] = s.ReadByte();
+              this.mData[250] = s.ReadByte();
+              this.mData[251] = s.ReadByte();
+              this.mData[252] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -22720,7 +22720,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasDistanceSensor()
         {
-            mMessageId = 132;
+            _messageId = UasMessages.DistanceSensor;
             CrcExtra = 85;
         }
 
@@ -22738,14 +22738,14 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mMinDistance = s.ReadUInt16();
-            this.mMaxDistance = s.ReadUInt16();
-            this.mCurrentDistance = s.ReadUInt16();
-            this.mType = s.ReadByte();
-            this.mId = s.ReadByte();
-            this.mOrientation = s.ReadByte();
-            this.mCovariance = s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mMinDistance = s.ReadUInt16();
+             this.mMaxDistance = s.ReadUInt16();
+             this.mCurrentDistance = s.ReadUInt16();
+             this.mType = s.ReadByte();
+             this.mId = s.ReadByte();
+             this.mOrientation = s.ReadByte();
+             this.mCovariance = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -22857,7 +22857,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasTerrainRequest()
         {
-            mMessageId = 133;
+            _messageId = UasMessages.TerrainRequest;
             CrcExtra = 6;
         }
 
@@ -22871,10 +22871,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mMask = s.ReadUInt64();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mGridSpacing = s.ReadUInt16();
+             this.mMask = s.ReadUInt64();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mGridSpacing = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -22966,7 +22966,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasTerrainData()
         {
-            mMessageId = 134;
+            _messageId = UasMessages.TerrainData;
             CrcExtra = 229;
         }
 
@@ -22996,26 +22996,26 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mGridSpacing = s.ReadUInt16();
-            this.mData[0] = s.ReadInt16();
-            this.mData[1] = s.ReadInt16();
-            this.mData[2] = s.ReadInt16();
-            this.mData[3] = s.ReadInt16();
-            this.mData[4] = s.ReadInt16();
-            this.mData[5] = s.ReadInt16();
-            this.mData[6] = s.ReadInt16();
-            this.mData[7] = s.ReadInt16();
-            this.mData[8] = s.ReadInt16();
-            this.mData[9] = s.ReadInt16();
-            this.mData[10] = s.ReadInt16();
-            this.mData[11] = s.ReadInt16();
-            this.mData[12] = s.ReadInt16();
-            this.mData[13] = s.ReadInt16();
-            this.mData[14] = s.ReadInt16();
-            this.mData[15] = s.ReadInt16();
-            this.mGridbit = s.ReadByte();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mGridSpacing = s.ReadUInt16();
+              this.mData[0] = s.ReadInt16();
+              this.mData[1] = s.ReadInt16();
+              this.mData[2] = s.ReadInt16();
+              this.mData[3] = s.ReadInt16();
+              this.mData[4] = s.ReadInt16();
+              this.mData[5] = s.ReadInt16();
+              this.mData[6] = s.ReadInt16();
+              this.mData[7] = s.ReadInt16();
+              this.mData[8] = s.ReadInt16();
+              this.mData[9] = s.ReadInt16();
+              this.mData[10] = s.ReadInt16();
+              this.mData[11] = s.ReadInt16();
+              this.mData[12] = s.ReadInt16();
+              this.mData[13] = s.ReadInt16();
+              this.mData[14] = s.ReadInt16();
+              this.mData[15] = s.ReadInt16();
+             this.mGridbit = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -23090,7 +23090,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasTerrainCheck()
         {
-            mMessageId = 135;
+            _messageId = UasMessages.TerrainCheck;
             CrcExtra = 203;
         }
 
@@ -23102,8 +23102,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
         }
 
         protected override void InitMetadata()
@@ -23197,7 +23197,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasTerrainReport()
         {
-            mMessageId = 136;
+            _messageId = UasMessages.TerrainReport;
             CrcExtra = 1;
         }
 
@@ -23214,13 +23214,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mTerrainHeight = s.ReadSingle();
-            this.mCurrentHeight = s.ReadSingle();
-            this.mSpacing = s.ReadUInt16();
-            this.mPending = s.ReadUInt16();
-            this.mLoaded = s.ReadUInt16();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mTerrainHeight = s.ReadSingle();
+             this.mCurrentHeight = s.ReadSingle();
+             this.mSpacing = s.ReadUInt16();
+             this.mPending = s.ReadUInt16();
+             this.mLoaded = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -23325,7 +23325,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasScaledPressure2()
         {
-            mMessageId = 137;
+            _messageId = UasMessages.ScaledPressure2;
             CrcExtra = 195;
         }
 
@@ -23339,10 +23339,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mPressAbs = s.ReadSingle();
-            this.mPressDiff = s.ReadSingle();
-            this.mTemperature = s.ReadInt16();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mPressAbs = s.ReadSingle();
+             this.mPressDiff = s.ReadSingle();
+             this.mTemperature = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -23442,8 +23442,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAttPosMocap()
         {
-            mMessageId = 138;
-            CrcExtra = 19;
+            _messageId = UasMessages.AttPosMocap;
+            CrcExtra = 109;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -23481,35 +23481,35 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mQ[0] = s.ReadSingle();
-            this.mQ[1] = s.ReadSingle();
-            this.mQ[2] = s.ReadSingle();
-            this.mQ[3] = s.ReadSingle();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mCovariance[0] = s.ReadSingle();
-            this.mCovariance[1] = s.ReadSingle();
-            this.mCovariance[2] = s.ReadSingle();
-            this.mCovariance[3] = s.ReadSingle();
-            this.mCovariance[4] = s.ReadSingle();
-            this.mCovariance[5] = s.ReadSingle();
-            this.mCovariance[6] = s.ReadSingle();
-            this.mCovariance[7] = s.ReadSingle();
-            this.mCovariance[8] = s.ReadSingle();
-            this.mCovariance[9] = s.ReadSingle();
-            this.mCovariance[10] = s.ReadSingle();
-            this.mCovariance[11] = s.ReadSingle();
-            this.mCovariance[12] = s.ReadSingle();
-            this.mCovariance[13] = s.ReadSingle();
-            this.mCovariance[14] = s.ReadSingle();
-            this.mCovariance[15] = s.ReadSingle();
-            this.mCovariance[16] = s.ReadSingle();
-            this.mCovariance[17] = s.ReadSingle();
-            this.mCovariance[18] = s.ReadSingle();
-            this.mCovariance[19] = s.ReadSingle();
-            this.mCovariance[20] = s.ReadSingle();
+             this.mTimeUsec = s.ReadUInt64();
+              this.mQ[0] = s.ReadSingle();
+              this.mQ[1] = s.ReadSingle();
+              this.mQ[2] = s.ReadSingle();
+              this.mQ[3] = s.ReadSingle();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[0] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[1] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[2] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[3] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[4] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[5] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[6] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[7] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[8] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[9] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[10] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[11] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[12] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[13] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[14] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[15] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[16] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[17] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[18] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[19] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mCovariance[20] = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -23615,7 +23615,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSetActuatorControlTarget()
         {
-            mMessageId = 139;
+            _messageId = UasMessages.SetActuatorControlTarget;
             CrcExtra = 168;
         }
 
@@ -23637,18 +23637,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mControls[0] = s.ReadSingle();
-            this.mControls[1] = s.ReadSingle();
-            this.mControls[2] = s.ReadSingle();
-            this.mControls[3] = s.ReadSingle();
-            this.mControls[4] = s.ReadSingle();
-            this.mControls[5] = s.ReadSingle();
-            this.mControls[6] = s.ReadSingle();
-            this.mControls[7] = s.ReadSingle();
-            this.mGroupMlx = s.ReadByte();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+              this.mControls[0] = s.ReadSingle();
+              this.mControls[1] = s.ReadSingle();
+              this.mControls[2] = s.ReadSingle();
+              this.mControls[3] = s.ReadSingle();
+              this.mControls[4] = s.ReadSingle();
+              this.mControls[5] = s.ReadSingle();
+              this.mControls[6] = s.ReadSingle();
+              this.mControls[7] = s.ReadSingle();
+             this.mGroupMlx = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -23731,7 +23731,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasActuatorControlTarget()
         {
-            mMessageId = 140;
+            _messageId = UasMessages.ActuatorControlTarget;
             CrcExtra = 181;
         }
 
@@ -23751,16 +23751,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mControls[0] = s.ReadSingle();
-            this.mControls[1] = s.ReadSingle();
-            this.mControls[2] = s.ReadSingle();
-            this.mControls[3] = s.ReadSingle();
-            this.mControls[4] = s.ReadSingle();
-            this.mControls[5] = s.ReadSingle();
-            this.mControls[6] = s.ReadSingle();
-            this.mControls[7] = s.ReadSingle();
-            this.mGroupMlx = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+              this.mControls[0] = s.ReadSingle();
+              this.mControls[1] = s.ReadSingle();
+              this.mControls[2] = s.ReadSingle();
+              this.mControls[3] = s.ReadSingle();
+              this.mControls[4] = s.ReadSingle();
+              this.mControls[5] = s.ReadSingle();
+              this.mControls[6] = s.ReadSingle();
+              this.mControls[7] = s.ReadSingle();
+             this.mGroupMlx = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -23861,7 +23861,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAltitude()
         {
-            mMessageId = 141;
+            _messageId = UasMessages.Altitude;
             CrcExtra = 47;
         }
 
@@ -23878,13 +23878,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mAltitudeMonotonic = s.ReadSingle();
-            this.mAltitudeAmsl = s.ReadSingle();
-            this.mAltitudeLocal = s.ReadSingle();
-            this.mAltitudeRelative = s.ReadSingle();
-            this.mAltitudeTerrain = s.ReadSingle();
-            this.mBottomClearance = s.ReadSingle();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mAltitudeMonotonic = s.ReadSingle();
+             this.mAltitudeAmsl = s.ReadSingle();
+             this.mAltitudeLocal = s.ReadSingle();
+             this.mAltitudeRelative = s.ReadSingle();
+             this.mAltitudeTerrain = s.ReadSingle();
+             this.mBottomClearance = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -23997,7 +23997,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasResourceRequest()
         {
-            mMessageId = 142;
+            _messageId = UasMessages.ResourceRequest;
             CrcExtra = 72;
         }
 
@@ -24250,249 +24250,249 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mRequestId = s.ReadByte();
-            this.mUriType = s.ReadByte();
-            this.mUri[0] = s.ReadByte();
-            this.mUri[1] = s.ReadByte();
-            this.mUri[2] = s.ReadByte();
-            this.mUri[3] = s.ReadByte();
-            this.mUri[4] = s.ReadByte();
-            this.mUri[5] = s.ReadByte();
-            this.mUri[6] = s.ReadByte();
-            this.mUri[7] = s.ReadByte();
-            this.mUri[8] = s.ReadByte();
-            this.mUri[9] = s.ReadByte();
-            this.mUri[10] = s.ReadByte();
-            this.mUri[11] = s.ReadByte();
-            this.mUri[12] = s.ReadByte();
-            this.mUri[13] = s.ReadByte();
-            this.mUri[14] = s.ReadByte();
-            this.mUri[15] = s.ReadByte();
-            this.mUri[16] = s.ReadByte();
-            this.mUri[17] = s.ReadByte();
-            this.mUri[18] = s.ReadByte();
-            this.mUri[19] = s.ReadByte();
-            this.mUri[20] = s.ReadByte();
-            this.mUri[21] = s.ReadByte();
-            this.mUri[22] = s.ReadByte();
-            this.mUri[23] = s.ReadByte();
-            this.mUri[24] = s.ReadByte();
-            this.mUri[25] = s.ReadByte();
-            this.mUri[26] = s.ReadByte();
-            this.mUri[27] = s.ReadByte();
-            this.mUri[28] = s.ReadByte();
-            this.mUri[29] = s.ReadByte();
-            this.mUri[30] = s.ReadByte();
-            this.mUri[31] = s.ReadByte();
-            this.mUri[32] = s.ReadByte();
-            this.mUri[33] = s.ReadByte();
-            this.mUri[34] = s.ReadByte();
-            this.mUri[35] = s.ReadByte();
-            this.mUri[36] = s.ReadByte();
-            this.mUri[37] = s.ReadByte();
-            this.mUri[38] = s.ReadByte();
-            this.mUri[39] = s.ReadByte();
-            this.mUri[40] = s.ReadByte();
-            this.mUri[41] = s.ReadByte();
-            this.mUri[42] = s.ReadByte();
-            this.mUri[43] = s.ReadByte();
-            this.mUri[44] = s.ReadByte();
-            this.mUri[45] = s.ReadByte();
-            this.mUri[46] = s.ReadByte();
-            this.mUri[47] = s.ReadByte();
-            this.mUri[48] = s.ReadByte();
-            this.mUri[49] = s.ReadByte();
-            this.mUri[50] = s.ReadByte();
-            this.mUri[51] = s.ReadByte();
-            this.mUri[52] = s.ReadByte();
-            this.mUri[53] = s.ReadByte();
-            this.mUri[54] = s.ReadByte();
-            this.mUri[55] = s.ReadByte();
-            this.mUri[56] = s.ReadByte();
-            this.mUri[57] = s.ReadByte();
-            this.mUri[58] = s.ReadByte();
-            this.mUri[59] = s.ReadByte();
-            this.mUri[60] = s.ReadByte();
-            this.mUri[61] = s.ReadByte();
-            this.mUri[62] = s.ReadByte();
-            this.mUri[63] = s.ReadByte();
-            this.mUri[64] = s.ReadByte();
-            this.mUri[65] = s.ReadByte();
-            this.mUri[66] = s.ReadByte();
-            this.mUri[67] = s.ReadByte();
-            this.mUri[68] = s.ReadByte();
-            this.mUri[69] = s.ReadByte();
-            this.mUri[70] = s.ReadByte();
-            this.mUri[71] = s.ReadByte();
-            this.mUri[72] = s.ReadByte();
-            this.mUri[73] = s.ReadByte();
-            this.mUri[74] = s.ReadByte();
-            this.mUri[75] = s.ReadByte();
-            this.mUri[76] = s.ReadByte();
-            this.mUri[77] = s.ReadByte();
-            this.mUri[78] = s.ReadByte();
-            this.mUri[79] = s.ReadByte();
-            this.mUri[80] = s.ReadByte();
-            this.mUri[81] = s.ReadByte();
-            this.mUri[82] = s.ReadByte();
-            this.mUri[83] = s.ReadByte();
-            this.mUri[84] = s.ReadByte();
-            this.mUri[85] = s.ReadByte();
-            this.mUri[86] = s.ReadByte();
-            this.mUri[87] = s.ReadByte();
-            this.mUri[88] = s.ReadByte();
-            this.mUri[89] = s.ReadByte();
-            this.mUri[90] = s.ReadByte();
-            this.mUri[91] = s.ReadByte();
-            this.mUri[92] = s.ReadByte();
-            this.mUri[93] = s.ReadByte();
-            this.mUri[94] = s.ReadByte();
-            this.mUri[95] = s.ReadByte();
-            this.mUri[96] = s.ReadByte();
-            this.mUri[97] = s.ReadByte();
-            this.mUri[98] = s.ReadByte();
-            this.mUri[99] = s.ReadByte();
-            this.mUri[100] = s.ReadByte();
-            this.mUri[101] = s.ReadByte();
-            this.mUri[102] = s.ReadByte();
-            this.mUri[103] = s.ReadByte();
-            this.mUri[104] = s.ReadByte();
-            this.mUri[105] = s.ReadByte();
-            this.mUri[106] = s.ReadByte();
-            this.mUri[107] = s.ReadByte();
-            this.mUri[108] = s.ReadByte();
-            this.mUri[109] = s.ReadByte();
-            this.mUri[110] = s.ReadByte();
-            this.mUri[111] = s.ReadByte();
-            this.mUri[112] = s.ReadByte();
-            this.mUri[113] = s.ReadByte();
-            this.mUri[114] = s.ReadByte();
-            this.mUri[115] = s.ReadByte();
-            this.mUri[116] = s.ReadByte();
-            this.mUri[117] = s.ReadByte();
-            this.mUri[118] = s.ReadByte();
-            this.mUri[119] = s.ReadByte();
-            this.mTransferType = s.ReadByte();
-            this.mStorage[0] = s.ReadByte();
-            this.mStorage[1] = s.ReadByte();
-            this.mStorage[2] = s.ReadByte();
-            this.mStorage[3] = s.ReadByte();
-            this.mStorage[4] = s.ReadByte();
-            this.mStorage[5] = s.ReadByte();
-            this.mStorage[6] = s.ReadByte();
-            this.mStorage[7] = s.ReadByte();
-            this.mStorage[8] = s.ReadByte();
-            this.mStorage[9] = s.ReadByte();
-            this.mStorage[10] = s.ReadByte();
-            this.mStorage[11] = s.ReadByte();
-            this.mStorage[12] = s.ReadByte();
-            this.mStorage[13] = s.ReadByte();
-            this.mStorage[14] = s.ReadByte();
-            this.mStorage[15] = s.ReadByte();
-            this.mStorage[16] = s.ReadByte();
-            this.mStorage[17] = s.ReadByte();
-            this.mStorage[18] = s.ReadByte();
-            this.mStorage[19] = s.ReadByte();
-            this.mStorage[20] = s.ReadByte();
-            this.mStorage[21] = s.ReadByte();
-            this.mStorage[22] = s.ReadByte();
-            this.mStorage[23] = s.ReadByte();
-            this.mStorage[24] = s.ReadByte();
-            this.mStorage[25] = s.ReadByte();
-            this.mStorage[26] = s.ReadByte();
-            this.mStorage[27] = s.ReadByte();
-            this.mStorage[28] = s.ReadByte();
-            this.mStorage[29] = s.ReadByte();
-            this.mStorage[30] = s.ReadByte();
-            this.mStorage[31] = s.ReadByte();
-            this.mStorage[32] = s.ReadByte();
-            this.mStorage[33] = s.ReadByte();
-            this.mStorage[34] = s.ReadByte();
-            this.mStorage[35] = s.ReadByte();
-            this.mStorage[36] = s.ReadByte();
-            this.mStorage[37] = s.ReadByte();
-            this.mStorage[38] = s.ReadByte();
-            this.mStorage[39] = s.ReadByte();
-            this.mStorage[40] = s.ReadByte();
-            this.mStorage[41] = s.ReadByte();
-            this.mStorage[42] = s.ReadByte();
-            this.mStorage[43] = s.ReadByte();
-            this.mStorage[44] = s.ReadByte();
-            this.mStorage[45] = s.ReadByte();
-            this.mStorage[46] = s.ReadByte();
-            this.mStorage[47] = s.ReadByte();
-            this.mStorage[48] = s.ReadByte();
-            this.mStorage[49] = s.ReadByte();
-            this.mStorage[50] = s.ReadByte();
-            this.mStorage[51] = s.ReadByte();
-            this.mStorage[52] = s.ReadByte();
-            this.mStorage[53] = s.ReadByte();
-            this.mStorage[54] = s.ReadByte();
-            this.mStorage[55] = s.ReadByte();
-            this.mStorage[56] = s.ReadByte();
-            this.mStorage[57] = s.ReadByte();
-            this.mStorage[58] = s.ReadByte();
-            this.mStorage[59] = s.ReadByte();
-            this.mStorage[60] = s.ReadByte();
-            this.mStorage[61] = s.ReadByte();
-            this.mStorage[62] = s.ReadByte();
-            this.mStorage[63] = s.ReadByte();
-            this.mStorage[64] = s.ReadByte();
-            this.mStorage[65] = s.ReadByte();
-            this.mStorage[66] = s.ReadByte();
-            this.mStorage[67] = s.ReadByte();
-            this.mStorage[68] = s.ReadByte();
-            this.mStorage[69] = s.ReadByte();
-            this.mStorage[70] = s.ReadByte();
-            this.mStorage[71] = s.ReadByte();
-            this.mStorage[72] = s.ReadByte();
-            this.mStorage[73] = s.ReadByte();
-            this.mStorage[74] = s.ReadByte();
-            this.mStorage[75] = s.ReadByte();
-            this.mStorage[76] = s.ReadByte();
-            this.mStorage[77] = s.ReadByte();
-            this.mStorage[78] = s.ReadByte();
-            this.mStorage[79] = s.ReadByte();
-            this.mStorage[80] = s.ReadByte();
-            this.mStorage[81] = s.ReadByte();
-            this.mStorage[82] = s.ReadByte();
-            this.mStorage[83] = s.ReadByte();
-            this.mStorage[84] = s.ReadByte();
-            this.mStorage[85] = s.ReadByte();
-            this.mStorage[86] = s.ReadByte();
-            this.mStorage[87] = s.ReadByte();
-            this.mStorage[88] = s.ReadByte();
-            this.mStorage[89] = s.ReadByte();
-            this.mStorage[90] = s.ReadByte();
-            this.mStorage[91] = s.ReadByte();
-            this.mStorage[92] = s.ReadByte();
-            this.mStorage[93] = s.ReadByte();
-            this.mStorage[94] = s.ReadByte();
-            this.mStorage[95] = s.ReadByte();
-            this.mStorage[96] = s.ReadByte();
-            this.mStorage[97] = s.ReadByte();
-            this.mStorage[98] = s.ReadByte();
-            this.mStorage[99] = s.ReadByte();
-            this.mStorage[100] = s.ReadByte();
-            this.mStorage[101] = s.ReadByte();
-            this.mStorage[102] = s.ReadByte();
-            this.mStorage[103] = s.ReadByte();
-            this.mStorage[104] = s.ReadByte();
-            this.mStorage[105] = s.ReadByte();
-            this.mStorage[106] = s.ReadByte();
-            this.mStorage[107] = s.ReadByte();
-            this.mStorage[108] = s.ReadByte();
-            this.mStorage[109] = s.ReadByte();
-            this.mStorage[110] = s.ReadByte();
-            this.mStorage[111] = s.ReadByte();
-            this.mStorage[112] = s.ReadByte();
-            this.mStorage[113] = s.ReadByte();
-            this.mStorage[114] = s.ReadByte();
-            this.mStorage[115] = s.ReadByte();
-            this.mStorage[116] = s.ReadByte();
-            this.mStorage[117] = s.ReadByte();
-            this.mStorage[118] = s.ReadByte();
-            this.mStorage[119] = s.ReadByte();
+             this.mRequestId = s.ReadByte();
+             this.mUriType = s.ReadByte();
+              this.mUri[0] = s.ReadByte();
+              this.mUri[1] = s.ReadByte();
+              this.mUri[2] = s.ReadByte();
+              this.mUri[3] = s.ReadByte();
+              this.mUri[4] = s.ReadByte();
+              this.mUri[5] = s.ReadByte();
+              this.mUri[6] = s.ReadByte();
+              this.mUri[7] = s.ReadByte();
+              this.mUri[8] = s.ReadByte();
+              this.mUri[9] = s.ReadByte();
+              this.mUri[10] = s.ReadByte();
+              this.mUri[11] = s.ReadByte();
+              this.mUri[12] = s.ReadByte();
+              this.mUri[13] = s.ReadByte();
+              this.mUri[14] = s.ReadByte();
+              this.mUri[15] = s.ReadByte();
+              this.mUri[16] = s.ReadByte();
+              this.mUri[17] = s.ReadByte();
+              this.mUri[18] = s.ReadByte();
+              this.mUri[19] = s.ReadByte();
+              this.mUri[20] = s.ReadByte();
+              this.mUri[21] = s.ReadByte();
+              this.mUri[22] = s.ReadByte();
+              this.mUri[23] = s.ReadByte();
+              this.mUri[24] = s.ReadByte();
+              this.mUri[25] = s.ReadByte();
+              this.mUri[26] = s.ReadByte();
+              this.mUri[27] = s.ReadByte();
+              this.mUri[28] = s.ReadByte();
+              this.mUri[29] = s.ReadByte();
+              this.mUri[30] = s.ReadByte();
+              this.mUri[31] = s.ReadByte();
+              this.mUri[32] = s.ReadByte();
+              this.mUri[33] = s.ReadByte();
+              this.mUri[34] = s.ReadByte();
+              this.mUri[35] = s.ReadByte();
+              this.mUri[36] = s.ReadByte();
+              this.mUri[37] = s.ReadByte();
+              this.mUri[38] = s.ReadByte();
+              this.mUri[39] = s.ReadByte();
+              this.mUri[40] = s.ReadByte();
+              this.mUri[41] = s.ReadByte();
+              this.mUri[42] = s.ReadByte();
+              this.mUri[43] = s.ReadByte();
+              this.mUri[44] = s.ReadByte();
+              this.mUri[45] = s.ReadByte();
+              this.mUri[46] = s.ReadByte();
+              this.mUri[47] = s.ReadByte();
+              this.mUri[48] = s.ReadByte();
+              this.mUri[49] = s.ReadByte();
+              this.mUri[50] = s.ReadByte();
+              this.mUri[51] = s.ReadByte();
+              this.mUri[52] = s.ReadByte();
+              this.mUri[53] = s.ReadByte();
+              this.mUri[54] = s.ReadByte();
+              this.mUri[55] = s.ReadByte();
+              this.mUri[56] = s.ReadByte();
+              this.mUri[57] = s.ReadByte();
+              this.mUri[58] = s.ReadByte();
+              this.mUri[59] = s.ReadByte();
+              this.mUri[60] = s.ReadByte();
+              this.mUri[61] = s.ReadByte();
+              this.mUri[62] = s.ReadByte();
+              this.mUri[63] = s.ReadByte();
+              this.mUri[64] = s.ReadByte();
+              this.mUri[65] = s.ReadByte();
+              this.mUri[66] = s.ReadByte();
+              this.mUri[67] = s.ReadByte();
+              this.mUri[68] = s.ReadByte();
+              this.mUri[69] = s.ReadByte();
+              this.mUri[70] = s.ReadByte();
+              this.mUri[71] = s.ReadByte();
+              this.mUri[72] = s.ReadByte();
+              this.mUri[73] = s.ReadByte();
+              this.mUri[74] = s.ReadByte();
+              this.mUri[75] = s.ReadByte();
+              this.mUri[76] = s.ReadByte();
+              this.mUri[77] = s.ReadByte();
+              this.mUri[78] = s.ReadByte();
+              this.mUri[79] = s.ReadByte();
+              this.mUri[80] = s.ReadByte();
+              this.mUri[81] = s.ReadByte();
+              this.mUri[82] = s.ReadByte();
+              this.mUri[83] = s.ReadByte();
+              this.mUri[84] = s.ReadByte();
+              this.mUri[85] = s.ReadByte();
+              this.mUri[86] = s.ReadByte();
+              this.mUri[87] = s.ReadByte();
+              this.mUri[88] = s.ReadByte();
+              this.mUri[89] = s.ReadByte();
+              this.mUri[90] = s.ReadByte();
+              this.mUri[91] = s.ReadByte();
+              this.mUri[92] = s.ReadByte();
+              this.mUri[93] = s.ReadByte();
+              this.mUri[94] = s.ReadByte();
+              this.mUri[95] = s.ReadByte();
+              this.mUri[96] = s.ReadByte();
+              this.mUri[97] = s.ReadByte();
+              this.mUri[98] = s.ReadByte();
+              this.mUri[99] = s.ReadByte();
+              this.mUri[100] = s.ReadByte();
+              this.mUri[101] = s.ReadByte();
+              this.mUri[102] = s.ReadByte();
+              this.mUri[103] = s.ReadByte();
+              this.mUri[104] = s.ReadByte();
+              this.mUri[105] = s.ReadByte();
+              this.mUri[106] = s.ReadByte();
+              this.mUri[107] = s.ReadByte();
+              this.mUri[108] = s.ReadByte();
+              this.mUri[109] = s.ReadByte();
+              this.mUri[110] = s.ReadByte();
+              this.mUri[111] = s.ReadByte();
+              this.mUri[112] = s.ReadByte();
+              this.mUri[113] = s.ReadByte();
+              this.mUri[114] = s.ReadByte();
+              this.mUri[115] = s.ReadByte();
+              this.mUri[116] = s.ReadByte();
+              this.mUri[117] = s.ReadByte();
+              this.mUri[118] = s.ReadByte();
+              this.mUri[119] = s.ReadByte();
+             this.mTransferType = s.ReadByte();
+              this.mStorage[0] = s.ReadByte();
+              this.mStorage[1] = s.ReadByte();
+              this.mStorage[2] = s.ReadByte();
+              this.mStorage[3] = s.ReadByte();
+              this.mStorage[4] = s.ReadByte();
+              this.mStorage[5] = s.ReadByte();
+              this.mStorage[6] = s.ReadByte();
+              this.mStorage[7] = s.ReadByte();
+              this.mStorage[8] = s.ReadByte();
+              this.mStorage[9] = s.ReadByte();
+              this.mStorage[10] = s.ReadByte();
+              this.mStorage[11] = s.ReadByte();
+              this.mStorage[12] = s.ReadByte();
+              this.mStorage[13] = s.ReadByte();
+              this.mStorage[14] = s.ReadByte();
+              this.mStorage[15] = s.ReadByte();
+              this.mStorage[16] = s.ReadByte();
+              this.mStorage[17] = s.ReadByte();
+              this.mStorage[18] = s.ReadByte();
+              this.mStorage[19] = s.ReadByte();
+              this.mStorage[20] = s.ReadByte();
+              this.mStorage[21] = s.ReadByte();
+              this.mStorage[22] = s.ReadByte();
+              this.mStorage[23] = s.ReadByte();
+              this.mStorage[24] = s.ReadByte();
+              this.mStorage[25] = s.ReadByte();
+              this.mStorage[26] = s.ReadByte();
+              this.mStorage[27] = s.ReadByte();
+              this.mStorage[28] = s.ReadByte();
+              this.mStorage[29] = s.ReadByte();
+              this.mStorage[30] = s.ReadByte();
+              this.mStorage[31] = s.ReadByte();
+              this.mStorage[32] = s.ReadByte();
+              this.mStorage[33] = s.ReadByte();
+              this.mStorage[34] = s.ReadByte();
+              this.mStorage[35] = s.ReadByte();
+              this.mStorage[36] = s.ReadByte();
+              this.mStorage[37] = s.ReadByte();
+              this.mStorage[38] = s.ReadByte();
+              this.mStorage[39] = s.ReadByte();
+              this.mStorage[40] = s.ReadByte();
+              this.mStorage[41] = s.ReadByte();
+              this.mStorage[42] = s.ReadByte();
+              this.mStorage[43] = s.ReadByte();
+              this.mStorage[44] = s.ReadByte();
+              this.mStorage[45] = s.ReadByte();
+              this.mStorage[46] = s.ReadByte();
+              this.mStorage[47] = s.ReadByte();
+              this.mStorage[48] = s.ReadByte();
+              this.mStorage[49] = s.ReadByte();
+              this.mStorage[50] = s.ReadByte();
+              this.mStorage[51] = s.ReadByte();
+              this.mStorage[52] = s.ReadByte();
+              this.mStorage[53] = s.ReadByte();
+              this.mStorage[54] = s.ReadByte();
+              this.mStorage[55] = s.ReadByte();
+              this.mStorage[56] = s.ReadByte();
+              this.mStorage[57] = s.ReadByte();
+              this.mStorage[58] = s.ReadByte();
+              this.mStorage[59] = s.ReadByte();
+              this.mStorage[60] = s.ReadByte();
+              this.mStorage[61] = s.ReadByte();
+              this.mStorage[62] = s.ReadByte();
+              this.mStorage[63] = s.ReadByte();
+              this.mStorage[64] = s.ReadByte();
+              this.mStorage[65] = s.ReadByte();
+              this.mStorage[66] = s.ReadByte();
+              this.mStorage[67] = s.ReadByte();
+              this.mStorage[68] = s.ReadByte();
+              this.mStorage[69] = s.ReadByte();
+              this.mStorage[70] = s.ReadByte();
+              this.mStorage[71] = s.ReadByte();
+              this.mStorage[72] = s.ReadByte();
+              this.mStorage[73] = s.ReadByte();
+              this.mStorage[74] = s.ReadByte();
+              this.mStorage[75] = s.ReadByte();
+              this.mStorage[76] = s.ReadByte();
+              this.mStorage[77] = s.ReadByte();
+              this.mStorage[78] = s.ReadByte();
+              this.mStorage[79] = s.ReadByte();
+              this.mStorage[80] = s.ReadByte();
+              this.mStorage[81] = s.ReadByte();
+              this.mStorage[82] = s.ReadByte();
+              this.mStorage[83] = s.ReadByte();
+              this.mStorage[84] = s.ReadByte();
+              this.mStorage[85] = s.ReadByte();
+              this.mStorage[86] = s.ReadByte();
+              this.mStorage[87] = s.ReadByte();
+              this.mStorage[88] = s.ReadByte();
+              this.mStorage[89] = s.ReadByte();
+              this.mStorage[90] = s.ReadByte();
+              this.mStorage[91] = s.ReadByte();
+              this.mStorage[92] = s.ReadByte();
+              this.mStorage[93] = s.ReadByte();
+              this.mStorage[94] = s.ReadByte();
+              this.mStorage[95] = s.ReadByte();
+              this.mStorage[96] = s.ReadByte();
+              this.mStorage[97] = s.ReadByte();
+              this.mStorage[98] = s.ReadByte();
+              this.mStorage[99] = s.ReadByte();
+              this.mStorage[100] = s.ReadByte();
+              this.mStorage[101] = s.ReadByte();
+              this.mStorage[102] = s.ReadByte();
+              this.mStorage[103] = s.ReadByte();
+              this.mStorage[104] = s.ReadByte();
+              this.mStorage[105] = s.ReadByte();
+              this.mStorage[106] = s.ReadByte();
+              this.mStorage[107] = s.ReadByte();
+              this.mStorage[108] = s.ReadByte();
+              this.mStorage[109] = s.ReadByte();
+              this.mStorage[110] = s.ReadByte();
+              this.mStorage[111] = s.ReadByte();
+              this.mStorage[112] = s.ReadByte();
+              this.mStorage[113] = s.ReadByte();
+              this.mStorage[114] = s.ReadByte();
+              this.mStorage[115] = s.ReadByte();
+              this.mStorage[116] = s.ReadByte();
+              this.mStorage[117] = s.ReadByte();
+              this.mStorage[118] = s.ReadByte();
+              this.mStorage[119] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -24583,7 +24583,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasScaledPressure3()
         {
-            mMessageId = 143;
+            _messageId = UasMessages.ScaledPressure3;
             CrcExtra = 131;
         }
 
@@ -24597,10 +24597,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mPressAbs = s.ReadSingle();
-            this.mPressDiff = s.ReadSingle();
-            this.mTemperature = s.ReadInt16();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mPressAbs = s.ReadSingle();
+             this.mPressDiff = s.ReadSingle();
+             this.mTemperature = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -24740,7 +24740,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasFollowTarget()
         {
-            mMessageId = 144;
+            _messageId = UasMessages.FollowTarget;
             CrcExtra = 127;
         }
 
@@ -24772,28 +24772,28 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimestamp = s.ReadUInt64();
-            this.mCustomState = s.ReadUInt64();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadSingle();
-            this.mVel[0] = s.ReadSingle();
-            this.mVel[1] = s.ReadSingle();
-            this.mVel[2] = s.ReadSingle();
-            this.mAcc[0] = s.ReadSingle();
-            this.mAcc[1] = s.ReadSingle();
-            this.mAcc[2] = s.ReadSingle();
-            this.mAttitudeQ[0] = s.ReadSingle();
-            this.mAttitudeQ[1] = s.ReadSingle();
-            this.mAttitudeQ[2] = s.ReadSingle();
-            this.mAttitudeQ[3] = s.ReadSingle();
-            this.mRates[0] = s.ReadSingle();
-            this.mRates[1] = s.ReadSingle();
-            this.mRates[2] = s.ReadSingle();
-            this.mPositionCov[0] = s.ReadSingle();
-            this.mPositionCov[1] = s.ReadSingle();
-            this.mPositionCov[2] = s.ReadSingle();
-            this.mEstCapabilities = s.ReadByte();
+             this.mTimestamp = s.ReadUInt64();
+             this.mCustomState = s.ReadUInt64();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadSingle();
+              this.mVel[0] = s.ReadSingle();
+              this.mVel[1] = s.ReadSingle();
+              this.mVel[2] = s.ReadSingle();
+              this.mAcc[0] = s.ReadSingle();
+              this.mAcc[1] = s.ReadSingle();
+              this.mAcc[2] = s.ReadSingle();
+              this.mAttitudeQ[0] = s.ReadSingle();
+              this.mAttitudeQ[1] = s.ReadSingle();
+              this.mAttitudeQ[2] = s.ReadSingle();
+              this.mAttitudeQ[3] = s.ReadSingle();
+              this.mRates[0] = s.ReadSingle();
+              this.mRates[1] = s.ReadSingle();
+              this.mRates[2] = s.ReadSingle();
+              this.mPositionCov[0] = s.ReadSingle();
+              this.mPositionCov[1] = s.ReadSingle();
+              this.mPositionCov[2] = s.ReadSingle();
+             this.mEstCapabilities = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -25030,7 +25030,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasControlSystemState()
         {
-            mMessageId = 146;
+            _messageId = UasMessages.ControlSystemState;
             CrcExtra = 103;
         }
 
@@ -25064,30 +25064,30 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mXAcc = s.ReadSingle();
-            this.mYAcc = s.ReadSingle();
-            this.mZAcc = s.ReadSingle();
-            this.mXVel = s.ReadSingle();
-            this.mYVel = s.ReadSingle();
-            this.mZVel = s.ReadSingle();
-            this.mXPos = s.ReadSingle();
-            this.mYPos = s.ReadSingle();
-            this.mZPos = s.ReadSingle();
-            this.mAirspeed = s.ReadSingle();
-            this.mVelVariance[0] = s.ReadSingle();
-            this.mVelVariance[1] = s.ReadSingle();
-            this.mVelVariance[2] = s.ReadSingle();
-            this.mPosVariance[0] = s.ReadSingle();
-            this.mPosVariance[1] = s.ReadSingle();
-            this.mPosVariance[2] = s.ReadSingle();
-            this.mQ[0] = s.ReadSingle();
-            this.mQ[1] = s.ReadSingle();
-            this.mQ[2] = s.ReadSingle();
-            this.mQ[3] = s.ReadSingle();
-            this.mRollRate = s.ReadSingle();
-            this.mPitchRate = s.ReadSingle();
-            this.mYawRate = s.ReadSingle();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mXAcc = s.ReadSingle();
+             this.mYAcc = s.ReadSingle();
+             this.mZAcc = s.ReadSingle();
+             this.mXVel = s.ReadSingle();
+             this.mYVel = s.ReadSingle();
+             this.mZVel = s.ReadSingle();
+             this.mXPos = s.ReadSingle();
+             this.mYPos = s.ReadSingle();
+             this.mZPos = s.ReadSingle();
+             this.mAirspeed = s.ReadSingle();
+              this.mVelVariance[0] = s.ReadSingle();
+              this.mVelVariance[1] = s.ReadSingle();
+              this.mVelVariance[2] = s.ReadSingle();
+              this.mPosVariance[0] = s.ReadSingle();
+              this.mPosVariance[1] = s.ReadSingle();
+              this.mPosVariance[2] = s.ReadSingle();
+              this.mQ[0] = s.ReadSingle();
+              this.mQ[1] = s.ReadSingle();
+              this.mQ[2] = s.ReadSingle();
+              this.mQ[3] = s.ReadSingle();
+             this.mRollRate = s.ReadSingle();
+             this.mPitchRate = s.ReadSingle();
+             this.mYawRate = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -25318,8 +25318,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasBatteryStatus()
         {
-            mMessageId = 147;
-            CrcExtra = 149;
+            _messageId = UasMessages.BatteryStatus;
+            CrcExtra = 154;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -25348,26 +25348,26 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCurrentConsumed = s.ReadInt32();
-            this.mEnergyConsumed = s.ReadInt32();
-            this.mTimeRemaining = s.ReadInt32();
-            this.mTemperature = s.ReadInt16();
-            this.mVoltages[0] = s.ReadUInt16();
-            this.mVoltages[1] = s.ReadUInt16();
-            this.mVoltages[2] = s.ReadUInt16();
-            this.mVoltages[3] = s.ReadUInt16();
-            this.mVoltages[4] = s.ReadUInt16();
-            this.mVoltages[5] = s.ReadUInt16();
-            this.mVoltages[6] = s.ReadUInt16();
-            this.mVoltages[7] = s.ReadUInt16();
-            this.mVoltages[8] = s.ReadUInt16();
-            this.mVoltages[9] = s.ReadUInt16();
-            this.mCurrentBattery = s.ReadInt16();
-            this.mId = s.ReadByte();
-            this.mBatteryFunction = s.ReadByte();
-            this.mType = s.ReadByte();
-            this.mBatteryRemaining = s.ReadSByte();
-            this.mChargeState = s.ReadByte();
+             this.mCurrentConsumed = s.ReadInt32();
+             this.mEnergyConsumed = s.ReadInt32();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mTimeRemaining = s.ReadInt32();
+             this.mTemperature = s.ReadInt16();
+              this.mVoltages[0] = s.ReadUInt16();
+              this.mVoltages[1] = s.ReadUInt16();
+              this.mVoltages[2] = s.ReadUInt16();
+              this.mVoltages[3] = s.ReadUInt16();
+              this.mVoltages[4] = s.ReadUInt16();
+              this.mVoltages[5] = s.ReadUInt16();
+              this.mVoltages[6] = s.ReadUInt16();
+              this.mVoltages[7] = s.ReadUInt16();
+              this.mVoltages[8] = s.ReadUInt16();
+              this.mVoltages[9] = s.ReadUInt16();
+             this.mCurrentBattery = s.ReadInt16();
+             this.mId = s.ReadByte();
+             this.mBatteryFunction = s.ReadByte();
+             this.mType = s.ReadByte();
+             this.mBatteryRemaining = s.ReadSByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mChargeState = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -25564,8 +25564,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAutopilotVersion()
         {
-            mMessageId = 148;
-            CrcExtra = 39;
+            _messageId = UasMessages.AutopilotVersion;
+            CrcExtra = 178;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -25624,56 +25624,56 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCapabilities = s.ReadUInt64();
-            this.mUid = s.ReadUInt64();
-            this.mFlightSwVersion = s.ReadUInt32();
-            this.mMiddlewareSwVersion = s.ReadUInt32();
-            this.mOsSwVersion = s.ReadUInt32();
-            this.mBoardVersion = s.ReadUInt32();
-            this.mVendorId = s.ReadUInt16();
-            this.mProductId = s.ReadUInt16();
-            this.mFlightCustomVersion[0] = s.ReadByte();
-            this.mFlightCustomVersion[1] = s.ReadByte();
-            this.mFlightCustomVersion[2] = s.ReadByte();
-            this.mFlightCustomVersion[3] = s.ReadByte();
-            this.mFlightCustomVersion[4] = s.ReadByte();
-            this.mFlightCustomVersion[5] = s.ReadByte();
-            this.mFlightCustomVersion[6] = s.ReadByte();
-            this.mFlightCustomVersion[7] = s.ReadByte();
-            this.mMiddlewareCustomVersion[0] = s.ReadByte();
-            this.mMiddlewareCustomVersion[1] = s.ReadByte();
-            this.mMiddlewareCustomVersion[2] = s.ReadByte();
-            this.mMiddlewareCustomVersion[3] = s.ReadByte();
-            this.mMiddlewareCustomVersion[4] = s.ReadByte();
-            this.mMiddlewareCustomVersion[5] = s.ReadByte();
-            this.mMiddlewareCustomVersion[6] = s.ReadByte();
-            this.mMiddlewareCustomVersion[7] = s.ReadByte();
-            this.mOsCustomVersion[0] = s.ReadByte();
-            this.mOsCustomVersion[1] = s.ReadByte();
-            this.mOsCustomVersion[2] = s.ReadByte();
-            this.mOsCustomVersion[3] = s.ReadByte();
-            this.mOsCustomVersion[4] = s.ReadByte();
-            this.mOsCustomVersion[5] = s.ReadByte();
-            this.mOsCustomVersion[6] = s.ReadByte();
-            this.mOsCustomVersion[7] = s.ReadByte();
-            this.mUid2[0] = s.ReadByte();
-            this.mUid2[1] = s.ReadByte();
-            this.mUid2[2] = s.ReadByte();
-            this.mUid2[3] = s.ReadByte();
-            this.mUid2[4] = s.ReadByte();
-            this.mUid2[5] = s.ReadByte();
-            this.mUid2[6] = s.ReadByte();
-            this.mUid2[7] = s.ReadByte();
-            this.mUid2[8] = s.ReadByte();
-            this.mUid2[9] = s.ReadByte();
-            this.mUid2[10] = s.ReadByte();
-            this.mUid2[11] = s.ReadByte();
-            this.mUid2[12] = s.ReadByte();
-            this.mUid2[13] = s.ReadByte();
-            this.mUid2[14] = s.ReadByte();
-            this.mUid2[15] = s.ReadByte();
-            this.mUid2[16] = s.ReadByte();
-            this.mUid2[17] = s.ReadByte();
+             this.mCapabilities = s.ReadUInt64();
+             this.mUid = s.ReadUInt64();
+             this.mFlightSwVersion = s.ReadUInt32();
+             this.mMiddlewareSwVersion = s.ReadUInt32();
+             this.mOsSwVersion = s.ReadUInt32();
+             this.mBoardVersion = s.ReadUInt32();
+             this.mVendorId = s.ReadUInt16();
+             this.mProductId = s.ReadUInt16();
+              this.mFlightCustomVersion[0] = s.ReadByte();
+              this.mFlightCustomVersion[1] = s.ReadByte();
+              this.mFlightCustomVersion[2] = s.ReadByte();
+              this.mFlightCustomVersion[3] = s.ReadByte();
+              this.mFlightCustomVersion[4] = s.ReadByte();
+              this.mFlightCustomVersion[5] = s.ReadByte();
+              this.mFlightCustomVersion[6] = s.ReadByte();
+              this.mFlightCustomVersion[7] = s.ReadByte();
+              this.mMiddlewareCustomVersion[0] = s.ReadByte();
+              this.mMiddlewareCustomVersion[1] = s.ReadByte();
+              this.mMiddlewareCustomVersion[2] = s.ReadByte();
+              this.mMiddlewareCustomVersion[3] = s.ReadByte();
+              this.mMiddlewareCustomVersion[4] = s.ReadByte();
+              this.mMiddlewareCustomVersion[5] = s.ReadByte();
+              this.mMiddlewareCustomVersion[6] = s.ReadByte();
+              this.mMiddlewareCustomVersion[7] = s.ReadByte();
+              this.mOsCustomVersion[0] = s.ReadByte();
+              this.mOsCustomVersion[1] = s.ReadByte();
+              this.mOsCustomVersion[2] = s.ReadByte();
+              this.mOsCustomVersion[3] = s.ReadByte();
+              this.mOsCustomVersion[4] = s.ReadByte();
+              this.mOsCustomVersion[5] = s.ReadByte();
+              this.mOsCustomVersion[6] = s.ReadByte();
+              this.mOsCustomVersion[7] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[0] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[1] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[2] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[3] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[4] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[5] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[6] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[7] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[8] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[9] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[10] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[11] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[12] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[13] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[14] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[15] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[16] = s.ReadByte();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mUid2[17] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -25893,8 +25893,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLandingTarget()
         {
-            mMessageId = 149;
-            CrcExtra = 48;
+            _messageId = UasMessages.LandingTarget;
+            CrcExtra = 200;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -25920,23 +25920,23 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mAngleX = s.ReadSingle();
-            this.mAngleY = s.ReadSingle();
-            this.mDistance = s.ReadSingle();
-            this.mSizeX = s.ReadSingle();
-            this.mSizeY = s.ReadSingle();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mQ[0] = s.ReadSingle();
-            this.mQ[1] = s.ReadSingle();
-            this.mQ[2] = s.ReadSingle();
-            this.mQ[3] = s.ReadSingle();
-            this.mTargetNum = s.ReadByte();
-            this.mFrame = s.ReadByte();
-            this.mType = s.ReadByte();
-            this.mPositionValid = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mAngleX = s.ReadSingle();
+             this.mAngleY = s.ReadSingle();
+             this.mDistance = s.ReadSingle();
+             this.mSizeX = s.ReadSingle();
+             this.mSizeY = s.ReadSingle();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mX = s.ReadSingle();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mY = s.ReadSingle();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mZ = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mQ[0] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mQ[1] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mQ[2] = s.ReadSingle();
+             if(s.BaseStream.Position < s.BaseStream.Length) this.mQ[3] = s.ReadSingle();
+             this.mTargetNum = s.ReadByte();
+             this.mFrame = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mType = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mPositionValid = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -26138,7 +26138,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasEstimatorStatus()
         {
-            mMessageId = 230;
+            _messageId = UasMessages.EstimatorStatus;
             CrcExtra = 163;
         }
 
@@ -26158,16 +26158,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mVelRatio = s.ReadSingle();
-            this.mPosHorizRatio = s.ReadSingle();
-            this.mPosVertRatio = s.ReadSingle();
-            this.mMagRatio = s.ReadSingle();
-            this.mHaglRatio = s.ReadSingle();
-            this.mTasRatio = s.ReadSingle();
-            this.mPosHorizAccuracy = s.ReadSingle();
-            this.mPosVertAccuracy = s.ReadSingle();
-            this.mFlags = s.ReadUInt16();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mVelRatio = s.ReadSingle();
+             this.mPosHorizRatio = s.ReadSingle();
+             this.mPosVertRatio = s.ReadSingle();
+             this.mMagRatio = s.ReadSingle();
+             this.mHaglRatio = s.ReadSingle();
+             this.mTasRatio = s.ReadSingle();
+             this.mPosHorizAccuracy = s.ReadSingle();
+             this.mPosVertAccuracy = s.ReadSingle();
+             this.mFlags = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -26330,7 +26330,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasWindCov()
         {
-            mMessageId = 231;
+            _messageId = UasMessages.WindCov;
             CrcExtra = 105;
         }
 
@@ -26349,15 +26349,15 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mWindX = s.ReadSingle();
-            this.mWindY = s.ReadSingle();
-            this.mWindZ = s.ReadSingle();
-            this.mVarHoriz = s.ReadSingle();
-            this.mVarVert = s.ReadSingle();
-            this.mWindAlt = s.ReadSingle();
-            this.mHorizAccuracy = s.ReadSingle();
-            this.mVertAccuracy = s.ReadSingle();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mWindX = s.ReadSingle();
+             this.mWindY = s.ReadSingle();
+             this.mWindZ = s.ReadSingle();
+             this.mVarHoriz = s.ReadSingle();
+             this.mVarVert = s.ReadSingle();
+             this.mWindAlt = s.ReadSingle();
+             this.mHorizAccuracy = s.ReadSingle();
+             this.mVertAccuracy = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -26588,7 +26588,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGpsInput()
         {
-            mMessageId = 232;
+            _messageId = UasMessages.GpsInput;
             CrcExtra = 151;
         }
 
@@ -26616,24 +26616,24 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mTimeWeekMs = s.ReadUInt32();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAlt = s.ReadSingle();
-            this.mHdop = s.ReadSingle();
-            this.mVdop = s.ReadSingle();
-            this.mVn = s.ReadSingle();
-            this.mVe = s.ReadSingle();
-            this.mVd = s.ReadSingle();
-            this.mSpeedAccuracy = s.ReadSingle();
-            this.mHorizAccuracy = s.ReadSingle();
-            this.mVertAccuracy = s.ReadSingle();
-            this.mIgnoreFlags = s.ReadUInt16();
-            this.mTimeWeek = s.ReadUInt16();
-            this.mGpsId = s.ReadByte();
-            this.mFixType = s.ReadByte();
-            this.mSatellitesVisible = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mTimeWeekMs = s.ReadUInt32();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAlt = s.ReadSingle();
+             this.mHdop = s.ReadSingle();
+             this.mVdop = s.ReadSingle();
+             this.mVn = s.ReadSingle();
+             this.mVe = s.ReadSingle();
+             this.mVd = s.ReadSingle();
+             this.mSpeedAccuracy = s.ReadSingle();
+             this.mHorizAccuracy = s.ReadSingle();
+             this.mVertAccuracy = s.ReadSingle();
+             this.mIgnoreFlags = s.ReadUInt16();
+             this.mTimeWeek = s.ReadUInt16();
+             this.mGpsId = s.ReadByte();
+             this.mFixType = s.ReadByte();
+             this.mSatellitesVisible = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -26807,7 +26807,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGpsRtcmData()
         {
-            mMessageId = 233;
+            _messageId = UasMessages.GpsRtcmData;
             CrcExtra = 35;
         }
 
@@ -26999,188 +26999,188 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mFlags = s.ReadByte();
-            this.mLen = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
-            this.mData[32] = s.ReadByte();
-            this.mData[33] = s.ReadByte();
-            this.mData[34] = s.ReadByte();
-            this.mData[35] = s.ReadByte();
-            this.mData[36] = s.ReadByte();
-            this.mData[37] = s.ReadByte();
-            this.mData[38] = s.ReadByte();
-            this.mData[39] = s.ReadByte();
-            this.mData[40] = s.ReadByte();
-            this.mData[41] = s.ReadByte();
-            this.mData[42] = s.ReadByte();
-            this.mData[43] = s.ReadByte();
-            this.mData[44] = s.ReadByte();
-            this.mData[45] = s.ReadByte();
-            this.mData[46] = s.ReadByte();
-            this.mData[47] = s.ReadByte();
-            this.mData[48] = s.ReadByte();
-            this.mData[49] = s.ReadByte();
-            this.mData[50] = s.ReadByte();
-            this.mData[51] = s.ReadByte();
-            this.mData[52] = s.ReadByte();
-            this.mData[53] = s.ReadByte();
-            this.mData[54] = s.ReadByte();
-            this.mData[55] = s.ReadByte();
-            this.mData[56] = s.ReadByte();
-            this.mData[57] = s.ReadByte();
-            this.mData[58] = s.ReadByte();
-            this.mData[59] = s.ReadByte();
-            this.mData[60] = s.ReadByte();
-            this.mData[61] = s.ReadByte();
-            this.mData[62] = s.ReadByte();
-            this.mData[63] = s.ReadByte();
-            this.mData[64] = s.ReadByte();
-            this.mData[65] = s.ReadByte();
-            this.mData[66] = s.ReadByte();
-            this.mData[67] = s.ReadByte();
-            this.mData[68] = s.ReadByte();
-            this.mData[69] = s.ReadByte();
-            this.mData[70] = s.ReadByte();
-            this.mData[71] = s.ReadByte();
-            this.mData[72] = s.ReadByte();
-            this.mData[73] = s.ReadByte();
-            this.mData[74] = s.ReadByte();
-            this.mData[75] = s.ReadByte();
-            this.mData[76] = s.ReadByte();
-            this.mData[77] = s.ReadByte();
-            this.mData[78] = s.ReadByte();
-            this.mData[79] = s.ReadByte();
-            this.mData[80] = s.ReadByte();
-            this.mData[81] = s.ReadByte();
-            this.mData[82] = s.ReadByte();
-            this.mData[83] = s.ReadByte();
-            this.mData[84] = s.ReadByte();
-            this.mData[85] = s.ReadByte();
-            this.mData[86] = s.ReadByte();
-            this.mData[87] = s.ReadByte();
-            this.mData[88] = s.ReadByte();
-            this.mData[89] = s.ReadByte();
-            this.mData[90] = s.ReadByte();
-            this.mData[91] = s.ReadByte();
-            this.mData[92] = s.ReadByte();
-            this.mData[93] = s.ReadByte();
-            this.mData[94] = s.ReadByte();
-            this.mData[95] = s.ReadByte();
-            this.mData[96] = s.ReadByte();
-            this.mData[97] = s.ReadByte();
-            this.mData[98] = s.ReadByte();
-            this.mData[99] = s.ReadByte();
-            this.mData[100] = s.ReadByte();
-            this.mData[101] = s.ReadByte();
-            this.mData[102] = s.ReadByte();
-            this.mData[103] = s.ReadByte();
-            this.mData[104] = s.ReadByte();
-            this.mData[105] = s.ReadByte();
-            this.mData[106] = s.ReadByte();
-            this.mData[107] = s.ReadByte();
-            this.mData[108] = s.ReadByte();
-            this.mData[109] = s.ReadByte();
-            this.mData[110] = s.ReadByte();
-            this.mData[111] = s.ReadByte();
-            this.mData[112] = s.ReadByte();
-            this.mData[113] = s.ReadByte();
-            this.mData[114] = s.ReadByte();
-            this.mData[115] = s.ReadByte();
-            this.mData[116] = s.ReadByte();
-            this.mData[117] = s.ReadByte();
-            this.mData[118] = s.ReadByte();
-            this.mData[119] = s.ReadByte();
-            this.mData[120] = s.ReadByte();
-            this.mData[121] = s.ReadByte();
-            this.mData[122] = s.ReadByte();
-            this.mData[123] = s.ReadByte();
-            this.mData[124] = s.ReadByte();
-            this.mData[125] = s.ReadByte();
-            this.mData[126] = s.ReadByte();
-            this.mData[127] = s.ReadByte();
-            this.mData[128] = s.ReadByte();
-            this.mData[129] = s.ReadByte();
-            this.mData[130] = s.ReadByte();
-            this.mData[131] = s.ReadByte();
-            this.mData[132] = s.ReadByte();
-            this.mData[133] = s.ReadByte();
-            this.mData[134] = s.ReadByte();
-            this.mData[135] = s.ReadByte();
-            this.mData[136] = s.ReadByte();
-            this.mData[137] = s.ReadByte();
-            this.mData[138] = s.ReadByte();
-            this.mData[139] = s.ReadByte();
-            this.mData[140] = s.ReadByte();
-            this.mData[141] = s.ReadByte();
-            this.mData[142] = s.ReadByte();
-            this.mData[143] = s.ReadByte();
-            this.mData[144] = s.ReadByte();
-            this.mData[145] = s.ReadByte();
-            this.mData[146] = s.ReadByte();
-            this.mData[147] = s.ReadByte();
-            this.mData[148] = s.ReadByte();
-            this.mData[149] = s.ReadByte();
-            this.mData[150] = s.ReadByte();
-            this.mData[151] = s.ReadByte();
-            this.mData[152] = s.ReadByte();
-            this.mData[153] = s.ReadByte();
-            this.mData[154] = s.ReadByte();
-            this.mData[155] = s.ReadByte();
-            this.mData[156] = s.ReadByte();
-            this.mData[157] = s.ReadByte();
-            this.mData[158] = s.ReadByte();
-            this.mData[159] = s.ReadByte();
-            this.mData[160] = s.ReadByte();
-            this.mData[161] = s.ReadByte();
-            this.mData[162] = s.ReadByte();
-            this.mData[163] = s.ReadByte();
-            this.mData[164] = s.ReadByte();
-            this.mData[165] = s.ReadByte();
-            this.mData[166] = s.ReadByte();
-            this.mData[167] = s.ReadByte();
-            this.mData[168] = s.ReadByte();
-            this.mData[169] = s.ReadByte();
-            this.mData[170] = s.ReadByte();
-            this.mData[171] = s.ReadByte();
-            this.mData[172] = s.ReadByte();
-            this.mData[173] = s.ReadByte();
-            this.mData[174] = s.ReadByte();
-            this.mData[175] = s.ReadByte();
-            this.mData[176] = s.ReadByte();
-            this.mData[177] = s.ReadByte();
-            this.mData[178] = s.ReadByte();
-            this.mData[179] = s.ReadByte();
+             this.mFlags = s.ReadByte();
+             this.mLen = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
+              this.mData[32] = s.ReadByte();
+              this.mData[33] = s.ReadByte();
+              this.mData[34] = s.ReadByte();
+              this.mData[35] = s.ReadByte();
+              this.mData[36] = s.ReadByte();
+              this.mData[37] = s.ReadByte();
+              this.mData[38] = s.ReadByte();
+              this.mData[39] = s.ReadByte();
+              this.mData[40] = s.ReadByte();
+              this.mData[41] = s.ReadByte();
+              this.mData[42] = s.ReadByte();
+              this.mData[43] = s.ReadByte();
+              this.mData[44] = s.ReadByte();
+              this.mData[45] = s.ReadByte();
+              this.mData[46] = s.ReadByte();
+              this.mData[47] = s.ReadByte();
+              this.mData[48] = s.ReadByte();
+              this.mData[49] = s.ReadByte();
+              this.mData[50] = s.ReadByte();
+              this.mData[51] = s.ReadByte();
+              this.mData[52] = s.ReadByte();
+              this.mData[53] = s.ReadByte();
+              this.mData[54] = s.ReadByte();
+              this.mData[55] = s.ReadByte();
+              this.mData[56] = s.ReadByte();
+              this.mData[57] = s.ReadByte();
+              this.mData[58] = s.ReadByte();
+              this.mData[59] = s.ReadByte();
+              this.mData[60] = s.ReadByte();
+              this.mData[61] = s.ReadByte();
+              this.mData[62] = s.ReadByte();
+              this.mData[63] = s.ReadByte();
+              this.mData[64] = s.ReadByte();
+              this.mData[65] = s.ReadByte();
+              this.mData[66] = s.ReadByte();
+              this.mData[67] = s.ReadByte();
+              this.mData[68] = s.ReadByte();
+              this.mData[69] = s.ReadByte();
+              this.mData[70] = s.ReadByte();
+              this.mData[71] = s.ReadByte();
+              this.mData[72] = s.ReadByte();
+              this.mData[73] = s.ReadByte();
+              this.mData[74] = s.ReadByte();
+              this.mData[75] = s.ReadByte();
+              this.mData[76] = s.ReadByte();
+              this.mData[77] = s.ReadByte();
+              this.mData[78] = s.ReadByte();
+              this.mData[79] = s.ReadByte();
+              this.mData[80] = s.ReadByte();
+              this.mData[81] = s.ReadByte();
+              this.mData[82] = s.ReadByte();
+              this.mData[83] = s.ReadByte();
+              this.mData[84] = s.ReadByte();
+              this.mData[85] = s.ReadByte();
+              this.mData[86] = s.ReadByte();
+              this.mData[87] = s.ReadByte();
+              this.mData[88] = s.ReadByte();
+              this.mData[89] = s.ReadByte();
+              this.mData[90] = s.ReadByte();
+              this.mData[91] = s.ReadByte();
+              this.mData[92] = s.ReadByte();
+              this.mData[93] = s.ReadByte();
+              this.mData[94] = s.ReadByte();
+              this.mData[95] = s.ReadByte();
+              this.mData[96] = s.ReadByte();
+              this.mData[97] = s.ReadByte();
+              this.mData[98] = s.ReadByte();
+              this.mData[99] = s.ReadByte();
+              this.mData[100] = s.ReadByte();
+              this.mData[101] = s.ReadByte();
+              this.mData[102] = s.ReadByte();
+              this.mData[103] = s.ReadByte();
+              this.mData[104] = s.ReadByte();
+              this.mData[105] = s.ReadByte();
+              this.mData[106] = s.ReadByte();
+              this.mData[107] = s.ReadByte();
+              this.mData[108] = s.ReadByte();
+              this.mData[109] = s.ReadByte();
+              this.mData[110] = s.ReadByte();
+              this.mData[111] = s.ReadByte();
+              this.mData[112] = s.ReadByte();
+              this.mData[113] = s.ReadByte();
+              this.mData[114] = s.ReadByte();
+              this.mData[115] = s.ReadByte();
+              this.mData[116] = s.ReadByte();
+              this.mData[117] = s.ReadByte();
+              this.mData[118] = s.ReadByte();
+              this.mData[119] = s.ReadByte();
+              this.mData[120] = s.ReadByte();
+              this.mData[121] = s.ReadByte();
+              this.mData[122] = s.ReadByte();
+              this.mData[123] = s.ReadByte();
+              this.mData[124] = s.ReadByte();
+              this.mData[125] = s.ReadByte();
+              this.mData[126] = s.ReadByte();
+              this.mData[127] = s.ReadByte();
+              this.mData[128] = s.ReadByte();
+              this.mData[129] = s.ReadByte();
+              this.mData[130] = s.ReadByte();
+              this.mData[131] = s.ReadByte();
+              this.mData[132] = s.ReadByte();
+              this.mData[133] = s.ReadByte();
+              this.mData[134] = s.ReadByte();
+              this.mData[135] = s.ReadByte();
+              this.mData[136] = s.ReadByte();
+              this.mData[137] = s.ReadByte();
+              this.mData[138] = s.ReadByte();
+              this.mData[139] = s.ReadByte();
+              this.mData[140] = s.ReadByte();
+              this.mData[141] = s.ReadByte();
+              this.mData[142] = s.ReadByte();
+              this.mData[143] = s.ReadByte();
+              this.mData[144] = s.ReadByte();
+              this.mData[145] = s.ReadByte();
+              this.mData[146] = s.ReadByte();
+              this.mData[147] = s.ReadByte();
+              this.mData[148] = s.ReadByte();
+              this.mData[149] = s.ReadByte();
+              this.mData[150] = s.ReadByte();
+              this.mData[151] = s.ReadByte();
+              this.mData[152] = s.ReadByte();
+              this.mData[153] = s.ReadByte();
+              this.mData[154] = s.ReadByte();
+              this.mData[155] = s.ReadByte();
+              this.mData[156] = s.ReadByte();
+              this.mData[157] = s.ReadByte();
+              this.mData[158] = s.ReadByte();
+              this.mData[159] = s.ReadByte();
+              this.mData[160] = s.ReadByte();
+              this.mData[161] = s.ReadByte();
+              this.mData[162] = s.ReadByte();
+              this.mData[163] = s.ReadByte();
+              this.mData[164] = s.ReadByte();
+              this.mData[165] = s.ReadByte();
+              this.mData[166] = s.ReadByte();
+              this.mData[167] = s.ReadByte();
+              this.mData[168] = s.ReadByte();
+              this.mData[169] = s.ReadByte();
+              this.mData[170] = s.ReadByte();
+              this.mData[171] = s.ReadByte();
+              this.mData[172] = s.ReadByte();
+              this.mData[173] = s.ReadByte();
+              this.mData[174] = s.ReadByte();
+              this.mData[175] = s.ReadByte();
+              this.mData[176] = s.ReadByte();
+              this.mData[177] = s.ReadByte();
+              this.mData[178] = s.ReadByte();
+              this.mData[179] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -27417,7 +27417,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHighLatency()
         {
-            mMessageId = 234;
+            _messageId = UasMessages.HighLatency;
             CrcExtra = 150;
         }
 
@@ -27451,30 +27451,30 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCustomMode = s.ReadUInt32();
-            this.mLatitude = s.ReadInt32();
-            this.mLongitude = s.ReadInt32();
-            this.mRoll = s.ReadInt16();
-            this.mPitch = s.ReadInt16();
-            this.mHeading = s.ReadUInt16();
-            this.mHeadingSp = s.ReadInt16();
-            this.mAltitudeAmsl = s.ReadInt16();
-            this.mAltitudeSp = s.ReadInt16();
-            this.mWpDistance = s.ReadUInt16();
-            this.mBaseMode = s.ReadByte();
-            this.mLandedState = (MavLandedState)s.ReadByte();
-            this.mThrottle = s.ReadSByte();
-            this.mAirspeed = s.ReadByte();
-            this.mAirspeedSp = s.ReadByte();
-            this.mGroundspeed = s.ReadByte();
-            this.mClimbRate = s.ReadSByte();
-            this.mGpsNsat = s.ReadByte();
-            this.mGpsFixType = s.ReadByte();
-            this.mBatteryRemaining = s.ReadByte();
-            this.mTemperature = s.ReadSByte();
-            this.mTemperatureAir = s.ReadSByte();
-            this.mFailsafe = s.ReadByte();
-            this.mWpNum = s.ReadByte();
+             this.mCustomMode = s.ReadUInt32();
+             this.mLatitude = s.ReadInt32();
+             this.mLongitude = s.ReadInt32();
+             this.mRoll = s.ReadInt16();
+             this.mPitch = s.ReadInt16();
+             this.mHeading = s.ReadUInt16();
+             this.mHeadingSp = s.ReadInt16();
+             this.mAltitudeAmsl = s.ReadInt16();
+             this.mAltitudeSp = s.ReadInt16();
+             this.mWpDistance = s.ReadUInt16();
+             this.mBaseMode = s.ReadByte();
+             this.mLandedState = (MavLandedState)s.ReadByte();
+             this.mThrottle = s.ReadSByte();
+             this.mAirspeed = s.ReadByte();
+             this.mAirspeedSp = s.ReadByte();
+             this.mGroundspeed = s.ReadByte();
+             this.mClimbRate = s.ReadSByte();
+             this.mGpsNsat = s.ReadByte();
+             this.mGpsFixType = s.ReadByte();
+             this.mBatteryRemaining = s.ReadByte();
+             this.mTemperature = s.ReadSByte();
+             this.mTemperatureAir = s.ReadSByte();
+             this.mFailsafe = s.ReadByte();
+             this.mWpNum = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -27883,7 +27883,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHighLatency2()
         {
-            mMessageId = 235;
+            _messageId = UasMessages.HighLatency2;
             CrcExtra = 179;
         }
 
@@ -27920,33 +27920,33 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimestamp = s.ReadUInt32();
-            this.mLatitude = s.ReadInt32();
-            this.mLongitude = s.ReadInt32();
-            this.mCustomMode = s.ReadUInt16();
-            this.mAltitude = s.ReadInt16();
-            this.mTargetAltitude = s.ReadInt16();
-            this.mTargetDistance = s.ReadUInt16();
-            this.mWpNum = s.ReadUInt16();
-            this.mFailureFlags = s.ReadUInt16();
-            this.mType = s.ReadByte();
-            this.mAutopilot = s.ReadByte();
-            this.mHeading = s.ReadByte();
-            this.mTargetHeading = s.ReadByte();
-            this.mThrottle = s.ReadByte();
-            this.mAirspeed = s.ReadByte();
-            this.mAirspeedSp = s.ReadByte();
-            this.mGroundspeed = s.ReadByte();
-            this.mWindspeed = s.ReadByte();
-            this.mWindHeading = s.ReadByte();
-            this.mEph = s.ReadByte();
-            this.mEpv = s.ReadByte();
-            this.mTemperatureAir = s.ReadSByte();
-            this.mClimbRate = s.ReadSByte();
-            this.mBattery = s.ReadSByte();
-            this.mCustom0 = s.ReadSByte();
-            this.mCustom1 = s.ReadSByte();
-            this.mCustom2 = s.ReadSByte();
+             this.mTimestamp = s.ReadUInt32();
+             this.mLatitude = s.ReadInt32();
+             this.mLongitude = s.ReadInt32();
+             this.mCustomMode = s.ReadUInt16();
+             this.mAltitude = s.ReadInt16();
+             this.mTargetAltitude = s.ReadInt16();
+             this.mTargetDistance = s.ReadUInt16();
+             this.mWpNum = s.ReadUInt16();
+             this.mFailureFlags = s.ReadUInt16();
+             this.mType = s.ReadByte();
+             this.mAutopilot = s.ReadByte();
+             this.mHeading = s.ReadByte();
+             this.mTargetHeading = s.ReadByte();
+             this.mThrottle = s.ReadByte();
+             this.mAirspeed = s.ReadByte();
+             this.mAirspeedSp = s.ReadByte();
+             this.mGroundspeed = s.ReadByte();
+             this.mWindspeed = s.ReadByte();
+             this.mWindHeading = s.ReadByte();
+             this.mEph = s.ReadByte();
+             this.mEpv = s.ReadByte();
+             this.mTemperatureAir = s.ReadSByte();
+             this.mClimbRate = s.ReadSByte();
+             this.mBattery = s.ReadSByte();
+             this.mCustom0 = s.ReadSByte();
+             this.mCustom1 = s.ReadSByte();
+             this.mCustom2 = s.ReadSByte();
         }
 
         protected override void InitMetadata()
@@ -28215,7 +28215,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasVibration()
         {
-            mMessageId = 241;
+            _messageId = UasMessages.Vibration;
             CrcExtra = 90;
         }
 
@@ -28232,13 +28232,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mVibrationX = s.ReadSingle();
-            this.mVibrationY = s.ReadSingle();
-            this.mVibrationZ = s.ReadSingle();
-            this.mClipping0 = s.ReadUInt32();
-            this.mClipping1 = s.ReadUInt32();
-            this.mClipping2 = s.ReadUInt32();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mVibrationX = s.ReadSingle();
+             this.mVibrationY = s.ReadSingle();
+             this.mVibrationZ = s.ReadSingle();
+             this.mClipping0 = s.ReadUInt32();
+             this.mClipping1 = s.ReadUInt32();
+             this.mClipping2 = s.ReadUInt32();
         }
 
         protected override void InitMetadata()
@@ -28399,8 +28399,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHomePosition()
         {
-            mMessageId = 242;
-            CrcExtra = 1;
+            _messageId = UasMessages.HomePosition;
+            CrcExtra = 104;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -28423,20 +28423,20 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLatitude = s.ReadInt32();
-            this.mLongitude = s.ReadInt32();
-            this.mAltitude = s.ReadInt32();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mQ[0] = s.ReadSingle();
-            this.mQ[1] = s.ReadSingle();
-            this.mQ[2] = s.ReadSingle();
-            this.mQ[3] = s.ReadSingle();
-            this.mApproachX = s.ReadSingle();
-            this.mApproachY = s.ReadSingle();
-            this.mApproachZ = s.ReadSingle();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mTimeUsec = s.ReadUInt64();
+             this.mLatitude = s.ReadInt32();
+             this.mLongitude = s.ReadInt32();
+             this.mAltitude = s.ReadInt32();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+              this.mQ[0] = s.ReadSingle();
+              this.mQ[1] = s.ReadSingle();
+              this.mQ[2] = s.ReadSingle();
+              this.mQ[3] = s.ReadSingle();
+             this.mApproachX = s.ReadSingle();
+             this.mApproachY = s.ReadSingle();
+             this.mApproachZ = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -28633,8 +28633,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSetHomePosition()
         {
-            mMessageId = 243;
-            CrcExtra = 57;
+            _messageId = UasMessages.SetHomePosition;
+            CrcExtra = 85;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -28658,21 +28658,21 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLatitude = s.ReadInt32();
-            this.mLongitude = s.ReadInt32();
-            this.mAltitude = s.ReadInt32();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mQ[0] = s.ReadSingle();
-            this.mQ[1] = s.ReadSingle();
-            this.mQ[2] = s.ReadSingle();
-            this.mQ[3] = s.ReadSingle();
-            this.mApproachX = s.ReadSingle();
-            this.mApproachY = s.ReadSingle();
-            this.mApproachZ = s.ReadSingle();
-            this.mTargetSystem = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mTimeUsec = s.ReadUInt64();
+             this.mLatitude = s.ReadInt32();
+             this.mLongitude = s.ReadInt32();
+             this.mAltitude = s.ReadInt32();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+              this.mQ[0] = s.ReadSingle();
+              this.mQ[1] = s.ReadSingle();
+              this.mQ[2] = s.ReadSingle();
+              this.mQ[3] = s.ReadSingle();
+             this.mApproachX = s.ReadSingle();
+             this.mApproachY = s.ReadSingle();
+             this.mApproachZ = s.ReadSingle();
+             this.mTargetSystem = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -28796,7 +28796,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMessageInterval()
         {
-            mMessageId = 244;
+            _messageId = UasMessages.MessageInterval;
             CrcExtra = 95;
         }
 
@@ -28808,8 +28808,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mIntervalUs = s.ReadInt32();
-            this.mMessageId = s.ReadUInt16();
+             this.mIntervalUs = s.ReadInt32();
+             this.mMessageId = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -28863,7 +28863,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasExtendedSysState()
         {
-            mMessageId = 245;
+            _messageId = UasMessages.ExtendedSysState;
             CrcExtra = 130;
         }
 
@@ -28875,8 +28875,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mVtolState = (MavVtolState)s.ReadByte();
-            this.mLandedState = (MavLandedState)s.ReadByte();
+             this.mVtolState = (MavVtolState)s.ReadByte();
+             this.mLandedState = (MavLandedState)s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -29020,7 +29020,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAdsbVehicle()
         {
-            mMessageId = 246;
+            _messageId = UasMessages.AdsbVehicle;
             CrcExtra = 184;
         }
 
@@ -29051,27 +29051,27 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mIcaoAddress = s.ReadUInt32();
-            this.mLat = s.ReadInt32();
-            this.mLon = s.ReadInt32();
-            this.mAltitude = s.ReadInt32();
-            this.mHeading = s.ReadUInt16();
-            this.mHorVelocity = s.ReadUInt16();
-            this.mVerVelocity = s.ReadInt16();
-            this.mFlags = s.ReadUInt16();
-            this.mSquawk = s.ReadUInt16();
-            this.mAltitudeType = s.ReadByte();
-            this.mCallsign[0] = s.ReadChar();
-            this.mCallsign[1] = s.ReadChar();
-            this.mCallsign[2] = s.ReadChar();
-            this.mCallsign[3] = s.ReadChar();
-            this.mCallsign[4] = s.ReadChar();
-            this.mCallsign[5] = s.ReadChar();
-            this.mCallsign[6] = s.ReadChar();
-            this.mCallsign[7] = s.ReadChar();
-            this.mCallsign[8] = s.ReadChar();
-            this.mEmitterType = s.ReadByte();
-            this.mTslc = s.ReadByte();
+             this.mIcaoAddress = s.ReadUInt32();
+             this.mLat = s.ReadInt32();
+             this.mLon = s.ReadInt32();
+             this.mAltitude = s.ReadInt32();
+             this.mHeading = s.ReadUInt16();
+             this.mHorVelocity = s.ReadUInt16();
+             this.mVerVelocity = s.ReadInt16();
+             this.mFlags = s.ReadUInt16();
+             this.mSquawk = s.ReadUInt16();
+             this.mAltitudeType = s.ReadByte();
+              this.mCallsign[0] = s.ReadChar();
+              this.mCallsign[1] = s.ReadChar();
+              this.mCallsign[2] = s.ReadChar();
+              this.mCallsign[3] = s.ReadChar();
+              this.mCallsign[4] = s.ReadChar();
+              this.mCallsign[5] = s.ReadChar();
+              this.mCallsign[6] = s.ReadChar();
+              this.mCallsign[7] = s.ReadChar();
+              this.mCallsign[8] = s.ReadChar();
+             this.mEmitterType = s.ReadByte();
+             this.mTslc = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -29242,7 +29242,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasCollision()
         {
-            mMessageId = 247;
+            _messageId = UasMessages.Collision;
             CrcExtra = 81;
         }
 
@@ -29259,13 +29259,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mId = s.ReadUInt32();
-            this.mTimeToMinimumDelta = s.ReadSingle();
-            this.mAltitudeMinimumDelta = s.ReadSingle();
-            this.mHorizontalMinimumDelta = s.ReadSingle();
-            this.mSrc = s.ReadByte();
-            this.mAction = s.ReadByte();
-            this.mThreatLevel = s.ReadByte();
+             this.mId = s.ReadUInt32();
+             this.mTimeToMinimumDelta = s.ReadSingle();
+             this.mAltitudeMinimumDelta = s.ReadSingle();
+             this.mHorizontalMinimumDelta = s.ReadSingle();
+             this.mSrc = s.ReadByte();
+             this.mAction = s.ReadByte();
+             this.mThreatLevel = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -29378,7 +29378,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasV2Extension()
         {
-            mMessageId = 248;
+            _messageId = UasMessages.V2Extension;
             CrcExtra = 8;
         }
 
@@ -29641,259 +29641,259 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mMessageType = s.ReadUInt16();
-            this.mTargetNetwork = s.ReadByte();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mPayload[0] = s.ReadByte();
-            this.mPayload[1] = s.ReadByte();
-            this.mPayload[2] = s.ReadByte();
-            this.mPayload[3] = s.ReadByte();
-            this.mPayload[4] = s.ReadByte();
-            this.mPayload[5] = s.ReadByte();
-            this.mPayload[6] = s.ReadByte();
-            this.mPayload[7] = s.ReadByte();
-            this.mPayload[8] = s.ReadByte();
-            this.mPayload[9] = s.ReadByte();
-            this.mPayload[10] = s.ReadByte();
-            this.mPayload[11] = s.ReadByte();
-            this.mPayload[12] = s.ReadByte();
-            this.mPayload[13] = s.ReadByte();
-            this.mPayload[14] = s.ReadByte();
-            this.mPayload[15] = s.ReadByte();
-            this.mPayload[16] = s.ReadByte();
-            this.mPayload[17] = s.ReadByte();
-            this.mPayload[18] = s.ReadByte();
-            this.mPayload[19] = s.ReadByte();
-            this.mPayload[20] = s.ReadByte();
-            this.mPayload[21] = s.ReadByte();
-            this.mPayload[22] = s.ReadByte();
-            this.mPayload[23] = s.ReadByte();
-            this.mPayload[24] = s.ReadByte();
-            this.mPayload[25] = s.ReadByte();
-            this.mPayload[26] = s.ReadByte();
-            this.mPayload[27] = s.ReadByte();
-            this.mPayload[28] = s.ReadByte();
-            this.mPayload[29] = s.ReadByte();
-            this.mPayload[30] = s.ReadByte();
-            this.mPayload[31] = s.ReadByte();
-            this.mPayload[32] = s.ReadByte();
-            this.mPayload[33] = s.ReadByte();
-            this.mPayload[34] = s.ReadByte();
-            this.mPayload[35] = s.ReadByte();
-            this.mPayload[36] = s.ReadByte();
-            this.mPayload[37] = s.ReadByte();
-            this.mPayload[38] = s.ReadByte();
-            this.mPayload[39] = s.ReadByte();
-            this.mPayload[40] = s.ReadByte();
-            this.mPayload[41] = s.ReadByte();
-            this.mPayload[42] = s.ReadByte();
-            this.mPayload[43] = s.ReadByte();
-            this.mPayload[44] = s.ReadByte();
-            this.mPayload[45] = s.ReadByte();
-            this.mPayload[46] = s.ReadByte();
-            this.mPayload[47] = s.ReadByte();
-            this.mPayload[48] = s.ReadByte();
-            this.mPayload[49] = s.ReadByte();
-            this.mPayload[50] = s.ReadByte();
-            this.mPayload[51] = s.ReadByte();
-            this.mPayload[52] = s.ReadByte();
-            this.mPayload[53] = s.ReadByte();
-            this.mPayload[54] = s.ReadByte();
-            this.mPayload[55] = s.ReadByte();
-            this.mPayload[56] = s.ReadByte();
-            this.mPayload[57] = s.ReadByte();
-            this.mPayload[58] = s.ReadByte();
-            this.mPayload[59] = s.ReadByte();
-            this.mPayload[60] = s.ReadByte();
-            this.mPayload[61] = s.ReadByte();
-            this.mPayload[62] = s.ReadByte();
-            this.mPayload[63] = s.ReadByte();
-            this.mPayload[64] = s.ReadByte();
-            this.mPayload[65] = s.ReadByte();
-            this.mPayload[66] = s.ReadByte();
-            this.mPayload[67] = s.ReadByte();
-            this.mPayload[68] = s.ReadByte();
-            this.mPayload[69] = s.ReadByte();
-            this.mPayload[70] = s.ReadByte();
-            this.mPayload[71] = s.ReadByte();
-            this.mPayload[72] = s.ReadByte();
-            this.mPayload[73] = s.ReadByte();
-            this.mPayload[74] = s.ReadByte();
-            this.mPayload[75] = s.ReadByte();
-            this.mPayload[76] = s.ReadByte();
-            this.mPayload[77] = s.ReadByte();
-            this.mPayload[78] = s.ReadByte();
-            this.mPayload[79] = s.ReadByte();
-            this.mPayload[80] = s.ReadByte();
-            this.mPayload[81] = s.ReadByte();
-            this.mPayload[82] = s.ReadByte();
-            this.mPayload[83] = s.ReadByte();
-            this.mPayload[84] = s.ReadByte();
-            this.mPayload[85] = s.ReadByte();
-            this.mPayload[86] = s.ReadByte();
-            this.mPayload[87] = s.ReadByte();
-            this.mPayload[88] = s.ReadByte();
-            this.mPayload[89] = s.ReadByte();
-            this.mPayload[90] = s.ReadByte();
-            this.mPayload[91] = s.ReadByte();
-            this.mPayload[92] = s.ReadByte();
-            this.mPayload[93] = s.ReadByte();
-            this.mPayload[94] = s.ReadByte();
-            this.mPayload[95] = s.ReadByte();
-            this.mPayload[96] = s.ReadByte();
-            this.mPayload[97] = s.ReadByte();
-            this.mPayload[98] = s.ReadByte();
-            this.mPayload[99] = s.ReadByte();
-            this.mPayload[100] = s.ReadByte();
-            this.mPayload[101] = s.ReadByte();
-            this.mPayload[102] = s.ReadByte();
-            this.mPayload[103] = s.ReadByte();
-            this.mPayload[104] = s.ReadByte();
-            this.mPayload[105] = s.ReadByte();
-            this.mPayload[106] = s.ReadByte();
-            this.mPayload[107] = s.ReadByte();
-            this.mPayload[108] = s.ReadByte();
-            this.mPayload[109] = s.ReadByte();
-            this.mPayload[110] = s.ReadByte();
-            this.mPayload[111] = s.ReadByte();
-            this.mPayload[112] = s.ReadByte();
-            this.mPayload[113] = s.ReadByte();
-            this.mPayload[114] = s.ReadByte();
-            this.mPayload[115] = s.ReadByte();
-            this.mPayload[116] = s.ReadByte();
-            this.mPayload[117] = s.ReadByte();
-            this.mPayload[118] = s.ReadByte();
-            this.mPayload[119] = s.ReadByte();
-            this.mPayload[120] = s.ReadByte();
-            this.mPayload[121] = s.ReadByte();
-            this.mPayload[122] = s.ReadByte();
-            this.mPayload[123] = s.ReadByte();
-            this.mPayload[124] = s.ReadByte();
-            this.mPayload[125] = s.ReadByte();
-            this.mPayload[126] = s.ReadByte();
-            this.mPayload[127] = s.ReadByte();
-            this.mPayload[128] = s.ReadByte();
-            this.mPayload[129] = s.ReadByte();
-            this.mPayload[130] = s.ReadByte();
-            this.mPayload[131] = s.ReadByte();
-            this.mPayload[132] = s.ReadByte();
-            this.mPayload[133] = s.ReadByte();
-            this.mPayload[134] = s.ReadByte();
-            this.mPayload[135] = s.ReadByte();
-            this.mPayload[136] = s.ReadByte();
-            this.mPayload[137] = s.ReadByte();
-            this.mPayload[138] = s.ReadByte();
-            this.mPayload[139] = s.ReadByte();
-            this.mPayload[140] = s.ReadByte();
-            this.mPayload[141] = s.ReadByte();
-            this.mPayload[142] = s.ReadByte();
-            this.mPayload[143] = s.ReadByte();
-            this.mPayload[144] = s.ReadByte();
-            this.mPayload[145] = s.ReadByte();
-            this.mPayload[146] = s.ReadByte();
-            this.mPayload[147] = s.ReadByte();
-            this.mPayload[148] = s.ReadByte();
-            this.mPayload[149] = s.ReadByte();
-            this.mPayload[150] = s.ReadByte();
-            this.mPayload[151] = s.ReadByte();
-            this.mPayload[152] = s.ReadByte();
-            this.mPayload[153] = s.ReadByte();
-            this.mPayload[154] = s.ReadByte();
-            this.mPayload[155] = s.ReadByte();
-            this.mPayload[156] = s.ReadByte();
-            this.mPayload[157] = s.ReadByte();
-            this.mPayload[158] = s.ReadByte();
-            this.mPayload[159] = s.ReadByte();
-            this.mPayload[160] = s.ReadByte();
-            this.mPayload[161] = s.ReadByte();
-            this.mPayload[162] = s.ReadByte();
-            this.mPayload[163] = s.ReadByte();
-            this.mPayload[164] = s.ReadByte();
-            this.mPayload[165] = s.ReadByte();
-            this.mPayload[166] = s.ReadByte();
-            this.mPayload[167] = s.ReadByte();
-            this.mPayload[168] = s.ReadByte();
-            this.mPayload[169] = s.ReadByte();
-            this.mPayload[170] = s.ReadByte();
-            this.mPayload[171] = s.ReadByte();
-            this.mPayload[172] = s.ReadByte();
-            this.mPayload[173] = s.ReadByte();
-            this.mPayload[174] = s.ReadByte();
-            this.mPayload[175] = s.ReadByte();
-            this.mPayload[176] = s.ReadByte();
-            this.mPayload[177] = s.ReadByte();
-            this.mPayload[178] = s.ReadByte();
-            this.mPayload[179] = s.ReadByte();
-            this.mPayload[180] = s.ReadByte();
-            this.mPayload[181] = s.ReadByte();
-            this.mPayload[182] = s.ReadByte();
-            this.mPayload[183] = s.ReadByte();
-            this.mPayload[184] = s.ReadByte();
-            this.mPayload[185] = s.ReadByte();
-            this.mPayload[186] = s.ReadByte();
-            this.mPayload[187] = s.ReadByte();
-            this.mPayload[188] = s.ReadByte();
-            this.mPayload[189] = s.ReadByte();
-            this.mPayload[190] = s.ReadByte();
-            this.mPayload[191] = s.ReadByte();
-            this.mPayload[192] = s.ReadByte();
-            this.mPayload[193] = s.ReadByte();
-            this.mPayload[194] = s.ReadByte();
-            this.mPayload[195] = s.ReadByte();
-            this.mPayload[196] = s.ReadByte();
-            this.mPayload[197] = s.ReadByte();
-            this.mPayload[198] = s.ReadByte();
-            this.mPayload[199] = s.ReadByte();
-            this.mPayload[200] = s.ReadByte();
-            this.mPayload[201] = s.ReadByte();
-            this.mPayload[202] = s.ReadByte();
-            this.mPayload[203] = s.ReadByte();
-            this.mPayload[204] = s.ReadByte();
-            this.mPayload[205] = s.ReadByte();
-            this.mPayload[206] = s.ReadByte();
-            this.mPayload[207] = s.ReadByte();
-            this.mPayload[208] = s.ReadByte();
-            this.mPayload[209] = s.ReadByte();
-            this.mPayload[210] = s.ReadByte();
-            this.mPayload[211] = s.ReadByte();
-            this.mPayload[212] = s.ReadByte();
-            this.mPayload[213] = s.ReadByte();
-            this.mPayload[214] = s.ReadByte();
-            this.mPayload[215] = s.ReadByte();
-            this.mPayload[216] = s.ReadByte();
-            this.mPayload[217] = s.ReadByte();
-            this.mPayload[218] = s.ReadByte();
-            this.mPayload[219] = s.ReadByte();
-            this.mPayload[220] = s.ReadByte();
-            this.mPayload[221] = s.ReadByte();
-            this.mPayload[222] = s.ReadByte();
-            this.mPayload[223] = s.ReadByte();
-            this.mPayload[224] = s.ReadByte();
-            this.mPayload[225] = s.ReadByte();
-            this.mPayload[226] = s.ReadByte();
-            this.mPayload[227] = s.ReadByte();
-            this.mPayload[228] = s.ReadByte();
-            this.mPayload[229] = s.ReadByte();
-            this.mPayload[230] = s.ReadByte();
-            this.mPayload[231] = s.ReadByte();
-            this.mPayload[232] = s.ReadByte();
-            this.mPayload[233] = s.ReadByte();
-            this.mPayload[234] = s.ReadByte();
-            this.mPayload[235] = s.ReadByte();
-            this.mPayload[236] = s.ReadByte();
-            this.mPayload[237] = s.ReadByte();
-            this.mPayload[238] = s.ReadByte();
-            this.mPayload[239] = s.ReadByte();
-            this.mPayload[240] = s.ReadByte();
-            this.mPayload[241] = s.ReadByte();
-            this.mPayload[242] = s.ReadByte();
-            this.mPayload[243] = s.ReadByte();
-            this.mPayload[244] = s.ReadByte();
-            this.mPayload[245] = s.ReadByte();
-            this.mPayload[246] = s.ReadByte();
-            this.mPayload[247] = s.ReadByte();
-            this.mPayload[248] = s.ReadByte();
+             this.mMessageType = s.ReadUInt16();
+             this.mTargetNetwork = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+              this.mPayload[0] = s.ReadByte();
+              this.mPayload[1] = s.ReadByte();
+              this.mPayload[2] = s.ReadByte();
+              this.mPayload[3] = s.ReadByte();
+              this.mPayload[4] = s.ReadByte();
+              this.mPayload[5] = s.ReadByte();
+              this.mPayload[6] = s.ReadByte();
+              this.mPayload[7] = s.ReadByte();
+              this.mPayload[8] = s.ReadByte();
+              this.mPayload[9] = s.ReadByte();
+              this.mPayload[10] = s.ReadByte();
+              this.mPayload[11] = s.ReadByte();
+              this.mPayload[12] = s.ReadByte();
+              this.mPayload[13] = s.ReadByte();
+              this.mPayload[14] = s.ReadByte();
+              this.mPayload[15] = s.ReadByte();
+              this.mPayload[16] = s.ReadByte();
+              this.mPayload[17] = s.ReadByte();
+              this.mPayload[18] = s.ReadByte();
+              this.mPayload[19] = s.ReadByte();
+              this.mPayload[20] = s.ReadByte();
+              this.mPayload[21] = s.ReadByte();
+              this.mPayload[22] = s.ReadByte();
+              this.mPayload[23] = s.ReadByte();
+              this.mPayload[24] = s.ReadByte();
+              this.mPayload[25] = s.ReadByte();
+              this.mPayload[26] = s.ReadByte();
+              this.mPayload[27] = s.ReadByte();
+              this.mPayload[28] = s.ReadByte();
+              this.mPayload[29] = s.ReadByte();
+              this.mPayload[30] = s.ReadByte();
+              this.mPayload[31] = s.ReadByte();
+              this.mPayload[32] = s.ReadByte();
+              this.mPayload[33] = s.ReadByte();
+              this.mPayload[34] = s.ReadByte();
+              this.mPayload[35] = s.ReadByte();
+              this.mPayload[36] = s.ReadByte();
+              this.mPayload[37] = s.ReadByte();
+              this.mPayload[38] = s.ReadByte();
+              this.mPayload[39] = s.ReadByte();
+              this.mPayload[40] = s.ReadByte();
+              this.mPayload[41] = s.ReadByte();
+              this.mPayload[42] = s.ReadByte();
+              this.mPayload[43] = s.ReadByte();
+              this.mPayload[44] = s.ReadByte();
+              this.mPayload[45] = s.ReadByte();
+              this.mPayload[46] = s.ReadByte();
+              this.mPayload[47] = s.ReadByte();
+              this.mPayload[48] = s.ReadByte();
+              this.mPayload[49] = s.ReadByte();
+              this.mPayload[50] = s.ReadByte();
+              this.mPayload[51] = s.ReadByte();
+              this.mPayload[52] = s.ReadByte();
+              this.mPayload[53] = s.ReadByte();
+              this.mPayload[54] = s.ReadByte();
+              this.mPayload[55] = s.ReadByte();
+              this.mPayload[56] = s.ReadByte();
+              this.mPayload[57] = s.ReadByte();
+              this.mPayload[58] = s.ReadByte();
+              this.mPayload[59] = s.ReadByte();
+              this.mPayload[60] = s.ReadByte();
+              this.mPayload[61] = s.ReadByte();
+              this.mPayload[62] = s.ReadByte();
+              this.mPayload[63] = s.ReadByte();
+              this.mPayload[64] = s.ReadByte();
+              this.mPayload[65] = s.ReadByte();
+              this.mPayload[66] = s.ReadByte();
+              this.mPayload[67] = s.ReadByte();
+              this.mPayload[68] = s.ReadByte();
+              this.mPayload[69] = s.ReadByte();
+              this.mPayload[70] = s.ReadByte();
+              this.mPayload[71] = s.ReadByte();
+              this.mPayload[72] = s.ReadByte();
+              this.mPayload[73] = s.ReadByte();
+              this.mPayload[74] = s.ReadByte();
+              this.mPayload[75] = s.ReadByte();
+              this.mPayload[76] = s.ReadByte();
+              this.mPayload[77] = s.ReadByte();
+              this.mPayload[78] = s.ReadByte();
+              this.mPayload[79] = s.ReadByte();
+              this.mPayload[80] = s.ReadByte();
+              this.mPayload[81] = s.ReadByte();
+              this.mPayload[82] = s.ReadByte();
+              this.mPayload[83] = s.ReadByte();
+              this.mPayload[84] = s.ReadByte();
+              this.mPayload[85] = s.ReadByte();
+              this.mPayload[86] = s.ReadByte();
+              this.mPayload[87] = s.ReadByte();
+              this.mPayload[88] = s.ReadByte();
+              this.mPayload[89] = s.ReadByte();
+              this.mPayload[90] = s.ReadByte();
+              this.mPayload[91] = s.ReadByte();
+              this.mPayload[92] = s.ReadByte();
+              this.mPayload[93] = s.ReadByte();
+              this.mPayload[94] = s.ReadByte();
+              this.mPayload[95] = s.ReadByte();
+              this.mPayload[96] = s.ReadByte();
+              this.mPayload[97] = s.ReadByte();
+              this.mPayload[98] = s.ReadByte();
+              this.mPayload[99] = s.ReadByte();
+              this.mPayload[100] = s.ReadByte();
+              this.mPayload[101] = s.ReadByte();
+              this.mPayload[102] = s.ReadByte();
+              this.mPayload[103] = s.ReadByte();
+              this.mPayload[104] = s.ReadByte();
+              this.mPayload[105] = s.ReadByte();
+              this.mPayload[106] = s.ReadByte();
+              this.mPayload[107] = s.ReadByte();
+              this.mPayload[108] = s.ReadByte();
+              this.mPayload[109] = s.ReadByte();
+              this.mPayload[110] = s.ReadByte();
+              this.mPayload[111] = s.ReadByte();
+              this.mPayload[112] = s.ReadByte();
+              this.mPayload[113] = s.ReadByte();
+              this.mPayload[114] = s.ReadByte();
+              this.mPayload[115] = s.ReadByte();
+              this.mPayload[116] = s.ReadByte();
+              this.mPayload[117] = s.ReadByte();
+              this.mPayload[118] = s.ReadByte();
+              this.mPayload[119] = s.ReadByte();
+              this.mPayload[120] = s.ReadByte();
+              this.mPayload[121] = s.ReadByte();
+              this.mPayload[122] = s.ReadByte();
+              this.mPayload[123] = s.ReadByte();
+              this.mPayload[124] = s.ReadByte();
+              this.mPayload[125] = s.ReadByte();
+              this.mPayload[126] = s.ReadByte();
+              this.mPayload[127] = s.ReadByte();
+              this.mPayload[128] = s.ReadByte();
+              this.mPayload[129] = s.ReadByte();
+              this.mPayload[130] = s.ReadByte();
+              this.mPayload[131] = s.ReadByte();
+              this.mPayload[132] = s.ReadByte();
+              this.mPayload[133] = s.ReadByte();
+              this.mPayload[134] = s.ReadByte();
+              this.mPayload[135] = s.ReadByte();
+              this.mPayload[136] = s.ReadByte();
+              this.mPayload[137] = s.ReadByte();
+              this.mPayload[138] = s.ReadByte();
+              this.mPayload[139] = s.ReadByte();
+              this.mPayload[140] = s.ReadByte();
+              this.mPayload[141] = s.ReadByte();
+              this.mPayload[142] = s.ReadByte();
+              this.mPayload[143] = s.ReadByte();
+              this.mPayload[144] = s.ReadByte();
+              this.mPayload[145] = s.ReadByte();
+              this.mPayload[146] = s.ReadByte();
+              this.mPayload[147] = s.ReadByte();
+              this.mPayload[148] = s.ReadByte();
+              this.mPayload[149] = s.ReadByte();
+              this.mPayload[150] = s.ReadByte();
+              this.mPayload[151] = s.ReadByte();
+              this.mPayload[152] = s.ReadByte();
+              this.mPayload[153] = s.ReadByte();
+              this.mPayload[154] = s.ReadByte();
+              this.mPayload[155] = s.ReadByte();
+              this.mPayload[156] = s.ReadByte();
+              this.mPayload[157] = s.ReadByte();
+              this.mPayload[158] = s.ReadByte();
+              this.mPayload[159] = s.ReadByte();
+              this.mPayload[160] = s.ReadByte();
+              this.mPayload[161] = s.ReadByte();
+              this.mPayload[162] = s.ReadByte();
+              this.mPayload[163] = s.ReadByte();
+              this.mPayload[164] = s.ReadByte();
+              this.mPayload[165] = s.ReadByte();
+              this.mPayload[166] = s.ReadByte();
+              this.mPayload[167] = s.ReadByte();
+              this.mPayload[168] = s.ReadByte();
+              this.mPayload[169] = s.ReadByte();
+              this.mPayload[170] = s.ReadByte();
+              this.mPayload[171] = s.ReadByte();
+              this.mPayload[172] = s.ReadByte();
+              this.mPayload[173] = s.ReadByte();
+              this.mPayload[174] = s.ReadByte();
+              this.mPayload[175] = s.ReadByte();
+              this.mPayload[176] = s.ReadByte();
+              this.mPayload[177] = s.ReadByte();
+              this.mPayload[178] = s.ReadByte();
+              this.mPayload[179] = s.ReadByte();
+              this.mPayload[180] = s.ReadByte();
+              this.mPayload[181] = s.ReadByte();
+              this.mPayload[182] = s.ReadByte();
+              this.mPayload[183] = s.ReadByte();
+              this.mPayload[184] = s.ReadByte();
+              this.mPayload[185] = s.ReadByte();
+              this.mPayload[186] = s.ReadByte();
+              this.mPayload[187] = s.ReadByte();
+              this.mPayload[188] = s.ReadByte();
+              this.mPayload[189] = s.ReadByte();
+              this.mPayload[190] = s.ReadByte();
+              this.mPayload[191] = s.ReadByte();
+              this.mPayload[192] = s.ReadByte();
+              this.mPayload[193] = s.ReadByte();
+              this.mPayload[194] = s.ReadByte();
+              this.mPayload[195] = s.ReadByte();
+              this.mPayload[196] = s.ReadByte();
+              this.mPayload[197] = s.ReadByte();
+              this.mPayload[198] = s.ReadByte();
+              this.mPayload[199] = s.ReadByte();
+              this.mPayload[200] = s.ReadByte();
+              this.mPayload[201] = s.ReadByte();
+              this.mPayload[202] = s.ReadByte();
+              this.mPayload[203] = s.ReadByte();
+              this.mPayload[204] = s.ReadByte();
+              this.mPayload[205] = s.ReadByte();
+              this.mPayload[206] = s.ReadByte();
+              this.mPayload[207] = s.ReadByte();
+              this.mPayload[208] = s.ReadByte();
+              this.mPayload[209] = s.ReadByte();
+              this.mPayload[210] = s.ReadByte();
+              this.mPayload[211] = s.ReadByte();
+              this.mPayload[212] = s.ReadByte();
+              this.mPayload[213] = s.ReadByte();
+              this.mPayload[214] = s.ReadByte();
+              this.mPayload[215] = s.ReadByte();
+              this.mPayload[216] = s.ReadByte();
+              this.mPayload[217] = s.ReadByte();
+              this.mPayload[218] = s.ReadByte();
+              this.mPayload[219] = s.ReadByte();
+              this.mPayload[220] = s.ReadByte();
+              this.mPayload[221] = s.ReadByte();
+              this.mPayload[222] = s.ReadByte();
+              this.mPayload[223] = s.ReadByte();
+              this.mPayload[224] = s.ReadByte();
+              this.mPayload[225] = s.ReadByte();
+              this.mPayload[226] = s.ReadByte();
+              this.mPayload[227] = s.ReadByte();
+              this.mPayload[228] = s.ReadByte();
+              this.mPayload[229] = s.ReadByte();
+              this.mPayload[230] = s.ReadByte();
+              this.mPayload[231] = s.ReadByte();
+              this.mPayload[232] = s.ReadByte();
+              this.mPayload[233] = s.ReadByte();
+              this.mPayload[234] = s.ReadByte();
+              this.mPayload[235] = s.ReadByte();
+              this.mPayload[236] = s.ReadByte();
+              this.mPayload[237] = s.ReadByte();
+              this.mPayload[238] = s.ReadByte();
+              this.mPayload[239] = s.ReadByte();
+              this.mPayload[240] = s.ReadByte();
+              this.mPayload[241] = s.ReadByte();
+              this.mPayload[242] = s.ReadByte();
+              this.mPayload[243] = s.ReadByte();
+              this.mPayload[244] = s.ReadByte();
+              this.mPayload[245] = s.ReadByte();
+              this.mPayload[246] = s.ReadByte();
+              this.mPayload[247] = s.ReadByte();
+              this.mPayload[248] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -29984,7 +29984,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMemoryVect()
         {
-            mMessageId = 249;
+            _messageId = UasMessages.MemoryVect;
             CrcExtra = 204;
         }
 
@@ -30029,41 +30029,41 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mAddress = s.ReadUInt16();
-            this.mVer = s.ReadByte();
-            this.mType = s.ReadByte();
-            this.mValue[0] = s.ReadSByte();
-            this.mValue[1] = s.ReadSByte();
-            this.mValue[2] = s.ReadSByte();
-            this.mValue[3] = s.ReadSByte();
-            this.mValue[4] = s.ReadSByte();
-            this.mValue[5] = s.ReadSByte();
-            this.mValue[6] = s.ReadSByte();
-            this.mValue[7] = s.ReadSByte();
-            this.mValue[8] = s.ReadSByte();
-            this.mValue[9] = s.ReadSByte();
-            this.mValue[10] = s.ReadSByte();
-            this.mValue[11] = s.ReadSByte();
-            this.mValue[12] = s.ReadSByte();
-            this.mValue[13] = s.ReadSByte();
-            this.mValue[14] = s.ReadSByte();
-            this.mValue[15] = s.ReadSByte();
-            this.mValue[16] = s.ReadSByte();
-            this.mValue[17] = s.ReadSByte();
-            this.mValue[18] = s.ReadSByte();
-            this.mValue[19] = s.ReadSByte();
-            this.mValue[20] = s.ReadSByte();
-            this.mValue[21] = s.ReadSByte();
-            this.mValue[22] = s.ReadSByte();
-            this.mValue[23] = s.ReadSByte();
-            this.mValue[24] = s.ReadSByte();
-            this.mValue[25] = s.ReadSByte();
-            this.mValue[26] = s.ReadSByte();
-            this.mValue[27] = s.ReadSByte();
-            this.mValue[28] = s.ReadSByte();
-            this.mValue[29] = s.ReadSByte();
-            this.mValue[30] = s.ReadSByte();
-            this.mValue[31] = s.ReadSByte();
+             this.mAddress = s.ReadUInt16();
+             this.mVer = s.ReadByte();
+             this.mType = s.ReadByte();
+              this.mValue[0] = s.ReadSByte();
+              this.mValue[1] = s.ReadSByte();
+              this.mValue[2] = s.ReadSByte();
+              this.mValue[3] = s.ReadSByte();
+              this.mValue[4] = s.ReadSByte();
+              this.mValue[5] = s.ReadSByte();
+              this.mValue[6] = s.ReadSByte();
+              this.mValue[7] = s.ReadSByte();
+              this.mValue[8] = s.ReadSByte();
+              this.mValue[9] = s.ReadSByte();
+              this.mValue[10] = s.ReadSByte();
+              this.mValue[11] = s.ReadSByte();
+              this.mValue[12] = s.ReadSByte();
+              this.mValue[13] = s.ReadSByte();
+              this.mValue[14] = s.ReadSByte();
+              this.mValue[15] = s.ReadSByte();
+              this.mValue[16] = s.ReadSByte();
+              this.mValue[17] = s.ReadSByte();
+              this.mValue[18] = s.ReadSByte();
+              this.mValue[19] = s.ReadSByte();
+              this.mValue[20] = s.ReadSByte();
+              this.mValue[21] = s.ReadSByte();
+              this.mValue[22] = s.ReadSByte();
+              this.mValue[23] = s.ReadSByte();
+              this.mValue[24] = s.ReadSByte();
+              this.mValue[25] = s.ReadSByte();
+              this.mValue[26] = s.ReadSByte();
+              this.mValue[27] = s.ReadSByte();
+              this.mValue[28] = s.ReadSByte();
+              this.mValue[29] = s.ReadSByte();
+              this.mValue[30] = s.ReadSByte();
+              this.mValue[31] = s.ReadSByte();
         }
 
         protected override void InitMetadata()
@@ -30152,7 +30152,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasDebugVect()
         {
-            mMessageId = 250;
+            _messageId = UasMessages.DebugVect;
             CrcExtra = 49;
         }
 
@@ -30176,20 +30176,20 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mX = s.ReadSingle();
-            this.mY = s.ReadSingle();
-            this.mZ = s.ReadSingle();
-            this.mName[0] = s.ReadChar();
-            this.mName[1] = s.ReadChar();
-            this.mName[2] = s.ReadChar();
-            this.mName[3] = s.ReadChar();
-            this.mName[4] = s.ReadChar();
-            this.mName[5] = s.ReadChar();
-            this.mName[6] = s.ReadChar();
-            this.mName[7] = s.ReadChar();
-            this.mName[8] = s.ReadChar();
-            this.mName[9] = s.ReadChar();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mX = s.ReadSingle();
+             this.mY = s.ReadSingle();
+             this.mZ = s.ReadSingle();
+              this.mName[0] = s.ReadChar();
+              this.mName[1] = s.ReadChar();
+              this.mName[2] = s.ReadChar();
+              this.mName[3] = s.ReadChar();
+              this.mName[4] = s.ReadChar();
+              this.mName[5] = s.ReadChar();
+              this.mName[6] = s.ReadChar();
+              this.mName[7] = s.ReadChar();
+              this.mName[8] = s.ReadChar();
+              this.mName[9] = s.ReadChar();
         }
 
         protected override void InitMetadata()
@@ -30272,7 +30272,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasNamedValueFloat()
         {
-            mMessageId = 251;
+            _messageId = UasMessages.NamedValueFloat;
             CrcExtra = 170;
         }
 
@@ -30294,18 +30294,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mValue = s.ReadSingle();
-            this.mName[0] = s.ReadChar();
-            this.mName[1] = s.ReadChar();
-            this.mName[2] = s.ReadChar();
-            this.mName[3] = s.ReadChar();
-            this.mName[4] = s.ReadChar();
-            this.mName[5] = s.ReadChar();
-            this.mName[6] = s.ReadChar();
-            this.mName[7] = s.ReadChar();
-            this.mName[8] = s.ReadChar();
-            this.mName[9] = s.ReadChar();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mValue = s.ReadSingle();
+              this.mName[0] = s.ReadChar();
+              this.mName[1] = s.ReadChar();
+              this.mName[2] = s.ReadChar();
+              this.mName[3] = s.ReadChar();
+              this.mName[4] = s.ReadChar();
+              this.mName[5] = s.ReadChar();
+              this.mName[6] = s.ReadChar();
+              this.mName[7] = s.ReadChar();
+              this.mName[8] = s.ReadChar();
+              this.mName[9] = s.ReadChar();
         }
 
         protected override void InitMetadata()
@@ -30374,7 +30374,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasNamedValueInt()
         {
-            mMessageId = 252;
+            _messageId = UasMessages.NamedValueInt;
             CrcExtra = 44;
         }
 
@@ -30396,18 +30396,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mValue = s.ReadInt32();
-            this.mName[0] = s.ReadChar();
-            this.mName[1] = s.ReadChar();
-            this.mName[2] = s.ReadChar();
-            this.mName[3] = s.ReadChar();
-            this.mName[4] = s.ReadChar();
-            this.mName[5] = s.ReadChar();
-            this.mName[6] = s.ReadChar();
-            this.mName[7] = s.ReadChar();
-            this.mName[8] = s.ReadChar();
-            this.mName[9] = s.ReadChar();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mValue = s.ReadInt32();
+              this.mName[0] = s.ReadChar();
+              this.mName[1] = s.ReadChar();
+              this.mName[2] = s.ReadChar();
+              this.mName[3] = s.ReadChar();
+              this.mName[4] = s.ReadChar();
+              this.mName[5] = s.ReadChar();
+              this.mName[6] = s.ReadChar();
+              this.mName[7] = s.ReadChar();
+              this.mName[8] = s.ReadChar();
+              this.mName[9] = s.ReadChar();
         }
 
         protected override void InitMetadata()
@@ -30468,7 +30468,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasStatustext()
         {
-            mMessageId = 253;
+            _messageId = UasMessages.Statustext;
             CrcExtra = 83;
         }
 
@@ -30529,57 +30529,57 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeverity = s.ReadByte();
-            this.mText[0] = s.ReadChar();
-            this.mText[1] = s.ReadChar();
-            this.mText[2] = s.ReadChar();
-            this.mText[3] = s.ReadChar();
-            this.mText[4] = s.ReadChar();
-            this.mText[5] = s.ReadChar();
-            this.mText[6] = s.ReadChar();
-            this.mText[7] = s.ReadChar();
-            this.mText[8] = s.ReadChar();
-            this.mText[9] = s.ReadChar();
-            this.mText[10] = s.ReadChar();
-            this.mText[11] = s.ReadChar();
-            this.mText[12] = s.ReadChar();
-            this.mText[13] = s.ReadChar();
-            this.mText[14] = s.ReadChar();
-            this.mText[15] = s.ReadChar();
-            this.mText[16] = s.ReadChar();
-            this.mText[17] = s.ReadChar();
-            this.mText[18] = s.ReadChar();
-            this.mText[19] = s.ReadChar();
-            this.mText[20] = s.ReadChar();
-            this.mText[21] = s.ReadChar();
-            this.mText[22] = s.ReadChar();
-            this.mText[23] = s.ReadChar();
-            this.mText[24] = s.ReadChar();
-            this.mText[25] = s.ReadChar();
-            this.mText[26] = s.ReadChar();
-            this.mText[27] = s.ReadChar();
-            this.mText[28] = s.ReadChar();
-            this.mText[29] = s.ReadChar();
-            this.mText[30] = s.ReadChar();
-            this.mText[31] = s.ReadChar();
-            this.mText[32] = s.ReadChar();
-            this.mText[33] = s.ReadChar();
-            this.mText[34] = s.ReadChar();
-            this.mText[35] = s.ReadChar();
-            this.mText[36] = s.ReadChar();
-            this.mText[37] = s.ReadChar();
-            this.mText[38] = s.ReadChar();
-            this.mText[39] = s.ReadChar();
-            this.mText[40] = s.ReadChar();
-            this.mText[41] = s.ReadChar();
-            this.mText[42] = s.ReadChar();
-            this.mText[43] = s.ReadChar();
-            this.mText[44] = s.ReadChar();
-            this.mText[45] = s.ReadChar();
-            this.mText[46] = s.ReadChar();
-            this.mText[47] = s.ReadChar();
-            this.mText[48] = s.ReadChar();
-            this.mText[49] = s.ReadChar();
+             this.mSeverity = s.ReadByte();
+              this.mText[0] = s.ReadChar();
+              this.mText[1] = s.ReadChar();
+              this.mText[2] = s.ReadChar();
+              this.mText[3] = s.ReadChar();
+              this.mText[4] = s.ReadChar();
+              this.mText[5] = s.ReadChar();
+              this.mText[6] = s.ReadChar();
+              this.mText[7] = s.ReadChar();
+              this.mText[8] = s.ReadChar();
+              this.mText[9] = s.ReadChar();
+              this.mText[10] = s.ReadChar();
+              this.mText[11] = s.ReadChar();
+              this.mText[12] = s.ReadChar();
+              this.mText[13] = s.ReadChar();
+              this.mText[14] = s.ReadChar();
+              this.mText[15] = s.ReadChar();
+              this.mText[16] = s.ReadChar();
+              this.mText[17] = s.ReadChar();
+              this.mText[18] = s.ReadChar();
+              this.mText[19] = s.ReadChar();
+              this.mText[20] = s.ReadChar();
+              this.mText[21] = s.ReadChar();
+              this.mText[22] = s.ReadChar();
+              this.mText[23] = s.ReadChar();
+              this.mText[24] = s.ReadChar();
+              this.mText[25] = s.ReadChar();
+              this.mText[26] = s.ReadChar();
+              this.mText[27] = s.ReadChar();
+              this.mText[28] = s.ReadChar();
+              this.mText[29] = s.ReadChar();
+              this.mText[30] = s.ReadChar();
+              this.mText[31] = s.ReadChar();
+              this.mText[32] = s.ReadChar();
+              this.mText[33] = s.ReadChar();
+              this.mText[34] = s.ReadChar();
+              this.mText[35] = s.ReadChar();
+              this.mText[36] = s.ReadChar();
+              this.mText[37] = s.ReadChar();
+              this.mText[38] = s.ReadChar();
+              this.mText[39] = s.ReadChar();
+              this.mText[40] = s.ReadChar();
+              this.mText[41] = s.ReadChar();
+              this.mText[42] = s.ReadChar();
+              this.mText[43] = s.ReadChar();
+              this.mText[44] = s.ReadChar();
+              this.mText[45] = s.ReadChar();
+              this.mText[46] = s.ReadChar();
+              this.mText[47] = s.ReadChar();
+              this.mText[48] = s.ReadChar();
+              this.mText[49] = s.ReadChar();
         }
 
         protected override void InitMetadata()
@@ -30641,7 +30641,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasDebug()
         {
-            mMessageId = 254;
+            _messageId = UasMessages.Debug;
             CrcExtra = 46;
         }
 
@@ -30654,9 +30654,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeBootMs = s.ReadUInt32();
-            this.mValue = s.ReadSingle();
-            this.mInd = s.ReadByte();
+             this.mTimeBootMs = s.ReadUInt32();
+             this.mValue = s.ReadSingle();
+             this.mInd = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -30797,7 +30797,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSensorOffsets()
         {
-            mMessageId = 150;
+            _messageId = UasMessages.SensorOffsets;
             CrcExtra = 134;
         }
 
@@ -30819,18 +30819,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mMagDeclination = s.ReadSingle();
-            this.mRawPress = s.ReadInt32();
-            this.mRawTemp = s.ReadInt32();
-            this.mGyroCalX = s.ReadSingle();
-            this.mGyroCalY = s.ReadSingle();
-            this.mGyroCalZ = s.ReadSingle();
-            this.mAccelCalX = s.ReadSingle();
-            this.mAccelCalY = s.ReadSingle();
-            this.mAccelCalZ = s.ReadSingle();
-            this.mMagOfsX = s.ReadInt16();
-            this.mMagOfsY = s.ReadInt16();
-            this.mMagOfsZ = s.ReadInt16();
+             this.mMagDeclination = s.ReadSingle();
+             this.mRawPress = s.ReadInt32();
+             this.mRawTemp = s.ReadInt32();
+             this.mGyroCalX = s.ReadSingle();
+             this.mGyroCalY = s.ReadSingle();
+             this.mGyroCalZ = s.ReadSingle();
+             this.mAccelCalX = s.ReadSingle();
+             this.mAccelCalY = s.ReadSingle();
+             this.mAccelCalZ = s.ReadSingle();
+             this.mMagOfsX = s.ReadInt16();
+             this.mMagOfsY = s.ReadInt16();
+             this.mMagOfsZ = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -30978,7 +30978,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSetMagOffsets()
         {
-            mMessageId = 151;
+            _messageId = UasMessages.SetMagOffsets;
             CrcExtra = 219;
         }
 
@@ -30993,11 +30993,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mMagOfsX = s.ReadInt16();
-            this.mMagOfsY = s.ReadInt16();
-            this.mMagOfsZ = s.ReadInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mMagOfsX = s.ReadInt16();
+             this.mMagOfsY = s.ReadInt16();
+             this.mMagOfsZ = s.ReadInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -31080,8 +31080,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMeminfo()
         {
-            mMessageId = 152;
-            CrcExtra = 112;
+            _messageId = UasMessages.Meminfo;
+            CrcExtra = 208;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -31093,9 +31093,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mFreemem32 = s.ReadUInt32();
-            this.mBrkval = s.ReadUInt16();
-            this.mFreemem = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mFreemem32 = s.ReadUInt32();
+             this.mBrkval = s.ReadUInt16();
+             this.mFreemem = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -31188,7 +31188,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasApAdc()
         {
-            mMessageId = 153;
+            _messageId = UasMessages.ApAdc;
             CrcExtra = 188;
         }
 
@@ -31204,12 +31204,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mAdc1 = s.ReadUInt16();
-            this.mAdc2 = s.ReadUInt16();
-            this.mAdc3 = s.ReadUInt16();
-            this.mAdc4 = s.ReadUInt16();
-            this.mAdc5 = s.ReadUInt16();
-            this.mAdc6 = s.ReadUInt16();
+             this.mAdc1 = s.ReadUInt16();
+             this.mAdc2 = s.ReadUInt16();
+             this.mAdc3 = s.ReadUInt16();
+             this.mAdc4 = s.ReadUInt16();
+             this.mAdc5 = s.ReadUInt16();
+             this.mAdc6 = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -31363,7 +31363,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasDigicamConfigure()
         {
-            mMessageId = 154;
+            _messageId = UasMessages.DigicamConfigure;
             CrcExtra = 84;
         }
 
@@ -31384,17 +31384,17 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mExtraValue = s.ReadSingle();
-            this.mShutterSpeed = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMode = s.ReadByte();
-            this.mAperture = s.ReadByte();
-            this.mIso = s.ReadByte();
-            this.mExposureType = s.ReadByte();
-            this.mCommandId = s.ReadByte();
-            this.mEngineCutOff = s.ReadByte();
-            this.mExtraParam = s.ReadByte();
+             this.mExtraValue = s.ReadSingle();
+             this.mShutterSpeed = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mMode = s.ReadByte();
+             this.mAperture = s.ReadByte();
+             this.mIso = s.ReadByte();
+             this.mExposureType = s.ReadByte();
+             this.mCommandId = s.ReadByte();
+             this.mEngineCutOff = s.ReadByte();
+             this.mExtraParam = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -31575,7 +31575,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasDigicamControl()
         {
-            mMessageId = 155;
+            _messageId = UasMessages.DigicamControl;
             CrcExtra = 22;
         }
 
@@ -31595,16 +31595,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mExtraValue = s.ReadSingle();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mSession = s.ReadByte();
-            this.mZoomPos = s.ReadByte();
-            this.mZoomStep = s.ReadSByte();
-            this.mFocusLock = s.ReadByte();
-            this.mShot = s.ReadByte();
-            this.mCommandId = s.ReadByte();
-            this.mExtraParam = s.ReadByte();
+             this.mExtraValue = s.ReadSingle();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mSession = s.ReadByte();
+             this.mZoomPos = s.ReadByte();
+             this.mZoomStep = s.ReadSByte();
+             this.mFocusLock = s.ReadByte();
+             this.mShot = s.ReadByte();
+             this.mCommandId = s.ReadByte();
+             this.mExtraParam = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -31746,7 +31746,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMountConfigure()
         {
-            mMessageId = 156;
+            _messageId = UasMessages.MountConfigure;
             CrcExtra = 19;
         }
 
@@ -31762,12 +31762,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mMountMode = s.ReadByte();
-            this.mStabRoll = s.ReadByte();
-            this.mStabPitch = s.ReadByte();
-            this.mStabYaw = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mMountMode = s.ReadByte();
+             this.mStabRoll = s.ReadByte();
+             this.mStabPitch = s.ReadByte();
+             this.mStabYaw = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -31881,7 +31881,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMountControl()
         {
-            mMessageId = 157;
+            _messageId = UasMessages.MountControl;
             CrcExtra = 21;
         }
 
@@ -31897,12 +31897,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mInputA = s.ReadInt32();
-            this.mInputB = s.ReadInt32();
-            this.mInputC = s.ReadInt32();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mSavePosition = s.ReadByte();
+             this.mInputA = s.ReadInt32();
+             this.mInputB = s.ReadInt32();
+             this.mInputC = s.ReadInt32();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mSavePosition = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -32008,7 +32008,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMountStatus()
         {
-            mMessageId = 158;
+            _messageId = UasMessages.MountStatus;
             CrcExtra = 134;
         }
 
@@ -32023,11 +32023,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mPointingA = s.ReadInt32();
-            this.mPointingB = s.ReadInt32();
-            this.mPointingC = s.ReadInt32();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mPointingA = s.ReadInt32();
+             this.mPointingB = s.ReadInt32();
+             this.mPointingC = s.ReadInt32();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -32134,7 +32134,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasFencePoint()
         {
-            mMessageId = 160;
+            _messageId = UasMessages.FencePoint;
             CrcExtra = 78;
         }
 
@@ -32150,12 +32150,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mLat = s.ReadSingle();
-            this.mLng = s.ReadSingle();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mIdx = s.ReadByte();
-            this.mCount = s.ReadByte();
+             this.mLat = s.ReadSingle();
+             this.mLng = s.ReadSingle();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mIdx = s.ReadByte();
+             this.mCount = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -32245,7 +32245,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasFenceFetchPoint()
         {
-            mMessageId = 161;
+            _messageId = UasMessages.FenceFetchPoint;
             CrcExtra = 68;
         }
 
@@ -32258,9 +32258,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mIdx = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mIdx = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -32337,7 +32337,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasFenceStatus()
         {
-            mMessageId = 162;
+            _messageId = UasMessages.FenceStatus;
             CrcExtra = 189;
         }
 
@@ -32351,10 +32351,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mBreachTime = s.ReadUInt32();
-            this.mBreachCount = s.ReadUInt16();
-            this.mBreachStatus = s.ReadByte();
-            this.mBreachType = s.ReadByte();
+             this.mBreachTime = s.ReadUInt32();
+             this.mBreachCount = s.ReadUInt16();
+             this.mBreachStatus = s.ReadByte();
+             this.mBreachType = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -32462,7 +32462,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAhrs()
         {
-            mMessageId = 163;
+            _messageId = UasMessages.Ahrs;
             CrcExtra = 127;
         }
 
@@ -32479,13 +32479,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mOmegaix = s.ReadSingle();
-            this.mOmegaiy = s.ReadSingle();
-            this.mOmegaiz = s.ReadSingle();
-            this.mAccelWeight = s.ReadSingle();
-            this.mRenormVal = s.ReadSingle();
-            this.mErrorRp = s.ReadSingle();
-            this.mErrorYaw = s.ReadSingle();
+             this.mOmegaix = s.ReadSingle();
+             this.mOmegaiy = s.ReadSingle();
+             this.mOmegaiz = s.ReadSingle();
+             this.mAccelWeight = s.ReadSingle();
+             this.mRenormVal = s.ReadSingle();
+             this.mErrorRp = s.ReadSingle();
+             this.mErrorYaw = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -32646,7 +32646,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasSimstate()
         {
-            mMessageId = 164;
+            _messageId = UasMessages.Simstate;
             CrcExtra = 154;
         }
 
@@ -32667,17 +32667,17 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mXacc = s.ReadSingle();
-            this.mYacc = s.ReadSingle();
-            this.mZacc = s.ReadSingle();
-            this.mXgyro = s.ReadSingle();
-            this.mYgyro = s.ReadSingle();
-            this.mZgyro = s.ReadSingle();
-            this.mLat = s.ReadInt32();
-            this.mLng = s.ReadInt32();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mXacc = s.ReadSingle();
+             this.mYacc = s.ReadSingle();
+             this.mZacc = s.ReadSingle();
+             this.mXgyro = s.ReadSingle();
+             this.mYgyro = s.ReadSingle();
+             this.mZgyro = s.ReadSingle();
+             this.mLat = s.ReadInt32();
+             this.mLng = s.ReadInt32();
         }
 
         protected override void InitMetadata()
@@ -32794,7 +32794,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasHwstatus()
         {
-            mMessageId = 165;
+            _messageId = UasMessages.Hwstatus;
             CrcExtra = 21;
         }
 
@@ -32806,8 +32806,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mVcc = s.ReadUInt16();
-            this.mI2cerr = s.ReadByte();
+             this.mVcc = s.ReadUInt16();
+             this.mI2cerr = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -32901,7 +32901,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRadio()
         {
-            mMessageId = 166;
+            _messageId = UasMessages.Radio;
             CrcExtra = 21;
         }
 
@@ -32918,13 +32918,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mRxerrors = s.ReadUInt16();
-            this.mFixed = s.ReadUInt16();
-            this.mRssi = s.ReadByte();
-            this.mRemrssi = s.ReadByte();
-            this.mTxbuf = s.ReadByte();
-            this.mNoise = s.ReadByte();
-            this.mRemnoise = s.ReadByte();
+             this.mRxerrors = s.ReadUInt16();
+             this.mFixed = s.ReadUInt16();
+             this.mRssi = s.ReadByte();
+             this.mRemrssi = s.ReadByte();
+             this.mTxbuf = s.ReadByte();
+             this.mNoise = s.ReadByte();
+             this.mRemnoise = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -33069,7 +33069,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLimitsStatus()
         {
-            mMessageId = 167;
+            _messageId = UasMessages.LimitsStatus;
             CrcExtra = 144;
         }
 
@@ -33088,15 +33088,15 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mLastTrigger = s.ReadUInt32();
-            this.mLastAction = s.ReadUInt32();
-            this.mLastRecovery = s.ReadUInt32();
-            this.mLastClear = s.ReadUInt32();
-            this.mBreachCount = s.ReadUInt16();
-            this.mLimitsState = s.ReadByte();
-            this.mModsEnabled = s.ReadByte();
-            this.mModsRequired = s.ReadByte();
-            this.mModsTriggered = s.ReadByte();
+             this.mLastTrigger = s.ReadUInt32();
+             this.mLastAction = s.ReadUInt32();
+             this.mLastRecovery = s.ReadUInt32();
+             this.mLastClear = s.ReadUInt32();
+             this.mBreachCount = s.ReadUInt16();
+             this.mLimitsState = s.ReadByte();
+             this.mModsEnabled = s.ReadByte();
+             this.mModsRequired = s.ReadByte();
+             this.mModsTriggered = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -33207,7 +33207,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasWind()
         {
-            mMessageId = 168;
+            _messageId = UasMessages.Wind;
             CrcExtra = 1;
         }
 
@@ -33220,9 +33220,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mDirection = s.ReadSingle();
-            this.mSpeed = s.ReadSingle();
-            this.mSpeedZ = s.ReadSingle();
+             this.mDirection = s.ReadSingle();
+             this.mSpeed = s.ReadSingle();
+             this.mSpeedZ = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -33291,7 +33291,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasData16()
         {
-            mMessageId = 169;
+            _messageId = UasMessages.Data16;
             CrcExtra = 234;
         }
 
@@ -33319,24 +33319,24 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mType = s.ReadByte();
-            this.mLen = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
+             this.mType = s.ReadByte();
+             this.mLen = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -33405,7 +33405,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasData32()
         {
-            mMessageId = 170;
+            _messageId = UasMessages.Data32;
             CrcExtra = 73;
         }
 
@@ -33449,40 +33449,40 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mType = s.ReadByte();
-            this.mLen = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
+             this.mType = s.ReadByte();
+             this.mLen = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -33551,7 +33551,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasData64()
         {
-            mMessageId = 171;
+            _messageId = UasMessages.Data64;
             CrcExtra = 181;
         }
 
@@ -33627,72 +33627,72 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mType = s.ReadByte();
-            this.mLen = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
-            this.mData[32] = s.ReadByte();
-            this.mData[33] = s.ReadByte();
-            this.mData[34] = s.ReadByte();
-            this.mData[35] = s.ReadByte();
-            this.mData[36] = s.ReadByte();
-            this.mData[37] = s.ReadByte();
-            this.mData[38] = s.ReadByte();
-            this.mData[39] = s.ReadByte();
-            this.mData[40] = s.ReadByte();
-            this.mData[41] = s.ReadByte();
-            this.mData[42] = s.ReadByte();
-            this.mData[43] = s.ReadByte();
-            this.mData[44] = s.ReadByte();
-            this.mData[45] = s.ReadByte();
-            this.mData[46] = s.ReadByte();
-            this.mData[47] = s.ReadByte();
-            this.mData[48] = s.ReadByte();
-            this.mData[49] = s.ReadByte();
-            this.mData[50] = s.ReadByte();
-            this.mData[51] = s.ReadByte();
-            this.mData[52] = s.ReadByte();
-            this.mData[53] = s.ReadByte();
-            this.mData[54] = s.ReadByte();
-            this.mData[55] = s.ReadByte();
-            this.mData[56] = s.ReadByte();
-            this.mData[57] = s.ReadByte();
-            this.mData[58] = s.ReadByte();
-            this.mData[59] = s.ReadByte();
-            this.mData[60] = s.ReadByte();
-            this.mData[61] = s.ReadByte();
-            this.mData[62] = s.ReadByte();
-            this.mData[63] = s.ReadByte();
+             this.mType = s.ReadByte();
+             this.mLen = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
+              this.mData[32] = s.ReadByte();
+              this.mData[33] = s.ReadByte();
+              this.mData[34] = s.ReadByte();
+              this.mData[35] = s.ReadByte();
+              this.mData[36] = s.ReadByte();
+              this.mData[37] = s.ReadByte();
+              this.mData[38] = s.ReadByte();
+              this.mData[39] = s.ReadByte();
+              this.mData[40] = s.ReadByte();
+              this.mData[41] = s.ReadByte();
+              this.mData[42] = s.ReadByte();
+              this.mData[43] = s.ReadByte();
+              this.mData[44] = s.ReadByte();
+              this.mData[45] = s.ReadByte();
+              this.mData[46] = s.ReadByte();
+              this.mData[47] = s.ReadByte();
+              this.mData[48] = s.ReadByte();
+              this.mData[49] = s.ReadByte();
+              this.mData[50] = s.ReadByte();
+              this.mData[51] = s.ReadByte();
+              this.mData[52] = s.ReadByte();
+              this.mData[53] = s.ReadByte();
+              this.mData[54] = s.ReadByte();
+              this.mData[55] = s.ReadByte();
+              this.mData[56] = s.ReadByte();
+              this.mData[57] = s.ReadByte();
+              this.mData[58] = s.ReadByte();
+              this.mData[59] = s.ReadByte();
+              this.mData[60] = s.ReadByte();
+              this.mData[61] = s.ReadByte();
+              this.mData[62] = s.ReadByte();
+              this.mData[63] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -33761,7 +33761,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasData96()
         {
-            mMessageId = 172;
+            _messageId = UasMessages.Data96;
             CrcExtra = 22;
         }
 
@@ -33869,104 +33869,104 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mType = s.ReadByte();
-            this.mLen = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
-            this.mData[32] = s.ReadByte();
-            this.mData[33] = s.ReadByte();
-            this.mData[34] = s.ReadByte();
-            this.mData[35] = s.ReadByte();
-            this.mData[36] = s.ReadByte();
-            this.mData[37] = s.ReadByte();
-            this.mData[38] = s.ReadByte();
-            this.mData[39] = s.ReadByte();
-            this.mData[40] = s.ReadByte();
-            this.mData[41] = s.ReadByte();
-            this.mData[42] = s.ReadByte();
-            this.mData[43] = s.ReadByte();
-            this.mData[44] = s.ReadByte();
-            this.mData[45] = s.ReadByte();
-            this.mData[46] = s.ReadByte();
-            this.mData[47] = s.ReadByte();
-            this.mData[48] = s.ReadByte();
-            this.mData[49] = s.ReadByte();
-            this.mData[50] = s.ReadByte();
-            this.mData[51] = s.ReadByte();
-            this.mData[52] = s.ReadByte();
-            this.mData[53] = s.ReadByte();
-            this.mData[54] = s.ReadByte();
-            this.mData[55] = s.ReadByte();
-            this.mData[56] = s.ReadByte();
-            this.mData[57] = s.ReadByte();
-            this.mData[58] = s.ReadByte();
-            this.mData[59] = s.ReadByte();
-            this.mData[60] = s.ReadByte();
-            this.mData[61] = s.ReadByte();
-            this.mData[62] = s.ReadByte();
-            this.mData[63] = s.ReadByte();
-            this.mData[64] = s.ReadByte();
-            this.mData[65] = s.ReadByte();
-            this.mData[66] = s.ReadByte();
-            this.mData[67] = s.ReadByte();
-            this.mData[68] = s.ReadByte();
-            this.mData[69] = s.ReadByte();
-            this.mData[70] = s.ReadByte();
-            this.mData[71] = s.ReadByte();
-            this.mData[72] = s.ReadByte();
-            this.mData[73] = s.ReadByte();
-            this.mData[74] = s.ReadByte();
-            this.mData[75] = s.ReadByte();
-            this.mData[76] = s.ReadByte();
-            this.mData[77] = s.ReadByte();
-            this.mData[78] = s.ReadByte();
-            this.mData[79] = s.ReadByte();
-            this.mData[80] = s.ReadByte();
-            this.mData[81] = s.ReadByte();
-            this.mData[82] = s.ReadByte();
-            this.mData[83] = s.ReadByte();
-            this.mData[84] = s.ReadByte();
-            this.mData[85] = s.ReadByte();
-            this.mData[86] = s.ReadByte();
-            this.mData[87] = s.ReadByte();
-            this.mData[88] = s.ReadByte();
-            this.mData[89] = s.ReadByte();
-            this.mData[90] = s.ReadByte();
-            this.mData[91] = s.ReadByte();
-            this.mData[92] = s.ReadByte();
-            this.mData[93] = s.ReadByte();
-            this.mData[94] = s.ReadByte();
-            this.mData[95] = s.ReadByte();
+             this.mType = s.ReadByte();
+             this.mLen = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
+              this.mData[32] = s.ReadByte();
+              this.mData[33] = s.ReadByte();
+              this.mData[34] = s.ReadByte();
+              this.mData[35] = s.ReadByte();
+              this.mData[36] = s.ReadByte();
+              this.mData[37] = s.ReadByte();
+              this.mData[38] = s.ReadByte();
+              this.mData[39] = s.ReadByte();
+              this.mData[40] = s.ReadByte();
+              this.mData[41] = s.ReadByte();
+              this.mData[42] = s.ReadByte();
+              this.mData[43] = s.ReadByte();
+              this.mData[44] = s.ReadByte();
+              this.mData[45] = s.ReadByte();
+              this.mData[46] = s.ReadByte();
+              this.mData[47] = s.ReadByte();
+              this.mData[48] = s.ReadByte();
+              this.mData[49] = s.ReadByte();
+              this.mData[50] = s.ReadByte();
+              this.mData[51] = s.ReadByte();
+              this.mData[52] = s.ReadByte();
+              this.mData[53] = s.ReadByte();
+              this.mData[54] = s.ReadByte();
+              this.mData[55] = s.ReadByte();
+              this.mData[56] = s.ReadByte();
+              this.mData[57] = s.ReadByte();
+              this.mData[58] = s.ReadByte();
+              this.mData[59] = s.ReadByte();
+              this.mData[60] = s.ReadByte();
+              this.mData[61] = s.ReadByte();
+              this.mData[62] = s.ReadByte();
+              this.mData[63] = s.ReadByte();
+              this.mData[64] = s.ReadByte();
+              this.mData[65] = s.ReadByte();
+              this.mData[66] = s.ReadByte();
+              this.mData[67] = s.ReadByte();
+              this.mData[68] = s.ReadByte();
+              this.mData[69] = s.ReadByte();
+              this.mData[70] = s.ReadByte();
+              this.mData[71] = s.ReadByte();
+              this.mData[72] = s.ReadByte();
+              this.mData[73] = s.ReadByte();
+              this.mData[74] = s.ReadByte();
+              this.mData[75] = s.ReadByte();
+              this.mData[76] = s.ReadByte();
+              this.mData[77] = s.ReadByte();
+              this.mData[78] = s.ReadByte();
+              this.mData[79] = s.ReadByte();
+              this.mData[80] = s.ReadByte();
+              this.mData[81] = s.ReadByte();
+              this.mData[82] = s.ReadByte();
+              this.mData[83] = s.ReadByte();
+              this.mData[84] = s.ReadByte();
+              this.mData[85] = s.ReadByte();
+              this.mData[86] = s.ReadByte();
+              this.mData[87] = s.ReadByte();
+              this.mData[88] = s.ReadByte();
+              this.mData[89] = s.ReadByte();
+              this.mData[90] = s.ReadByte();
+              this.mData[91] = s.ReadByte();
+              this.mData[92] = s.ReadByte();
+              this.mData[93] = s.ReadByte();
+              this.mData[94] = s.ReadByte();
+              this.mData[95] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -34027,7 +34027,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRangefinder()
         {
-            mMessageId = 173;
+            _messageId = UasMessages.Rangefinder;
             CrcExtra = 83;
         }
 
@@ -34039,8 +34039,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mDistance = s.ReadSingle();
-            this.mVoltage = s.ReadSingle();
+             this.mDistance = s.ReadSingle();
+             this.mVoltage = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -34174,7 +34174,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAirspeedAutocal()
         {
-            mMessageId = 174;
+            _messageId = UasMessages.AirspeedAutocal;
             CrcExtra = 167;
         }
 
@@ -34196,18 +34196,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mVx = s.ReadSingle();
-            this.mVy = s.ReadSingle();
-            this.mVz = s.ReadSingle();
-            this.mDiffPressure = s.ReadSingle();
-            this.mEas2tas = s.ReadSingle();
-            this.mRatio = s.ReadSingle();
-            this.mStateX = s.ReadSingle();
-            this.mStateY = s.ReadSingle();
-            this.mStateZ = s.ReadSingle();
-            this.mPax = s.ReadSingle();
-            this.mPby = s.ReadSingle();
-            this.mPcz = s.ReadSingle();
+             this.mVx = s.ReadSingle();
+             this.mVy = s.ReadSingle();
+             this.mVz = s.ReadSingle();
+             this.mDiffPressure = s.ReadSingle();
+             this.mEas2tas = s.ReadSingle();
+             this.mRatio = s.ReadSingle();
+             this.mStateX = s.ReadSingle();
+             this.mStateY = s.ReadSingle();
+             this.mStateZ = s.ReadSingle();
+             this.mPax = s.ReadSingle();
+             this.mPby = s.ReadSingle();
+             this.mPcz = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -34395,7 +34395,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRallyPoint()
         {
-            mMessageId = 175;
+            _messageId = UasMessages.RallyPoint;
             CrcExtra = 138;
         }
 
@@ -34415,16 +34415,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mLat = s.ReadInt32();
-            this.mLng = s.ReadInt32();
-            this.mAlt = s.ReadInt16();
-            this.mBreakAlt = s.ReadInt16();
-            this.mLandDir = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mIdx = s.ReadByte();
-            this.mCount = s.ReadByte();
-            this.mFlags = s.ReadByte();
+             this.mLat = s.ReadInt32();
+             this.mLng = s.ReadInt32();
+             this.mAlt = s.ReadInt16();
+             this.mBreakAlt = s.ReadInt16();
+             this.mLandDir = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mIdx = s.ReadByte();
+             this.mCount = s.ReadByte();
+             this.mFlags = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -34542,7 +34542,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRallyFetchPoint()
         {
-            mMessageId = 176;
+            _messageId = UasMessages.RallyFetchPoint;
             CrcExtra = 234;
         }
 
@@ -34555,9 +34555,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mIdx = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mIdx = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -34650,7 +34650,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasCompassmotStatus()
         {
-            mMessageId = 177;
+            _messageId = UasMessages.CompassmotStatus;
             CrcExtra = 240;
         }
 
@@ -34666,12 +34666,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCurrent = s.ReadSingle();
-            this.mCompensationx = s.ReadSingle();
-            this.mCompensationy = s.ReadSingle();
-            this.mCompensationz = s.ReadSingle();
-            this.mThrottle = s.ReadUInt16();
-            this.mInterference = s.ReadUInt16();
+             this.mCurrent = s.ReadSingle();
+             this.mCompensationx = s.ReadSingle();
+             this.mCompensationy = s.ReadSingle();
+             this.mCompensationz = s.ReadSingle();
+             this.mThrottle = s.ReadUInt16();
+             this.mInterference = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -34785,7 +34785,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAhrs2()
         {
-            mMessageId = 178;
+            _messageId = UasMessages.Ahrs2;
             CrcExtra = 47;
         }
 
@@ -34801,12 +34801,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mAltitude = s.ReadSingle();
-            this.mLat = s.ReadInt32();
-            this.mLng = s.ReadInt32();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mAltitude = s.ReadSingle();
+             this.mLat = s.ReadInt32();
+             this.mLng = s.ReadInt32();
         }
 
         protected override void InitMetadata()
@@ -34944,7 +34944,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasCameraStatus()
         {
-            mMessageId = 179;
+            _messageId = UasMessages.CameraStatus;
             CrcExtra = 189;
         }
 
@@ -34963,15 +34963,15 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mP1 = s.ReadSingle();
-            this.mP2 = s.ReadSingle();
-            this.mP3 = s.ReadSingle();
-            this.mP4 = s.ReadSingle();
-            this.mImgIdx = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mCamIdx = s.ReadByte();
-            this.mEventId = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mP1 = s.ReadSingle();
+             this.mP2 = s.ReadSingle();
+             this.mP3 = s.ReadSingle();
+             this.mP4 = s.ReadSingle();
+             this.mImgIdx = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mCamIdx = s.ReadByte();
+             this.mEventId = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -35170,8 +35170,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasCameraFeedback()
         {
-            mMessageId = 180;
-            CrcExtra = 81;
+            _messageId = UasMessages.CameraFeedback;
+            CrcExtra = 52;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -35194,20 +35194,20 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTimeUsec = s.ReadUInt64();
-            this.mLat = s.ReadInt32();
-            this.mLng = s.ReadInt32();
-            this.mAltMsl = s.ReadSingle();
-            this.mAltRel = s.ReadSingle();
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mFocLen = s.ReadSingle();
-            this.mImgIdx = s.ReadUInt16();
-            this.mCompletedCaptures = s.ReadUInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mCamIdx = s.ReadByte();
-            this.mFlags = s.ReadByte();
+             this.mTimeUsec = s.ReadUInt64();
+             this.mLat = s.ReadInt32();
+             this.mLng = s.ReadInt32();
+             this.mAltMsl = s.ReadSingle();
+             this.mAltRel = s.ReadSingle();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mFocLen = s.ReadSingle();
+             this.mImgIdx = s.ReadUInt16();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mCompletedCaptures = s.ReadUInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mCamIdx = s.ReadByte();
+             this.mFlags = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -35345,7 +35345,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasBattery2()
         {
-            mMessageId = 181;
+            _messageId = UasMessages.Battery2;
             CrcExtra = 174;
         }
 
@@ -35357,8 +35357,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mVoltage = s.ReadUInt16();
-            this.mCurrentBattery = s.ReadInt16();
+             this.mVoltage = s.ReadUInt16();
+             this.mCurrentBattery = s.ReadInt16();
         }
 
         protected override void InitMetadata()
@@ -35476,7 +35476,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAhrs3()
         {
-            mMessageId = 182;
+            _messageId = UasMessages.Ahrs3;
             CrcExtra = 229;
         }
 
@@ -35496,16 +35496,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mRoll = s.ReadSingle();
-            this.mPitch = s.ReadSingle();
-            this.mYaw = s.ReadSingle();
-            this.mAltitude = s.ReadSingle();
-            this.mLat = s.ReadInt32();
-            this.mLng = s.ReadInt32();
-            this.mV1 = s.ReadSingle();
-            this.mV2 = s.ReadSingle();
-            this.mV3 = s.ReadSingle();
-            this.mV4 = s.ReadSingle();
+             this.mRoll = s.ReadSingle();
+             this.mPitch = s.ReadSingle();
+             this.mYaw = s.ReadSingle();
+             this.mAltitude = s.ReadSingle();
+             this.mLat = s.ReadInt32();
+             this.mLng = s.ReadInt32();
+             this.mV1 = s.ReadSingle();
+             this.mV2 = s.ReadSingle();
+             this.mV3 = s.ReadSingle();
+             this.mV4 = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -35615,7 +35615,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasAutopilotVersionRequest()
         {
-            mMessageId = 183;
+            _messageId = UasMessages.AutopilotVersionRequest;
             CrcExtra = 85;
         }
 
@@ -35627,8 +35627,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -35698,7 +35698,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRemoteLogDataBlock()
         {
-            mMessageId = 184;
+            _messageId = UasMessages.RemoteLogDataBlock;
             CrcExtra = 159;
         }
 
@@ -35911,209 +35911,209 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeqno = s.ReadUInt32();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mData[0] = s.ReadByte();
-            this.mData[1] = s.ReadByte();
-            this.mData[2] = s.ReadByte();
-            this.mData[3] = s.ReadByte();
-            this.mData[4] = s.ReadByte();
-            this.mData[5] = s.ReadByte();
-            this.mData[6] = s.ReadByte();
-            this.mData[7] = s.ReadByte();
-            this.mData[8] = s.ReadByte();
-            this.mData[9] = s.ReadByte();
-            this.mData[10] = s.ReadByte();
-            this.mData[11] = s.ReadByte();
-            this.mData[12] = s.ReadByte();
-            this.mData[13] = s.ReadByte();
-            this.mData[14] = s.ReadByte();
-            this.mData[15] = s.ReadByte();
-            this.mData[16] = s.ReadByte();
-            this.mData[17] = s.ReadByte();
-            this.mData[18] = s.ReadByte();
-            this.mData[19] = s.ReadByte();
-            this.mData[20] = s.ReadByte();
-            this.mData[21] = s.ReadByte();
-            this.mData[22] = s.ReadByte();
-            this.mData[23] = s.ReadByte();
-            this.mData[24] = s.ReadByte();
-            this.mData[25] = s.ReadByte();
-            this.mData[26] = s.ReadByte();
-            this.mData[27] = s.ReadByte();
-            this.mData[28] = s.ReadByte();
-            this.mData[29] = s.ReadByte();
-            this.mData[30] = s.ReadByte();
-            this.mData[31] = s.ReadByte();
-            this.mData[32] = s.ReadByte();
-            this.mData[33] = s.ReadByte();
-            this.mData[34] = s.ReadByte();
-            this.mData[35] = s.ReadByte();
-            this.mData[36] = s.ReadByte();
-            this.mData[37] = s.ReadByte();
-            this.mData[38] = s.ReadByte();
-            this.mData[39] = s.ReadByte();
-            this.mData[40] = s.ReadByte();
-            this.mData[41] = s.ReadByte();
-            this.mData[42] = s.ReadByte();
-            this.mData[43] = s.ReadByte();
-            this.mData[44] = s.ReadByte();
-            this.mData[45] = s.ReadByte();
-            this.mData[46] = s.ReadByte();
-            this.mData[47] = s.ReadByte();
-            this.mData[48] = s.ReadByte();
-            this.mData[49] = s.ReadByte();
-            this.mData[50] = s.ReadByte();
-            this.mData[51] = s.ReadByte();
-            this.mData[52] = s.ReadByte();
-            this.mData[53] = s.ReadByte();
-            this.mData[54] = s.ReadByte();
-            this.mData[55] = s.ReadByte();
-            this.mData[56] = s.ReadByte();
-            this.mData[57] = s.ReadByte();
-            this.mData[58] = s.ReadByte();
-            this.mData[59] = s.ReadByte();
-            this.mData[60] = s.ReadByte();
-            this.mData[61] = s.ReadByte();
-            this.mData[62] = s.ReadByte();
-            this.mData[63] = s.ReadByte();
-            this.mData[64] = s.ReadByte();
-            this.mData[65] = s.ReadByte();
-            this.mData[66] = s.ReadByte();
-            this.mData[67] = s.ReadByte();
-            this.mData[68] = s.ReadByte();
-            this.mData[69] = s.ReadByte();
-            this.mData[70] = s.ReadByte();
-            this.mData[71] = s.ReadByte();
-            this.mData[72] = s.ReadByte();
-            this.mData[73] = s.ReadByte();
-            this.mData[74] = s.ReadByte();
-            this.mData[75] = s.ReadByte();
-            this.mData[76] = s.ReadByte();
-            this.mData[77] = s.ReadByte();
-            this.mData[78] = s.ReadByte();
-            this.mData[79] = s.ReadByte();
-            this.mData[80] = s.ReadByte();
-            this.mData[81] = s.ReadByte();
-            this.mData[82] = s.ReadByte();
-            this.mData[83] = s.ReadByte();
-            this.mData[84] = s.ReadByte();
-            this.mData[85] = s.ReadByte();
-            this.mData[86] = s.ReadByte();
-            this.mData[87] = s.ReadByte();
-            this.mData[88] = s.ReadByte();
-            this.mData[89] = s.ReadByte();
-            this.mData[90] = s.ReadByte();
-            this.mData[91] = s.ReadByte();
-            this.mData[92] = s.ReadByte();
-            this.mData[93] = s.ReadByte();
-            this.mData[94] = s.ReadByte();
-            this.mData[95] = s.ReadByte();
-            this.mData[96] = s.ReadByte();
-            this.mData[97] = s.ReadByte();
-            this.mData[98] = s.ReadByte();
-            this.mData[99] = s.ReadByte();
-            this.mData[100] = s.ReadByte();
-            this.mData[101] = s.ReadByte();
-            this.mData[102] = s.ReadByte();
-            this.mData[103] = s.ReadByte();
-            this.mData[104] = s.ReadByte();
-            this.mData[105] = s.ReadByte();
-            this.mData[106] = s.ReadByte();
-            this.mData[107] = s.ReadByte();
-            this.mData[108] = s.ReadByte();
-            this.mData[109] = s.ReadByte();
-            this.mData[110] = s.ReadByte();
-            this.mData[111] = s.ReadByte();
-            this.mData[112] = s.ReadByte();
-            this.mData[113] = s.ReadByte();
-            this.mData[114] = s.ReadByte();
-            this.mData[115] = s.ReadByte();
-            this.mData[116] = s.ReadByte();
-            this.mData[117] = s.ReadByte();
-            this.mData[118] = s.ReadByte();
-            this.mData[119] = s.ReadByte();
-            this.mData[120] = s.ReadByte();
-            this.mData[121] = s.ReadByte();
-            this.mData[122] = s.ReadByte();
-            this.mData[123] = s.ReadByte();
-            this.mData[124] = s.ReadByte();
-            this.mData[125] = s.ReadByte();
-            this.mData[126] = s.ReadByte();
-            this.mData[127] = s.ReadByte();
-            this.mData[128] = s.ReadByte();
-            this.mData[129] = s.ReadByte();
-            this.mData[130] = s.ReadByte();
-            this.mData[131] = s.ReadByte();
-            this.mData[132] = s.ReadByte();
-            this.mData[133] = s.ReadByte();
-            this.mData[134] = s.ReadByte();
-            this.mData[135] = s.ReadByte();
-            this.mData[136] = s.ReadByte();
-            this.mData[137] = s.ReadByte();
-            this.mData[138] = s.ReadByte();
-            this.mData[139] = s.ReadByte();
-            this.mData[140] = s.ReadByte();
-            this.mData[141] = s.ReadByte();
-            this.mData[142] = s.ReadByte();
-            this.mData[143] = s.ReadByte();
-            this.mData[144] = s.ReadByte();
-            this.mData[145] = s.ReadByte();
-            this.mData[146] = s.ReadByte();
-            this.mData[147] = s.ReadByte();
-            this.mData[148] = s.ReadByte();
-            this.mData[149] = s.ReadByte();
-            this.mData[150] = s.ReadByte();
-            this.mData[151] = s.ReadByte();
-            this.mData[152] = s.ReadByte();
-            this.mData[153] = s.ReadByte();
-            this.mData[154] = s.ReadByte();
-            this.mData[155] = s.ReadByte();
-            this.mData[156] = s.ReadByte();
-            this.mData[157] = s.ReadByte();
-            this.mData[158] = s.ReadByte();
-            this.mData[159] = s.ReadByte();
-            this.mData[160] = s.ReadByte();
-            this.mData[161] = s.ReadByte();
-            this.mData[162] = s.ReadByte();
-            this.mData[163] = s.ReadByte();
-            this.mData[164] = s.ReadByte();
-            this.mData[165] = s.ReadByte();
-            this.mData[166] = s.ReadByte();
-            this.mData[167] = s.ReadByte();
-            this.mData[168] = s.ReadByte();
-            this.mData[169] = s.ReadByte();
-            this.mData[170] = s.ReadByte();
-            this.mData[171] = s.ReadByte();
-            this.mData[172] = s.ReadByte();
-            this.mData[173] = s.ReadByte();
-            this.mData[174] = s.ReadByte();
-            this.mData[175] = s.ReadByte();
-            this.mData[176] = s.ReadByte();
-            this.mData[177] = s.ReadByte();
-            this.mData[178] = s.ReadByte();
-            this.mData[179] = s.ReadByte();
-            this.mData[180] = s.ReadByte();
-            this.mData[181] = s.ReadByte();
-            this.mData[182] = s.ReadByte();
-            this.mData[183] = s.ReadByte();
-            this.mData[184] = s.ReadByte();
-            this.mData[185] = s.ReadByte();
-            this.mData[186] = s.ReadByte();
-            this.mData[187] = s.ReadByte();
-            this.mData[188] = s.ReadByte();
-            this.mData[189] = s.ReadByte();
-            this.mData[190] = s.ReadByte();
-            this.mData[191] = s.ReadByte();
-            this.mData[192] = s.ReadByte();
-            this.mData[193] = s.ReadByte();
-            this.mData[194] = s.ReadByte();
-            this.mData[195] = s.ReadByte();
-            this.mData[196] = s.ReadByte();
-            this.mData[197] = s.ReadByte();
-            this.mData[198] = s.ReadByte();
-            this.mData[199] = s.ReadByte();
+             this.mSeqno = s.ReadUInt32();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+              this.mData[0] = s.ReadByte();
+              this.mData[1] = s.ReadByte();
+              this.mData[2] = s.ReadByte();
+              this.mData[3] = s.ReadByte();
+              this.mData[4] = s.ReadByte();
+              this.mData[5] = s.ReadByte();
+              this.mData[6] = s.ReadByte();
+              this.mData[7] = s.ReadByte();
+              this.mData[8] = s.ReadByte();
+              this.mData[9] = s.ReadByte();
+              this.mData[10] = s.ReadByte();
+              this.mData[11] = s.ReadByte();
+              this.mData[12] = s.ReadByte();
+              this.mData[13] = s.ReadByte();
+              this.mData[14] = s.ReadByte();
+              this.mData[15] = s.ReadByte();
+              this.mData[16] = s.ReadByte();
+              this.mData[17] = s.ReadByte();
+              this.mData[18] = s.ReadByte();
+              this.mData[19] = s.ReadByte();
+              this.mData[20] = s.ReadByte();
+              this.mData[21] = s.ReadByte();
+              this.mData[22] = s.ReadByte();
+              this.mData[23] = s.ReadByte();
+              this.mData[24] = s.ReadByte();
+              this.mData[25] = s.ReadByte();
+              this.mData[26] = s.ReadByte();
+              this.mData[27] = s.ReadByte();
+              this.mData[28] = s.ReadByte();
+              this.mData[29] = s.ReadByte();
+              this.mData[30] = s.ReadByte();
+              this.mData[31] = s.ReadByte();
+              this.mData[32] = s.ReadByte();
+              this.mData[33] = s.ReadByte();
+              this.mData[34] = s.ReadByte();
+              this.mData[35] = s.ReadByte();
+              this.mData[36] = s.ReadByte();
+              this.mData[37] = s.ReadByte();
+              this.mData[38] = s.ReadByte();
+              this.mData[39] = s.ReadByte();
+              this.mData[40] = s.ReadByte();
+              this.mData[41] = s.ReadByte();
+              this.mData[42] = s.ReadByte();
+              this.mData[43] = s.ReadByte();
+              this.mData[44] = s.ReadByte();
+              this.mData[45] = s.ReadByte();
+              this.mData[46] = s.ReadByte();
+              this.mData[47] = s.ReadByte();
+              this.mData[48] = s.ReadByte();
+              this.mData[49] = s.ReadByte();
+              this.mData[50] = s.ReadByte();
+              this.mData[51] = s.ReadByte();
+              this.mData[52] = s.ReadByte();
+              this.mData[53] = s.ReadByte();
+              this.mData[54] = s.ReadByte();
+              this.mData[55] = s.ReadByte();
+              this.mData[56] = s.ReadByte();
+              this.mData[57] = s.ReadByte();
+              this.mData[58] = s.ReadByte();
+              this.mData[59] = s.ReadByte();
+              this.mData[60] = s.ReadByte();
+              this.mData[61] = s.ReadByte();
+              this.mData[62] = s.ReadByte();
+              this.mData[63] = s.ReadByte();
+              this.mData[64] = s.ReadByte();
+              this.mData[65] = s.ReadByte();
+              this.mData[66] = s.ReadByte();
+              this.mData[67] = s.ReadByte();
+              this.mData[68] = s.ReadByte();
+              this.mData[69] = s.ReadByte();
+              this.mData[70] = s.ReadByte();
+              this.mData[71] = s.ReadByte();
+              this.mData[72] = s.ReadByte();
+              this.mData[73] = s.ReadByte();
+              this.mData[74] = s.ReadByte();
+              this.mData[75] = s.ReadByte();
+              this.mData[76] = s.ReadByte();
+              this.mData[77] = s.ReadByte();
+              this.mData[78] = s.ReadByte();
+              this.mData[79] = s.ReadByte();
+              this.mData[80] = s.ReadByte();
+              this.mData[81] = s.ReadByte();
+              this.mData[82] = s.ReadByte();
+              this.mData[83] = s.ReadByte();
+              this.mData[84] = s.ReadByte();
+              this.mData[85] = s.ReadByte();
+              this.mData[86] = s.ReadByte();
+              this.mData[87] = s.ReadByte();
+              this.mData[88] = s.ReadByte();
+              this.mData[89] = s.ReadByte();
+              this.mData[90] = s.ReadByte();
+              this.mData[91] = s.ReadByte();
+              this.mData[92] = s.ReadByte();
+              this.mData[93] = s.ReadByte();
+              this.mData[94] = s.ReadByte();
+              this.mData[95] = s.ReadByte();
+              this.mData[96] = s.ReadByte();
+              this.mData[97] = s.ReadByte();
+              this.mData[98] = s.ReadByte();
+              this.mData[99] = s.ReadByte();
+              this.mData[100] = s.ReadByte();
+              this.mData[101] = s.ReadByte();
+              this.mData[102] = s.ReadByte();
+              this.mData[103] = s.ReadByte();
+              this.mData[104] = s.ReadByte();
+              this.mData[105] = s.ReadByte();
+              this.mData[106] = s.ReadByte();
+              this.mData[107] = s.ReadByte();
+              this.mData[108] = s.ReadByte();
+              this.mData[109] = s.ReadByte();
+              this.mData[110] = s.ReadByte();
+              this.mData[111] = s.ReadByte();
+              this.mData[112] = s.ReadByte();
+              this.mData[113] = s.ReadByte();
+              this.mData[114] = s.ReadByte();
+              this.mData[115] = s.ReadByte();
+              this.mData[116] = s.ReadByte();
+              this.mData[117] = s.ReadByte();
+              this.mData[118] = s.ReadByte();
+              this.mData[119] = s.ReadByte();
+              this.mData[120] = s.ReadByte();
+              this.mData[121] = s.ReadByte();
+              this.mData[122] = s.ReadByte();
+              this.mData[123] = s.ReadByte();
+              this.mData[124] = s.ReadByte();
+              this.mData[125] = s.ReadByte();
+              this.mData[126] = s.ReadByte();
+              this.mData[127] = s.ReadByte();
+              this.mData[128] = s.ReadByte();
+              this.mData[129] = s.ReadByte();
+              this.mData[130] = s.ReadByte();
+              this.mData[131] = s.ReadByte();
+              this.mData[132] = s.ReadByte();
+              this.mData[133] = s.ReadByte();
+              this.mData[134] = s.ReadByte();
+              this.mData[135] = s.ReadByte();
+              this.mData[136] = s.ReadByte();
+              this.mData[137] = s.ReadByte();
+              this.mData[138] = s.ReadByte();
+              this.mData[139] = s.ReadByte();
+              this.mData[140] = s.ReadByte();
+              this.mData[141] = s.ReadByte();
+              this.mData[142] = s.ReadByte();
+              this.mData[143] = s.ReadByte();
+              this.mData[144] = s.ReadByte();
+              this.mData[145] = s.ReadByte();
+              this.mData[146] = s.ReadByte();
+              this.mData[147] = s.ReadByte();
+              this.mData[148] = s.ReadByte();
+              this.mData[149] = s.ReadByte();
+              this.mData[150] = s.ReadByte();
+              this.mData[151] = s.ReadByte();
+              this.mData[152] = s.ReadByte();
+              this.mData[153] = s.ReadByte();
+              this.mData[154] = s.ReadByte();
+              this.mData[155] = s.ReadByte();
+              this.mData[156] = s.ReadByte();
+              this.mData[157] = s.ReadByte();
+              this.mData[158] = s.ReadByte();
+              this.mData[159] = s.ReadByte();
+              this.mData[160] = s.ReadByte();
+              this.mData[161] = s.ReadByte();
+              this.mData[162] = s.ReadByte();
+              this.mData[163] = s.ReadByte();
+              this.mData[164] = s.ReadByte();
+              this.mData[165] = s.ReadByte();
+              this.mData[166] = s.ReadByte();
+              this.mData[167] = s.ReadByte();
+              this.mData[168] = s.ReadByte();
+              this.mData[169] = s.ReadByte();
+              this.mData[170] = s.ReadByte();
+              this.mData[171] = s.ReadByte();
+              this.mData[172] = s.ReadByte();
+              this.mData[173] = s.ReadByte();
+              this.mData[174] = s.ReadByte();
+              this.mData[175] = s.ReadByte();
+              this.mData[176] = s.ReadByte();
+              this.mData[177] = s.ReadByte();
+              this.mData[178] = s.ReadByte();
+              this.mData[179] = s.ReadByte();
+              this.mData[180] = s.ReadByte();
+              this.mData[181] = s.ReadByte();
+              this.mData[182] = s.ReadByte();
+              this.mData[183] = s.ReadByte();
+              this.mData[184] = s.ReadByte();
+              this.mData[185] = s.ReadByte();
+              this.mData[186] = s.ReadByte();
+              this.mData[187] = s.ReadByte();
+              this.mData[188] = s.ReadByte();
+              this.mData[189] = s.ReadByte();
+              this.mData[190] = s.ReadByte();
+              this.mData[191] = s.ReadByte();
+              this.mData[192] = s.ReadByte();
+              this.mData[193] = s.ReadByte();
+              this.mData[194] = s.ReadByte();
+              this.mData[195] = s.ReadByte();
+              this.mData[196] = s.ReadByte();
+              this.mData[197] = s.ReadByte();
+              this.mData[198] = s.ReadByte();
+              this.mData[199] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -36197,7 +36197,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRemoteLogBlockStatus()
         {
-            mMessageId = 185;
+            _messageId = UasMessages.RemoteLogBlockStatus;
             CrcExtra = 186;
         }
 
@@ -36211,10 +36211,10 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mSeqno = s.ReadUInt32();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mStatus = s.ReadByte();
+             this.mSeqno = s.ReadUInt32();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mStatus = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -36314,7 +36314,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasLedControl()
         {
-            mMessageId = 186;
+            _messageId = UasMessages.LedControl;
             CrcExtra = 72;
         }
 
@@ -36353,35 +36353,35 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mInstance = s.ReadByte();
-            this.mPattern = s.ReadByte();
-            this.mCustomLen = s.ReadByte();
-            this.mCustomBytes[0] = s.ReadByte();
-            this.mCustomBytes[1] = s.ReadByte();
-            this.mCustomBytes[2] = s.ReadByte();
-            this.mCustomBytes[3] = s.ReadByte();
-            this.mCustomBytes[4] = s.ReadByte();
-            this.mCustomBytes[5] = s.ReadByte();
-            this.mCustomBytes[6] = s.ReadByte();
-            this.mCustomBytes[7] = s.ReadByte();
-            this.mCustomBytes[8] = s.ReadByte();
-            this.mCustomBytes[9] = s.ReadByte();
-            this.mCustomBytes[10] = s.ReadByte();
-            this.mCustomBytes[11] = s.ReadByte();
-            this.mCustomBytes[12] = s.ReadByte();
-            this.mCustomBytes[13] = s.ReadByte();
-            this.mCustomBytes[14] = s.ReadByte();
-            this.mCustomBytes[15] = s.ReadByte();
-            this.mCustomBytes[16] = s.ReadByte();
-            this.mCustomBytes[17] = s.ReadByte();
-            this.mCustomBytes[18] = s.ReadByte();
-            this.mCustomBytes[19] = s.ReadByte();
-            this.mCustomBytes[20] = s.ReadByte();
-            this.mCustomBytes[21] = s.ReadByte();
-            this.mCustomBytes[22] = s.ReadByte();
-            this.mCustomBytes[23] = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mInstance = s.ReadByte();
+             this.mPattern = s.ReadByte();
+             this.mCustomLen = s.ReadByte();
+              this.mCustomBytes[0] = s.ReadByte();
+              this.mCustomBytes[1] = s.ReadByte();
+              this.mCustomBytes[2] = s.ReadByte();
+              this.mCustomBytes[3] = s.ReadByte();
+              this.mCustomBytes[4] = s.ReadByte();
+              this.mCustomBytes[5] = s.ReadByte();
+              this.mCustomBytes[6] = s.ReadByte();
+              this.mCustomBytes[7] = s.ReadByte();
+              this.mCustomBytes[8] = s.ReadByte();
+              this.mCustomBytes[9] = s.ReadByte();
+              this.mCustomBytes[10] = s.ReadByte();
+              this.mCustomBytes[11] = s.ReadByte();
+              this.mCustomBytes[12] = s.ReadByte();
+              this.mCustomBytes[13] = s.ReadByte();
+              this.mCustomBytes[14] = s.ReadByte();
+              this.mCustomBytes[15] = s.ReadByte();
+              this.mCustomBytes[16] = s.ReadByte();
+              this.mCustomBytes[17] = s.ReadByte();
+              this.mCustomBytes[18] = s.ReadByte();
+              this.mCustomBytes[19] = s.ReadByte();
+              this.mCustomBytes[20] = s.ReadByte();
+              this.mCustomBytes[21] = s.ReadByte();
+              this.mCustomBytes[22] = s.ReadByte();
+              this.mCustomBytes[23] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -36519,7 +36519,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMagCalProgress()
         {
-            mMessageId = 191;
+            _messageId = UasMessages.MagCalProgress;
             CrcExtra = 92;
         }
 
@@ -36547,24 +36547,24 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mDirectionX = s.ReadSingle();
-            this.mDirectionY = s.ReadSingle();
-            this.mDirectionZ = s.ReadSingle();
-            this.mCompassId = s.ReadByte();
-            this.mCalMask = s.ReadByte();
-            this.mCalStatus = s.ReadByte();
-            this.mAttempt = s.ReadByte();
-            this.mCompletionPct = s.ReadByte();
-            this.mCompletionMask[0] = s.ReadByte();
-            this.mCompletionMask[1] = s.ReadByte();
-            this.mCompletionMask[2] = s.ReadByte();
-            this.mCompletionMask[3] = s.ReadByte();
-            this.mCompletionMask[4] = s.ReadByte();
-            this.mCompletionMask[5] = s.ReadByte();
-            this.mCompletionMask[6] = s.ReadByte();
-            this.mCompletionMask[7] = s.ReadByte();
-            this.mCompletionMask[8] = s.ReadByte();
-            this.mCompletionMask[9] = s.ReadByte();
+             this.mDirectionX = s.ReadSingle();
+             this.mDirectionY = s.ReadSingle();
+             this.mDirectionZ = s.ReadSingle();
+             this.mCompassId = s.ReadByte();
+             this.mCalMask = s.ReadByte();
+             this.mCalStatus = s.ReadByte();
+             this.mAttempt = s.ReadByte();
+             this.mCompletionPct = s.ReadByte();
+              this.mCompletionMask[0] = s.ReadByte();
+              this.mCompletionMask[1] = s.ReadByte();
+              this.mCompletionMask[2] = s.ReadByte();
+              this.mCompletionMask[3] = s.ReadByte();
+              this.mCompletionMask[4] = s.ReadByte();
+              this.mCompletionMask[5] = s.ReadByte();
+              this.mCompletionMask[6] = s.ReadByte();
+              this.mCompletionMask[7] = s.ReadByte();
+              this.mCompletionMask[8] = s.ReadByte();
+              this.mCompletionMask[9] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -36787,8 +36787,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasMagCalReport()
         {
-            mMessageId = 192;
-            CrcExtra = 253;
+            _messageId = UasMessages.MagCalReport;
+            CrcExtra = 36;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -36814,23 +36814,23 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mFitness = s.ReadSingle();
-            this.mOfsX = s.ReadSingle();
-            this.mOfsY = s.ReadSingle();
-            this.mOfsZ = s.ReadSingle();
-            this.mDiagX = s.ReadSingle();
-            this.mDiagY = s.ReadSingle();
-            this.mDiagZ = s.ReadSingle();
-            this.mOffdiagX = s.ReadSingle();
-            this.mOffdiagY = s.ReadSingle();
-            this.mOffdiagZ = s.ReadSingle();
-            this.mOrientationConfidence = s.ReadSingle();
-            this.mCompassId = s.ReadByte();
-            this.mCalMask = s.ReadByte();
-            this.mCalStatus = s.ReadByte();
-            this.mAutosaved = (MavCmd)s.ReadByte();
-            this.mOldOrientation = s.ReadByte();
-            this.mNewOrientation = s.ReadByte();
+             this.mFitness = s.ReadSingle();
+             this.mOfsX = s.ReadSingle();
+             this.mOfsY = s.ReadSingle();
+             this.mOfsZ = s.ReadSingle();
+             this.mDiagX = s.ReadSingle();
+             this.mDiagY = s.ReadSingle();
+             this.mDiagZ = s.ReadSingle();
+             this.mOffdiagX = s.ReadSingle();
+             this.mOffdiagY = s.ReadSingle();
+             this.mOffdiagZ = s.ReadSingle();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mOrientationConfidence = s.ReadSingle();
+             this.mCompassId = s.ReadByte();
+             this.mCalMask = s.ReadByte();
+             this.mCalStatus = s.ReadByte();
+             this.mAutosaved = (MavCmd)s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mOldOrientation = s.ReadByte();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mNewOrientation = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -37030,8 +37030,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasEkfStatusReport()
         {
-            mMessageId = 193;
-            CrcExtra = 203;
+            _messageId = UasMessages.EkfStatusReport;
+            CrcExtra = 71;
         }
 
         override internal void SerializeBody(BinaryWriter s)
@@ -37047,13 +37047,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mVelocityVariance = s.ReadSingle();
-            this.mPosHorizVariance = s.ReadSingle();
-            this.mPosVertVariance = s.ReadSingle();
-            this.mCompassVariance = s.ReadSingle();
-            this.mTerrainAltVariance = s.ReadSingle();
-            this.mAirspeedVariance = s.ReadSingle();
-            this.mFlags = s.ReadUInt16();
+             this.mVelocityVariance = s.ReadSingle();
+             this.mPosHorizVariance = s.ReadSingle();
+             this.mPosVertVariance = s.ReadSingle();
+             this.mCompassVariance = s.ReadSingle();
+             this.mTerrainAltVariance = s.ReadSingle();
+            if(s.BaseStream.Position < s.BaseStream.Length) this.mAirspeedVariance = s.ReadSingle();
+             this.mFlags = s.ReadUInt16();
         }
 
         protected override void InitMetadata()
@@ -37182,7 +37182,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasPidTuning()
         {
-            mMessageId = 194;
+            _messageId = UasMessages.PidTuning;
             CrcExtra = 98;
         }
 
@@ -37199,13 +37199,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mDesired = s.ReadSingle();
-            this.mAchieved = s.ReadSingle();
-            this.mFf = s.ReadSingle();
-            this.mP = s.ReadSingle();
-            this.mI = s.ReadSingle();
-            this.mD = s.ReadSingle();
-            this.mAxis = s.ReadByte();
+             this.mDesired = s.ReadSingle();
+             this.mAchieved = s.ReadSingle();
+             this.mFf = s.ReadSingle();
+             this.mP = s.ReadSingle();
+             this.mI = s.ReadSingle();
+             this.mD = s.ReadSingle();
+             this.mAxis = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -37358,7 +37358,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasDeepstall()
         {
-            mMessageId = 195;
+            _messageId = UasMessages.Deepstall;
             CrcExtra = 120;
         }
 
@@ -37378,16 +37378,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mLandingLat = s.ReadInt32();
-            this.mLandingLon = s.ReadInt32();
-            this.mPathLat = s.ReadInt32();
-            this.mPathLon = s.ReadInt32();
-            this.mArcEntryLat = s.ReadInt32();
-            this.mArcEntryLon = s.ReadInt32();
-            this.mAltitude = s.ReadSingle();
-            this.mExpectedTravelDistance = s.ReadSingle();
-            this.mCrossTrackError = s.ReadSingle();
-            this.mStage = s.ReadByte();
+             this.mLandingLat = s.ReadInt32();
+             this.mLandingLon = s.ReadInt32();
+             this.mPathLat = s.ReadInt32();
+             this.mPathLon = s.ReadInt32();
+             this.mArcEntryLat = s.ReadInt32();
+             this.mArcEntryLon = s.ReadInt32();
+             this.mAltitude = s.ReadSingle();
+             this.mExpectedTravelDistance = s.ReadSingle();
+             this.mCrossTrackError = s.ReadSingle();
+             this.mStage = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -37577,7 +37577,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGimbalReport()
         {
-            mMessageId = 200;
+            _messageId = UasMessages.GimbalReport;
             CrcExtra = 134;
         }
 
@@ -37599,18 +37599,18 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mDeltaTime = s.ReadSingle();
-            this.mDeltaAngleX = s.ReadSingle();
-            this.mDeltaAngleY = s.ReadSingle();
-            this.mDeltaAngleZ = s.ReadSingle();
-            this.mDeltaVelocityX = s.ReadSingle();
-            this.mDeltaVelocityY = s.ReadSingle();
-            this.mDeltaVelocityZ = s.ReadSingle();
-            this.mJointRoll = s.ReadSingle();
-            this.mJointEl = s.ReadSingle();
-            this.mJointAz = s.ReadSingle();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mDeltaTime = s.ReadSingle();
+             this.mDeltaAngleX = s.ReadSingle();
+             this.mDeltaAngleY = s.ReadSingle();
+             this.mDeltaAngleZ = s.ReadSingle();
+             this.mDeltaVelocityX = s.ReadSingle();
+             this.mDeltaVelocityY = s.ReadSingle();
+             this.mDeltaVelocityZ = s.ReadSingle();
+             this.mJointRoll = s.ReadSingle();
+             this.mJointEl = s.ReadSingle();
+             this.mJointAz = s.ReadSingle();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -37758,7 +37758,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGimbalControl()
         {
-            mMessageId = 201;
+            _messageId = UasMessages.GimbalControl;
             CrcExtra = 205;
         }
 
@@ -37773,11 +37773,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mDemandedRateX = s.ReadSingle();
-            this.mDemandedRateY = s.ReadSingle();
-            this.mDemandedRateZ = s.ReadSingle();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mDemandedRateX = s.ReadSingle();
+             this.mDemandedRateY = s.ReadSingle();
+             this.mDemandedRateZ = s.ReadSingle();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -37876,7 +37876,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGimbalTorqueCmdReport()
         {
-            mMessageId = 214;
+            _messageId = UasMessages.GimbalTorqueCmdReport;
             CrcExtra = 69;
         }
 
@@ -37891,11 +37891,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mRlTorqueCmd = s.ReadInt16();
-            this.mElTorqueCmd = s.ReadInt16();
-            this.mAzTorqueCmd = s.ReadInt16();
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
+             this.mRlTorqueCmd = s.ReadInt16();
+             this.mElTorqueCmd = s.ReadInt16();
+             this.mAzTorqueCmd = s.ReadInt16();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -37978,7 +37978,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGoproHeartbeat()
         {
-            mMessageId = 215;
+            _messageId = UasMessages.GoproHeartbeat;
             CrcExtra = 101;
         }
 
@@ -37991,9 +37991,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mStatus = s.ReadByte();
-            this.mCaptureMode = s.ReadByte();
-            this.mFlags = s.ReadByte();
+             this.mStatus = s.ReadByte();
+             this.mCaptureMode = s.ReadByte();
+             this.mFlags = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -38062,7 +38062,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGoproGetRequest()
         {
-            mMessageId = 216;
+            _messageId = UasMessages.GoproGetRequest;
             CrcExtra = 50;
         }
 
@@ -38075,9 +38075,9 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mCmdId = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mCmdId = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -38146,7 +38146,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGoproGetResponse()
         {
-            mMessageId = 217;
+            _messageId = UasMessages.GoproGetResponse;
             CrcExtra = 202;
         }
 
@@ -38162,12 +38162,12 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCmdId = s.ReadByte();
-            this.mStatus = s.ReadByte();
-            this.mValue[0] = s.ReadByte();
-            this.mValue[1] = s.ReadByte();
-            this.mValue[2] = s.ReadByte();
-            this.mValue[3] = s.ReadByte();
+             this.mCmdId = s.ReadByte();
+             this.mStatus = s.ReadByte();
+              this.mValue[0] = s.ReadByte();
+              this.mValue[1] = s.ReadByte();
+              this.mValue[2] = s.ReadByte();
+              this.mValue[3] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -38244,7 +38244,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGoproSetRequest()
         {
-            mMessageId = 218;
+            _messageId = UasMessages.GoproSetRequest;
             CrcExtra = 17;
         }
 
@@ -38261,13 +38261,13 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mTargetSystem = s.ReadByte();
-            this.mTargetComponent = s.ReadByte();
-            this.mCmdId = s.ReadByte();
-            this.mValue[0] = s.ReadByte();
-            this.mValue[1] = s.ReadByte();
-            this.mValue[2] = s.ReadByte();
-            this.mValue[3] = s.ReadByte();
+             this.mTargetSystem = s.ReadByte();
+             this.mTargetComponent = s.ReadByte();
+             this.mCmdId = s.ReadByte();
+              this.mValue[0] = s.ReadByte();
+              this.mValue[1] = s.ReadByte();
+              this.mValue[2] = s.ReadByte();
+              this.mValue[3] = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -38335,7 +38335,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasGoproSetResponse()
         {
-            mMessageId = 219;
+            _messageId = UasMessages.GoproSetResponse;
             CrcExtra = 162;
         }
 
@@ -38347,8 +38347,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mCmdId = s.ReadByte();
-            this.mStatus = s.ReadByte();
+             this.mCmdId = s.ReadByte();
+             this.mStatus = s.ReadByte();
         }
 
         protected override void InitMetadata()
@@ -38402,7 +38402,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         public UasRpm()
         {
-            mMessageId = 226;
+            _messageId = UasMessages.Rpm;
             CrcExtra = 207;
         }
 
@@ -38414,8 +38414,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         override internal void DeserializeBody(BinaryReader s)
         {
-            this.mRpm1 = s.ReadSingle();
-            this.mRpm2 = s.ReadSingle();
+             this.mRpm1 = s.ReadSingle();
+             this.mRpm2 = s.ReadSingle();
         }
 
         protected override void InitMetadata()
@@ -38643,392 +38643,392 @@ namespace LagoVista.Uas.Core.MavLink
 
     public class UasSummary
     {
-        public static UasMessage CreateFromId(byte id)
+        public static UasMessage CreateFromId(UasMessages id)
         {
             switch (id)
             {
-               case 0: return new UasHeartbeat();
-               case 1: return new UasSysStatus();
-               case 2: return new UasSystemTime();
-               case 4: return new UasPing();
-               case 5: return new UasChangeOperatorControl();
-               case 6: return new UasChangeOperatorControlAck();
-               case 7: return new UasAuthKey();
-               case 11: return new UasSetMode();
-               case 20: return new UasParamRequestRead();
-               case 21: return new UasParamRequestList();
-               case 22: return new UasParamValue();
-               case 23: return new UasParamSet();
-               case 24: return new UasGpsRawInt();
-               case 25: return new UasGpsStatus();
-               case 26: return new UasScaledImu();
-               case 27: return new UasRawImu();
-               case 28: return new UasRawPressure();
-               case 29: return new UasScaledPressure();
-               case 30: return new UasAttitude();
-               case 31: return new UasAttitudeQuaternion();
-               case 32: return new UasLocalPositionNed();
-               case 33: return new UasGlobalPositionInt();
-               case 34: return new UasRcChannelsScaled();
-               case 35: return new UasRcChannelsRaw();
-               case 36: return new UasServoOutputRaw();
-               case 37: return new UasMissionRequestPartialList();
-               case 38: return new UasMissionWritePartialList();
-               case 39: return new UasMissionItem();
-               case 40: return new UasMissionRequest();
-               case 41: return new UasMissionSetCurrent();
-               case 42: return new UasMissionCurrent();
-               case 43: return new UasMissionRequestList();
-               case 44: return new UasMissionCount();
-               case 45: return new UasMissionClearAll();
-               case 46: return new UasMissionItemReached();
-               case 47: return new UasMissionAck();
-               case 48: return new UasSetGpsGlobalOrigin();
-               case 49: return new UasGpsGlobalOrigin();
-               case 50: return new UasParamMapRc();
-               case 51: return new UasMissionRequestInt();
-               case 54: return new UasSafetySetAllowedArea();
-               case 55: return new UasSafetyAllowedArea();
-               case 61: return new UasAttitudeQuaternionCov();
-               case 62: return new UasNavControllerOutput();
-               case 63: return new UasGlobalPositionIntCov();
-               case 64: return new UasLocalPositionNedCov();
-               case 65: return new UasRcChannels();
-               case 66: return new UasRequestDataStream();
-               case 67: return new UasDataStream();
-               case 69: return new UasManualControl();
-               case 70: return new UasRcChannelsOverride();
-               case 73: return new UasMissionItemInt();
-               case 74: return new UasVfrHud();
-               case 75: return new UasCommandInt();
-               case 76: return new UasCommandLong();
-               case 77: return new UasCommandAck();
-               case 81: return new UasManualSetpoint();
-               case 82: return new UasSetAttitudeTarget();
-               case 83: return new UasAttitudeTarget();
-               case 84: return new UasSetPositionTargetLocalNed();
-               case 85: return new UasPositionTargetLocalNed();
-               case 86: return new UasSetPositionTargetGlobalInt();
-               case 87: return new UasPositionTargetGlobalInt();
-               case 89: return new UasLocalPositionNedSystemGlobalOffset();
-               case 90: return new UasHilState();
-               case 91: return new UasHilControls();
-               case 92: return new UasHilRcInputsRaw();
-               case 93: return new UasHilActuatorControls();
-               case 100: return new UasOpticalFlow();
-               case 101: return new UasGlobalVisionPositionEstimate();
-               case 102: return new UasVisionPositionEstimate();
-               case 103: return new UasVisionSpeedEstimate();
-               case 104: return new UasViconPositionEstimate();
-               case 105: return new UasHighresImu();
-               case 106: return new UasOpticalFlowRad();
-               case 107: return new UasHilSensor();
-               case 108: return new UasSimState();
-               case 109: return new UasRadioStatus();
-               case 110: return new UasFileTransferProtocol();
-               case 111: return new UasTimesync();
-               case 112: return new UasCameraTrigger();
-               case 113: return new UasHilGps();
-               case 114: return new UasHilOpticalFlow();
-               case 115: return new UasHilStateQuaternion();
-               case 116: return new UasScaledImu2();
-               case 117: return new UasLogRequestList();
-               case 118: return new UasLogEntry();
-               case 119: return new UasLogRequestData();
-               case 120: return new UasLogData();
-               case 121: return new UasLogErase();
-               case 122: return new UasLogRequestEnd();
-               case 123: return new UasGpsInjectData();
-               case 124: return new UasGps2Raw();
-               case 125: return new UasPowerStatus();
-               case 126: return new UasSerialControl();
-               case 127: return new UasGpsRtk();
-               case 128: return new UasGps2Rtk();
-               case 129: return new UasScaledImu3();
-               case 130: return new UasDataTransmissionHandshake();
-               case 131: return new UasEncapsulatedData();
-               case 132: return new UasDistanceSensor();
-               case 133: return new UasTerrainRequest();
-               case 134: return new UasTerrainData();
-               case 135: return new UasTerrainCheck();
-               case 136: return new UasTerrainReport();
-               case 137: return new UasScaledPressure2();
-               case 138: return new UasAttPosMocap();
-               case 139: return new UasSetActuatorControlTarget();
-               case 140: return new UasActuatorControlTarget();
-               case 141: return new UasAltitude();
-               case 142: return new UasResourceRequest();
-               case 143: return new UasScaledPressure3();
-               case 144: return new UasFollowTarget();
-               case 146: return new UasControlSystemState();
-               case 147: return new UasBatteryStatus();
-               case 148: return new UasAutopilotVersion();
-               case 149: return new UasLandingTarget();
-               case 230: return new UasEstimatorStatus();
-               case 231: return new UasWindCov();
-               case 232: return new UasGpsInput();
-               case 233: return new UasGpsRtcmData();
-               case 234: return new UasHighLatency();
-               case 235: return new UasHighLatency2();
-               case 241: return new UasVibration();
-               case 242: return new UasHomePosition();
-               case 243: return new UasSetHomePosition();
-               case 244: return new UasMessageInterval();
-               case 245: return new UasExtendedSysState();
-               case 246: return new UasAdsbVehicle();
-               case 247: return new UasCollision();
-               case 248: return new UasV2Extension();
-               case 249: return new UasMemoryVect();
-               case 250: return new UasDebugVect();
-               case 251: return new UasNamedValueFloat();
-               case 252: return new UasNamedValueInt();
-               case 253: return new UasStatustext();
-               case 254: return new UasDebug();
-               case 150: return new UasSensorOffsets();
-               case 151: return new UasSetMagOffsets();
-               case 152: return new UasMeminfo();
-               case 153: return new UasApAdc();
-               case 154: return new UasDigicamConfigure();
-               case 155: return new UasDigicamControl();
-               case 156: return new UasMountConfigure();
-               case 157: return new UasMountControl();
-               case 158: return new UasMountStatus();
-               case 160: return new UasFencePoint();
-               case 161: return new UasFenceFetchPoint();
-               case 162: return new UasFenceStatus();
-               case 163: return new UasAhrs();
-               case 164: return new UasSimstate();
-               case 165: return new UasHwstatus();
-               case 166: return new UasRadio();
-               case 167: return new UasLimitsStatus();
-               case 168: return new UasWind();
-               case 169: return new UasData16();
-               case 170: return new UasData32();
-               case 171: return new UasData64();
-               case 172: return new UasData96();
-               case 173: return new UasRangefinder();
-               case 174: return new UasAirspeedAutocal();
-               case 175: return new UasRallyPoint();
-               case 176: return new UasRallyFetchPoint();
-               case 177: return new UasCompassmotStatus();
-               case 178: return new UasAhrs2();
-               case 179: return new UasCameraStatus();
-               case 180: return new UasCameraFeedback();
-               case 181: return new UasBattery2();
-               case 182: return new UasAhrs3();
-               case 183: return new UasAutopilotVersionRequest();
-               case 184: return new UasRemoteLogDataBlock();
-               case 185: return new UasRemoteLogBlockStatus();
-               case 186: return new UasLedControl();
-               case 191: return new UasMagCalProgress();
-               case 192: return new UasMagCalReport();
-               case 193: return new UasEkfStatusReport();
-               case 194: return new UasPidTuning();
-               case 195: return new UasDeepstall();
-               case 200: return new UasGimbalReport();
-               case 201: return new UasGimbalControl();
-               case 214: return new UasGimbalTorqueCmdReport();
-               case 215: return new UasGoproHeartbeat();
-               case 216: return new UasGoproGetRequest();
-               case 217: return new UasGoproGetResponse();
-               case 218: return new UasGoproSetRequest();
-               case 219: return new UasGoproSetResponse();
-               case 226: return new UasRpm();
+               case UasMessages.Heartbeat: return new UasHeartbeat();
+               case UasMessages.SysStatus: return new UasSysStatus();
+               case UasMessages.SystemTime: return new UasSystemTime();
+               case UasMessages.Ping: return new UasPing();
+               case UasMessages.ChangeOperatorControl: return new UasChangeOperatorControl();
+               case UasMessages.ChangeOperatorControlAck: return new UasChangeOperatorControlAck();
+               case UasMessages.AuthKey: return new UasAuthKey();
+               case UasMessages.SetMode: return new UasSetMode();
+               case UasMessages.ParamRequestRead: return new UasParamRequestRead();
+               case UasMessages.ParamRequestList: return new UasParamRequestList();
+               case UasMessages.ParamValue: return new UasParamValue();
+               case UasMessages.ParamSet: return new UasParamSet();
+               case UasMessages.GpsRawInt: return new UasGpsRawInt();
+               case UasMessages.GpsStatus: return new UasGpsStatus();
+               case UasMessages.ScaledImu: return new UasScaledImu();
+               case UasMessages.RawImu: return new UasRawImu();
+               case UasMessages.RawPressure: return new UasRawPressure();
+               case UasMessages.ScaledPressure: return new UasScaledPressure();
+               case UasMessages.Attitude: return new UasAttitude();
+               case UasMessages.AttitudeQuaternion: return new UasAttitudeQuaternion();
+               case UasMessages.LocalPositionNed: return new UasLocalPositionNed();
+               case UasMessages.GlobalPositionInt: return new UasGlobalPositionInt();
+               case UasMessages.RcChannelsScaled: return new UasRcChannelsScaled();
+               case UasMessages.RcChannelsRaw: return new UasRcChannelsRaw();
+               case UasMessages.ServoOutputRaw: return new UasServoOutputRaw();
+               case UasMessages.MissionRequestPartialList: return new UasMissionRequestPartialList();
+               case UasMessages.MissionWritePartialList: return new UasMissionWritePartialList();
+               case UasMessages.MissionItem: return new UasMissionItem();
+               case UasMessages.MissionRequest: return new UasMissionRequest();
+               case UasMessages.MissionSetCurrent: return new UasMissionSetCurrent();
+               case UasMessages.MissionCurrent: return new UasMissionCurrent();
+               case UasMessages.MissionRequestList: return new UasMissionRequestList();
+               case UasMessages.MissionCount: return new UasMissionCount();
+               case UasMessages.MissionClearAll: return new UasMissionClearAll();
+               case UasMessages.MissionItemReached: return new UasMissionItemReached();
+               case UasMessages.MissionAck: return new UasMissionAck();
+               case UasMessages.SetGpsGlobalOrigin: return new UasSetGpsGlobalOrigin();
+               case UasMessages.GpsGlobalOrigin: return new UasGpsGlobalOrigin();
+               case UasMessages.ParamMapRc: return new UasParamMapRc();
+               case UasMessages.MissionRequestInt: return new UasMissionRequestInt();
+               case UasMessages.SafetySetAllowedArea: return new UasSafetySetAllowedArea();
+               case UasMessages.SafetyAllowedArea: return new UasSafetyAllowedArea();
+               case UasMessages.AttitudeQuaternionCov: return new UasAttitudeQuaternionCov();
+               case UasMessages.NavControllerOutput: return new UasNavControllerOutput();
+               case UasMessages.GlobalPositionIntCov: return new UasGlobalPositionIntCov();
+               case UasMessages.LocalPositionNedCov: return new UasLocalPositionNedCov();
+               case UasMessages.RcChannels: return new UasRcChannels();
+               case UasMessages.RequestDataStream: return new UasRequestDataStream();
+               case UasMessages.DataStream: return new UasDataStream();
+               case UasMessages.ManualControl: return new UasManualControl();
+               case UasMessages.RcChannelsOverride: return new UasRcChannelsOverride();
+               case UasMessages.MissionItemInt: return new UasMissionItemInt();
+               case UasMessages.VfrHud: return new UasVfrHud();
+               case UasMessages.CommandInt: return new UasCommandInt();
+               case UasMessages.CommandLong: return new UasCommandLong();
+               case UasMessages.CommandAck: return new UasCommandAck();
+               case UasMessages.ManualSetpoint: return new UasManualSetpoint();
+               case UasMessages.SetAttitudeTarget: return new UasSetAttitudeTarget();
+               case UasMessages.AttitudeTarget: return new UasAttitudeTarget();
+               case UasMessages.SetPositionTargetLocalNed: return new UasSetPositionTargetLocalNed();
+               case UasMessages.PositionTargetLocalNed: return new UasPositionTargetLocalNed();
+               case UasMessages.SetPositionTargetGlobalInt: return new UasSetPositionTargetGlobalInt();
+               case UasMessages.PositionTargetGlobalInt: return new UasPositionTargetGlobalInt();
+               case UasMessages.LocalPositionNedSystemGlobalOffset: return new UasLocalPositionNedSystemGlobalOffset();
+               case UasMessages.HilState: return new UasHilState();
+               case UasMessages.HilControls: return new UasHilControls();
+               case UasMessages.HilRcInputsRaw: return new UasHilRcInputsRaw();
+               case UasMessages.HilActuatorControls: return new UasHilActuatorControls();
+               case UasMessages.OpticalFlow: return new UasOpticalFlow();
+               case UasMessages.GlobalVisionPositionEstimate: return new UasGlobalVisionPositionEstimate();
+               case UasMessages.VisionPositionEstimate: return new UasVisionPositionEstimate();
+               case UasMessages.VisionSpeedEstimate: return new UasVisionSpeedEstimate();
+               case UasMessages.ViconPositionEstimate: return new UasViconPositionEstimate();
+               case UasMessages.HighresImu: return new UasHighresImu();
+               case UasMessages.OpticalFlowRad: return new UasOpticalFlowRad();
+               case UasMessages.HilSensor: return new UasHilSensor();
+               case UasMessages.SimState: return new UasSimState();
+               case UasMessages.RadioStatus: return new UasRadioStatus();
+               case UasMessages.FileTransferProtocol: return new UasFileTransferProtocol();
+               case UasMessages.Timesync: return new UasTimesync();
+               case UasMessages.CameraTrigger: return new UasCameraTrigger();
+               case UasMessages.HilGps: return new UasHilGps();
+               case UasMessages.HilOpticalFlow: return new UasHilOpticalFlow();
+               case UasMessages.HilStateQuaternion: return new UasHilStateQuaternion();
+               case UasMessages.ScaledImu2: return new UasScaledImu2();
+               case UasMessages.LogRequestList: return new UasLogRequestList();
+               case UasMessages.LogEntry: return new UasLogEntry();
+               case UasMessages.LogRequestData: return new UasLogRequestData();
+               case UasMessages.LogData: return new UasLogData();
+               case UasMessages.LogErase: return new UasLogErase();
+               case UasMessages.LogRequestEnd: return new UasLogRequestEnd();
+               case UasMessages.GpsInjectData: return new UasGpsInjectData();
+               case UasMessages.Gps2Raw: return new UasGps2Raw();
+               case UasMessages.PowerStatus: return new UasPowerStatus();
+               case UasMessages.SerialControl: return new UasSerialControl();
+               case UasMessages.GpsRtk: return new UasGpsRtk();
+               case UasMessages.Gps2Rtk: return new UasGps2Rtk();
+               case UasMessages.ScaledImu3: return new UasScaledImu3();
+               case UasMessages.DataTransmissionHandshake: return new UasDataTransmissionHandshake();
+               case UasMessages.EncapsulatedData: return new UasEncapsulatedData();
+               case UasMessages.DistanceSensor: return new UasDistanceSensor();
+               case UasMessages.TerrainRequest: return new UasTerrainRequest();
+               case UasMessages.TerrainData: return new UasTerrainData();
+               case UasMessages.TerrainCheck: return new UasTerrainCheck();
+               case UasMessages.TerrainReport: return new UasTerrainReport();
+               case UasMessages.ScaledPressure2: return new UasScaledPressure2();
+               case UasMessages.AttPosMocap: return new UasAttPosMocap();
+               case UasMessages.SetActuatorControlTarget: return new UasSetActuatorControlTarget();
+               case UasMessages.ActuatorControlTarget: return new UasActuatorControlTarget();
+               case UasMessages.Altitude: return new UasAltitude();
+               case UasMessages.ResourceRequest: return new UasResourceRequest();
+               case UasMessages.ScaledPressure3: return new UasScaledPressure3();
+               case UasMessages.FollowTarget: return new UasFollowTarget();
+               case UasMessages.ControlSystemState: return new UasControlSystemState();
+               case UasMessages.BatteryStatus: return new UasBatteryStatus();
+               case UasMessages.AutopilotVersion: return new UasAutopilotVersion();
+               case UasMessages.LandingTarget: return new UasLandingTarget();
+               case UasMessages.EstimatorStatus: return new UasEstimatorStatus();
+               case UasMessages.WindCov: return new UasWindCov();
+               case UasMessages.GpsInput: return new UasGpsInput();
+               case UasMessages.GpsRtcmData: return new UasGpsRtcmData();
+               case UasMessages.HighLatency: return new UasHighLatency();
+               case UasMessages.HighLatency2: return new UasHighLatency2();
+               case UasMessages.Vibration: return new UasVibration();
+               case UasMessages.HomePosition: return new UasHomePosition();
+               case UasMessages.SetHomePosition: return new UasSetHomePosition();
+               case UasMessages.MessageInterval: return new UasMessageInterval();
+               case UasMessages.ExtendedSysState: return new UasExtendedSysState();
+               case UasMessages.AdsbVehicle: return new UasAdsbVehicle();
+               case UasMessages.Collision: return new UasCollision();
+               case UasMessages.V2Extension: return new UasV2Extension();
+               case UasMessages.MemoryVect: return new UasMemoryVect();
+               case UasMessages.DebugVect: return new UasDebugVect();
+               case UasMessages.NamedValueFloat: return new UasNamedValueFloat();
+               case UasMessages.NamedValueInt: return new UasNamedValueInt();
+               case UasMessages.Statustext: return new UasStatustext();
+               case UasMessages.Debug: return new UasDebug();
+               case UasMessages.SensorOffsets: return new UasSensorOffsets();
+               case UasMessages.SetMagOffsets: return new UasSetMagOffsets();
+               case UasMessages.Meminfo: return new UasMeminfo();
+               case UasMessages.ApAdc: return new UasApAdc();
+               case UasMessages.DigicamConfigure: return new UasDigicamConfigure();
+               case UasMessages.DigicamControl: return new UasDigicamControl();
+               case UasMessages.MountConfigure: return new UasMountConfigure();
+               case UasMessages.MountControl: return new UasMountControl();
+               case UasMessages.MountStatus: return new UasMountStatus();
+               case UasMessages.FencePoint: return new UasFencePoint();
+               case UasMessages.FenceFetchPoint: return new UasFenceFetchPoint();
+               case UasMessages.FenceStatus: return new UasFenceStatus();
+               case UasMessages.Ahrs: return new UasAhrs();
+               case UasMessages.Simstate: return new UasSimstate();
+               case UasMessages.Hwstatus: return new UasHwstatus();
+               case UasMessages.Radio: return new UasRadio();
+               case UasMessages.LimitsStatus: return new UasLimitsStatus();
+               case UasMessages.Wind: return new UasWind();
+               case UasMessages.Data16: return new UasData16();
+               case UasMessages.Data32: return new UasData32();
+               case UasMessages.Data64: return new UasData64();
+               case UasMessages.Data96: return new UasData96();
+               case UasMessages.Rangefinder: return new UasRangefinder();
+               case UasMessages.AirspeedAutocal: return new UasAirspeedAutocal();
+               case UasMessages.RallyPoint: return new UasRallyPoint();
+               case UasMessages.RallyFetchPoint: return new UasRallyFetchPoint();
+               case UasMessages.CompassmotStatus: return new UasCompassmotStatus();
+               case UasMessages.Ahrs2: return new UasAhrs2();
+               case UasMessages.CameraStatus: return new UasCameraStatus();
+               case UasMessages.CameraFeedback: return new UasCameraFeedback();
+               case UasMessages.Battery2: return new UasBattery2();
+               case UasMessages.Ahrs3: return new UasAhrs3();
+               case UasMessages.AutopilotVersionRequest: return new UasAutopilotVersionRequest();
+               case UasMessages.RemoteLogDataBlock: return new UasRemoteLogDataBlock();
+               case UasMessages.RemoteLogBlockStatus: return new UasRemoteLogBlockStatus();
+               case UasMessages.LedControl: return new UasLedControl();
+               case UasMessages.MagCalProgress: return new UasMagCalProgress();
+               case UasMessages.MagCalReport: return new UasMagCalReport();
+               case UasMessages.EkfStatusReport: return new UasEkfStatusReport();
+               case UasMessages.PidTuning: return new UasPidTuning();
+               case UasMessages.Deepstall: return new UasDeepstall();
+               case UasMessages.GimbalReport: return new UasGimbalReport();
+               case UasMessages.GimbalControl: return new UasGimbalControl();
+               case UasMessages.GimbalTorqueCmdReport: return new UasGimbalTorqueCmdReport();
+               case UasMessages.GoproHeartbeat: return new UasGoproHeartbeat();
+               case UasMessages.GoproGetRequest: return new UasGoproGetRequest();
+               case UasMessages.GoproGetResponse: return new UasGoproGetResponse();
+               case UasMessages.GoproSetRequest: return new UasGoproSetRequest();
+               case UasMessages.GoproSetResponse: return new UasGoproSetResponse();
+               case UasMessages.Rpm: return new UasRpm();
                default: return null;
             }
         }
 
-        public static byte GetCrcExtraForId(byte id)
+        public static byte GetCrcExtraForId(UasMessages id)
         {
             switch (id)
             {
-               case 0: return 50;
-               case 1: return 124;
-               case 2: return 137;
-               case 4: return 237;
-               case 5: return 217;
-               case 6: return 104;
-               case 7: return 119;
-               case 11: return 89;
-               case 20: return 214;
-               case 21: return 159;
-               case 22: return 220;
-               case 23: return 168;
-               case 24: return 111;
-               case 25: return 23;
-               case 26: return 170;
-               case 27: return 144;
-               case 28: return 67;
-               case 29: return 115;
-               case 30: return 39;
-               case 31: return 246;
-               case 32: return 185;
-               case 33: return 104;
-               case 34: return 237;
-               case 35: return 244;
-               case 36: return 175;
-               case 37: return 4;
-               case 38: return 168;
-               case 39: return 95;
-               case 40: return 177;
-               case 41: return 28;
-               case 42: return 28;
-               case 43: return 148;
-               case 44: return 52;
-               case 45: return 25;
-               case 46: return 11;
-               case 47: return 146;
-               case 48: return 62;
-               case 49: return 95;
-               case 50: return 78;
-               case 51: return 129;
-               case 54: return 15;
-               case 55: return 3;
-               case 61: return 167;
-               case 62: return 183;
-               case 63: return 119;
-               case 64: return 191;
-               case 65: return 118;
-               case 66: return 148;
-               case 67: return 21;
-               case 69: return 243;
-               case 70: return 140;
-               case 73: return 209;
-               case 74: return 20;
-               case 75: return 158;
-               case 76: return 152;
-               case 77: return 205;
-               case 81: return 106;
-               case 82: return 49;
-               case 83: return 22;
-               case 84: return 143;
-               case 85: return 140;
-               case 86: return 5;
-               case 87: return 150;
-               case 89: return 231;
-               case 90: return 183;
-               case 91: return 63;
-               case 92: return 54;
-               case 93: return 47;
-               case 100: return 145;
-               case 101: return 10;
-               case 102: return 185;
-               case 103: return 27;
-               case 104: return 176;
-               case 105: return 93;
-               case 106: return 138;
-               case 107: return 108;
-               case 108: return 32;
-               case 109: return 185;
-               case 110: return 84;
-               case 111: return 34;
-               case 112: return 174;
-               case 113: return 124;
-               case 114: return 237;
-               case 115: return 4;
-               case 116: return 76;
-               case 117: return 128;
-               case 118: return 56;
-               case 119: return 116;
-               case 120: return 134;
-               case 121: return 237;
-               case 122: return 203;
-               case 123: return 250;
-               case 124: return 87;
-               case 125: return 203;
-               case 126: return 220;
-               case 127: return 25;
-               case 128: return 226;
-               case 129: return 46;
-               case 130: return 29;
-               case 131: return 223;
-               case 132: return 85;
-               case 133: return 6;
-               case 134: return 229;
-               case 135: return 203;
-               case 136: return 1;
-               case 137: return 195;
-               case 138: return 19;
-               case 139: return 168;
-               case 140: return 181;
-               case 141: return 47;
-               case 142: return 72;
-               case 143: return 131;
-               case 144: return 127;
-               case 146: return 103;
-               case 147: return 149;
-               case 148: return 39;
-               case 149: return 48;
-               case 230: return 163;
-               case 231: return 105;
-               case 232: return 151;
-               case 233: return 35;
-               case 234: return 150;
-               case 235: return 179;
-               case 241: return 90;
-               case 242: return 1;
-               case 243: return 57;
-               case 244: return 95;
-               case 245: return 130;
-               case 246: return 184;
-               case 247: return 81;
-               case 248: return 8;
-               case 249: return 204;
-               case 250: return 49;
-               case 251: return 170;
-               case 252: return 44;
-               case 253: return 83;
-               case 254: return 46;
-               case 150: return 134;
-               case 151: return 219;
-               case 152: return 112;
-               case 153: return 188;
-               case 154: return 84;
-               case 155: return 22;
-               case 156: return 19;
-               case 157: return 21;
-               case 158: return 134;
-               case 160: return 78;
-               case 161: return 68;
-               case 162: return 189;
-               case 163: return 127;
-               case 164: return 154;
-               case 165: return 21;
-               case 166: return 21;
-               case 167: return 144;
-               case 168: return 1;
-               case 169: return 234;
-               case 170: return 73;
-               case 171: return 181;
-               case 172: return 22;
-               case 173: return 83;
-               case 174: return 167;
-               case 175: return 138;
-               case 176: return 234;
-               case 177: return 240;
-               case 178: return 47;
-               case 179: return 189;
-               case 180: return 81;
-               case 181: return 174;
-               case 182: return 229;
-               case 183: return 85;
-               case 184: return 159;
-               case 185: return 186;
-               case 186: return 72;
-               case 191: return 92;
-               case 192: return 253;
-               case 193: return 203;
-               case 194: return 98;
-               case 195: return 120;
-               case 200: return 134;
-               case 201: return 205;
-               case 214: return 69;
-               case 215: return 101;
-               case 216: return 50;
-               case 217: return 202;
-               case 218: return 17;
-               case 219: return 162;
-               case 226: return 207;
+               case UasMessages.Heartbeat: return 50;
+               case UasMessages.SysStatus: return 124;
+               case UasMessages.SystemTime: return 137;
+               case UasMessages.Ping: return 237;
+               case UasMessages.ChangeOperatorControl: return 217;
+               case UasMessages.ChangeOperatorControlAck: return 104;
+               case UasMessages.AuthKey: return 119;
+               case UasMessages.SetMode: return 89;
+               case UasMessages.ParamRequestRead: return 214;
+               case UasMessages.ParamRequestList: return 159;
+               case UasMessages.ParamValue: return 220;
+               case UasMessages.ParamSet: return 168;
+               case UasMessages.GpsRawInt: return 24;
+               case UasMessages.GpsStatus: return 23;
+               case UasMessages.ScaledImu: return 170;
+               case UasMessages.RawImu: return 144;
+               case UasMessages.RawPressure: return 67;
+               case UasMessages.ScaledPressure: return 115;
+               case UasMessages.Attitude: return 39;
+               case UasMessages.AttitudeQuaternion: return 246;
+               case UasMessages.LocalPositionNed: return 185;
+               case UasMessages.GlobalPositionInt: return 104;
+               case UasMessages.RcChannelsScaled: return 237;
+               case UasMessages.RcChannelsRaw: return 244;
+               case UasMessages.ServoOutputRaw: return 222;
+               case UasMessages.MissionRequestPartialList: return 212;
+               case UasMessages.MissionWritePartialList: return 9;
+               case UasMessages.MissionItem: return 254;
+               case UasMessages.MissionRequest: return 230;
+               case UasMessages.MissionSetCurrent: return 28;
+               case UasMessages.MissionCurrent: return 28;
+               case UasMessages.MissionRequestList: return 132;
+               case UasMessages.MissionCount: return 221;
+               case UasMessages.MissionClearAll: return 232;
+               case UasMessages.MissionItemReached: return 11;
+               case UasMessages.MissionAck: return 153;
+               case UasMessages.SetGpsGlobalOrigin: return 41;
+               case UasMessages.GpsGlobalOrigin: return 39;
+               case UasMessages.ParamMapRc: return 78;
+               case UasMessages.MissionRequestInt: return 196;
+               case UasMessages.SafetySetAllowedArea: return 15;
+               case UasMessages.SafetyAllowedArea: return 3;
+               case UasMessages.AttitudeQuaternionCov: return 167;
+               case UasMessages.NavControllerOutput: return 183;
+               case UasMessages.GlobalPositionIntCov: return 119;
+               case UasMessages.LocalPositionNedCov: return 191;
+               case UasMessages.RcChannels: return 118;
+               case UasMessages.RequestDataStream: return 148;
+               case UasMessages.DataStream: return 21;
+               case UasMessages.ManualControl: return 243;
+               case UasMessages.RcChannelsOverride: return 124;
+               case UasMessages.MissionItemInt: return 38;
+               case UasMessages.VfrHud: return 20;
+               case UasMessages.CommandInt: return 158;
+               case UasMessages.CommandLong: return 152;
+               case UasMessages.CommandAck: return 143;
+               case UasMessages.ManualSetpoint: return 106;
+               case UasMessages.SetAttitudeTarget: return 49;
+               case UasMessages.AttitudeTarget: return 22;
+               case UasMessages.SetPositionTargetLocalNed: return 143;
+               case UasMessages.PositionTargetLocalNed: return 140;
+               case UasMessages.SetPositionTargetGlobalInt: return 5;
+               case UasMessages.PositionTargetGlobalInt: return 150;
+               case UasMessages.LocalPositionNedSystemGlobalOffset: return 231;
+               case UasMessages.HilState: return 183;
+               case UasMessages.HilControls: return 63;
+               case UasMessages.HilRcInputsRaw: return 54;
+               case UasMessages.HilActuatorControls: return 47;
+               case UasMessages.OpticalFlow: return 175;
+               case UasMessages.GlobalVisionPositionEstimate: return 102;
+               case UasMessages.VisionPositionEstimate: return 158;
+               case UasMessages.VisionSpeedEstimate: return 208;
+               case UasMessages.ViconPositionEstimate: return 56;
+               case UasMessages.HighresImu: return 93;
+               case UasMessages.OpticalFlowRad: return 138;
+               case UasMessages.HilSensor: return 108;
+               case UasMessages.SimState: return 32;
+               case UasMessages.RadioStatus: return 185;
+               case UasMessages.FileTransferProtocol: return 84;
+               case UasMessages.Timesync: return 34;
+               case UasMessages.CameraTrigger: return 174;
+               case UasMessages.HilGps: return 124;
+               case UasMessages.HilOpticalFlow: return 237;
+               case UasMessages.HilStateQuaternion: return 4;
+               case UasMessages.ScaledImu2: return 76;
+               case UasMessages.LogRequestList: return 128;
+               case UasMessages.LogEntry: return 56;
+               case UasMessages.LogRequestData: return 116;
+               case UasMessages.LogData: return 134;
+               case UasMessages.LogErase: return 237;
+               case UasMessages.LogRequestEnd: return 203;
+               case UasMessages.GpsInjectData: return 250;
+               case UasMessages.Gps2Raw: return 87;
+               case UasMessages.PowerStatus: return 203;
+               case UasMessages.SerialControl: return 220;
+               case UasMessages.GpsRtk: return 25;
+               case UasMessages.Gps2Rtk: return 226;
+               case UasMessages.ScaledImu3: return 46;
+               case UasMessages.DataTransmissionHandshake: return 29;
+               case UasMessages.EncapsulatedData: return 223;
+               case UasMessages.DistanceSensor: return 85;
+               case UasMessages.TerrainRequest: return 6;
+               case UasMessages.TerrainData: return 229;
+               case UasMessages.TerrainCheck: return 203;
+               case UasMessages.TerrainReport: return 1;
+               case UasMessages.ScaledPressure2: return 195;
+               case UasMessages.AttPosMocap: return 109;
+               case UasMessages.SetActuatorControlTarget: return 168;
+               case UasMessages.ActuatorControlTarget: return 181;
+               case UasMessages.Altitude: return 47;
+               case UasMessages.ResourceRequest: return 72;
+               case UasMessages.ScaledPressure3: return 131;
+               case UasMessages.FollowTarget: return 127;
+               case UasMessages.ControlSystemState: return 103;
+               case UasMessages.BatteryStatus: return 154;
+               case UasMessages.AutopilotVersion: return 178;
+               case UasMessages.LandingTarget: return 200;
+               case UasMessages.EstimatorStatus: return 163;
+               case UasMessages.WindCov: return 105;
+               case UasMessages.GpsInput: return 151;
+               case UasMessages.GpsRtcmData: return 35;
+               case UasMessages.HighLatency: return 150;
+               case UasMessages.HighLatency2: return 179;
+               case UasMessages.Vibration: return 90;
+               case UasMessages.HomePosition: return 104;
+               case UasMessages.SetHomePosition: return 85;
+               case UasMessages.MessageInterval: return 95;
+               case UasMessages.ExtendedSysState: return 130;
+               case UasMessages.AdsbVehicle: return 184;
+               case UasMessages.Collision: return 81;
+               case UasMessages.V2Extension: return 8;
+               case UasMessages.MemoryVect: return 204;
+               case UasMessages.DebugVect: return 49;
+               case UasMessages.NamedValueFloat: return 170;
+               case UasMessages.NamedValueInt: return 44;
+               case UasMessages.Statustext: return 83;
+               case UasMessages.Debug: return 46;
+               case UasMessages.SensorOffsets: return 134;
+               case UasMessages.SetMagOffsets: return 219;
+               case UasMessages.Meminfo: return 208;
+               case UasMessages.ApAdc: return 188;
+               case UasMessages.DigicamConfigure: return 84;
+               case UasMessages.DigicamControl: return 22;
+               case UasMessages.MountConfigure: return 19;
+               case UasMessages.MountControl: return 21;
+               case UasMessages.MountStatus: return 134;
+               case UasMessages.FencePoint: return 78;
+               case UasMessages.FenceFetchPoint: return 68;
+               case UasMessages.FenceStatus: return 189;
+               case UasMessages.Ahrs: return 127;
+               case UasMessages.Simstate: return 154;
+               case UasMessages.Hwstatus: return 21;
+               case UasMessages.Radio: return 21;
+               case UasMessages.LimitsStatus: return 144;
+               case UasMessages.Wind: return 1;
+               case UasMessages.Data16: return 234;
+               case UasMessages.Data32: return 73;
+               case UasMessages.Data64: return 181;
+               case UasMessages.Data96: return 22;
+               case UasMessages.Rangefinder: return 83;
+               case UasMessages.AirspeedAutocal: return 167;
+               case UasMessages.RallyPoint: return 138;
+               case UasMessages.RallyFetchPoint: return 234;
+               case UasMessages.CompassmotStatus: return 240;
+               case UasMessages.Ahrs2: return 47;
+               case UasMessages.CameraStatus: return 189;
+               case UasMessages.CameraFeedback: return 52;
+               case UasMessages.Battery2: return 174;
+               case UasMessages.Ahrs3: return 229;
+               case UasMessages.AutopilotVersionRequest: return 85;
+               case UasMessages.RemoteLogDataBlock: return 159;
+               case UasMessages.RemoteLogBlockStatus: return 186;
+               case UasMessages.LedControl: return 72;
+               case UasMessages.MagCalProgress: return 92;
+               case UasMessages.MagCalReport: return 36;
+               case UasMessages.EkfStatusReport: return 71;
+               case UasMessages.PidTuning: return 98;
+               case UasMessages.Deepstall: return 120;
+               case UasMessages.GimbalReport: return 134;
+               case UasMessages.GimbalControl: return 205;
+               case UasMessages.GimbalTorqueCmdReport: return 69;
+               case UasMessages.GoproHeartbeat: return 101;
+               case UasMessages.GoproGetRequest: return 50;
+               case UasMessages.GoproGetResponse: return 202;
+               case UasMessages.GoproSetRequest: return 17;
+               case UasMessages.GoproSetResponse: return 162;
+               case UasMessages.Rpm: return 207;
                default: return 0;
             }
         }

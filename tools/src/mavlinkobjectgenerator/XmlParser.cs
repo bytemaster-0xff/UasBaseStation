@@ -66,6 +66,8 @@ namespace MavLinkObjectGenerator
             EnumEntry currentEntry = null;
             EnumEntryParameter currentParam = null;
             int currentEnumValue = 0;
+            bool isExtensionsParam = false;
+            int fieldIndex = 0;
 
             while (reader.Read())
             {
@@ -80,6 +82,7 @@ namespace MavLinkObjectGenerator
                             result.Version = reader.ReadElementContentAsInt();
                             break;
                         case "message":
+                            isExtensionsParam = false;
                              // if (currentMsg != null) SortFields(currentMsg);   //<--- if condition deleted 
                             currentMsg = new MessageData();
                             currentObject = currentMsg;
@@ -93,19 +96,25 @@ namespace MavLinkObjectGenerator
                             break;
                         case "field":
                             currentField = new FieldData();
+                            currentField.Index = fieldIndex++;
                             currentField.Name = reader.GetAttribute("name");
                             currentField.TypeString = reader.GetAttribute("type");
                             currentField.Type = GetFieldTypeFromString(currentField.TypeString);
                             currentField.NumElements = GetFieldTypeNumElements(currentField.TypeString);
+                            currentField.IsExtension = isExtensionsParam;
                             currentField.Description = reader.ReadElementContentAsString();
                             UpdateEnumFields(result, currentField);
                             currentMsg.Fields.Add(currentField);
+                            break;
+                        case "extensions":
+                            isExtensionsParam = true;
                             break;
                         case "enum":
                             currentEnum = GetEnumDataForName(result, reader.GetAttribute("name"));
                             currentObject = currentEnum;
                             result.Enumerations[currentEnum.Name] = currentEnum;
                             currentEnumValue = 0;
+                            isExtensionsParam = true;
                             break;
                         case "entry":
                             currentEntry = new EnumEntry();

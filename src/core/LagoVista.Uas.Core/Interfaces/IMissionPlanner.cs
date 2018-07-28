@@ -4,6 +4,6 @@ namespace LagoVista.Uas.Core
 {
     public interface IMissionPlanner
     {
-        Task GetWayPoints(IUas drone, ITransport link);
+        Task GetWayPoints(IUas uas, ITransport link);
     }
 }

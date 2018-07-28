@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LagoVista.Uas.Core.MavLink;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -13,9 +14,9 @@ namespace LagoVista.Uas.Core.Models
             protected set;
         }
 
-        public byte MessageId
+        public UasMessages MessageId
         {
-            get { return mMessageId; }
+            get { return _messageId; }
         }
 
 
@@ -51,7 +52,7 @@ namespace LagoVista.Uas.Core.Models
         }
 
 
-        protected byte mMessageId;
+        protected UasMessages _messageId;
         protected UasMessageMetadata mMetadata;
     }
 

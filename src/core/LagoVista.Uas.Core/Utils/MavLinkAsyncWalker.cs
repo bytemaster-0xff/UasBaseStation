@@ -38,7 +38,7 @@ namespace LagoVista.Uas.Core.Utils
     /// </remarks>
     public class MavLinkAsyncWalker: MavLinkGenericPacketWalker
     {
-        public const int DefaultCircularBufferSize = 4096;
+        public const int DefaultCircularBufferSize = 64 * 1024;
 
         private BlockingCircularStream mProcessStream;
 
@@ -62,12 +62,12 @@ namespace LagoVista.Uas.Core.Utils
 
         private void PacketProcessingWorker(object state)
         {
-            using (BinaryReader reader = MavLinkPacket.GetBinaryReader(mProcessStream))
+            using (var reader = MavLinkPacket.GetBinaryReader(mProcessStream))
             {
                 while (true)
                 {
                     SyncStream(reader);
-                    MavLinkPacket packet = MavLinkPacket.Deserialize(reader, 0);
+                    var packet = MavLinkPacket.Deserialize(reader, 0);
 
                     if (packet.IsValid)
                     {

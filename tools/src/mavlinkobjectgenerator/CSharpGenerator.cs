@@ -24,11 +24,12 @@ THE SOFTWARE.
 using System;
 using System.IO;
 using System.Text;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace MavLinkObjectGenerator
 {
-    public class CSharpGenerator: GenericGenerator
+    public class CSharpGenerator : GenericGenerator
     {
 
         // __ Config consts ______________________________________________
@@ -82,7 +83,7 @@ namespace MavLinkObjectGenerator
             WL("{");
             WL();
         }
-       
+
         private void WriteEnums()
         {
             foreach (EnumData e in mProtocolData.Enumerations.Values)
@@ -99,11 +100,11 @@ namespace MavLinkObjectGenerator
             }
 
         }
-        
+
         private void WriteClasses()
         {
-            
-           
+
+
 
             foreach (MessageData m in mProtocolData.Messages.Values)
             {
@@ -151,18 +152,18 @@ namespace MavLinkObjectGenerator
 
             WL("    }");
             WL();
-        }
+        }        
 
         private void WriteSummaryCreateFromId()
         {
-            WL("        public static UasMessage CreateFromId(byte id)");
+            WL("        public static UasMessage CreateFromId(UasMessages id)");
             WL("        {");
             WL("            switch (id)");
             WL("            {");
 
             foreach (MessageData m in mProtocolData.Messages.Values)
             {
-                WL("               case {0}: return new {1}();", m.Id, GetClassName(m));
+                WL("               case UasMessages.{0}: return new {1}();", GetEnumName(m.Name), GetClassName(m));
             }
             WL("               default: return null;");
             WL("            }");
@@ -172,14 +173,14 @@ namespace MavLinkObjectGenerator
 
         private void WriteSummaryGetCrc()
         {
-            WL("        public static byte GetCrcExtraForId(byte id)");
+            WL("        public static byte GetCrcExtraForId(UasMessages id)");
             WL("        {");
             WL("            switch (id)");
             WL("            {");
 
             foreach (MessageData m in mProtocolData.Messages.Values)
             {
-                WL("               case {0}: return {1};", m.Id, GetMessageExtraCrc(m));
+                WL("               case UasMessages.{0}: return {1};", GetEnumName(m.Name), GetMessageExtraCrc(m));
             }
             WL("               default: return 0;");
             WL("            }");
@@ -234,7 +235,7 @@ namespace MavLinkObjectGenerator
                     WL();
                 }
 
-                    WL("            mEnums.Add(en.Name, en);");
+                WL("            mEnums.Add(en.Name, en);");
             }
             WL("        }");
         }
@@ -266,7 +267,7 @@ namespace MavLinkObjectGenerator
             WL("    public class {0}: UasMessage", GetClassName(m));
             WL("    {");
         }
-       
+
         private void WriteProperties(MessageData m)
         {
             foreach (FieldData f in m.Fields)
@@ -290,7 +291,7 @@ namespace MavLinkObjectGenerator
         {
             WL("        public {0}()", GetClassName(m));
             WL("        {");
-            WL("            mMessageId = {0};", m.Id);
+            WL("            _messageId = UasMessages.{0};", GetEnumName(m.Name));
             WL("            CrcExtra = {0};", GetMessageExtraCrc(m));
             WL("        }");
             WL();
@@ -301,7 +302,7 @@ namespace MavLinkObjectGenerator
             WL("        override internal void SerializeBody(BinaryWriter s)");
             WL("        {");
 
-            foreach (FieldData f in m.Fields)
+            foreach (var f in m.Fields)
             {
                 if (f.NumElements <= 1)
                 {
@@ -332,15 +333,15 @@ namespace MavLinkObjectGenerator
 
                 if (numElements <= 1)
                 {
-                    WL("            this.{0} = {1}s.{2}();",
-                       GetPrivateFieldName(f), GetEnumTypeCast(f), GetReadOperation(f));
+                    WL("            {0} this.{1} = {2}s.{3}();",
+                      f.IsExtension ? "if(s.BaseStream.Position < s.BaseStream.Length)" : String.Empty, GetPrivateFieldName(f), GetEnumTypeCast(f), GetReadOperation(f));
                 }
                 else
                 {
                     for (int i = 0; i < numElements; ++i)
                     {
-                        WL("            this.{0}[{1}] = {2}s.{3}();",
-                           GetPrivateFieldName(f), i, GetEnumTypeCast(f), GetReadOperation(f));
+                        WL("             {0} this.{1}[{2}] = {3}s.{4}();",
+                           f.IsExtension ? "if(s.BaseStream.Position < s.BaseStream.Length)" : String.Empty, GetPrivateFieldName(f), i, GetEnumTypeCast(f), GetReadOperation(f));
                     }
                 }
             }
@@ -394,7 +395,7 @@ namespace MavLinkObjectGenerator
                 WL("                Name = \"{0}\",", GetFieldName(f));
                 WL("                Description = \"{0}\",", GetSanitizedComment(f.Description));
                 WL("                NumElements = {0},", f.NumElements);
-                
+
                 if (f.IsEnum)
                 {
                     EnumData en = mProtocolData.Enumerations[f.EnumType];
@@ -403,7 +404,7 @@ namespace MavLinkObjectGenerator
 
                     WL("                EnumMetadata = UasSummary.GetEnumMetadata(\"{0}\"),", GetEnumName(en.Name));
                 }
-                
+
                 WL("            });");
                 WL();
             }
@@ -412,7 +413,7 @@ namespace MavLinkObjectGenerator
             WL();
         }
 
-        
+
         private void WritePrivateFields(MessageData m)
         {
             foreach (FieldData f in m.Fields)
@@ -547,7 +548,7 @@ namespace MavLinkObjectGenerator
             if (!f.IsEnum) return "";
 
             // Field is enum, use the declared type
-            return string.Format("({0})", 
+            return string.Format("({0})",
                 GetBaseCSharpType(XmlParser.GetFieldTypeFromString(f.TypeString)));
         }
 
@@ -599,7 +600,7 @@ namespace MavLinkObjectGenerator
         private static string GetSanitizedComment(string comment)
         {
             if (comment == null) return "";
-            
+
             return comment.Replace('\n', ' ').Replace('\r', ' ').Replace('"', '\'');
         }
 

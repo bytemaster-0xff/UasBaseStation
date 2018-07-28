@@ -4,6 +4,7 @@ using LagoVista.Core.Models;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
+using LagoVista.Uas.Drones;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,14 +19,14 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public MainViewModel(IMissionPlanner planner)
         {
-            TelemetryLink = new SerialPortTransport();
+            TelemetryLink = new SerialPortTransport(DispatcherServices);
             //TelemetryLink.MessageParsed += _telemeteryLink_MessageParsed;
             OpenSerialPortCommand = new RelayCommand(HandleConnectClick, CanPressConnect);
             GetWaypointsCommand = new RelayCommand(GetWaypoints, CanDoConnectedStuff);
 
             Title = "Kevin";
 
-
+            _apmDrone = new APM(null);
 
             _planner = planner;
         }
@@ -42,7 +43,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public bool CanDoConnectedStuff()
         {
-            return TelemetryLink.IsConected;
+            return TelemetryLink.IsConnected;
         }
 
         public async override Task InitAsync()
@@ -53,7 +54,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public void HandleConnectClick()
         {
-            if (TelemetryLink.IsConected)
+            if (TelemetryLink.IsConnected)
             {
                 CloseSerialPort();
             }
@@ -70,8 +71,10 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public async void OpenSerialPort()
         {
-            SelectedPort.BaudRate = 57600;
-            await (TelemetryLink as SerialPortTransport).OpenAsync(DeviceManager.CreateSerialPort(SelectedPort));
+            SelectedPort.BaudRate = 115200;
+            var port = DeviceManager.CreateSerialPort(SelectedPort);
+            TelemetryLink.Initialize();
+            await (TelemetryLink as SerialPortTransport).OpenAsync(port);
             ConnectMessage = "Disconnect";
             OpenSerialPortCommand.RaiseCanExecuteChanged();
             GetWaypointsCommand.RaiseCanExecuteChanged();

@@ -23,5 +23,8 @@ namespace LagoVista.Uas.Core
         ObservableCollection<ServoOutput> ServoOutputs { get; }
         float Yaw { get; set; }
         float YawSpeed { get; set; }
+
+        byte SystemId { get; }
+        byte ComponentId { get; }
     }
 }

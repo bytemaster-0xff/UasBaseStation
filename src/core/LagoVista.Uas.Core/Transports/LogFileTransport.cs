@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using LagoVista.Core;
 using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Utils;
 
@@ -7,8 +8,8 @@ namespace LagoVista.Uas.Core.MavLink
     public class LogFileTransport: Transport
     {
         private string mLogFileName;
-
-        public LogFileTransport(string logFileName)
+        
+        public LogFileTransport(string logFileName, IDispatcherServices dispatcher) : base(dispatcher)
         {
             mLogFileName = logFileName;
         }

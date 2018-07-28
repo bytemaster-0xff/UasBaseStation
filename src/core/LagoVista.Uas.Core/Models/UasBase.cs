@@ -1,9 +1,6 @@
 ﻿using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace LagoVista.Uas.Core
 {
@@ -24,8 +21,16 @@ namespace LagoVista.Uas.Core
             
             ServoOutputs = new ObservableCollection<ServoOutput>();
             for (var idx = 0; idx < 16; ++idx) ServoOutputs.Add(new ServoOutput());
+
+            ComponentId = 1;
+            SystemId = 1;
         }
-        
+
+        public byte SystemId { get; }
+
+        public byte ComponentId { get; }
+
+
         public DOF3Sensor Acc { get; }
 
         public DOF3Sensor Gyro { get; }

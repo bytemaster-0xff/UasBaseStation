@@ -65,11 +65,13 @@ namespace MavLinkObjectGenerator
     [DebuggerDisplay("{Name}: [type: {TypeString}] [enum: {EnumType}]")]
     public class FieldData : ProtocolObject
     {
+        public int Index;
         public string TypeString;
         public FieldDataType Type;
         public int NumElements;
         public bool IsEnum = false;
         public string EnumType;
+        public bool IsExtension = false;
     }
 
     public class EnumData : ProtocolObject

@@ -29,7 +29,8 @@ using System.Threading.Tasks;
 using System.Linq;
 using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Utils;
-using LagoVista.Core.Models;
+using System.Diagnostics;
+using LagoVista.Core;
 
 namespace LagoVista.Uas.Core.MavLink
 {
@@ -45,6 +46,10 @@ namespace LagoVista.Uas.Core.MavLink
         private ISerialPort _serialPort;
         private bool _isActive = true;
 
+        public SerialPortTransport(IDispatcherServices dispatcher) : base(dispatcher)
+        {
+
+        }
 
         public override void Initialize()
         {
@@ -65,23 +70,18 @@ namespace LagoVista.Uas.Core.MavLink
             _mavLinkAsyncWalker.PacketReceived += HandlePacketReceived;
         }
 
-        public void Open(ISerialPort serialPort)
-        {
-            _serialPort = serialPort;
-
-            ThreadPool.QueueUserWorkItem(new WaitCallback(ProcessReceiveQueue), null);
-            ThreadPool.QueueUserWorkItem(new WaitCallback(ProcessSendQueue));
-        }
-
         private void StartListening()
         {
-            var buffer = new byte[1024];
+            var buffer = new byte[256];
             Task.Run(async () =>
             {
-                var bytesRead = await _serialPort.ReadAsync(buffer, 0, 1024);
-                var outputBuffer = buffer.Take(bytesRead);
-                _receiveQueue.Enqueue(outputBuffer.ToArray());
-                _receiveSignal.Set();
+                while (true)
+                {
+                    var bytesRead = await _serialPort.ReadAsync(buffer, 0, 256);
+                    var outputBuffer = buffer.Take(bytesRead);
+                    _receiveQueue.Enqueue(outputBuffer.ToArray());
+                    _receiveSignal.Set();
+                }
             });
         }
 
@@ -156,14 +156,11 @@ namespace LagoVista.Uas.Core.MavLink
             _sendSignal.Set();
         }
 
-        protected override void HandlePacketReceived(object sender, MavLinkPacket e)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         protected override void HandleReceptionEnded(object sender)
         {
-            throw new NotImplementedException();
+            
         }
 
         public TimeSpan Timeout
@@ -178,7 +175,7 @@ namespace LagoVista.Uas.Core.MavLink
             _serialPort.Dispose();
             _serialPort = null;
 
-            IsConected = false;
+            IsConnected = false;
         }
 
         public async Task OpenAsync(ISerialPort serialPort)
@@ -188,8 +185,10 @@ namespace LagoVista.Uas.Core.MavLink
             await _serialPort.OpenAsync();
 
             StartListening();
+            ThreadPool.QueueUserWorkItem(new WaitCallback(ProcessReceiveQueue), null);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(ProcessSendQueue));
 
-            IsConected = true;
+            IsConnected = true;
         }
 
     }

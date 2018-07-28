@@ -3258,7 +3258,7 @@
       <description>Request the overall list of mission items from the system/component.</description>
       <field type="uint8_t" name="target_system">System ID</field>
       <field type="uint8_t" name="target_component">Component ID</field>
-      <extensions/>
+     <extensions/>
       <field type="uint8_t" name="mission_type" enum="MAV_MISSION_TYPE">Mission type.</field>
     </message>
     <message id="44" name="MISSION_COUNT">

@@ -42,12 +42,15 @@ namespace MavLinkObjectGenerator
 
             foreach (FieldData f in m.Fields)
             {
-                crc = X25Crc.X25CrcAccumulate(XmlParser.GetBasicFieldTypeFromString(f.TypeString) + ' ', crc);
-                crc = X25Crc.X25CrcAccumulate(f.Name + ' ', crc);
-
-                if (f.NumElements > 1)
+                if (!f.IsExtension)
                 {
-                    crc = X25Crc.X25CrcAccumulate((byte)f.NumElements, crc);
+                    crc = X25Crc.X25CrcAccumulate(XmlParser.GetBasicFieldTypeFromString(f.TypeString) + ' ', crc);
+                    crc = X25Crc.X25CrcAccumulate(f.Name + ' ', crc);
+
+                    if (f.NumElements > 1)
+                    {
+                        crc = X25Crc.X25CrcAccumulate((byte)f.NumElements, crc);
+                    }
                 }
             }
 

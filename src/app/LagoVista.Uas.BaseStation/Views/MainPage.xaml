@@ -26,32 +26,42 @@
 
             <Label Text="{Binding TelemetryLink.MessagesReceived}" Grid.Column="1" />
             <Label Text="{Binding TelemetryLink.BytesReceived}" Grid.Column="1" Grid.Row="1" />
-            <ListView Grid.Row="4" ItemsSource="{Binding TelemetryLink.Messages}">
+            <ListView Grid.Row="4" ItemsSource="{Binding TelemetryLink.Messages}" BackgroundColor="Yellow" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <ViewCell.View>
-
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30" />
-                                        <ColumnDefinition Width="30" />
-                                        <ColumnDefinition Width="30" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding seq }" />
-                                    <Label Text="{Binding sysid }" Grid.Column="1" />
-                                    <Label Text="{Binding compid }" Grid.Column="2" />
-                                    <Label Text="{Binding MessageInfo.Name }" Grid.Column="3" />
-                                    <Label Text="{Binding MessageInfo.MsgId }" Grid.Column="4" />
-                                    <Label Text="{Binding MessageInfo.Type }" Grid.Column="5" />
+                                    <Label Text="{Binding MessageId }" Grid.Column="0" />
+                                    <Label Text="{Binding ReceiptCount }" Grid.Column="1" />
                                 </Grid>
                             </ViewCell.View>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <ListView Grid.Row="4" ItemsSource="{Binding TelemetryLink.StatusMessages}" Grid.Column="1" BackgroundColor="Yellow" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding  }" Grid.Column="0" />
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
         </Grid>
     </pge:LagoVistaContentPage.Content>
 </pge:LagoVistaContentPage >

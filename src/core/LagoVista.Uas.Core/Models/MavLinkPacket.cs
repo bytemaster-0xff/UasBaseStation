@@ -21,6 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
+using LagoVista.Core.Models;
 using LagoVista.Uas.Core.MavLink;
 using System;
 using System.IO;
@@ -28,17 +29,20 @@ using System.Text;
 
 namespace LagoVista.Uas.Core.Models
 {
-    public class MavLinkPacket
+    public class MavLinkPacket : ModelBase
     {
         public const int PacketOverheadNumBytes = 7;
 
         public bool IsValid = false;
 
         public byte PayLoadLength;
-        public byte PacketSequenceNumber;
-        public byte SystemId;
-        public byte ComponentId;
-        public byte MessageId;
+        public byte PacketSequenceNumber { get; private set; }
+        public byte SystemId { get; private set; }
+        public byte ComponentId { get; private set; }
+
+
+        public UasMessages MessageId { get; private set; }
+
         public byte[] Payload;
         public byte Checksum1;
         public byte Checksum2;
@@ -68,7 +72,7 @@ namespace LagoVista.Uas.Core.Models
                 PacketSequenceNumber = s.ReadByte(),
                 SystemId = s.ReadByte(),
                 ComponentId = s.ReadByte(),
-                MessageId = s.ReadByte(),
+                MessageId = (UasMessages)s.ReadByte(),
             };
 
             // Read the payload instead of deserializing so we can validate CRC.
@@ -80,8 +84,19 @@ namespace LagoVista.Uas.Core.Models
             {
                 result.DeserializeMessage();
             }
+            else
+            {
+                result.IsValid = false;
+            }
 
             return result;
+        }
+
+        int _receiptCount;
+        public int ReceiptCount
+        {
+            get { return _receiptCount; }
+            set { Set(ref _receiptCount, value); }
         }
 
         public int GetPacketSize()
@@ -93,8 +108,8 @@ namespace LagoVista.Uas.Core.Models
         {
             UInt16 crc = GetPacketCrc(this);
 
-            return ( ((byte)(crc & 0xFF) == Checksum1) &&
-                     ((byte)(crc >> 8) == Checksum2) );
+            return (((byte)(crc & 0xFF) == Checksum1) &&
+                     ((byte)(crc >> 8) == Checksum2));
         }
 
         private void DeserializeMessage()
@@ -182,7 +197,7 @@ namespace LagoVista.Uas.Core.Models
             w.Write(PacketSequenceNumber);
             w.Write(SystemId);
             w.Write(ComponentId);
-            w.Write(MessageId);
+            w.Write((byte)MessageId);
             w.Write(Payload);
             w.Write(Checksum1);
             w.Write(Checksum2);
@@ -203,7 +218,7 @@ namespace LagoVista.Uas.Core.Models
             crc = X25CrcAccumulate(p.PacketSequenceNumber, crc);
             crc = X25CrcAccumulate(p.SystemId, crc);
             crc = X25CrcAccumulate(p.ComponentId, crc);
-            crc = X25CrcAccumulate(p.MessageId, crc);
+            crc = X25CrcAccumulate((byte)p.MessageId, crc);
 
             for (int i = 0; i < p.Payload.Length; ++i)
             {

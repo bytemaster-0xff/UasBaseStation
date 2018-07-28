@@ -29,6 +29,7 @@ using System.Net.Sockets;
 using System.Collections.Concurrent;
 using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Utils;
+using LagoVista.Core;
 
 namespace LagoVista.Uas.Core.MavLink
 {
@@ -47,6 +48,10 @@ namespace LagoVista.Uas.Core.MavLink
         private UdpClient mUdpClient;
         private bool mIsActive = true;
 
+        public UdpTransport(IDispatcherServices dispatcher) : base(dispatcher)
+        {
+
+        }
 
         public override void Initialize()
         {
