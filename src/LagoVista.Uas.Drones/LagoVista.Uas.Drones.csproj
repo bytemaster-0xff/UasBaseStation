@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\LagoVista.Uas.Core\LagoVista.Uas.Core.csproj" />
+    <ProjectReference Include="..\core\LagoVista.Uas.Core\LagoVista.Uas.Core.csproj" />
   </ItemGroup>
 
 </Project>
