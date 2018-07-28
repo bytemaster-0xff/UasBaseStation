@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LagoVista.Client.Core" Version="1.2.435-alpha1011" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.435-beta1758" />
+    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.435-beta1758" />
+    <PackageReference Include="LagoVista.XPlat" Version="1.2.435-alpha1011" />
+  </ItemGroup>
+
+</Project>

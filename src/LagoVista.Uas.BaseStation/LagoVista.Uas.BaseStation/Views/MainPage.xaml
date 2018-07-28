@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pge:LagoVistaContentPage  
+        xmlns="http://xamarin.com/schemas/2014/forms"
+              xmlns:pge="clr-namespace:LagoVista.XPlat.Core;assembly=LagoVista.XPlat.Core"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Uas.BaseStation"
+             x:Class="LagoVista.Uas.BaseStation.Views.MainPage">
+
+    <pge:LagoVistaContentPage.Content>
+        <Grid Margin="50">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="33*" />
+                <ColumnDefinition Width="33*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Serial Ports" />
+            <Picker ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" Grid.Row="1" />
+            <Button Text="{Binding ConnectMessage}" Command="{Binding OpenSerialPortCommand}" Grid.Row="2" />
+            <Button Text="Get Waypoints" Command="{Binding GetWaypointsCommand}" Grid.Row="3" />
+
+            <Label Text="{Binding TelemetryLink.MessagesReceived}" Grid.Column="1" />
+            <Label Text="{Binding TelemetryLink.BytesReceived}" Grid.Column="1" Grid.Row="1" />
+            <ListView Grid.Row="4" ItemsSource="{Binding TelemetryLink.Messages}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="30" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding seq }" />
+                                    <Label Text="{Binding sysid }" Grid.Column="1" />
+                                    <Label Text="{Binding compid }" Grid.Column="2" />
+                                    <Label Text="{Binding MessageInfo.Name }" Grid.Column="3" />
+                                    <Label Text="{Binding MessageInfo.MsgId }" Grid.Column="4" />
+                                    <Label Text="{Binding MessageInfo.Type }" Grid.Column="5" />
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </pge:LagoVistaContentPage.Content>
+</pge:LagoVistaContentPage >
