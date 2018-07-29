@@ -27,7 +27,8 @@
             <Button Text="Get Waypoints" Command="{Binding GetWaypointsCommand}" Grid.Row="3" />
 
             <Label Text="{Binding TelemetryLink.MessagesReceived}" Grid.Column="1" />
-            <Label Text="{Binding TelemetryLink.BytesReceived}" Grid.Column="1" Grid.Row="1" />
+            <Label Text="{Binding TelemetryLink.MessagesSent}" Grid.Column="1" Grid.Row="1" />
+            <Label Text="{Binding TelemetryLink.BytesReceived}" Grid.Column="1" Grid.Row="2" />
             <ListView Grid.Row="4" ItemsSource="{Binding TelemetryLink.Messages}" BackgroundColor="Yellow" >
                 <ListView.ItemTemplate>
                     <DataTemplate>

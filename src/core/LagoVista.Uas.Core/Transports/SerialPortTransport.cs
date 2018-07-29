@@ -75,12 +75,15 @@ namespace LagoVista.Uas.Core.MavLink
             var buffer = new byte[256];
             Task.Run(async () =>
             {
-                while (true)
+                while (_serialPort != null)
                 {
                     var bytesRead = await _serialPort.ReadAsync(buffer, 0, 256);
-                    var outputBuffer = buffer.Take(bytesRead);
-                    _receiveQueue.Enqueue(outputBuffer.ToArray());
-                    _receiveSignal.Set();
+                    if (bytesRead > 0)
+                    {
+                        var outputBuffer = buffer.Take(bytesRead);
+                        _receiveQueue.Enqueue(outputBuffer.ToArray());
+                        _receiveSignal.Set();
+                    }
                 }
             });
         }
@@ -127,36 +130,16 @@ namespace LagoVista.Uas.Core.MavLink
 
         private async Task SendMavlinkMessage(UasMessage msg)
         {
-            byte[] buffer = _mavLinkAsyncWalker.SerializeMessage(msg, MavlinkSystemId, MavlinkComponentId, true);
-
+            byte[] buffer = _mavLinkAsyncWalker.SerializeMessage(msg, SystemId, ComponentId, true);
             await _serialPort.WriteAsync(buffer);
-        }
-
-        public void BeginHeartBeatLoop()
-        {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(HeartBeatLoop), null);
-        }
-
-        private void HeartBeatLoop(object state)
-        {
-            while (true)
-            {
-                foreach (UasMessage m in UavState.GetHeartBeatObjects())
-                {
-                    SendMessage(m);
-                }
-
-                Thread.Sleep(HeartBeatUpdateRateMs);
-            }
         }
 
         public override void SendMessage(UasMessage msg)
         {
+            MessagesSent++;
             _sendQueue.Enqueue(msg);
             _sendSignal.Set();
         }
-
-        
 
         protected override void HandleReceptionEnded(object sender)
         {

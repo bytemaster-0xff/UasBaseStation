@@ -166,29 +166,11 @@ namespace LagoVista.Uas.Core.MavLink
 
         private void SendMavlinkMessage(IPEndPoint ep, UasMessage msg)
         {
-            byte[] buffer = mMavLink.SerializeMessage(msg, MavlinkSystemId, MavlinkComponentId, true);
+            byte[] buffer = mMavLink.SerializeMessage(msg, SystemId, ComponentId, true);
             
             mUdpClient.Send(buffer, buffer.Length, ep);
         }
-
-
-        public void BeginHeartBeatLoop()
-        {
-            ThreadPool.QueueUserWorkItem(new WaitCallback(HeartBeatLoop), null);
-        }
-
-        private void HeartBeatLoop(object state)
-        {
-            while (true)
-            {
-                foreach (UasMessage m in UavState.GetHeartBeatObjects())
-                {
-                    SendMessage(m);
-                }
-
-                Thread.Sleep(HeartBeatUpdateRateMs);
-            }
-        }
+        
 
         public override void SendMessage(UasMessage msg)
         {

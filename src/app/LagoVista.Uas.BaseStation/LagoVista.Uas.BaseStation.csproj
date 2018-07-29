@@ -5,10 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Client.Core" Version="1.2.437-alpha1746" />
-    <PackageReference Include="LagoVista.Core" Version="2.1.435-beta1758" />
-    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.435-beta1758" />
-    <PackageReference Include="LagoVista.XPlat" Version="1.2.437-alpha1746" />
+    <PackageReference Include="LagoVista.Client.Core" Version="1.2.438-alpha1729" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.439-beta1607" />
+    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.439-beta1607" />
+    <PackageReference Include="LagoVista.MQTT" Version="1.2.438-alpha1754" />
+    <PackageReference Include="LagoVista.XPlat" Version="1.2.438-alpha1729" />
     <PackageReference Include="Microsoft.AppCenter" Version="1.8.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.8.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="1.8.0" />

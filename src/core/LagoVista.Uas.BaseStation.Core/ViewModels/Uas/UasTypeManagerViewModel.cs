@@ -27,9 +27,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels.Uas
             {
                 var items = (await RestClient.GetListResponseAsync<DeploymentInstanceSummary>("/api/deployment/instances", null)).Model;
                 Applications = new ObservableCollection<DeploymentInstanceSummary>(items);
-
                 DeviceTypes = new ObservableCollection<DeviceTypeSummary>( (await _dmClient.GetDeviceTypesAsync()).Model);
-         //       IncludedDeviceTypes = _dmClient.GetAppDeviceTypesAsync("UAS")
             });
         }
 

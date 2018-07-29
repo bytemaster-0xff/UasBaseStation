@@ -41,10 +41,7 @@ namespace LagoVista.Uas.Core.MavLink
 
         private ConcurrentDictionary<UasMessages, WaitOnRequest> Sessions { get; } = new ConcurrentDictionary<UasMessages, WaitOnRequest>();
 
-        public byte MavlinkSystemId = 0xFF;
-        public byte MavlinkComponentId = 0xBE;
-        public MavLinkState UavState = new MavLinkState();
-
+    
         public event EventHandler OnReceptionEnded;
         public event EventHandler<MavLinkPacket> OnPacketReceived;
 
@@ -56,20 +53,37 @@ namespace LagoVista.Uas.Core.MavLink
         {
             _dispatcher.Invoke(() =>
             {
-                if(e.MessageId == UasMessages.Statustext)
+                MessagesReceived++;
+                BytesReceived += e.PayLoadLength + 7;
+                switch (e.MessageId)
                 {
-                    StatusMessages.Insert(0, DateTime.Now.ToString() + " - " +  System.Text.ASCIIEncoding.ASCII.GetString(e.Payload));
-                }
+                    case UasMessages.Statustext:
+                        var txt = System.Text.ASCIIEncoding.ASCII.GetString(e.Payload);
+                        var existingMessage = StatusMessages.Where(m => m.EndsWith(txt)).FirstOrDefault();
+                        if (existingMessage != null)
+                        {
+                            StatusMessages.Remove(existingMessage);
+                        }
 
-                var msg = Messages.Where(m => m.MessageId == e.MessageId).FirstOrDefault();
-                if (msg != null)
-                {
-                    msg.ReceiptCount++;
-                }
-                else
-                {
-                    e.ReceiptCount++;
-                    Messages.Add(e);
+                        StatusMessages.Insert(0, DateTime.Now.ToString() + " - " + txt);
+                        break;
+                    case UasMessages.Heartbeat:
+                        var hb = e.Message as MavLink.UasHeartbeat;
+                        SystemId = e.SystemId;
+                        ComponentId = e.ComponentId;
+                        break;
+                    default:
+                        var msg = Messages.Where(m => m.MessageId == e.MessageId).FirstOrDefault();
+                        if (msg != null)
+                        {
+                            msg.ReceiptCount++;
+                        }
+                        else
+                        {
+                            e.ReceiptCount++;
+                            Messages.Add(e);
+                        }
+                        break;
                 }
 
                 OnPacketReceived?.Invoke(this, e);
@@ -151,12 +165,35 @@ namespace LagoVista.Uas.Core.MavLink
         public ObservableCollection<String> StatusMessages { get; } = new ObservableCollection<String>();
 
 
+        private byte _systemId;        
+        public byte SystemId
+        {
+            get { return _systemId; }
+            set { Set(ref _systemId, value);  }
+        }
+
+        private byte _componentId; 
+        public byte ComponentId
+        {
+            get { return _componentId; }
+            set { Set(ref _componentId, value); }
+        }
+
         private int _messagesReceived = 0;
         public int MessagesReceived
         {
             get { return _messagesReceived; }
             private set { Set(ref _messagesReceived, value); }
         }
+
+
+        private int _messagesSent = 0;
+        public int MessagesSent
+        {
+            get { return _messagesSent; }
+            protected set { Set(ref _messagesSent, value); }
+        }
+
 
         private int _errors;
         public int Errors

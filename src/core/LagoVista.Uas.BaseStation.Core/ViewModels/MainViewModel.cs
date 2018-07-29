@@ -21,9 +21,11 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         IUas _apmDrone;
         IUasAdapter _droneAdapter;
         IMissionPlanner _planner;
+        IHeartBeatManager _heartBeatManager;
 
-        public MainViewModel(IMissionPlanner planner)
+        public MainViewModel(IMissionPlanner planner, IHeartBeatManager heartBeatManager)
         {
+            _heartBeatManager = heartBeatManager;
             TelemetryLink = new SerialPortTransport(DispatcherServices);
             //TelemetryLink.MessageParsed += _telemeteryLink_MessageParsed;
             OpenSerialPortCommand = new RelayCommand(HandleConnectClick, CanPressConnect);
@@ -123,6 +125,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             ConnectMessage = "Disconnect";
             OpenSerialPortCommand.RaiseCanExecuteChanged();
             GetWaypointsCommand.RaiseCanExecuteChanged();
+            _heartBeatManager.Start(TelemetryLink, TimeSpan.FromSeconds(1));
         }
 
         public async void CloseSerialPort()

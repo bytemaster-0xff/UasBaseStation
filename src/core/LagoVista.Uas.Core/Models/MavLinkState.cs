@@ -32,12 +32,12 @@ namespace LagoVista.Uas.Core.Models
     /// </summary>
     public class MavLinkState
     {
-        private Dictionary<string, UasMessage> mState = new Dictionary<string, UasMessage>();
+        private Dictionary<string, UasMessage> _date = new Dictionary<string, UasMessage>();
         private List<UasMessage> mHeartBeatMessages = new List<UasMessage>();
 
         public MavLinkState()
         {
-            mState.Add("Heartbeat", new UasHeartbeat
+            _date.Add("Heartbeat", new UasHeartbeat
             {
                 Type = (byte)MavType.Quadrotor,
                 Autopilot = (byte)MavAutopilot.Ardupilotmega,
@@ -47,7 +47,7 @@ namespace LagoVista.Uas.Core.Models
                 MavlinkVersion = (byte)3,
             });
 
-            mState.Add("SysStatus", new UasSysStatus
+            _date.Add("SysStatus", new UasSysStatus
             {
                 Load = 500,
                 VoltageBattery = 11000,
@@ -55,14 +55,14 @@ namespace LagoVista.Uas.Core.Models
                 BatteryRemaining = -1
             });
 
-            mState.Add("LocalPositionNed", new UasLocalPositionNed());
+            _date.Add("LocalPositionNed", new UasLocalPositionNed());
 
-            mState.Add("Attitude", new UasAttitude());
+            _date.Add("Attitude", new UasAttitude());
         }
 
         public UasMessage Get(string mavlinkObjectName)
         {
-            return mState[mavlinkObjectName];
+            return _date[mavlinkObjectName];
         }
 
         public List<UasMessage> GetHeartBeatObjects()
