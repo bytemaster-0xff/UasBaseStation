@@ -1,6 +1,11 @@
-﻿using LagoVista.Client.Core.ViewModels;
+﻿using LagoVista.Client.Core.Resources;
+using LagoVista.Client.Core.ViewModels;
+using LagoVista.Client.Core.ViewModels.Auth;
+using LagoVista.Client.Core.ViewModels.Orgs;
+using LagoVista.Client.Core.ViewModels.Other;
 using LagoVista.Core.Commanding;
 using LagoVista.Core.Models;
+using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
@@ -29,6 +34,46 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             _apmDrone = new APM(null);
 
             _planner = planner;
+
+            MenuItems = new List<MenuItem>()
+            {
+                new MenuItem()
+                {
+                    Command = new RelayCommand(() => ViewModelNavigation.NavigateAsync<UasTypeManagerViewModel>(this)),
+                    Name = "Settings",
+                    FontIconKey = "fa-users"
+                },
+                new MenuItem()
+                {
+                    Command = new RelayCommand(() => ViewModelNavigation.NavigateAsync<UserOrgsViewModel>(this)),
+                    Name = ClientResources.MainMenu_SwitchOrgs,
+                    FontIconKey = "fa-users"
+                },
+                new MenuItem()
+                {
+                    Command = new RelayCommand(() => ViewModelNavigation.NavigateAsync<ChangePasswordViewModel>(this)),
+                    Name = ClientResources.MainMenu_ChangePassword,
+                    FontIconKey = "fa-key"
+                },
+                new MenuItem()
+                {
+                    Command = new RelayCommand(() => ViewModelNavigation.NavigateAsync<InviteUserViewModel>(this)),
+                    Name = ClientResources.MainMenu_InviteUser,
+                    FontIconKey = "fa-user"
+                },
+                new MenuItem()
+                {
+                    Command = new RelayCommand(() => ViewModelNavigation.NavigateAsync<AboutViewModel>(this)),
+                    Name = "About",
+                    FontIconKey = "fa-info"
+                },
+                new MenuItem()
+                {
+                    Command = new RelayCommand(() => Logout()),
+                    Name = ClientResources.Common_Logout,
+                    FontIconKey = "fa-sign-out"
+                }
+            };
         }
 
         private void _telemeteryLink_MessageParsed(object sender, UasMessage msg)

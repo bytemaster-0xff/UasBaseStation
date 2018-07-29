@@ -3,14 +3,18 @@
 using LagoVista.Client.Core;
 using LagoVista.Client.Core.Models;
 using LagoVista.Client.Core.ViewModels;
+using LagoVista.Client.Core.ViewModels.Other;
+using LagoVista.Client.Devices;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.IOC;
 using LagoVista.Core.ViewModels;
 using LagoVista.Uas.BaseStation.Core.ViewModels;
+using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.BaseStation.Views;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.Services;
 using LagoVista.XPlat.Core.Services;
+using LagoVista.XPlat.Core.Views.Other;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -57,14 +61,20 @@ namespace LagoVista.Uas.BaseStation
 
             DeviceInfo.Register();
 
+
+            
             SLWIOC.Register<IMissionPlanner, MissionPlanner>();
             SLWIOC.RegisterSingleton<IClientAppInfo>(clientAppInfo);
             SLWIOC.RegisterSingleton<IAppConfig>(new AppConfig());
+            SLWIOC.Register<IDeviceManagementClient, DeviceManagementClient>();
 
             var navigation = new ViewModelNavigation(this);
             XPlat.Core.Startup.Init(this, navigation);
             Startup.Init(serverInfo);
 
+            navigation.Add<UasDetailViewModel, Views.Uas.UasDetail>();
+            navigation.Add<UasManagerViewModel, Views.Uas.UasManager>();
+            navigation.Add<UasTypeManagerViewModel, Views.Uas.UasTypeManager>();
             navigation.Add<MainViewModel, Views.MainPage>();
             navigation.Add<SplashViewModel, Views.SplashView>();
 

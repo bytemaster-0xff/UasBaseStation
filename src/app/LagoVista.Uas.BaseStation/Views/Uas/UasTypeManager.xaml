@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pge:LagoVistaContentPage  
+        xmlns:pge="clr-namespace:LagoVista.XPlat.Core;assembly=LagoVista.XPlat.Core"
+        xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        Title="Include Devices Types"
+        LeftMenu="Back"
+      
+        x:Class="LagoVista.Uas.BaseStation.Views.Uas.UasTypeManager">
+    <pge:LagoVistaContentPage.MainContent>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Picker ItemsSource="{Binding Applications}" Grid.Row="0" Title="Application" SelectedItem="{Binding SelectedApp, Mode=TwoWay}" ItemDisplayBinding="{Binding Text}" />
+            <Picker ItemsSource="{Binding DeviceTypes}" Grid.Row="1" Title="Device Type" SelectedItem="{Binding SelectedDeviceType, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" />
+        </Grid>
+      </pge:LagoVistaContentPage.MainContent>
+</pge:LagoVistaContentPage>

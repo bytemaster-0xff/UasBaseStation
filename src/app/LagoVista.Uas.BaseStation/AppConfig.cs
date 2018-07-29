@@ -36,7 +36,7 @@ namespace LagoVista.Uas.BaseStation
         public bool EmitTestingCode => true;
 #endif
 
-        public string AppId => "D1C45FD985934A40225FC3322BBCCCDF";
+        public string AppId => "BCD0A4DF7F8449E693DA66A1205ADDB4";
         public string ClientType => "mobileapp";
 
         public VersionInfo Version { get; set; }

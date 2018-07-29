@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pge:LagoVistaContentPage  
+        xmlns:pge="clr-namespace:LagoVista.XPlat.Core;assembly=LagoVista.XPlat.Core"
         xmlns="http://xamarin.com/schemas/2014/forms"
-              xmlns:pge="clr-namespace:LagoVista.XPlat.Core;assembly=LagoVista.XPlat.Core"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Uas.BaseStation"
-             x:Class="LagoVista.Uas.BaseStation.Views.MainPage">
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:local="clr-namespace:Uas.BaseStation"
+        LeftMenu="Menu"
+        Title="NuvIoT UAS"
+        x:Class="LagoVista.Uas.BaseStation.Views.MainPage">
 
-    <pge:LagoVistaContentPage.Content>
+    <pge:LagoVistaContentPage.MainContent>
         <Grid Margin="50">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -63,5 +65,5 @@
             </ListView>
 
         </Grid>
-    </pge:LagoVistaContentPage.Content>
+    </pge:LagoVistaContentPage.MainContent>
 </pge:LagoVistaContentPage >

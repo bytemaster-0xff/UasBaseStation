@@ -68,7 +68,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x86\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;NETFX_CORE;WINDOWS_UWP;CODE_ANALYSIS;DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION</DefineConstants>
     <NoWarn>;2008</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x86</PlatformTarget>
@@ -103,6 +103,43 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\AV Receiver_100px.png" />
+    <Content Include="Assets\Icons\Checkmark_100px.png" />
+    <Content Include="Assets\Icons\Delete_100px.png" />
+    <Content Include="Assets\Icons\Design_100px.png" />
+    <Content Include="Assets\Icons\Edit Property_100px.png" />
+    <Content Include="Assets\Icons\Edit_100px.png" />
+    <Content Include="Assets\Icons\Electrical Threshold_100px.png" />
+    <Content Include="Assets\Icons\Exit_100px.png" />
+    <Content Include="Assets\Icons\Feed In_100px.png" />
+    <Content Include="Assets\Icons\Fog Lamp_100px.png" />
+    <Content Include="Assets\Icons\Forward Arrow_100px.png" />
+    <Content Include="Assets\Icons\Full Battery_100px.png" />
+    <Content Include="Assets\Icons\Half-Charged Battery_100px.png" />
+    <Content Include="Assets\Icons\Hub_100px.png" />
+    <Content Include="Assets\Icons\Idea_100px.png" />
+    <Content Include="Assets\Icons\Infrared Beam Sending_100px.png" />
+    <Content Include="Assets\Icons\LED Diode_100px.png" />
+    <Content Include="Assets\Icons\Low Battery_100px.png" />
+    <Content Include="Assets\Icons\Medium Volume_100px.png" />
+    <Content Include="Assets\Icons\Mirrored Reflector Bulb_100px.png" />
+    <Content Include="Assets\Icons\No Battery_100px.png" />
+    <Content Include="Assets\Icons\Nuclear Power Plant_100px.png" />
+    <Content Include="Assets\Icons\Play_100px.png" />
+    <Content Include="Assets\Icons\Plug 4_100px.png" />
+    <Content Include="Assets\Icons\Pressure Vessel_100px.png" />
+    <Content Include="Assets\Icons\Relay_100px.png" />
+    <Content Include="Assets\Icons\Right_100px.png" />
+    <Content Include="Assets\Icons\Robot_100px.png" />
+    <Content Include="Assets\Icons\Satellite Sending Signal_100px.png" />
+    <Content Include="Assets\Icons\Satellite_100px.png" />
+    <Content Include="Assets\Icons\Save_100px.png" />
+    <Content Include="Assets\Icons\Screenshot_100px.png" />
+    <Content Include="Assets\Icons\Settings_100px.png" />
+    <Content Include="Assets\Icons\Share_100px.png" />
+    <Content Include="Assets\Icons\Transistor_100px.png" />
+    <Content Include="Assets\Icons\Turbocharger_100px.png" />
+    <Content Include="Assets\Icons\Upload_100px.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
@@ -130,7 +167,10 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="nuviot.png" />
     <Content Include="Properties\Default.rd.xml" />
+    <Content Include="softwarelogistics.png" />
+    <Content Include="splashbg.jpg" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -190,6 +230,84 @@
       <Project>{c5024e79-4e27-4678-8b7b-f1f9e44ed854}</Project>
       <Name>LagoVista.Uas.BaseStation</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\iconize-entypoplus.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\iconize-fontawesome.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\iconize-ionicons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\iconize-material.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\iconize-meteocons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\iconize-simplelineicons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\iconize-typicons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\iconize-weathericons.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-Black.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-BlackItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-Bold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-BoldItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-Italic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-Light.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-LightItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-Medium.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-MediumItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-Thin.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoCondensed-Bold.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoCondensed-BoldItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoCondensed-Italic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoCondensed-Light.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoCondensed-LightItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Fonts\RobotoCondensed-Regular.ttf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
