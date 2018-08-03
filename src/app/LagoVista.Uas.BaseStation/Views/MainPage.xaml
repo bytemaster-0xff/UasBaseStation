@@ -15,6 +15,8 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -25,11 +27,13 @@
             <Picker ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" Grid.Row="1" />
             <Button Text="{Binding ConnectMessage}" Command="{Binding OpenSerialPortCommand}" Grid.Row="2" />
             <Button Text="Get Waypoints" Command="{Binding GetWaypointsCommand}" Grid.Row="3" />
+            <Button Text="Start Data Stream" Command="{Binding StartDataStreamsCommand}" Grid.Row="4" />
+            <Button Text="Stop Data Stream" Command="{Binding StopDataStreamsCommand}" Grid.Row="5" />
 
             <Label Text="{Binding TelemetryLink.MessagesReceived}" Grid.Column="1" />
             <Label Text="{Binding TelemetryLink.MessagesSent}" Grid.Column="1" Grid.Row="1" />
             <Label Text="{Binding TelemetryLink.BytesReceived}" Grid.Column="1" Grid.Row="2" />
-            <ListView Grid.Row="4" ItemsSource="{Binding TelemetryLink.Messages}" BackgroundColor="Yellow" >
+            <ListView Grid.Row="6" ItemsSource="{Binding TelemetryLink.Messages}" BackgroundColor="Yellow" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -48,7 +52,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ListView Grid.Row="4" ItemsSource="{Binding TelemetryLink.StatusMessages}" Grid.Column="1" BackgroundColor="Yellow" >
+            <ListView Grid.Row="6" ItemsSource="{Binding TelemetryLink.StatusMessages}" Grid.Column="1" BackgroundColor="Yellow" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

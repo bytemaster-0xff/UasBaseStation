@@ -60,6 +60,7 @@ namespace MavLinkObjectGenerator
     {
         public int Id;
         public List<FieldData> Fields = new List<FieldData>();
+        public List<FieldData> SortedFields = new List<FieldData>();
     }
 
     [DebuggerDisplay("{Name}: [type: {TypeString}] [enum: {EnumType}]")]

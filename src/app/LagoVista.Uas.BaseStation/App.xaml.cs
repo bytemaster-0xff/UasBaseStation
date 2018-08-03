@@ -12,6 +12,7 @@ using LagoVista.Uas.BaseStation.Core.ViewModels;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.BaseStation.Views;
 using LagoVista.Uas.Core;
+using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Services;
 using LagoVista.XPlat.Core.Services;
 using LagoVista.XPlat.Core.Views.Other;
@@ -61,12 +62,12 @@ namespace LagoVista.Uas.BaseStation
 
             DeviceInfo.Register();
 
-
-
             SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
             SLWIOC.Register<IMissionPlanner, MissionPlanner>();
             SLWIOC.RegisterSingleton<IClientAppInfo>(clientAppInfo);
             SLWIOC.RegisterSingleton<IAppConfig>(new AppConfig());
+            SLWIOC.RegisterSingleton<IConfigurationManager>(new ConfigurationManager());
+            SLWIOC.RegisterSingleton<ITelemetryService, TelemetryService>();            
             SLWIOC.Register<IDeviceManagementClient, DeviceManagementClient>();
 
             var navigation = new ViewModelNavigation(this);

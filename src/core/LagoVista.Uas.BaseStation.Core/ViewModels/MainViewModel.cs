@@ -22,14 +22,19 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         IUasAdapter _droneAdapter;
         IMissionPlanner _planner;
         IHeartBeatManager _heartBeatManager;
+        ITelemetryService _telemetryService;
 
-        public MainViewModel(IMissionPlanner planner, IHeartBeatManager heartBeatManager)
+        public MainViewModel(IMissionPlanner planner, IHeartBeatManager heartBeatManager, ITelemetryService telemetryService)
         {
+            _telemetryService = telemetryService;
             _heartBeatManager = heartBeatManager;
+
             TelemetryLink = new SerialPortTransport(DispatcherServices);
             //TelemetryLink.MessageParsed += _telemeteryLink_MessageParsed;
             OpenSerialPortCommand = new RelayCommand(HandleConnectClick, CanPressConnect);
             GetWaypointsCommand = new RelayCommand(GetWaypoints, CanDoConnectedStuff);
+            StartDataStreamsCommand = new RelayCommand(() => _telemetryService.Start(_apmDrone, TelemetryLink), CanDoConnectedStuff);
+            StopDataStreamsCommand = new RelayCommand(() => _telemetryService.Stop(TelemetryLink), CanDoConnectedStuff);
 
             Title = "Kevin";
 
@@ -123,8 +128,12 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             TelemetryLink.Initialize();
             await (TelemetryLink as SerialPortTransport).OpenAsync(port);
             ConnectMessage = "Disconnect";
+
             OpenSerialPortCommand.RaiseCanExecuteChanged();
             GetWaypointsCommand.RaiseCanExecuteChanged();
+            StartDataStreamsCommand.RaiseCanExecuteChanged();
+            StopDataStreamsCommand.RaiseCanExecuteChanged();
+
             _heartBeatManager.Start(TelemetryLink, TimeSpan.FromSeconds(1));
         }
 
@@ -132,9 +141,13 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         {
             await (TelemetryLink as SerialPortTransport).CloseAsync();
             ConnectMessage = "Connect";
+
             OpenSerialPortCommand.RaiseCanExecuteChanged();
             GetWaypointsCommand.RaiseCanExecuteChanged();
+            StartDataStreamsCommand.RaiseCanExecuteChanged();
+            StopDataStreamsCommand.RaiseCanExecuteChanged();
         }
+
 
         private SerialPortInfo _serialPortInfo;
         public SerialPortInfo SelectedPort
@@ -168,6 +181,8 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public RelayCommand OpenSerialPortCommand { get; }
         public RelayCommand GetWaypointsCommand { get; }
+        public RelayCommand StartDataStreamsCommand { get; }
+        public RelayCommand StopDataStreamsCommand { get; }
 
         public ITransport TelemetryLink { get; }
     }

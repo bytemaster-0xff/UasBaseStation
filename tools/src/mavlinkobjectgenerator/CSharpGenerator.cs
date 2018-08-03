@@ -302,7 +302,7 @@ namespace MavLinkObjectGenerator
             WL("        override internal void SerializeBody(BinaryWriter s)");
             WL("        {");
 
-            foreach (var f in m.Fields)
+            foreach (var f in m.SortedFields)
             {
                 if (f.NumElements <= 1)
                 {
@@ -327,7 +327,7 @@ namespace MavLinkObjectGenerator
             WL("        override internal void DeserializeBody(BinaryReader s)");
             WL("        {");
 
-            foreach (FieldData f in m.Fields)
+            foreach (var f in m.SortedFields)
             {
                 int numElements = f.NumElements;
 

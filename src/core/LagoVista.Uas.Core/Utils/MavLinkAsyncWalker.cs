@@ -23,6 +23,7 @@ THE SOFTWARE.
 */
 using LagoVista.Uas.Core.Models;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
@@ -75,6 +76,7 @@ namespace LagoVista.Uas.Core.Utils
                     }
                     else
                     {
+                        Debug.WriteLine("PACKET IS INVALID! => " + packet.MessageId);
                         NotifyPacketDiscarded(packet);
                     }
                 }

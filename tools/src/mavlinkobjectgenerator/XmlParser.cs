@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 using System;
+using System.Linq;
 using System.IO;
 using System.Xml;
 using System.Collections.Generic;
@@ -138,7 +139,8 @@ namespace MavLinkObjectGenerator
                     { 
                         if (currentMsg != null) 
                         { 
-                            SortFields(currentMsg); 
+                            SortFields(currentMsg, false);
+                            SortFields(currentMsg, true);
                         } 
                     } 
 
@@ -233,7 +235,7 @@ namespace MavLinkObjectGenerator
             return 1;
         }
 
-        private static void SortFields(MessageData obj)
+        private static void SortFields(MessageData obj, bool forExtension)
         {
             // Sort by field size first, then by the order the fields already have. 
 
@@ -242,7 +244,7 @@ namespace MavLinkObjectGenerator
             List<FieldData> L2 = new List<FieldData>();
             List<FieldData> L1 = new List<FieldData>();
 
-            foreach (FieldData f in obj.Fields)
+            foreach (FieldData f in obj.Fields.Where(fld=>fld.IsExtension = forExtension))
             {
                 switch (f.Type)
                 {
@@ -272,7 +274,7 @@ namespace MavLinkObjectGenerator
             result.AddRange(L2);
             result.AddRange(L1);
 
-            obj.Fields = result;
+            obj.SortedFields.AddRange(result);
         }
 
         private static void UpdateEnumFields(ProtocolData data, FieldData field)
