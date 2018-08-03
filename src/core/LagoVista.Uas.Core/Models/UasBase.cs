@@ -1,10 +1,11 @@
 ﻿using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
+using LagoVista.Uas.Core.Models;
 using System.Collections.ObjectModel;
 
 namespace LagoVista.Uas.Core
 {
-    public abstract class UasBase : ModelBase
+    public abstract class UasBase : ModelBase, IUas
     {
         LagoVista.IoT.DeviceManagement.Core.Models.Device _device;
 
@@ -27,9 +28,7 @@ namespace LagoVista.Uas.Core
         }
 
         public byte SystemId { get; }
-
         public byte ComponentId { get; }
-
 
         public DOF3Sensor Acc { get; }
 
@@ -37,9 +36,19 @@ namespace LagoVista.Uas.Core
 
         public DOF3Sensor Magnometer { get; }
 
-
         public EntityHeader DeviceType { get; }
         public EntityHeader DeviceConfiguration { get; }
+
+        IUasMessageAdapter _adapter;
+        public void SetAdapter(IUasMessageAdapter adapter) 
+        {
+            _adapter = adapter;
+        }
+
+        public  void Update(UasMessage msg)
+        {
+            _adapter.UpdateUas(this, msg);
+        }
 
         public float _pitch;
         public float Pitch

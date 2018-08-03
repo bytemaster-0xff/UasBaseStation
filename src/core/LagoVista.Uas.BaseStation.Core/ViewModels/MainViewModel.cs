@@ -19,7 +19,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
     public class MainViewModel : AppViewModelBase
     {
         IUas _apmDrone;
-        IUasAdapter _droneAdapter;
+        IUasMessageAdapter _droneAdapter;
         IMissionPlanner _planner;
         IHeartBeatManager _heartBeatManager;
         ITelemetryService _telemetryService;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LagoVista.Uas.Core
 {
-    public interface IUasAdapter
+    public interface IUasMessageAdapter
     {
         void UpdateUas(IUas uas, UasMessage message);
     }

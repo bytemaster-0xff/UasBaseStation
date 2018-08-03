@@ -51,6 +51,7 @@ namespace MavLinkGen
                     {
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.Error.WriteLine("Error in [{0}]: {1} ", file, ex.Message);
+                        Console.WriteLine(ex.StackTrace);
                         Console.ReadKey();
                     }
                 }
@@ -60,6 +61,7 @@ namespace MavLinkGen
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.Message);
+                Console.ReadKey();
                 return 1;
             }
 

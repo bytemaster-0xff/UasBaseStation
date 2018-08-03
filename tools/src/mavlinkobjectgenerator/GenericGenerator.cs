@@ -40,7 +40,7 @@ namespace MavLinkObjectGenerator
         {
             UInt16 crc = X25Crc.X25CrcCalculate(m.Name + ' ');
 
-            foreach (FieldData f in m.Fields)
+            foreach (FieldData f in m.SortedFields)
             {
                 if (!f.IsExtension)
                 {

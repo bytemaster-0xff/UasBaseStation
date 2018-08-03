@@ -244,7 +244,7 @@ namespace MavLinkObjectGenerator
             List<FieldData> L2 = new List<FieldData>();
             List<FieldData> L1 = new List<FieldData>();
 
-            foreach (FieldData f in obj.Fields.Where(fld=>fld.IsExtension = forExtension))
+            foreach (FieldData f in obj.Fields.Where(fld=>fld.IsExtension == forExtension))
             {
                 switch (f.Type)
                 {
