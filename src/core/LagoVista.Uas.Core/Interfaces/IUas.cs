@@ -1,5 +1,6 @@
 ﻿using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
+using LagoVista.Uas.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,6 +17,7 @@ namespace LagoVista.Uas.Core
         DOF3Sensor Gyro { get; }
         GeoLocation Location { get; set; }
         DOF3Sensor Magnometer { get; }
+        void Update(UasMessage msg);
         float Pitch { get; set; }
         float PitchSpeed { get; set; }
         float Roll { get; set; }
@@ -26,5 +28,7 @@ namespace LagoVista.Uas.Core
 
         byte SystemId { get; }
         byte ComponentId { get; }
+
+        SensorList Sensors { get; }
     }
 }

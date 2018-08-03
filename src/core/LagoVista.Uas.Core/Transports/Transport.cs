@@ -44,6 +44,7 @@ namespace LagoVista.Uas.Core.MavLink
     
         public event EventHandler OnReceptionEnded;
         public event EventHandler<MavLinkPacket> OnPacketReceived;
+        public event EventHandler<UasMessage> OnMessageReceived;
 
         public abstract void Initialize();
         public abstract void Dispose();
@@ -87,6 +88,7 @@ namespace LagoVista.Uas.Core.MavLink
                 }
 
                 OnPacketReceived?.Invoke(this, e);
+                OnMessageReceived?.Invoke(this, e.Message);
                 Complete(e);
             });
         }

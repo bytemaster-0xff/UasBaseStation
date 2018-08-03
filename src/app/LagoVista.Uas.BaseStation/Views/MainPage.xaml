@@ -22,6 +22,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="33*" />
                 <ColumnDefinition Width="33*" />
+                <ColumnDefinition Width="33*" />
             </Grid.ColumnDefinitions>
             <Label Text="Serial Ports" />
             <Picker ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" Grid.Row="1" />
@@ -33,7 +34,7 @@
             <Label Text="{Binding TelemetryLink.MessagesReceived}" Grid.Column="1" />
             <Label Text="{Binding TelemetryLink.MessagesSent}" Grid.Column="1" Grid.Row="1" />
             <Label Text="{Binding TelemetryLink.BytesReceived}" Grid.Column="1" Grid.Row="2" />
-            <ListView Grid.Row="6" ItemsSource="{Binding TelemetryLink.Messages}" BackgroundColor="Yellow" >
+            <ListView Grid.Row="6" ItemsSource="{Binding TelemetryLink.Messages}" >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -52,7 +53,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <ListView Grid.Row="6" ItemsSource="{Binding TelemetryLink.StatusMessages}" Grid.Column="1" BackgroundColor="Yellow" >
+            <ListView Grid.Row="6" ItemsSource="{Binding TelemetryLink.StatusMessages}" Grid.Column="1"  >
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -67,6 +68,40 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
+            </ListView>
+
+            <Grid Grid.RowSpan="2" Grid.Column="2">
+                <StackLayout>
+                    <Label Text="{Binding CurrentUas.Location.Longitude}" />
+                    <Label Text="{Binding CurrentUas.Location.Latitude}" />
+                    <Label Text="{Binding CurrentUas.Location.Altitude}" />
+                    <Label Text="{Binding CurrentUas.Pitch, StringFormat='{0:0.0}°'}" />
+                    <Label Text="{Binding CurrentUas.Roll, StringFormat='{0:0.0}°'}" />
+                    <Label Text="{Binding CurrentUas.Yaw, StringFormat='{0:0.0}°'}" />
+                </StackLayout>
+            </Grid>
+
+            <ListView Grid.Row="6" Grid.Column="2" ItemsSource="{Binding CurrentUas.Sensors.Sensors}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}" Grid.Column="0" />
+                                    <Label Text="{Binding Present}" Grid.Column="3" />
+                                    <Label Text="{Binding Enabled}" Grid.Column="1" />
+                                    <Label Text="{Binding Healthy}" Grid.Column="2" />
+                                </Grid>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>                
             </ListView>
 
         </Grid>

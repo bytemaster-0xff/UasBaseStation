@@ -8,6 +8,7 @@ namespace LagoVista.Uas.Drones
     {
         public APM(Device device) : base(device)
         {
+            this.SetAdapter(new APMAdapter());
         }
 
     }

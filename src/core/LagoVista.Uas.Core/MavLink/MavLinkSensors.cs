@@ -5,12 +5,16 @@ using System.Text;
 
 namespace LagoVista.Uas.Core.MavLink
 {
- public class MavLinkSensors
+
+
+
+    public class MavLinkSensors
     {
         BitArray bitArray = new BitArray(32);
 
         public bool seen = false;
-       
+
+
         public MavLinkSensors(uint p)
         {
             seen = true;

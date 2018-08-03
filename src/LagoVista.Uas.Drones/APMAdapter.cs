@@ -4,6 +4,7 @@ using LagoVista.Uas.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using LagoVista.Core;
 
 namespace LagoVista.Uas.Drones
 {
@@ -13,20 +14,34 @@ namespace LagoVista.Uas.Drones
         {
             var apm = uas as APM;
 
-            switch(message.MessageId)
+            switch (message.MessageId)
             {
                 case Core.MavLink.UasMessages.Heartbeat:
                     break;
                 case Core.MavLink.UasMessages.GpsRawInt:
+                    var gpsMsg = message as UasGpsRawInt;
+                    uas.Location = new LagoVista.Core.Models.Geo.GeoLocation()
+                    {
+                        Altitude = gpsMsg.Alt,
+                        Latitude = gpsMsg.Lat / 10000000.0f,
+                        Longitude = gpsMsg.Lon / 10000000.0f
+                    };
+
+                    break;
+
+                case UasMessages.SysStatus:
+                    var status = message as UasSysStatus;
+                    uas.Sensors.Update(status);
+
                     break;
 
                 case UasMessages.Attitude:
                     var att = message as UasAttitude;
-                    uas.Pitch = att.Pitch;
+                    uas.Pitch = att.Pitch.ToDegrees();
                     uas.PitchSpeed = att.Pitchspeed;
-                    uas.Roll = att.Roll;
+                    uas.Roll = att.Roll.ToDegrees();
                     uas.RollSpeed = att.Rollspeed;
-                    uas.Yaw = att.Yaw;
+                    uas.Yaw = att.Yaw.ToDegrees();
                     uas.YawSpeed = att.Yawspeed;
                     break;
 

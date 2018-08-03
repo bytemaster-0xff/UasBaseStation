@@ -10,6 +10,7 @@ namespace LagoVista.Uas.Core
     public interface ITransport
     {
         event EventHandler<MavLinkPacket> OnPacketReceived;
+        event EventHandler<UasMessage> OnMessageReceived;
         event EventHandler OnReceptionEnded;
 
         void Dispose();

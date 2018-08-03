@@ -18,8 +18,6 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 {
     public class MainViewModel : AppViewModelBase
     {
-        IUas _apmDrone;
-        IUasMessageAdapter _droneAdapter;
         IMissionPlanner _planner;
         IHeartBeatManager _heartBeatManager;
         ITelemetryService _telemetryService;
@@ -30,15 +28,17 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             _heartBeatManager = heartBeatManager;
 
             TelemetryLink = new SerialPortTransport(DispatcherServices);
+            TelemetryLink.OnMessageReceived += _telemeteryLink_MessageParsed;
             //TelemetryLink.MessageParsed += _telemeteryLink_MessageParsed;
             OpenSerialPortCommand = new RelayCommand(HandleConnectClick, CanPressConnect);
             GetWaypointsCommand = new RelayCommand(GetWaypoints, CanDoConnectedStuff);
-            StartDataStreamsCommand = new RelayCommand(() => _telemetryService.Start(_apmDrone, TelemetryLink), CanDoConnectedStuff);
+            StartDataStreamsCommand = new RelayCommand(() => _telemetryService.Start(CurrentUas, TelemetryLink), CanDoConnectedStuff);
             StopDataStreamsCommand = new RelayCommand(() => _telemetryService.Stop(TelemetryLink), CanDoConnectedStuff);
 
             Title = "Kevin";
 
-            _apmDrone = new APM(null);
+            CurrentUas = new APM(null);
+            CurrentUas = CurrentUas;
 
             _planner = planner;
 
@@ -85,7 +85,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         private void _telemeteryLink_MessageParsed(object sender, UasMessage msg)
         {
-            _droneAdapter.UpdateUas(_apmDrone, msg);
+            CurrentUas.Update(msg);
         }
 
         public bool CanPressConnect()
@@ -118,7 +118,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public async void GetWaypoints()
         {
-            await _planner.GetWayPoints(_apmDrone, TelemetryLink);
+            await _planner.GetWayPoints(CurrentUas, TelemetryLink);
         }
 
         public async void OpenSerialPort()
@@ -185,5 +185,12 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public RelayCommand StopDataStreamsCommand { get; }
 
         public ITransport TelemetryLink { get; }
+
+        IUas _currentUas;
+        public IUas CurrentUas
+        {
+            get { return _currentUas; }
+            set { Set(ref _currentUas, value); }
+        }
     }
 }

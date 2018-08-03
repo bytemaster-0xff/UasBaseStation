@@ -25,6 +25,8 @@ namespace LagoVista.Uas.Core
 
             ComponentId = 1;
             SystemId = 1;
+
+            Sensors = new SensorList();
         }
 
         public byte SystemId { get; }
@@ -45,7 +47,7 @@ namespace LagoVista.Uas.Core
             _adapter = adapter;
         }
 
-        public  void Update(UasMessage msg)
+        public void Update(UasMessage msg)
         {
             _adapter.UpdateUas(this, msg);
         }
@@ -91,6 +93,8 @@ namespace LagoVista.Uas.Core
             get => _rollSpeed;
             set => Set(ref _rollSpeed, value);
         }
+
+        public SensorList Sensors { get; }
 
         public ObservableCollection<RCChannel> Channels { get; }
         public ObservableCollection<ServoOutput> ServoOutputs { get; }
