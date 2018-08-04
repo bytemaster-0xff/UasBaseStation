@@ -195,4 +195,25 @@
   <data name="Sensor_Logging" xml:space="preserve">
     <value>Logging</value>
   </data>
+  <data name="Common_Error" xml:space="preserve">
+    <value>ERROR:</value>
+  </data>
+  <data name="Err_AirSpeed" xml:space="preserve">
+    <value>EKF - Airspeed Variance &gt;1 [{0}]</value>
+  </data>
+  <data name="Err_Comp" xml:space="preserve">
+    <value>EKF - Compass Variance &gt; 1 - [{0}]</value>
+  </data>
+  <data name="Err_HPos" xml:space="preserve">
+    <value>EKF - Horizontal Position Variance  &gt; 1 - [{0}]</value>
+  </data>
+  <data name="Err_TerrAlt" xml:space="preserve">
+    <value>EKF - Terrain Altitude Variance &gt; 1 - [{0}]</value>
+  </data>
+  <data name="Err_Velocity" xml:space="preserve">
+    <value>EKF - Velocity Variance &gt; 1 - [{0}]</value>
+  </data>
+  <data name="Err_VPos" xml:space="preserve">
+    <value>EKF - Vertical Position Variance &gt; 1 -  [{0}]</value>
+  </data>
 </root>

@@ -2,6 +2,7 @@
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using LagoVista.Core;
@@ -19,13 +20,21 @@ namespace LagoVista.Uas.Drones
                 case Core.MavLink.UasMessages.Heartbeat:
                     break;
                 case Core.MavLink.UasMessages.GpsRawInt:
+                    //TODO: Handle multiple GPS
                     var gpsMsg = message as UasGpsRawInt;
-                    uas.Location = new LagoVista.Core.Models.Geo.GeoLocation()
+                    if(!uas.GPSs.Any())
+                    {
+                        uas.GPSs.Add(new GPS());
+                    }
+
+                    uas.GPSs.First().Location = new LagoVista.Core.Models.Geo.GeoLocation()
                     {
                         Altitude = gpsMsg.Alt,
                         Latitude = gpsMsg.Lat / 10000000.0f,
                         Longitude = gpsMsg.Lon / 10000000.0f
                     };
+
+                    uas.CurrentLocation = uas.GPSs.First().Location;
 
                     break;
 

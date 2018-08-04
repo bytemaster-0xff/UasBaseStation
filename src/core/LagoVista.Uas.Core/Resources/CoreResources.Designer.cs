@@ -61,6 +61,69 @@ namespace LagoVista.Uas.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ERROR:.
+        /// </summary>
+        internal static string Common_Error {
+            get {
+                return ResourceManager.GetString("Common_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EKF - Airspeed Variance &gt;1 [{0}].
+        /// </summary>
+        internal static string Err_AirSpeed {
+            get {
+                return ResourceManager.GetString("Err_AirSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EKF - Compass Variance &gt; 1 - [{0}].
+        /// </summary>
+        internal static string Err_Comp {
+            get {
+                return ResourceManager.GetString("Err_Comp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EKF - Horizontal Position Variance  &gt; 1 - [{0}].
+        /// </summary>
+        internal static string Err_HPos {
+            get {
+                return ResourceManager.GetString("Err_HPos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EKF - Terrain Altitude Variance &gt; 1 - [{0}].
+        /// </summary>
+        internal static string Err_TerrAlt {
+            get {
+                return ResourceManager.GetString("Err_TerrAlt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EKF - Velocity Variance &gt; 1 - [{0}].
+        /// </summary>
+        internal static string Err_Velocity {
+            get {
+                return ResourceManager.GetString("Err_Velocity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EKF - Vertical Position Variance &gt; 1 -  [{0}].
+        /// </summary>
+        internal static string Err_VPos {
+            get {
+                return ResourceManager.GetString("Err_VPos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Logging.
         /// </summary>
         internal static string Logging {
