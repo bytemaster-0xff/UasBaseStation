@@ -3,6 +3,7 @@
         xmlns:pge="clr-namespace:LagoVista.XPlat.Core;assembly=LagoVista.XPlat.Core"
         xmlns="http://xamarin.com/schemas/2014/forms"
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        xmlns:ctl="clr-namespace:LagoVista.Uas.BaseStation.Controls"
         xmlns:local="clr-namespace:Uas.BaseStation"
         LeftMenu="Menu"
         Title="NuvIoT UAS"
@@ -12,98 +13,44 @@
         <Grid Margin="50">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="33*" />
                 <ColumnDefinition Width="33*" />
                 <ColumnDefinition Width="33*" />
             </Grid.ColumnDefinitions>
-            <Label Text="Serial Ports" />
-            <Picker ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}" Grid.Row="1" />
-            <Button Text="{Binding ConnectMessage}" Command="{Binding OpenSerialPortCommand}" Grid.Row="2" />
-            <Button Text="Get Waypoints" Command="{Binding GetWaypointsCommand}" Grid.Row="3" />
-            <Button Text="Start Data Stream" Command="{Binding StartDataStreamsCommand}" Grid.Row="4" />
-            <Button Text="Stop Data Stream" Command="{Binding StopDataStreamsCommand}" Grid.Row="5" />
 
-            <Label Text="{Binding TelemetryLink.MessagesReceived}" Grid.Column="1" />
-            <Label Text="{Binding TelemetryLink.MessagesSent}" Grid.Column="1" Grid.Row="1" />
-            <Label Text="{Binding TelemetryLink.BytesReceived}" Grid.Column="1" Grid.Row="2" />
-            <ListView Grid.Row="6" ItemsSource="{Binding TelemetryLink.Messages}" >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding MessageId }" Grid.Column="0" />
-                                    <Label Text="{Binding ReceiptCount }" Grid.Column="1" />
-                                </Grid>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout >
+                <Label Text="Serial Ports" />
+                <Picker ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}"  />
+                <Button Text="{Binding ConnectMessage}" Command="{Binding OpenSerialPortCommand}"  />
+                <Button Text="Get Waypoints" Command="{Binding GetWaypointsCommand}"  />
+                <Button Text="Start Data Stream" Command="{Binding StartDataStreamsCommand}"  />
+                <Button Text="Stop Data Stream" Command="{Binding StopDataStreamsCommand}"  />
+                <Button Text="Begin Calibration" Command="{Binding BeginCalibrationCommand}"  />
+            </StackLayout>
 
-            <ListView Grid.Row="6" ItemsSource="{Binding TelemetryLink.StatusMessages}" Grid.Column="1"  >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding  }" Grid.Column="0" />
-                                </Grid>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout Grid.Column="1">
+                <Label Text="{Binding Connections.Active.Transport.MessagesReceived}" />
+                <Label Text="{Binding Connections.Active.Transport.MessagesSent}"  />
+                <Label Text="{Binding Connections.Active.Transport.BytesReceived}"  />
+            </StackLayout>
 
-            <Grid Grid.RowSpan="2" Grid.Column="2">
-                <StackLayout>
-                    <Label Text="{Binding CurrentUas.Location.Longitude}" />
-                    <Label Text="{Binding CurrentUas.Location.Latitude}" />
-                    <Label Text="{Binding CurrentUas.Location.Altitude}" />
-                    <Label Text="{Binding CurrentUas.Pitch, StringFormat='{0:0.0}°'}" />
-                    <Label Text="{Binding CurrentUas.Roll, StringFormat='{0:0.0}°'}" />
-                    <Label Text="{Binding CurrentUas.Yaw, StringFormat='{0:0.0}°'}" />
-                </StackLayout>
-            </Grid>
+            <StackLayout  Grid.Column="2">
+                <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Longitude}" />
+                <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Longitude}" />
+                <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Longitude}" />
+                <Label Text="{Binding Connections.Active.Uas.Attitude.Pitch, StringFormat='{0:0.0}°'}" />
+                <Label Text="{Binding Connections.Active.Uas.Attitude.Roll, StringFormat='{0:0.0}°'}" />
+                <Label Text="{Binding Connections.Active.Uas.Attitude.Yaw, StringFormat='{0:0.0}°'}" />
+            </StackLayout>
 
-            <ListView Grid.Row="6" Grid.Column="2" ItemsSource="{Binding CurrentUas.Sensors.Sensors}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.View>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="50" />
-                                        <ColumnDefinition Width="50" />
-                                    </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Name}" Grid.Column="0" />
-                                    <Label Text="{Binding Present}" Grid.Column="3" />
-                                    <Label Text="{Binding Enabled}" Grid.Column="1" />
-                                    <Label Text="{Binding Healthy}" Grid.Column="2" />
-                                </Grid>
-                            </ViewCell.View>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>                
-            </ListView>
 
+            <ctl:MessagesList BindingContext="{Binding Connections.Active}" Grid.Row="1" />
+            <ctl:StatusMessages BindingContext="{Binding Connections.Active}" Grid.Row="1" Grid.Column="1" />
+            <ctl:SensorStatus BindingContext="{Binding Connections.Active}" Grid.Row="1" Grid.Column="2" />
         </Grid>
     </pge:LagoVistaContentPage.MainContent>
 </pge:LagoVistaContentPage >

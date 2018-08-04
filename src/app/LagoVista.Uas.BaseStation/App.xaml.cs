@@ -9,6 +9,7 @@ using LagoVista.Core.Interfaces;
 using LagoVista.Core.IOC;
 using LagoVista.Core.ViewModels;
 using LagoVista.Uas.BaseStation.Core.ViewModels;
+using LagoVista.Uas.BaseStation.Core.ViewModels.Calibration;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.BaseStation.Views;
 using LagoVista.Uas.Core;
@@ -64,16 +65,21 @@ namespace LagoVista.Uas.BaseStation
 
             SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
             SLWIOC.Register<IMissionPlanner, MissionPlanner>();
+            
             SLWIOC.RegisterSingleton<IClientAppInfo>(clientAppInfo);
             SLWIOC.RegisterSingleton<IAppConfig>(new AppConfig());
             SLWIOC.RegisterSingleton<IConfigurationManager>(new ConfigurationManager());
-            SLWIOC.RegisterSingleton<ITelemetryService, TelemetryService>();            
+            SLWIOC.RegisterSingleton<ITelemetryService, TelemetryService>();
+
+            SLWIOC.RegisterSingleton<IConnectedUasManager>(new ConnectedUasManager());
+
             SLWIOC.Register<IDeviceManagementClient, DeviceManagementClient>();
 
             var navigation = new ViewModelNavigation(this);
             XPlat.Core.Startup.Init(this, navigation);
             Startup.Init(serverInfo);
 
+            navigation.Add<CalibrationViewModel, Views.Calibration.CalibrationView>();
             navigation.Add<UasDetailViewModel, Views.Uas.UasDetail>();
             navigation.Add<UasManagerViewModel, Views.Uas.UasManager>();
             navigation.Add<UasTypeManagerViewModel, Views.Uas.UasTypeManager>();

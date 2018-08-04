@@ -62,7 +62,8 @@ namespace MavLinkObjectGenerator
             WriteHeader();
             WriteEnums();
             WriteClasses();
-            WriteSummary();
+            WriteSummary();            
+            WriteCommands();
             WriteFooter();
         }
 
@@ -152,7 +153,7 @@ namespace MavLinkObjectGenerator
 
             WL("    }");
             WL();
-        }        
+        }
 
         private void WriteSummaryCreateFromId()
         {
@@ -185,6 +186,73 @@ namespace MavLinkObjectGenerator
             WL("               default: return 0;");
             WL("            }");
             WL("        }");
+        }
+
+        private void WriteCommands()
+        {
+            WL("    public static class UasCommands");
+            WL("    {");
+            foreach (var en in mProtocolData.Enumerations.Values.Where(enm=>enm.Name == "MAV_CMD"))
+            {
+            
+                foreach (var entry in en.Entries)
+                {
+                    
+                    WL("           /// <summary>");
+                    WL($"           /// {GetSanitizedComment(entry.Description)}");
+                    WL("           /// </summary>");
+                    var idx = 0;
+                    foreach (var param in entry.Parameters)
+                    {
+                        if (param.Description != "Empty")
+                            WL($"           /// <param name=\"p{idx++}\">{GetSanitizedComment(param.Description)}</param>");
+                    }
+
+                    W($"           public static UasMessage {GetEnumEntryName(en, entry)}(byte targetSystem, byte targetComponent");
+                    idx = 0;
+                    foreach (var param in entry.Parameters)
+                    {
+                        if (param.Description != "Empty")
+                        {
+                                W($", float p{idx}");
+
+                            idx++;
+                        }
+                    }
+
+                    WL(", byte confirmation = 0)");
+                    WL("           {");
+                    WL("                var msg = new UasCommandLong() ");
+                    WL("                {");
+                    WL($"                    Command = {entry.Value},");
+                    WL($"                    Confirmation = confirmation,");
+                    WL($"                    TargetSystem = targetSystem,");
+                    WL($"                    TargetComponent = targetComponent,");
+                    idx = 0;
+                    var pIdx = 0;
+                    foreach (var param in entry.Parameters)
+                    {
+                        if (idx < 7)
+                        {
+                            if (param.Description != "Empty")
+                            {
+                                WL($"                    Param{idx + 1} = p{pIdx++},");
+                            }
+                            else
+                            {
+                                WL($"                    Param{idx + 1} = 0,");
+                            }
+                        }
+                        idx++;
+                    }
+                    WL("                };");
+                    WL("                return msg;");
+                    WL("           }");
+                    WL(String.Empty);
+                }
+            }
+
+            WL("    }");
         }
 
         private void WriteSummaryGetEnumMetadata()
@@ -610,6 +678,11 @@ namespace MavLinkObjectGenerator
         private void WL()
         {
             WL(mWriter);
+        }
+
+        private void W(String s)
+        {
+            mWriter.Write(s);
         }
 
         private void WL(string s, params object[] args)

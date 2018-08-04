@@ -1,11 +1,7 @@
 ﻿using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
-using System;
 using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using LagoVista.Core;
 
 namespace LagoVista.Uas.Drones
 {
@@ -18,41 +14,20 @@ namespace LagoVista.Uas.Drones
             switch (message.MessageId)
             {
                 case Core.MavLink.UasMessages.Heartbeat:
+                    uas.FlightController.Update(message as UasHeartbeat);
+                    uas.SystemStatus.Update(message as UasHeartbeat);
                     break;
                 case Core.MavLink.UasMessages.GpsRawInt:
-                    //TODO: Handle multiple GPS
-                    var gpsMsg = message as UasGpsRawInt;
-                    if(!uas.GPSs.Any())
-                    {
-                        uas.GPSs.Add(new GPS());
-                    }
-
-                    uas.GPSs.First().Location = new LagoVista.Core.Models.Geo.GeoLocation()
-                    {
-                        Altitude = gpsMsg.Alt,
-                        Latitude = gpsMsg.Lat / 10000000.0f,
-                        Longitude = gpsMsg.Lon / 10000000.0f
-                    };
-
+                    uas.GPSs.First().Update(message as UasGpsRawInt);
                     uas.CurrentLocation = uas.GPSs.First().Location;
-
                     break;
 
-                case UasMessages.SysStatus:
-                    var status = message as UasSysStatus;
-                    uas.Sensors.Update(status);
-
-                    break;
-
-                case UasMessages.Attitude:
-                    var att = message as UasAttitude;
-                    uas.Pitch = att.Pitch.ToDegrees();
-                    uas.PitchSpeed = att.Pitchspeed;
-                    uas.Roll = att.Roll.ToDegrees();
-                    uas.RollSpeed = att.Rollspeed;
-                    uas.Yaw = att.Yaw.ToDegrees();
-                    uas.YawSpeed = att.Yawspeed;
-                    break;
+                case UasMessages.SysStatus: uas.Sensors.Update(message as UasSysStatus); break;
+                case UasMessages.AutopilotVersion: uas.FlightController.Update(message as UasAutopilotVersion); break;
+                case UasMessages.Hwstatus: uas.FlightController.Update(message as UasHwstatus); break;
+                case UasMessages.PowerStatus: uas.PowerStatus.Update(message as UasPowerStatus); break;                
+                case UasMessages.Attitude: uas.Attitude.Update(message as UasAttitude); break;
+                case UasMessages.BatteryStatus: uas.Batteries.First().Update(message as UasBatteryStatus); break;
 
                 case UasMessages.MagCalProgress:
                     /* Compass Calibration Progress  */
@@ -60,10 +35,7 @@ namespace LagoVista.Uas.Drones
                 case UasMessages.CompassmotStatus:
                     /* Compass Calibration Status  */
                     break;
-                case UasMessages.EkfStatusReport:
-                    var ekfStatus = message as UasEkfStatusReport;
-
-                    break;
+                case UasMessages.EkfStatusReport: uas.EKFStatus.Update(message as UasEkfStatusReport); break;
                 case UasMessages.RcChannels:
                     var rcRaw = message as UasRcChannels;
                     uas.Channels[0].RawValue = rcRaw.Chan1Raw;
@@ -101,19 +73,9 @@ namespace LagoVista.Uas.Drones
                     /* For fixed wing */
                     break;
                 case Core.MavLink.UasMessages.RawImu:
-                    var imu = message as UasRawImu;
-                    uas.Acc.X = imu.Xacc;
-                    uas.Acc.Y = imu.Yacc;
-                    uas.Acc.Z = imu.Zacc;
-
-                    uas.Gyro.X = imu.Xgyro;
-                    uas.Gyro.Y = imu.Ygyro;
-                    uas.Gyro.Z = imu.Zgyro;
-
-                    uas.Magnometer.X = imu.Xmag;
-                    uas.Magnometer.Y = imu.Ymag;
-                    uas.Magnometer.Z = imu.Zmag;
-
+                    uas.Acc.First().Update(message as UasRawImu, DOFSensorType.Accelerometer);
+                    uas.Gyro.First().Update(message as UasRawImu, DOFSensorType.Gyro);
+                    uas.Magnometer.First().Update(message as UasRawImu, DOFSensorType.Magnometer);
                     break;
             }
 

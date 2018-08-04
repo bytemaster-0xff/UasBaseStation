@@ -9,6 +9,7 @@ using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
+using LagoVista.Uas.Core.Services;
 using LagoVista.Uas.Drones;
 using System;
 using System.Collections.Generic;
@@ -22,23 +23,28 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         IHeartBeatManager _heartBeatManager;
         ITelemetryService _telemetryService;
 
-        public MainViewModel(IMissionPlanner planner, IHeartBeatManager heartBeatManager, ITelemetryService telemetryService)
+        public MainViewModel(IMissionPlanner planner, IHeartBeatManager heartBeatManager, ITelemetryService telemetryService, IConnectedUasManager connectedUasManager)
         {
             _telemetryService = telemetryService;
             _heartBeatManager = heartBeatManager;
 
-            TelemetryLink = new SerialPortTransport(DispatcherServices);
-            TelemetryLink.OnMessageReceived += _telemeteryLink_MessageParsed;
+            Connections = connectedUasManager;
+
+            var transport = new SerialPortTransport(DispatcherServices);
+
+            Connections.Active = new ConnectedUas(new APM(null), transport);
+            Connections.All.Add(Connections.Active);
+
+            Connections.Active.Transport.OnMessageReceived += _telemeteryLink_MessageParsed;
+
             //TelemetryLink.MessageParsed += _telemeteryLink_MessageParsed;
             OpenSerialPortCommand = new RelayCommand(HandleConnectClick, CanPressConnect);
             GetWaypointsCommand = new RelayCommand(GetWaypoints, CanDoConnectedStuff);
-            StartDataStreamsCommand = new RelayCommand(() => _telemetryService.Start(CurrentUas, TelemetryLink), CanDoConnectedStuff);
-            StopDataStreamsCommand = new RelayCommand(() => _telemetryService.Stop(TelemetryLink), CanDoConnectedStuff);
+            StartDataStreamsCommand = new RelayCommand(() => _telemetryService.Start(Connections.Active.Uas, Connections.Active.Transport), CanDoConnectedStuff);
+            StopDataStreamsCommand = new RelayCommand(() => _telemetryService.Stop(Connections.Active.Transport), CanDoConnectedStuff);
+            BeginCalibrationCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<Calibration.CalibrationViewModel>(this), CanDoConnectedStuff);
 
-            Title = "Kevin";
-
-            CurrentUas = new APM(null);
-            CurrentUas = CurrentUas;
+            Title = "UAS NuvIoT Connector";
 
             _planner = planner;
 
@@ -85,7 +91,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         private void _telemeteryLink_MessageParsed(object sender, UasMessage msg)
         {
-            CurrentUas.Update(msg);
+            Connections.Active.Uas.Update(msg);
         }
 
         public bool CanPressConnect()
@@ -95,7 +101,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public bool CanDoConnectedStuff()
         {
-            return TelemetryLink.IsConnected;
+            return Connections.Active.Transport.IsConnected;
         }
 
         public async override Task InitAsync()
@@ -106,7 +112,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public void HandleConnectClick()
         {
-            if (TelemetryLink.IsConnected)
+            if (Connections.Active.Transport.IsConnected)
             {
                 CloseSerialPort();
             }
@@ -118,34 +124,36 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public async void GetWaypoints()
         {
-            await _planner.GetWayPoints(CurrentUas, TelemetryLink);
+            await _planner.GetWayPoints(Connections.Active.Uas, Connections.Active.Transport);
         }
 
         public async void OpenSerialPort()
         {
             SelectedPort.BaudRate = 115200;
             var port = DeviceManager.CreateSerialPort(SelectedPort);
-            TelemetryLink.Initialize();
-            await (TelemetryLink as SerialPortTransport).OpenAsync(port);
+            Connections.Active.Transport.Initialize();
+            await (Connections.Active.Transport as SerialPortTransport).OpenAsync(port);
             ConnectMessage = "Disconnect";
 
             OpenSerialPortCommand.RaiseCanExecuteChanged();
             GetWaypointsCommand.RaiseCanExecuteChanged();
             StartDataStreamsCommand.RaiseCanExecuteChanged();
             StopDataStreamsCommand.RaiseCanExecuteChanged();
+            BeginCalibrationCommand.RaiseCanExecuteChanged();
 
-            _heartBeatManager.Start(TelemetryLink, TimeSpan.FromSeconds(1));
+            _heartBeatManager.Start(Connections.Active.Transport, TimeSpan.FromSeconds(1));
         }
 
         public async void CloseSerialPort()
         {
-            await (TelemetryLink as SerialPortTransport).CloseAsync();
+            await (Connections.Active.Transport as SerialPortTransport).CloseAsync();
             ConnectMessage = "Connect";
 
             OpenSerialPortCommand.RaiseCanExecuteChanged();
             GetWaypointsCommand.RaiseCanExecuteChanged();
             StartDataStreamsCommand.RaiseCanExecuteChanged();
             StopDataStreamsCommand.RaiseCanExecuteChanged();
+            BeginCalibrationCommand.RaiseCanExecuteChanged();
         }
 
 
@@ -183,14 +191,10 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public RelayCommand GetWaypointsCommand { get; }
         public RelayCommand StartDataStreamsCommand { get; }
         public RelayCommand StopDataStreamsCommand { get; }
+        public RelayCommand BeginCalibrationCommand { get; }
 
-        public ITransport TelemetryLink { get; }
+        public IConnectedUasManager Connections { get; }
 
-        IUas _currentUas;
-        public IUas CurrentUas
-        {
-            get { return _currentUas; }
-            set { Set(ref _currentUas, value); }
-        }
+
     }
 }

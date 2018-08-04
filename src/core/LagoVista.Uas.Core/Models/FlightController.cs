@@ -99,8 +99,16 @@ namespace LagoVista.Uas.Core.Models
             get { return _mavLink2; }
         }
 
+        private byte _mavLinkVersion;
+        public byte MavlinkVersion
+        {
+            get { return _mavLinkVersion; }
+            set { Set(ref _mavLinkVersion, value); }
+        }
+
         public void Update(UasHeartbeat hb)
         {
+            MavlinkVersion = hb.MavlinkVersion;
         }
 
         public void Update(UasSystemTime sysTime)

@@ -65,9 +65,31 @@ namespace LagoVista.Uas.Core
             set { Set(ref _magneticDeclination, value); }
         }
 
+        public void Update(UasRawImu offsets, DOFSensorType sensorType)
+        {
+            switch (sensorType)
+            {
+                case DOFSensorType.Accelerometer:
+                    X = offsets.Xacc;
+                    Y = offsets.Yacc;
+                    Z = offsets.Zacc;
+                    break;
+                case DOFSensorType.Gyro:
+                    X = offsets.Xgyro;
+                    Y = offsets.Ygyro;
+                    Z = offsets.Zgyro;
+                    break;
+                case DOFSensorType.Magnometer:
+                    X = offsets.Xmag;
+                    Y = offsets.Ymag;
+                    Z = offsets.Zmag;
+                    break;
+            }
+        }
+
         public void Update(UasSensorOffsets offsets, DOFSensorType sensorType)
         {
-            switch(sensorType)
+            switch (sensorType)
             {
                 case DOFSensorType.Accelerometer:
                     OffsetX = offsets.AccelCalX;

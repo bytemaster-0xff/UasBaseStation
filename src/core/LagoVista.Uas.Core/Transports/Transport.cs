@@ -93,6 +93,8 @@ namespace LagoVista.Uas.Core.MavLink
             });
         }
 
+        
+
         protected abstract void HandleReceptionEnded(object sender);
 
         protected void Complete(MavLinkPacket msg)

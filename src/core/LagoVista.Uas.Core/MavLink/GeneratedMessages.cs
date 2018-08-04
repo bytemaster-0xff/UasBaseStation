@@ -47985,4 +47985,3958 @@ namespace LagoVista.Uas.Core.MavLink
         }
     }
 
+    public static class UasCommands
+    {
+           /// <summary>
+           /// Navigate to waypoint.
+           /// </summary>
+           /// <param name="p0">Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)</param>
+           /// <param name="p1">Acceptance radius in meters (if the sphere with this radius is hit, the waypoint counts as reached)</param>
+           /// <param name="p2">0 to pass through the WP, if > 0 radius in meters to pass by WP. Positive value for clockwise orbit, negative value for counter-clockwise orbit. Allows trajectory control.</param>
+           /// <param name="p3">Desired yaw angle at waypoint (rotary wing). NaN for unchanged.</param>
+           /// <param name="p4">Latitude</param>
+           /// <param name="p5">Longitude</param>
+           /// <param name="p6">Altitude</param>
+           public static UasMessage NavWaypoint(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 16,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Loiter around this waypoint an unlimited amount of time
+           /// </summary>
+           /// <param name="p0">Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise</param>
+           /// <param name="p1">Desired yaw angle.</param>
+           /// <param name="p2">Latitude</param>
+           /// <param name="p3">Longitude</param>
+           /// <param name="p4">Altitude</param>
+           public static UasMessage NavLoiterUnlim(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 17,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = p0,
+                    Param4 = p1,
+                    Param5 = p2,
+                    Param6 = p3,
+                    Param7 = p4,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Loiter around this waypoint for X turns
+           /// </summary>
+           /// <param name="p0">Turns</param>
+           /// <param name="p1">Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise</param>
+           /// <param name="p2">Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location. Else, this is desired yaw angle</param>
+           /// <param name="p3">Latitude</param>
+           /// <param name="p4">Longitude</param>
+           /// <param name="p5">Altitude</param>
+           public static UasMessage NavLoiterTurns(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 18,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = p1,
+                    Param4 = p2,
+                    Param5 = p3,
+                    Param6 = p4,
+                    Param7 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Loiter around this waypoint for X seconds
+           /// </summary>
+           /// <param name="p0">Seconds (decimal)</param>
+           /// <param name="p1">Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise</param>
+           /// <param name="p2">Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location. Else, this is desired yaw angle</param>
+           /// <param name="p3">Latitude</param>
+           /// <param name="p4">Longitude</param>
+           /// <param name="p5">Altitude</param>
+           public static UasMessage NavLoiterTime(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 19,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = p1,
+                    Param4 = p2,
+                    Param5 = p3,
+                    Param6 = p4,
+                    Param7 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Return to launch location
+           /// </summary>
+           public static UasMessage NavReturnToLaunch(byte targetSystem, byte targetComponent, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 20,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Land at location
+           /// </summary>
+           /// <param name="p0">Abort Alt</param>
+           /// <param name="p1">Precision land mode. (0 = normal landing, 1 = opportunistic precision landing, 2 = required precsion landing)</param>
+           /// <param name="p2">Desired yaw angle. NaN for unchanged.</param>
+           /// <param name="p3">Latitude</param>
+           /// <param name="p4">Longitude</param>
+           /// <param name="p5">Altitude (ground level)</param>
+           public static UasMessage NavLand(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 21,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = p2,
+                    Param5 = p3,
+                    Param6 = p4,
+                    Param7 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Takeoff from ground / hand
+           /// </summary>
+           /// <param name="p0">Minimum pitch (if airspeed sensor present), desired pitch without sensor</param>
+           /// <param name="p1">Yaw angle (if magnetometer present), ignored without magnetometer. NaN for unchanged.</param>
+           /// <param name="p2">Latitude</param>
+           /// <param name="p3">Longitude</param>
+           /// <param name="p4">Altitude</param>
+           public static UasMessage NavTakeoff(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 22,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = p1,
+                    Param5 = p2,
+                    Param6 = p3,
+                    Param7 = p4,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Land at local position (local frame only)
+           /// </summary>
+           /// <param name="p0">Landing target number (if available)</param>
+           /// <param name="p1">Maximum accepted offset from desired landing position [m] - computed magnitude from spherical coordinates: d = sqrt(x^2 + y^2 + z^2), which gives the maximum accepted distance between the desired landing position and the position where the vehicle is about to land</param>
+           /// <param name="p2">Landing descend rate [ms^-1]</param>
+           /// <param name="p3">Desired yaw angle [rad]</param>
+           /// <param name="p4">Y-axis position [m]</param>
+           /// <param name="p5">X-axis position [m]</param>
+           /// <param name="p6">Z-axis / ground level position [m]</param>
+           public static UasMessage NavLandLocal(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 23,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Takeoff from local position (local frame only)
+           /// </summary>
+           /// <param name="p0">Minimum pitch (if airspeed sensor present), desired pitch without sensor [rad]</param>
+           /// <param name="p1">Takeoff ascend rate [ms^-1]</param>
+           /// <param name="p2">Yaw angle [rad] (if magnetometer or another yaw estimation source present), ignored without one of these</param>
+           /// <param name="p3">Y-axis position [m]</param>
+           /// <param name="p4">X-axis position [m]</param>
+           /// <param name="p5">Z-axis position [m]</param>
+           public static UasMessage NavTakeoffLocal(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 24,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = p1,
+                    Param4 = p2,
+                    Param5 = p3,
+                    Param6 = p4,
+                    Param7 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Vehicle following, i.e. this waypoint represents the position of a moving vehicle
+           /// </summary>
+           /// <param name="p0">Following logic to use (e.g. loitering or sinusoidal following) - depends on specific autopilot implementation</param>
+           /// <param name="p1">Ground speed of vehicle to be followed</param>
+           /// <param name="p2">Radius around waypoint, in meters. If positive loiter clockwise, else counter-clockwise</param>
+           /// <param name="p3">Desired yaw angle.</param>
+           /// <param name="p4">Latitude</param>
+           /// <param name="p5">Longitude</param>
+           /// <param name="p6">Altitude</param>
+           public static UasMessage NavFollow(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 25,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Continue on the current course and climb/descend to specified altitude.  When the altitude is reached continue to the next command (i.e., don't proceed to the next command until the desired altitude is reached.
+           /// </summary>
+           /// <param name="p0">Climb or Descend (0 = Neutral, command completes when within 5m of this command's altitude, 1 = Climbing, command completes when at or above this command's altitude, 2 = Descending, command completes when at or below this command's altitude. </param>
+           /// <param name="p1">Desired altitude in meters</param>
+           public static UasMessage NavContinueAndChangeAlt(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 30,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Begin loiter at the specified Latitude and Longitude.  If Lat=Lon=0, then loiter at the current position.  Don't consider the navigation command complete (don't leave loiter) until the altitude has been reached.  Additionally, if the Heading Required parameter is non-zero the  aircraft will not leave the loiter until heading toward the next waypoint. 
+           /// </summary>
+           /// <param name="p0">Heading Required (0 = False)</param>
+           /// <param name="p1">Radius in meters. If positive loiter clockwise, negative counter-clockwise, 0 means no change to standard loiter.</param>
+           /// <param name="p2">Forward moving aircraft this sets exit xtrack location: 0 for center of loiter wp, 1 for exit location</param>
+           /// <param name="p3">Latitude</param>
+           /// <param name="p4">Longitude</param>
+           /// <param name="p5">Altitude</param>
+           public static UasMessage NavLoiterToAlt(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = p2,
+                    Param5 = p3,
+                    Param6 = p4,
+                    Param7 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Being following a target
+           /// </summary>
+           /// <param name="p0">System ID (the system ID of the FOLLOW_TARGET beacon). Send 0 to disable follow-me and return to the default position hold mode</param>
+           /// <param name="p1">RESERVED</param>
+           /// <param name="p2">RESERVED</param>
+           /// <param name="p3">altitude flag: 0: Keep current altitude, 1: keep altitude difference to target, 2: go to a fixed altitude above home</param>
+           /// <param name="p4">altitude</param>
+           /// <param name="p5">RESERVED</param>
+           /// <param name="p6">TTL in seconds in which the MAV should go to the default position hold mode after a message rx timeout</param>
+           public static UasMessage DoFollow(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 32,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Reposition the MAV after a follow target command has been sent
+           /// </summary>
+           /// <param name="p0">Camera q1 (where 0 is on the ray from the camera to the tracking device)</param>
+           /// <param name="p1">Camera q2</param>
+           /// <param name="p2">Camera q3</param>
+           /// <param name="p3">Camera q4</param>
+           /// <param name="p4">altitude offset from target (m)</param>
+           /// <param name="p5">X offset from target (m)</param>
+           /// <param name="p6">Y offset from target (m)</param>
+           public static UasMessage DoFollowReposition(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 33,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Start orbiting on the circumference of a circle defined by the parameters. Setting any value NaN results in using defaults.
+           /// </summary>
+           /// <param name="p0">Radius of the circle in meters. positive: Orbit clockwise. negative: Orbit counter-clockwise. </param>
+           /// <param name="p1">Velocity tangential in m/s. NaN: Vehicle configuration default.</param>
+           /// <param name="p2">Yaw behaviour of the vehicle. 0: vehicle front points to the center (default). 1: Hold last heading. 2: Leave yaw uncontrolled.</param>
+           /// <param name="p3">Reserved (e.g. for dynamic center beacon options)</param>
+           /// <param name="p4">Center point latitude (if no MAV_FRAME specified) / X coordinate according to MAV_FRAME. NaN: Use current vehicle position or current center if already orbiting.</param>
+           /// <param name="p5">Center point longitude (if no MAV_FRAME specified) / Y coordinate according to MAV_FRAME. NaN: Use current vehicle position or current center if already orbiting.</param>
+           /// <param name="p6">Center point altitude (AMSL) (if no MAV_FRAME specified) / Z coordinate according to MAV_FRAME. NaN: Use current vehicle position or current center if already orbiting.</param>
+           public static UasMessage DoOrbit(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 34,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Sets the region of interest (ROI) for a sensor set or the vehicle itself. This can then be used by the vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras.
+           /// </summary>
+           /// <param name="p0">Region of interest mode. (see MAV_ROI enum)</param>
+           /// <param name="p1">Waypoint index/ target ID. (see MAV_ROI enum)</param>
+           /// <param name="p2">ROI index (allows a vehicle to manage multiple ROI's)</param>
+           /// <param name="p3">x the location of the fixed ROI (see MAV_FRAME)</param>
+           /// <param name="p4">y</param>
+           /// <param name="p5">z</param>
+           public static UasMessage NavRoi(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 80,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = 0,
+                    Param5 = p3,
+                    Param6 = p4,
+                    Param7 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Control autonomous path planning on the MAV.
+           /// </summary>
+           /// <param name="p0">0: Disable local obstacle avoidance / local path planning (without resetting map), 1: Enable local path planning, 2: Enable and reset local path planning</param>
+           /// <param name="p1">0: Disable full path planning (without resetting map), 1: Enable, 2: Enable and reset map/occupancy grid, 3: Enable and reset planned route, but not occupancy grid</param>
+           /// <param name="p2">Yaw angle at goal, in compass degrees, [0..360]</param>
+           /// <param name="p3">Latitude/X of goal</param>
+           /// <param name="p4">Longitude/Y of goal</param>
+           /// <param name="p5">Altitude/Z of goal</param>
+           public static UasMessage NavPathplanning(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 81,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = p2,
+                    Param5 = p3,
+                    Param6 = p4,
+                    Param7 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Navigate to waypoint using a spline path.
+           /// </summary>
+           /// <param name="p0">Hold time in decimal seconds. (ignored by fixed wing, time to stay at waypoint for rotary wing)</param>
+           /// <param name="p1">Latitude/X of goal</param>
+           /// <param name="p2">Longitude/Y of goal</param>
+           /// <param name="p3">Altitude/Z of goal</param>
+           public static UasMessage NavSplineWaypoint(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 82,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = p1,
+                    Param6 = p2,
+                    Param7 = p3,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Takeoff from ground using VTOL mode
+           /// </summary>
+           /// <param name="p0">Front transition heading, see VTOL_TRANSITION_HEADING enum.</param>
+           /// <param name="p1">Yaw angle in degrees. NaN for unchanged.</param>
+           /// <param name="p2">Latitude</param>
+           /// <param name="p3">Longitude</param>
+           /// <param name="p4">Altitude</param>
+           public static UasMessage NavVtolTakeoff(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 84,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = p0,
+                    Param3 = 0,
+                    Param4 = p1,
+                    Param5 = p2,
+                    Param6 = p3,
+                    Param7 = p4,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Land using VTOL mode
+           /// </summary>
+           /// <param name="p0">Approach altitude (with the same reference as the Altitude field). NaN if unspecified.</param>
+           /// <param name="p1">Yaw angle in degrees. NaN for unchanged.</param>
+           /// <param name="p2">Latitude</param>
+           /// <param name="p3">Longitude</param>
+           /// <param name="p4">Altitude (ground level)</param>
+           public static UasMessage NavVtolLand(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 85,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = p0,
+                    Param4 = p1,
+                    Param5 = p2,
+                    Param6 = p3,
+                    Param7 = p4,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// hand control over to an external controller
+           /// </summary>
+           /// <param name="p0">On / Off (> 0.5f on)</param>
+           public static UasMessage NavGuidedEnable(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 92,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Delay the next navigation command a number of seconds or until a specified time
+           /// </summary>
+           /// <param name="p0">Delay in seconds (decimal, -1 to enable time-of-day fields)</param>
+           /// <param name="p1">hour (24h format, UTC, -1 to ignore)</param>
+           /// <param name="p2">minute (24h format, UTC, -1 to ignore)</param>
+           /// <param name="p3">second (24h format, UTC)</param>
+           public static UasMessage NavDelay(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 93,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Descend and place payload.  Vehicle descends until it detects a hanging payload has reached the ground, the gripper is opened to release the payload
+           /// </summary>
+           /// <param name="p0">Maximum distance to descend (meters)</param>
+           /// <param name="p1">Latitude (deg * 1E7)</param>
+           /// <param name="p2">Longitude (deg * 1E7)</param>
+           /// <param name="p3">Altitude (meters)</param>
+           public static UasMessage NavPayloadPlace(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 94,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = p1,
+                    Param6 = p2,
+                    Param7 = p3,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// NOP - This command is only used to mark the upper limit of the NAV/ACTION commands in the enumeration
+           /// </summary>
+           public static UasMessage NavLast(byte targetSystem, byte targetComponent, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 95,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Delay mission state machine.
+           /// </summary>
+           /// <param name="p0">Delay in seconds (decimal)</param>
+           public static UasMessage ConditionDelay(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 112,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Ascend/descend at rate.  Delay mission state machine until desired altitude reached.
+           /// </summary>
+           /// <param name="p0">Descent / Ascend rate (m/s)</param>
+           /// <param name="p1">Finish Altitude</param>
+           public static UasMessage ConditionChangeAlt(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 113,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Delay mission state machine until within desired distance of next NAV point.
+           /// </summary>
+           /// <param name="p0">Distance (meters)</param>
+           public static UasMessage ConditionDistance(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 114,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Reach a certain target angle.
+           /// </summary>
+           /// <param name="p0">target angle: [0-360], 0 is north</param>
+           /// <param name="p1">speed during yaw change:[deg per second]</param>
+           /// <param name="p2">direction: negative: counter clockwise, positive: clockwise [-1,1]</param>
+           /// <param name="p3">relative offset or absolute angle: [ 1,0]</param>
+           public static UasMessage ConditionYaw(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 115,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// NOP - This command is only used to mark the upper limit of the CONDITION commands in the enumeration
+           /// </summary>
+           public static UasMessage ConditionLast(byte targetSystem, byte targetComponent, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 159,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set system mode.
+           /// </summary>
+           /// <param name="p0">Mode, as defined by ENUM MAV_MODE</param>
+           /// <param name="p1">Custom mode - this is system specific, please refer to the individual autopilot specifications for details.</param>
+           /// <param name="p2">Custom sub mode - this is system specific, please refer to the individual autopilot specifications for details.</param>
+           public static UasMessage DoSetMode(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 176,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Jump to the desired command in the mission list.  Repeat this action only the specified number of times
+           /// </summary>
+           /// <param name="p0">Sequence number</param>
+           /// <param name="p1">Repeat count</param>
+           public static UasMessage DoJump(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 177,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Change speed and/or throttle set points.
+           /// </summary>
+           /// <param name="p0">Speed type (0=Airspeed, 1=Ground Speed)</param>
+           /// <param name="p1">Speed  (m/s, -1 indicates no change)</param>
+           /// <param name="p2">Throttle  ( Percent, -1 indicates no change)</param>
+           /// <param name="p3">absolute or relative [0,1]</param>
+           public static UasMessage DoChangeSpeed(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 178,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Changes the home location either to the current location or a specified location.
+           /// </summary>
+           /// <param name="p0">Use current (1=use current location, 0=use specified location)</param>
+           /// <param name="p1">Latitude</param>
+           /// <param name="p2">Longitude</param>
+           /// <param name="p3">Altitude</param>
+           public static UasMessage DoSetHome(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 179,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = p1,
+                    Param6 = p2,
+                    Param7 = p3,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set a system parameter.  Caution!  Use of this command requires knowledge of the numeric enumeration value of the parameter.
+           /// </summary>
+           /// <param name="p0">Parameter number</param>
+           /// <param name="p1">Parameter value</param>
+           public static UasMessage DoSetParameter(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 180,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set a relay to a condition.
+           /// </summary>
+           /// <param name="p0">Relay number</param>
+           /// <param name="p1">Setting (1=on, 0=off, others possible depending on system hardware)</param>
+           public static UasMessage DoSetRelay(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 181,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Cycle a relay on and off for a desired number of cycles with a desired period.
+           /// </summary>
+           /// <param name="p0">Relay number</param>
+           /// <param name="p1">Cycle count</param>
+           /// <param name="p2">Cycle time (seconds, decimal)</param>
+           public static UasMessage DoRepeatRelay(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 182,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set a servo to a desired PWM value.
+           /// </summary>
+           /// <param name="p0">Servo number</param>
+           /// <param name="p1">PWM (microseconds, 1000 to 2000 typical)</param>
+           public static UasMessage DoSetServo(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 183,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Cycle a between its nominal setting and a desired PWM for a desired number of cycles with a desired period.
+           /// </summary>
+           /// <param name="p0">Servo number</param>
+           /// <param name="p1">PWM (microseconds, 1000 to 2000 typical)</param>
+           /// <param name="p2">Cycle count</param>
+           /// <param name="p3">Cycle time (seconds)</param>
+           public static UasMessage DoRepeatServo(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 184,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Terminate flight immediately
+           /// </summary>
+           /// <param name="p0">Flight termination activated if > 0.5</param>
+           public static UasMessage DoFlighttermination(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 185,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Change altitude set point.
+           /// </summary>
+           /// <param name="p0">Altitude in meters</param>
+           /// <param name="p1">Mav frame of new altitude (see MAV_FRAME)</param>
+           public static UasMessage DoChangeAltitude(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 186,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to perform a landing. This is used as a marker in a mission to tell the autopilot where a sequence of mission items that represents a landing starts. It may also be sent via a COMMAND_LONG to trigger a landing, in which case the nearest (geographically) landing sequence in the mission will be used. The Latitude/Longitude is optional, and may be set to 0 if not needed. If specified then it will be used to help find the closest landing sequence.
+           /// </summary>
+           /// <param name="p0">Latitude</param>
+           /// <param name="p1">Longitude</param>
+           public static UasMessage DoLandStart(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 189,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = p0,
+                    Param6 = p1,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to perform a landing from a rally point.
+           /// </summary>
+           /// <param name="p0">Break altitude (meters)</param>
+           /// <param name="p1">Landing speed (m/s)</param>
+           public static UasMessage DoRallyLand(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 190,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to safely abort an autonomous landing.
+           /// </summary>
+           /// <param name="p0">Altitude (meters)</param>
+           public static UasMessage DoGoAround(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 191,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Reposition the vehicle to a specific WGS84 global position.
+           /// </summary>
+           /// <param name="p0">Ground speed, less than 0 (-1) for default</param>
+           /// <param name="p1">Bitmask of option flags, see the MAV_DO_REPOSITION_FLAGS enum.</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Yaw heading, NaN for unchanged. For planes indicates loiter direction (0: clockwise, 1: counter clockwise)</param>
+           /// <param name="p4">Latitude (deg * 1E7)</param>
+           /// <param name="p5">Longitude (deg * 1E7)</param>
+           /// <param name="p6">Altitude (meters)</param>
+           public static UasMessage DoReposition(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 192,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// If in a GPS controlled position mode, hold the current position or continue.
+           /// </summary>
+           /// <param name="p0">0: Pause current mission or reposition command, hold current position. 1: Continue mission. A VTOL capable vehicle should enter hover mode (multicopter and VTOL planes). A plane should loiter with the default loiter radius.</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Reserved</param>
+           /// <param name="p5">Reserved</param>
+           /// <param name="p6">Reserved</param>
+           public static UasMessage DoPauseContinue(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 193,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set moving direction to forward or reverse.
+           /// </summary>
+           /// <param name="p0">Direction (0=Forward, 1=Reverse)</param>
+           public static UasMessage DoSetReverse(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 194,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Sets the region of interest (ROI) to a location. This can then be used by the vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras.
+           /// </summary>
+           /// <param name="p0">Latitude</param>
+           /// <param name="p1">Longitude</param>
+           /// <param name="p2">Altitude</param>
+           public static UasMessage DoSetRoiLocation(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 195,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = p0,
+                    Param6 = p1,
+                    Param7 = p2,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Sets the region of interest (ROI) to be toward next waypoint, with optional pitch/roll/yaw offset. This can then be used by the vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras.
+           /// </summary>
+           /// <param name="p0">pitch offset from next waypoint</param>
+           /// <param name="p1">roll offset from next waypoint</param>
+           /// <param name="p2">yaw offset from next waypoint</param>
+           public static UasMessage DoSetRoiWpnextOffset(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 196,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = p0,
+                    Param6 = p1,
+                    Param7 = p2,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Cancels any previous ROI command returning the vehicle/sensors to default flight characteristics. This can then be used by the vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras.
+           /// </summary>
+           public static UasMessage DoSetRoiNone(byte targetSystem, byte targetComponent, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 197,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Control onboard camera system.
+           /// </summary>
+           /// <param name="p0">Camera ID (-1 for all)</param>
+           /// <param name="p1">Transmission: 0: disabled, 1: enabled compressed, 2: enabled raw</param>
+           /// <param name="p2">Transmission mode: 0: video stream, >0: single images every n seconds (decimal)</param>
+           /// <param name="p3">Recording: 0: disabled, 1: enabled compressed, 2: enabled raw</param>
+           public static UasMessage DoControlVideo(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 200,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Sets the region of interest (ROI) for a sensor set or the vehicle itself. This can then be used by the vehicles control system to control the vehicle attitude and the attitude of various sensors such as cameras.
+           /// </summary>
+           /// <param name="p0">Region of interest mode. (see MAV_ROI enum)</param>
+           /// <param name="p1">Waypoint index/ target ID. (see MAV_ROI enum)</param>
+           /// <param name="p2">ROI index (allows a vehicle to manage multiple ROI's)</param>
+           /// <param name="p3">MAV_ROI_WPNEXT: pitch offset from next waypoint, MAV_ROI_LOCATION: latitude</param>
+           /// <param name="p4">MAV_ROI_WPNEXT: roll offset from next waypoint, MAV_ROI_LOCATION: longitude</param>
+           /// <param name="p5">MAV_ROI_WPNEXT: yaw offset from next waypoint, MAV_ROI_LOCATION: altitude</param>
+           public static UasMessage DoSetRoi(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 201,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = 0,
+                    Param5 = p3,
+                    Param6 = p4,
+                    Param7 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// THIS INTERFACE IS DEPRECATED since 2018-01. Please use PARAM_EXT_XXX messages and the camera definition format described in https://mavlink.io/en/protocol/camera_def.html.
+           /// </summary>
+           /// <param name="p0">Modes: P, TV, AV, M, Etc</param>
+           /// <param name="p1">Shutter speed: Divisor number for one second</param>
+           /// <param name="p2">Aperture: F stop number</param>
+           /// <param name="p3">ISO number e.g. 80, 100, 200, Etc</param>
+           /// <param name="p4">Exposure type enumerator</param>
+           /// <param name="p5">Command Identity</param>
+           /// <param name="p6">Main engine cut-off time before camera trigger in seconds/10 (0 means no cut-off)</param>
+           public static UasMessage DoDigicamConfigure(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 202,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// THIS INTERFACE IS DEPRECATED since 2018-01. Please use PARAM_EXT_XXX messages and the camera definition format described in https://mavlink.io/en/protocol/camera_def.html.
+           /// </summary>
+           /// <param name="p0">Session control e.g. show/hide lens</param>
+           /// <param name="p1">Zoom's absolute position</param>
+           /// <param name="p2">Zooming step value to offset zoom from the current position</param>
+           /// <param name="p3">Focus Locking, Unlocking or Re-locking</param>
+           /// <param name="p4">Shooting Command</param>
+           /// <param name="p5">Command Identity</param>
+           /// <param name="p6">Test shot identifier. If set to 1, image will only be captured, but not counted towards internal frame count.</param>
+           public static UasMessage DoDigicamControl(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 203,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to configure a camera or antenna mount
+           /// </summary>
+           /// <param name="p0">Mount operation mode (see MAV_MOUNT_MODE enum)</param>
+           /// <param name="p1">stabilize roll? (1 = yes, 0 = no)</param>
+           /// <param name="p2">stabilize pitch? (1 = yes, 0 = no)</param>
+           /// <param name="p3">stabilize yaw? (1 = yes, 0 = no)</param>
+           /// <param name="p4">roll input (0 = angle body frame, 1 = angular rate, 2 = angle absolute frame)</param>
+           /// <param name="p5">pitch input (0 = angle body frame, 1 = angular rate, 2 = angle absolute frame)</param>
+           /// <param name="p6">yaw input (0 = angle body frame, 1 = angular rate, 2 = angle absolute frame)</param>
+           public static UasMessage DoMountConfigure(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 204,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to control a camera or antenna mount
+           /// </summary>
+           /// <param name="p0">pitch depending on mount mode (degrees or degrees/second depending on pitch input).</param>
+           /// <param name="p1">roll depending on mount mode (degrees or degrees/second depending on roll input).</param>
+           /// <param name="p2">yaw depending on mount mode (degrees or degrees/second depending on yaw input).</param>
+           /// <param name="p3">alt in meters depending on mount mode.</param>
+           /// <param name="p4">latitude in degrees * 1E7, set if appropriate mount mode.</param>
+           /// <param name="p5">longitude in degrees * 1E7, set if appropriate mount mode.</param>
+           /// <param name="p6">MAV_MOUNT_MODE enum value</param>
+           public static UasMessage DoMountControl(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 205,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to set camera trigger distance for this flight. The camera is triggered each time this distance is exceeded. This command can also be used to set the shutter integration time for the camera.
+           /// </summary>
+           /// <param name="p0">Camera trigger distance (meters). 0 to stop triggering.</param>
+           /// <param name="p1">Camera shutter integration time (milliseconds). -1 or 0 to ignore</param>
+           /// <param name="p2">Trigger camera once immediately. (0 = no trigger, 1 = trigger)</param>
+           public static UasMessage DoSetCamTriggDist(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 206,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to enable the geofence
+           /// </summary>
+           /// <param name="p0">enable? (0=disable, 1=enable, 2=disable_floor_only)</param>
+           public static UasMessage DoFenceEnable(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 207,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to trigger a parachute
+           /// </summary>
+           /// <param name="p0">action (0=disable, 1=enable, 2=release, for some systems see PARACHUTE_ACTION enum, not in general message set.)</param>
+           public static UasMessage DoParachute(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 208,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to perform motor test
+           /// </summary>
+           /// <param name="p0">motor number (a number from 1 to max number of motors on the vehicle)</param>
+           /// <param name="p1">throttle type (0=throttle percentage, 1=PWM, 2=pilot throttle channel pass-through. See MOTOR_TEST_THROTTLE_TYPE enum)</param>
+           /// <param name="p2">throttle</param>
+           /// <param name="p3">timeout (in seconds)</param>
+           /// <param name="p4">motor count (number of motors to test to test in sequence, waiting for the timeout above between them; 0=1 motor, 1=1 motor, 2=2 motors...)</param>
+           /// <param name="p5">motor test order (See MOTOR_TEST_ORDER enum)</param>
+           public static UasMessage DoMotorTest(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 209,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Change to/from inverted flight
+           /// </summary>
+           /// <param name="p0">inverted (0=normal, 1=inverted)</param>
+           public static UasMessage DoInvertedFlight(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 210,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Sets a desired vehicle turn angle and speed change
+           /// </summary>
+           /// <param name="p0">yaw angle to adjust steering by in centidegress</param>
+           /// <param name="p1">speed - normalized to 0 .. 1</param>
+           public static UasMessage NavSetYawSpeed(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 213,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to set camera trigger interval for this flight. If triggering is enabled, the camera is triggered each time this interval expires. This command can also be used to set the shutter integration time for the camera.
+           /// </summary>
+           /// <param name="p0">Camera trigger cycle time (milliseconds). -1 or 0 to ignore.</param>
+           /// <param name="p1">Camera shutter integration time (milliseconds). Should be less than trigger cycle time. -1 or 0 to ignore.</param>
+           public static UasMessage DoSetCamTriggInterval(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 214,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to control a camera or antenna mount, using a quaternion as reference.
+           /// </summary>
+           /// <param name="p0">q1 - quaternion param #1, w (1 in null-rotation)</param>
+           /// <param name="p1">q2 - quaternion param #2, x (0 in null-rotation)</param>
+           /// <param name="p2">q3 - quaternion param #3, y (0 in null-rotation)</param>
+           /// <param name="p3">q4 - quaternion param #4, z (0 in null-rotation)</param>
+           public static UasMessage DoMountControlQuat(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 220,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// set id of master controller
+           /// </summary>
+           /// <param name="p0">System ID</param>
+           /// <param name="p1">Component ID</param>
+           public static UasMessage DoGuidedMaster(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 221,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// set limits for external control
+           /// </summary>
+           /// <param name="p0">timeout - maximum time (in seconds) that external controller will be allowed to control vehicle. 0 means no timeout</param>
+           /// <param name="p1">Absolute altitude (AMSL) min, in meters - if vehicle moves below this alt, the command will be aborted and the mission will continue. 0 means no lower altitude limit</param>
+           /// <param name="p2">Absolute altitude (AMSL) max, in meters - if vehicle moves above this alt, the command will be aborted and the mission will continue. 0 means no upper altitude limit</param>
+           /// <param name="p3">Horizontal move limit (AMSL), in meters - if vehicle moves more than this distance from its location at the moment the command was executed, the command will be aborted and the mission will continue. 0 means no horizontal altitude limit</param>
+           public static UasMessage DoGuidedLimits(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 222,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Control vehicle engine. This is interpreted by the vehicles engine controller to change the target engine state. It is intended for vehicles with internal combustion engines
+           /// </summary>
+           /// <param name="p0">0: Stop engine, 1:Start Engine</param>
+           /// <param name="p1">0: Warm start, 1:Cold start. Controls use of choke where applicable</param>
+           /// <param name="p2">Height delay (meters). This is for commanding engine start only after the vehicle has gained the specified height. Used in VTOL vehicles during takeoff to start engine after the aircraft is off the ground. Zero for no delay.</param>
+           public static UasMessage DoEngineControl(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 223,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set the mission item with sequence number seq as current item. This means that the MAV will continue to this mission item on the shortest path (not following the mission items in-between).
+           /// </summary>
+           /// <param name="p0">Mission sequence value to set</param>
+           public static UasMessage DoSetMissionCurrent(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 224,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// NOP - This command is only used to mark the upper limit of the DO commands in the enumeration
+           /// </summary>
+           public static UasMessage DoLast(byte targetSystem, byte targetComponent, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 240,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Trigger calibration. This command will be only accepted if in pre-flight mode. Except for Temperature Calibration, only one sensor should be set in a single message and all others should be zero.
+           /// </summary>
+           /// <param name="p0">1: gyro calibration, 3: gyro temperature calibration</param>
+           /// <param name="p1">1: magnetometer calibration</param>
+           /// <param name="p2">1: ground pressure calibration</param>
+           /// <param name="p3">1: radio RC calibration, 2: RC trim calibration</param>
+           /// <param name="p4">1: accelerometer calibration, 2: board level calibration, 3: accelerometer temperature calibration, 4: simple accelerometer calibration</param>
+           /// <param name="p5">1: APM: compass/motor interference calibration (PX4: airspeed calibration, deprecated), 2: airspeed calibration</param>
+           /// <param name="p6">1: ESC calibration, 3: barometer temperature calibration</param>
+           public static UasMessage PreflightCalibration(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 241,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set sensor offsets. This command will be only accepted if in pre-flight mode.
+           /// </summary>
+           /// <param name="p0">Sensor to adjust the offsets for: 0: gyros, 1: accelerometer, 2: magnetometer, 3: barometer, 4: optical flow, 5: second magnetometer, 6: third magnetometer</param>
+           /// <param name="p1">X axis offset (or generic dimension 1), in the sensor's raw units</param>
+           /// <param name="p2">Y axis offset (or generic dimension 2), in the sensor's raw units</param>
+           /// <param name="p3">Z axis offset (or generic dimension 3), in the sensor's raw units</param>
+           /// <param name="p4">Generic dimension 4, in the sensor's raw units</param>
+           /// <param name="p5">Generic dimension 5, in the sensor's raw units</param>
+           /// <param name="p6">Generic dimension 6, in the sensor's raw units</param>
+           public static UasMessage PreflightSetSensorOffsets(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 242,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Trigger UAVCAN config. This command will be only accepted if in pre-flight mode.
+           /// </summary>
+           /// <param name="p0">1: Trigger actuator ID assignment and direction mapping.</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Reserved</param>
+           /// <param name="p5">Reserved</param>
+           /// <param name="p6">Reserved</param>
+           public static UasMessage PreflightUavcan(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 243,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request storage of different parameter values and logs. This command will be only accepted if in pre-flight mode.
+           /// </summary>
+           /// <param name="p0">Parameter storage: 0: READ FROM FLASH/EEPROM, 1: WRITE CURRENT TO FLASH/EEPROM, 2: Reset to defaults</param>
+           /// <param name="p1">Mission storage: 0: READ FROM FLASH/EEPROM, 1: WRITE CURRENT TO FLASH/EEPROM, 2: Reset to defaults</param>
+           /// <param name="p2">Onboard logging: 0: Ignore, 1: Start default rate logging, -1: Stop logging, > 1: start logging with rate of param 3 in Hz (e.g. set to 1000 for 1000 Hz logging)</param>
+           /// <param name="p3">Reserved</param>
+           public static UasMessage PreflightStorage(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 245,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request the reboot or shutdown of system components.
+           /// </summary>
+           /// <param name="p0">0: Do nothing for autopilot, 1: Reboot autopilot, 2: Shutdown autopilot, 3: Reboot autopilot and keep it in the bootloader until upgraded.</param>
+           /// <param name="p1">0: Do nothing for onboard computer, 1: Reboot onboard computer, 2: Shutdown onboard computer, 3: Reboot onboard computer and keep it in the bootloader until upgraded.</param>
+           /// <param name="p2">WIP: 0: Do nothing for camera, 1: Reboot onboard camera, 2: Shutdown onboard camera, 3: Reboot onboard camera and keep it in the bootloader until upgraded</param>
+           /// <param name="p3">WIP: 0: Do nothing for mount (e.g. gimbal), 1: Reboot mount, 2: Shutdown mount, 3: Reboot mount and keep it in the bootloader until upgraded</param>
+           /// <param name="p4">Reserved, send 0</param>
+           /// <param name="p5">Reserved, send 0</param>
+           /// <param name="p6">WIP: ID (e.g. camera ID -1 for all IDs)</param>
+           public static UasMessage PreflightRebootShutdown(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 246,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Hold / continue the current action
+           /// </summary>
+           /// <param name="p0">MAV_GOTO_DO_HOLD: hold MAV_GOTO_DO_CONTINUE: continue with next item in mission plan</param>
+           /// <param name="p1">MAV_GOTO_HOLD_AT_CURRENT_POSITION: Hold at current position MAV_GOTO_HOLD_AT_SPECIFIED_POSITION: hold at specified position</param>
+           /// <param name="p2">MAV_FRAME coordinate frame of hold point</param>
+           /// <param name="p3">Desired yaw angle in degrees</param>
+           /// <param name="p4">Latitude / X position</param>
+           /// <param name="p5">Longitude / Y position</param>
+           /// <param name="p6">Altitude / Z position</param>
+           public static UasMessage OverrideGoto(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 252,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// start running a mission
+           /// </summary>
+           /// <param name="p0">first_item: the first mission item to run</param>
+           /// <param name="p1">last_item:  the last mission item to run (after this item is run, the mission ends)</param>
+           public static UasMessage MissionStart(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 300,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Arms / Disarms a component
+           /// </summary>
+           /// <param name="p0">1 to arm, 0 to disarm</param>
+           public static UasMessage ComponentArmDisarm(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 400,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request the home position from the vehicle.
+           /// </summary>
+           /// <param name="p0">Reserved</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Reserved</param>
+           /// <param name="p5">Reserved</param>
+           /// <param name="p6">Reserved</param>
+           public static UasMessage GetHomePosition(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 410,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Starts receiver pairing
+           /// </summary>
+           /// <param name="p0">0:Spektrum</param>
+           /// <param name="p1">RC type (see RC_TYPE enum)</param>
+           public static UasMessage StartRxPair(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 500,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request the interval between messages for a particular MAVLink message ID
+           /// </summary>
+           /// <param name="p0">The MAVLink message ID</param>
+           public static UasMessage GetMessageInterval(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 510,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set the interval between messages for a particular MAVLink message ID. This interface replaces REQUEST_DATA_STREAM
+           /// </summary>
+           /// <param name="p0">The MAVLink message ID</param>
+           /// <param name="p1">The interval between two messages, in microseconds. Set to -1 to disable and 0 to request default rate.</param>
+           public static UasMessage SetMessageInterval(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 511,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request MAVLink protocol version compatibility
+           /// </summary>
+           /// <param name="p0">1: Request supported protocol versions by all nodes on the network</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage RequestProtocolVersion(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 519,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request autopilot capabilities
+           /// </summary>
+           /// <param name="p0">1: Request autopilot version</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage RequestAutopilotCapabilities(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 520,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request camera information (CAMERA_INFORMATION).
+           /// </summary>
+           /// <param name="p0">0: No action 1: Request camera capabilities</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage RequestCameraInformation(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 521,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request camera settings (CAMERA_SETTINGS).
+           /// </summary>
+           /// <param name="p0">0: No Action 1: Request camera settings</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage RequestCameraSettings(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 522,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Request storage information (STORAGE_INFORMATION). Use the command's target_component to target a specific component's storage.
+           /// </summary>
+           /// <param name="p0">Storage ID (0 for all, 1 for first, 2 for second, etc.)</param>
+           /// <param name="p1">0: No Action 1: Request storage information</param>
+           /// <param name="p2">Reserved (all remaining params)</param>
+           public static UasMessage RequestStorageInformation(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 525,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Format a storage medium. Once format is complete, a STORAGE_INFORMATION message is sent. Use the command's target_component to target a specific component's storage.
+           /// </summary>
+           /// <param name="p0">Storage ID (1 for first, 2 for second, etc.)</param>
+           /// <param name="p1">0: No action 1: Format storage</param>
+           /// <param name="p2">Reserved (all remaining params)</param>
+           public static UasMessage StorageFormat(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 526,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request camera capture status (CAMERA_CAPTURE_STATUS)
+           /// </summary>
+           /// <param name="p0">0: No Action 1: Request camera capture status</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage RequestCameraCaptureStatus(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 527,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Request flight information (FLIGHT_INFORMATION)
+           /// </summary>
+           /// <param name="p0">1: Request flight information</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage RequestFlightInformation(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 528,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Reset all camera settings to Factory Default
+           /// </summary>
+           /// <param name="p0">0: No Action 1: Reset all settings</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage ResetCameraSettings(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 529,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Set camera running mode. Use NAN for reserved values.
+           /// </summary>
+           /// <param name="p0">Reserved (Set to 0)</param>
+           /// <param name="p1">Camera mode (see CAMERA_MODE enum)</param>
+           /// <param name="p2">Reserved (all remaining params)</param>
+           public static UasMessage SetCameraMode(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 530,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Start image capture sequence. Sends CAMERA_IMAGE_CAPTURED after each capture. Use NAN for reserved values.
+           /// </summary>
+           /// <param name="p0">Reserved (Set to 0)</param>
+           /// <param name="p1">Duration between two consecutive pictures (in seconds)</param>
+           /// <param name="p2">Number of images to capture total - 0 for unlimited capture</param>
+           /// <param name="p3">Capture sequence (ID to prevent double captures when a command is retransmitted, 0: unused, >= 1: used)</param>
+           /// <param name="p4">Reserved (all remaining params)</param>
+           public static UasMessage ImageStartCapture(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2000,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Stop image capture sequence Use NAN for reserved values.
+           /// </summary>
+           /// <param name="p0">Reserved (Set to 0)</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage ImageStopCapture(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2001,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Re-request a CAMERA_IMAGE_CAPTURE packet. Use NAN for reserved values.
+           /// </summary>
+           /// <param name="p0">Sequence number for missing CAMERA_IMAGE_CAPTURE packet</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage RequestCameraImageCapture(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2002,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Enable or disable on-board camera triggering system.
+           /// </summary>
+           /// <param name="p0">Trigger enable/disable (0 for disable, 1 for start), -1 to ignore</param>
+           /// <param name="p1">1 to reset the trigger sequence, -1 or 0 to ignore</param>
+           /// <param name="p2">1 to pause triggering, but without switching the camera off or retracting it. -1 to ignore</param>
+           public static UasMessage DoTriggerControl(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2003,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Starts video capture (recording). Use NAN for reserved values.
+           /// </summary>
+           /// <param name="p0">Reserved (Set to 0)</param>
+           /// <param name="p1">Frequency CAMERA_CAPTURE_STATUS messages should be sent while recording (0 for no messages, otherwise frequency in Hz)</param>
+           /// <param name="p2">Reserved (all remaining params)</param>
+           public static UasMessage VideoStartCapture(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2500,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Stop the current video capture (recording). Use NAN for reserved values.
+           /// </summary>
+           /// <param name="p0">Reserved (Set to 0)</param>
+           /// <param name="p1">Reserved (all remaining params)</param>
+           public static UasMessage VideoStopCapture(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2501,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Start video streaming
+           /// </summary>
+           /// <param name="p0">Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)</param>
+           /// <param name="p1">Reserved</param>
+           public static UasMessage VideoStartStreaming(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2502,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Stop the current video streaming
+           /// </summary>
+           /// <param name="p0">Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)</param>
+           /// <param name="p1">Reserved</param>
+           public static UasMessage VideoStopStreaming(byte targetSystem, byte targetComponent, float p0, float p1, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2503,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Request video stream information (VIDEO_STREAM_INFORMATION)
+           /// </summary>
+           /// <param name="p0">Camera ID (0 for all cameras, 1 for first, 2 for second, etc.)</param>
+           /// <param name="p1">0: No Action 1: Request video stream information</param>
+           /// <param name="p2">Reserved (all remaining params)</param>
+           public static UasMessage RequestVideoStreamInformation(byte targetSystem, byte targetComponent, float p0, float p1, float p2, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2504,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request to start streaming logging data over MAVLink (see also LOGGING_DATA message)
+           /// </summary>
+           /// <param name="p0">Format: 0: ULog</param>
+           /// <param name="p1">Reserved (set to 0)</param>
+           /// <param name="p2">Reserved (set to 0)</param>
+           /// <param name="p3">Reserved (set to 0)</param>
+           /// <param name="p4">Reserved (set to 0)</param>
+           /// <param name="p5">Reserved (set to 0)</param>
+           /// <param name="p6">Reserved (set to 0)</param>
+           public static UasMessage LoggingStart(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2510,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request to stop streaming log data over MAVLink
+           /// </summary>
+           /// <param name="p0">Reserved (set to 0)</param>
+           /// <param name="p1">Reserved (set to 0)</param>
+           /// <param name="p2">Reserved (set to 0)</param>
+           /// <param name="p3">Reserved (set to 0)</param>
+           /// <param name="p4">Reserved (set to 0)</param>
+           /// <param name="p5">Reserved (set to 0)</param>
+           /// <param name="p6">Reserved (set to 0)</param>
+           public static UasMessage LoggingStop(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2511,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// 
+           /// </summary>
+           /// <param name="p0">Landing gear ID (default: 0, -1 for all)</param>
+           /// <param name="p1">Landing gear position (Down: 0, Up: 1, NAN for no change)</param>
+           /// <param name="p2">Reserved, set to NAN</param>
+           /// <param name="p3">Reserved, set to NAN</param>
+           /// <param name="p4">Reserved, set to NAN</param>
+           /// <param name="p5">Reserved, set to NAN</param>
+           /// <param name="p6">Reserved, set to NAN</param>
+           public static UasMessage AirframeConfiguration(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2520,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request to start/stop transmitting over the high latency telemetry
+           /// </summary>
+           /// <param name="p0">Control transmission over high latency telemetry (0: stop, 1: start)</param>
+           public static UasMessage ControlHighLatency(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2600,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = 0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Create a panorama at the current position
+           /// </summary>
+           /// <param name="p0">Viewing angle horizontal of the panorama (in degrees, +- 0.5 the total angle)</param>
+           /// <param name="p1">Viewing angle vertical of panorama (in degrees)</param>
+           /// <param name="p2">Speed of the horizontal rotation (in degrees per second)</param>
+           /// <param name="p3">Speed of the vertical rotation (in degrees per second)</param>
+           public static UasMessage PanoramaCreate(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 2800,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request VTOL transition
+           /// </summary>
+           /// <param name="p0">The target VTOL state, as defined by ENUM MAV_VTOL_STATE. Only MAV_VTOL_STATE_MC and MAV_VTOL_STATE_FW can be used.</param>
+           public static UasMessage DoVtolTransition(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 3000,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// This command sets the submode to standard guided when vehicle is in guided mode. The vehicle holds position and altitude and the user can input the desired velocites along all three axes.                    
+           /// </summary>
+           public static UasMessage SetGuidedSubmodeStandard(byte targetSystem, byte targetComponent, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 4000,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// This command sets submode circle when vehicle is in guided mode. Vehicle flies along a circle facing the center of the circle. The user can input the velocity along the circle and change the radius. If no input is given the vehicle will hold position.                    
+           /// </summary>
+           /// <param name="p0">Radius of desired circle in CIRCLE_MODE</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Unscaled target latitude of center of circle in CIRCLE_MODE</param>
+           /// <param name="p5">Unscaled target longitude of center of circle in CIRCLE_MODE</param>
+           public static UasMessage SetGuidedSubmodeCircle(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 4001,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// WIP: Delay mission state machine until gate has been reached.
+           /// </summary>
+           /// <param name="p0">Geometry: 0: orthogonal to path between previous and next waypoint.</param>
+           /// <param name="p1">Altitude: 0: ignore altitude</param>
+           /// <param name="p2">Latitude</param>
+           /// <param name="p3">Longitude</param>
+           /// <param name="p4">Altitude</param>
+           public static UasMessage ConditionGate(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 4501,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = p2,
+                    Param6 = p3,
+                    Param7 = p4,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Request authorization to arm the vehicle to a external entity, the arm authorizer is responsible to request all data that is needs from the vehicle before authorize or deny the request. If approved the progress of command_ack message should be set with period of time that this authorization is valid in seconds or in case it was denied it should be set with one of the reasons in ARM_AUTH_DENIED_REASON.          
+           /// </summary>
+           /// <param name="p0">Vehicle system id, this way ground station can request arm authorization on behalf of any vehicle</param>
+           public static UasMessage ArmAuthorizationRequest(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 3001,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Fence return point. There can only be one fence return point.          
+           /// </summary>
+           /// <param name="p0">Reserved</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Latitude</param>
+           /// <param name="p5">Longitude</param>
+           /// <param name="p6">Altitude</param>
+           public static UasMessage NavFenceReturnPoint(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 5000,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Fence vertex for an inclusion polygon (the polygon must not be self-intersecting). The vehicle must stay within this area. Minimum of 3 vertices required.          
+           /// </summary>
+           /// <param name="p0">Polygon vertex count</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Latitude</param>
+           /// <param name="p5">Longitude</param>
+           /// <param name="p6">Reserved</param>
+           public static UasMessage NavFencePolygonVertexInclusion(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 5001,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Fence vertex for an exclusion polygon (the polygon must not be self-intersecting). The vehicle must stay outside this area. Minimum of 3 vertices required.          
+           /// </summary>
+           /// <param name="p0">Polygon vertex count</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Latitude</param>
+           /// <param name="p5">Longitude</param>
+           /// <param name="p6">Reserved</param>
+           public static UasMessage NavFencePolygonVertexExclusion(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 5002,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Circular fence area. The vehicle must stay inside this area.          
+           /// </summary>
+           /// <param name="p0">radius in meters</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Latitude</param>
+           /// <param name="p5">Longitude</param>
+           /// <param name="p6">Reserved</param>
+           public static UasMessage NavFenceCircleInclusion(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 5003,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Circular fence area. The vehicle must stay outside this area.          
+           /// </summary>
+           /// <param name="p0">radius in meters</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Latitude</param>
+           /// <param name="p5">Longitude</param>
+           /// <param name="p6">Reserved</param>
+           public static UasMessage NavFenceCircleExclusion(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 5004,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Rally point. You can have multiple rally points defined.          
+           /// </summary>
+           /// <param name="p0">Reserved</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Latitude</param>
+           /// <param name="p5">Longitude</param>
+           /// <param name="p6">Altitude</param>
+           public static UasMessage NavRallyPoint(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 5100,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Commands the vehicle to respond with a sequence of messages UAVCAN_NODE_INFO, one message per every UAVCAN node that is online. Note that some of the response messages can be lost, which the receiver can detect easily by checking whether every received UAVCAN_NODE_STATUS has a matching message UAVCAN_NODE_INFO received earlier; if not, this command should be sent again in order to request re-transmission of the node information messages.
+           /// </summary>
+           /// <param name="p0">Reserved (set to 0)</param>
+           /// <param name="p1">Reserved (set to 0)</param>
+           /// <param name="p2">Reserved (set to 0)</param>
+           /// <param name="p3">Reserved (set to 0)</param>
+           /// <param name="p4">Reserved (set to 0)</param>
+           /// <param name="p5">Reserved (set to 0)</param>
+           /// <param name="p6">Reserved (set to 0)</param>
+           public static UasMessage UavcanGetNodeInfo(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 5200,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Deploy payload on a Lat / Lon / Alt position. This includes the navigation to reach the required release position and velocity.
+           /// </summary>
+           /// <param name="p0">Operation mode. 0: prepare single payload deploy (overwriting previous requests), but do not execute it. 1: execute payload deploy immediately (rejecting further deploy commands during execution, but allowing abort). 2: add payload deploy to existing deployment list.</param>
+           /// <param name="p1">Desired approach vector in degrees compass heading (0..360). A negative value indicates the system can define the approach vector at will.</param>
+           /// <param name="p2">Desired ground speed at release time. This can be overridden by the airframe in case it needs to meet minimum airspeed. A negative value indicates the system can define the ground speed at will.</param>
+           /// <param name="p3">Minimum altitude clearance to the release position in meters. A negative value indicates the system can define the clearance at will.</param>
+           /// <param name="p4">Latitude unscaled for MISSION_ITEM or in 1e7 degrees for MISSION_ITEM_INT</param>
+           /// <param name="p5">Longitude unscaled for MISSION_ITEM or in 1e7 degrees for MISSION_ITEM_INT</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage PayloadPrepareDeploy(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 30001,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Control the payload deployment.
+           /// </summary>
+           /// <param name="p0">Operation mode. 0: Abort deployment, continue normal mission. 1: switch to payload deployment mode. 100: delete first payload deployment request. 101: delete all payload deployment requests.</param>
+           /// <param name="p1">Reserved</param>
+           /// <param name="p2">Reserved</param>
+           /// <param name="p3">Reserved</param>
+           /// <param name="p4">Reserved</param>
+           /// <param name="p5">Reserved</param>
+           /// <param name="p6">Reserved</param>
+           public static UasMessage PayloadControlDeploy(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 30002,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage WaypointUser1(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31000,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage WaypointUser2(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31001,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage WaypointUser3(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31002,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage WaypointUser4(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31003,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined waypoint item. Ground Station will show the Vehicle as flying through this item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage WaypointUser5(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31004,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage SpatialUser1(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31005,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage SpatialUser2(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31006,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage SpatialUser3(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31007,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage SpatialUser4(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31008,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined spatial item. Ground Station will not show the Vehicle as flying through this item. Example: ROI item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">Latitude unscaled</param>
+           /// <param name="p5">Longitude unscaled</param>
+           /// <param name="p6">Altitude (AMSL), in meters</param>
+           public static UasMessage SpatialUser5(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31009,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">User defined</param>
+           /// <param name="p5">User defined</param>
+           /// <param name="p6">User defined</param>
+           public static UasMessage User1(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31010,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">User defined</param>
+           /// <param name="p5">User defined</param>
+           /// <param name="p6">User defined</param>
+           public static UasMessage User2(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31011,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">User defined</param>
+           /// <param name="p5">User defined</param>
+           /// <param name="p6">User defined</param>
+           public static UasMessage User3(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31012,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">User defined</param>
+           /// <param name="p5">User defined</param>
+           /// <param name="p6">User defined</param>
+           public static UasMessage User4(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31013,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// User defined command. Ground Station will not show the Vehicle as flying through this item. Example: MAV_CMD_DO_SET_PARAMETER item.
+           /// </summary>
+           /// <param name="p0">User defined</param>
+           /// <param name="p1">User defined</param>
+           /// <param name="p2">User defined</param>
+           /// <param name="p3">User defined</param>
+           /// <param name="p4">User defined</param>
+           /// <param name="p5">User defined</param>
+           /// <param name="p6">User defined</param>
+           public static UasMessage User5(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 31014,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to operate EPM gripper.
+           /// </summary>
+           /// <param name="p0">Gripper number (a number from 1 to max number of grippers on the vehicle).</param>
+           /// <param name="p1">Gripper action (0=release, 1=grab. See GRIPPER_ACTIONS enum).</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage DoGripper(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 211,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Enable/disable autotune.
+           /// </summary>
+           /// <param name="p0">Enable (1: enable, 0:disable).</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage DoAutotuneEnable(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 212,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Mission command to wait for an altitude or downwards vertical speed. This is meant for high altitude balloon launches, allowing the aircraft to be idle until either an altitude is reached or a negative vertical speed is reached (indicating early balloon burst). The wiggle time is how often to wiggle the control surfaces to prevent them seizing up.
+           /// </summary>
+           /// <param name="p0">Altitude (m).</param>
+           /// <param name="p1">Descent speed (m/s).</param>
+           /// <param name="p2">Wiggle Time (s).</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage NavAltitudeWait(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 83,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// A system wide power-off event has been initiated.
+           /// </summary>
+           /// <param name="p0">Empty.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage PowerOffInitiated(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42000,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// FLY button has been clicked.
+           /// </summary>
+           /// <param name="p0">Empty.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage SoloBtnFlyClick(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42001,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// FLY button has been held for 1.5 seconds.
+           /// </summary>
+           /// <param name="p0">Takeoff altitude.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage SoloBtnFlyHold(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42002,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// PAUSE button has been clicked.
+           /// </summary>
+           /// <param name="p0">1 if Solo is in a shot mode, 0 otherwise.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage SoloBtnPauseClick(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42003,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Magnetometer calibration based on fixed position          in earth field given by inclination, declination and intensity.
+           /// </summary>
+           /// <param name="p0">MagDeclinationDegrees.</param>
+           /// <param name="p1">MagInclinationDegrees.</param>
+           /// <param name="p2">MagIntensityMilliGauss.</param>
+           /// <param name="p3">YawDegrees.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage FixedMagCal(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42004,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Magnetometer calibration based on fixed expected field values in milliGauss.
+           /// </summary>
+           /// <param name="p0">FieldX.</param>
+           /// <param name="p1">FieldY.</param>
+           /// <param name="p2">FieldZ.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage FixedMagCalField(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42005,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Initiate a magnetometer calibration.
+           /// </summary>
+           /// <param name="p0">uint8_t bitmask of magnetometers (0 means all).</param>
+           /// <param name="p1">Automatically retry on failure (0=no retry, 1=retry).</param>
+           /// <param name="p2">Save without user input (0=require input, 1=autosave).</param>
+           /// <param name="p3">Delay (seconds).</param>
+           /// <param name="p4">Autoreboot (0=user reboot, 1=autoreboot).</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage DoStartMagCal(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42424,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Initiate a magnetometer calibration.
+           /// </summary>
+           /// <param name="p0">uint8_t bitmask of magnetometers (0 means all).</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage DoAcceptMagCal(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42425,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Cancel a running magnetometer calibration.
+           /// </summary>
+           /// <param name="p0">uint8_t bitmask of magnetometers (0 means all).</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage DoCancelMagCal(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42426,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Used when doing accelerometer calibration. When sent to the GCS tells it what position to put the vehicle in. When sent to the vehicle says what position the vehicle is in.
+           /// </summary>
+           /// <param name="p0">Position, one of the ACCELCAL_VEHICLE_POS enum values.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage AccelcalVehiclePos(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42429,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Reply with the version banner.
+           /// </summary>
+           /// <param name="p0">Empty.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage DoSendBanner(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42428,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Command autopilot to get into factory test/diagnostic mode.
+           /// </summary>
+           /// <param name="p0">0 means get out of test mode, 1 means get into test mode.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage SetFactoryTestMode(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42427,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Causes the gimbal to reset and boot as if it was just powered on.
+           /// </summary>
+           /// <param name="p0">Empty.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage GimbalReset(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42501,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Reports progress and success or failure of gimbal axis calibration procedure.
+           /// </summary>
+           /// <param name="p0">Gimbal axis we're reporting calibration progress for.</param>
+           /// <param name="p1">Current calibration progress for this axis, 0x64=100%.</param>
+           /// <param name="p2">Status of the calibration.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage GimbalAxisCalibrationStatus(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42502,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Starts commutation calibration on the gimbal.
+           /// </summary>
+           /// <param name="p0">Empty.</param>
+           /// <param name="p1">Empty.</param>
+           /// <param name="p2">Empty.</param>
+           /// <param name="p3">Empty.</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage GimbalRequestAxisCalibration(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42503,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Erases gimbal application and parameters.
+           /// </summary>
+           /// <param name="p0">Magic number.</param>
+           /// <param name="p1">Magic number.</param>
+           /// <param name="p2">Magic number.</param>
+           /// <param name="p3">Magic number.</param>
+           /// <param name="p4">Magic number.</param>
+           /// <param name="p5">Magic number.</param>
+           /// <param name="p6">Magic number.</param>
+           public static UasMessage GimbalFullReset(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42505,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Command to operate winch.
+           /// </summary>
+           /// <param name="p0">Winch number (0 for the default winch, otherwise a number from 1 to max number of winches on the vehicle).</param>
+           /// <param name="p1">Action (0=relax, 1=relative length control, 2=rate control. See WINCH_ACTIONS enum.).</param>
+           /// <param name="p2">Release length (cable distance to unwind in meters, negative numbers to wind in cable).</param>
+           /// <param name="p3">Release rate (meters/second).</param>
+           /// <param name="p4">Empty.</param>
+           /// <param name="p5">Empty.</param>
+           /// <param name="p6">Empty.</param>
+           public static UasMessage DoWinch(byte targetSystem, byte targetComponent, float p0, float p1, float p2, float p3, float p4, float p5, float p6, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42600,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = p0,
+                    Param2 = p1,
+                    Param3 = p2,
+                    Param4 = p3,
+                    Param5 = p4,
+                    Param6 = p5,
+                    Param7 = p6,
+                };
+                return msg;
+           }
+
+           /// <summary>
+           /// Update the bootloader
+           /// </summary>
+           /// <param name="p0">Magic number - set to 290876 to actually flash</param>
+           public static UasMessage FlashBootloader(byte targetSystem, byte targetComponent, float p0, byte confirmation = 0)
+           {
+                var msg = new UasCommandLong() 
+                {
+                    Command = 42650,
+                    Confirmation = confirmation,
+                    TargetSystem = targetSystem,
+                    TargetComponent = targetComponent,
+                    Param1 = 0,
+                    Param2 = 0,
+                    Param3 = 0,
+                    Param4 = 0,
+                    Param5 = p0,
+                    Param6 = 0,
+                    Param7 = 0,
+                };
+                return msg;
+           }
+
+    }
 }

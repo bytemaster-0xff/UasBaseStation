@@ -15,35 +15,35 @@ namespace LagoVista.Uas.Core
 
         bool Armed { get; }
 
-        List<DOF3Sensor> Acc { get; }
-        List<DOF3Sensor> Gyro { get; }
-        List<DOF3Sensor> Magnometer { get; }
-
-        List<GPS> GPSs { get; set; }
+        ObservableCollection<DOF3Sensor> Acc { get; }
+        ObservableCollection<DOF3Sensor> Gyro { get; }
+        ObservableCollection<DOF3Sensor> Magnometer { get; }
+        ObservableCollection<GPS> GPSs { get; }
+        ObservableCollection<Battery> Batteries { get; }
 
         GeoLocation HomeLocation { get; set; }
         GeoLocation CurrentLocation { get; set; }
 
         float DistanceToHome { get; set; }
 
+        FlightController FlightController { get; }
+
         ObservableCollection<RCChannel> Channels { get; }
         ObservableCollection<ServoOutput> ServoOutputs { get; }
         ObservableCollection<ESC> ESCs { get; }
         SensorList Sensors { get; }
+        PowerStatus PowerStatus { get; }
+
+        EKF EKFStatus { get; }
 
         void Update(UasMessage msg);
 
 
         float AngleOfAttack { get; set; }
-        float Pitch { get; set; }
-        float PitchSpeed { get; set; }
-        float Roll { get; set; }
-        float RollSpeed { get; set; }
 
-        
-        float Yaw { get; set; }
-        float YawSpeed { get; set; }
+        Attitude Attitude { get; }
 
+        SystemStatus SystemStatus { get; }
         byte SystemId { get; }
         byte ComponentId { get; }
 

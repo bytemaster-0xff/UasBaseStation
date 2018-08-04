@@ -10,7 +10,7 @@ namespace LagoVista.Uas.Core.Models
     {
         public ConfigurationManager()
         {
-            Current = new Configuration()
+            Current = new Models.Configuration()
             {
                 StreamReadConfigurations = new ObservableCollection<StreamReadConfig>()
                  {
@@ -25,8 +25,8 @@ namespace LagoVista.Uas.Core.Models
             };
         }
 
-        Configuration _current;
-        public Configuration Current
+        Models.Configuration _current;
+        public Models.Configuration Current
         {
             get { return _current; }
             set { Set(ref _current, value); }

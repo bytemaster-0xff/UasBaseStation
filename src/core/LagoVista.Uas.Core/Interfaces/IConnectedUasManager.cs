@@ -6,8 +6,10 @@ using System.Text;
 
 namespace LagoVista.Uas.Core
 {
-    public interface IConfigurationManager
+    public interface IConnectedUasManager
     {
-        Models.Configuration Current { get; }
+        ConnectedUas Active {get; set;}
+    
+        ObservableCollection<ConnectedUas> All { get; }
     }
 }

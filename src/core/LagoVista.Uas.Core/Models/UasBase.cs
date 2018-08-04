@@ -1,6 +1,7 @@
 ﻿using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
 using LagoVista.Uas.Core.Models;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LagoVista.Uas.Core
@@ -13,13 +14,25 @@ namespace LagoVista.Uas.Core
         {
             _device = device;
 
-            Acc = new DOF3Sensor();
-            Gyro = new DOF3Sensor();
-            Magnometer = new DOF3Sensor();
+            Acc = new ObservableCollection<DOF3Sensor>();
+            Acc.Add(new DOF3Sensor());
+            Gyro = new ObservableCollection<DOF3Sensor>();
+            Gyro.Add(new DOF3Sensor());
+            Magnometer = new ObservableCollection<DOF3Sensor>();
+            Magnometer.Add(new DOF3Sensor());
+            EKFStatus = new EKF();
+            GPSs = new ObservableCollection<GPS>();
+            GPSs.Add(new GPS());
+            Batteries = new ObservableCollection<Battery>();
+            Batteries.Add(new Battery());
+            SystemStatus = new SystemStatus();
+            Attitude = new Attitude();
+            FlightController = new FlightController();
+            PowerStatus = new PowerStatus();
 
             Channels = new ObservableCollection<RCChannel>();
-            for (var idx = 0; idx < 8; ++idx) Channels.Add(new RCChannel());
-            
+            for (var idx = 0; idx < 16; ++idx) Channels.Add(new RCChannel());
+
             ServoOutputs = new ObservableCollection<ServoOutput>();
             for (var idx = 0; idx < 16; ++idx) ServoOutputs.Add(new ServoOutput());
 
@@ -32,17 +45,17 @@ namespace LagoVista.Uas.Core
         public byte SystemId { get; }
         public byte ComponentId { get; }
 
-        public DOF3Sensor Acc { get; }
+        public ObservableCollection<DOF3Sensor> Acc { get; }
 
-        public DOF3Sensor Gyro { get; }
+        public ObservableCollection<DOF3Sensor> Gyro { get; }
 
-        public DOF3Sensor Magnometer { get; }
+        public ObservableCollection<DOF3Sensor> Magnometer { get; }
 
         public EntityHeader DeviceType { get; }
         public EntityHeader DeviceConfiguration { get; }
 
         IUasMessageAdapter _adapter;
-        public void SetAdapter(IUasMessageAdapter adapter) 
+        public void SetAdapter(IUasMessageAdapter adapter)
         {
             _adapter = adapter;
         }
@@ -52,52 +65,19 @@ namespace LagoVista.Uas.Core
             _adapter.UpdateUas(this, msg);
         }
 
-        public float _pitch;
-        public float Pitch
-        {
-            get => _pitch;
-            set => Set(ref _pitch, value);
-        }
+        public EKF EKFStatus { get; }
 
-        public float _yaw;
-        public float Yaw
-        {
-            get => _yaw;
-            set => Set(ref _yaw, value);
-        }
-
-        public float _roll;
-        public float Roll
-        {
-            get => _roll;
-            set => Set(ref _roll, value);
-        }
-
-        public float _pitchSpeed;
-        public float PitchSpeed
-        {
-            get => _pitchSpeed;
-            set => Set(ref _pitchSpeed, value);
-        }
-
-        public float _yawSpeed;
-        public float YawSpeed
-        {
-            get => _yawSpeed;
-            set => Set(ref _yawSpeed, value);
-        }
-
-        public float _rollSpeed;
-        public float RollSpeed
-        {
-            get => _rollSpeed;
-            set => Set(ref _rollSpeed, value);
-        }
+        public Attitude Attitude { get; }
 
         public SensorList Sensors { get; }
 
+        public ObservableCollection<Battery> Batteries { get; }
+
         public ObservableCollection<RCChannel> Channels { get; }
         public ObservableCollection<ServoOutput> ServoOutputs { get; }
+        public ObservableCollection<ESC> ESCs { get; }
+
+        public SystemStatus SystemStatus { get; }
 
         GeoLocation _location;
         public GeoLocation Location
@@ -106,5 +86,60 @@ namespace LagoVista.Uas.Core
             set { Set(ref _location, value); }
         }
 
+        private bool _armed;
+        public bool Armed
+        {
+            get { return _armed; }
+            set { Set(ref _armed, value); }
+        }
+
+        public ObservableCollection<GPS> GPSs { get; }
+
+        GeoLocation _homeLocation;
+        public GeoLocation HomeLocation
+        {
+            get { return _homeLocation; }
+            set { Set(ref _homeLocation, value); }
+        }
+
+        GeoLocation _currentLocation;
+        public GeoLocation CurrentLocation
+        {
+            get { return _currentLocation; }
+            set { Set(ref _currentLocation, value); }
+        }
+
+        float _distanceToHome;
+        public float DistanceToHome
+        {
+            get { return _distanceToHome; }
+            set { Set(ref _distanceToHome, value); }
+        }
+
+
+        private float _angleOfAttack;
+        public float AngleOfAttack
+        {
+            get => _angleOfAttack;
+            set => Set(ref _angleOfAttack, value);
+        }
+
+        private float _airSpeed;
+        public float AirSpeed
+        {
+            get => _airSpeed;
+            set => Set(ref _airSpeed, value);
+        }
+
+        private float _groundSpeed;
+        public float GroundSpeed
+        {
+            get => _groundSpeed;
+            set => Set(ref _groundSpeed, value);
+        }
+
+        public FlightController FlightController { get; }
+
+        public PowerStatus PowerStatus { get; }
     }
 }
