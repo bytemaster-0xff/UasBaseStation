@@ -55,9 +55,10 @@ namespace LagoVista.Uas.Core.Models
             RollSpeed = attitude.Rollspeed;
             YawSpeed = attitude.Yawspeed;
             PitchSpeed = attitude.Pitchspeed;
-            Roll = attitude.Roll;
-            Yaw = attitude.Yaw;
-            Pitch = attitude.Pitch;
+            Roll = attitude.Roll.ToDegrees();
+            var yaw = attitude.Yaw.ToDegrees();
+            Yaw = (yaw < 0) ?  360.0f + yaw : yaw ;
+            Pitch = attitude.Pitch.ToDegrees();
 
             TimeStamp = DateTime.Now;
             GaugeStatus = GaugeStatus.OK;

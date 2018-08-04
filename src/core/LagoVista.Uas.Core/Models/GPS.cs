@@ -93,8 +93,8 @@ namespace LagoVista.Uas.Core.Models
 
             Location = new GeoLocation()
             {
-                Latitude = gps.Lat / 100000.0,
-                Longitude = gps.Lon / 100000.0
+                Latitude = gps.Lat / 10000000.0,
+                Longitude = gps.Lon / 10000000.0
             };
         }
      
@@ -102,8 +102,8 @@ namespace LagoVista.Uas.Core.Models
         {
             Location = new GeoLocation()
             {
-                Latitude = gps.Lat / 100000.0,
-                Longitude = gps.Lon / 100000.0
+                Latitude = gps.Lat / 10000000.0,
+                Longitude = gps.Lon / 10000000.0
             };
 
             SateliteCount = gps.SatellitesVisible;

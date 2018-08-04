@@ -30,6 +30,7 @@
                 <Button Text="Start Data Stream" Command="{Binding StartDataStreamsCommand}"  />
                 <Button Text="Stop Data Stream" Command="{Binding StopDataStreamsCommand}"  />
                 <Button Text="Begin Calibration" Command="{Binding BeginCalibrationCommand}"  />
+                <Button Text="Fly Now" Command="{Binding FlyNowCommand}"  />
             </StackLayout>
 
             <StackLayout Grid.Column="1">
@@ -40,8 +41,8 @@
 
             <StackLayout  Grid.Column="2">
                 <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Longitude}" />
-                <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Longitude}" />
-                <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Longitude}" />
+                <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Latitude}" />
+                <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Altitude}" />
                 <Label Text="{Binding Connections.Active.Uas.Attitude.Pitch, StringFormat='{0:0.0}°'}" />
                 <Label Text="{Binding Connections.Active.Uas.Attitude.Roll, StringFormat='{0:0.0}°'}" />
                 <Label Text="{Binding Connections.Active.Uas.Attitude.Yaw, StringFormat='{0:0.0}°'}" />

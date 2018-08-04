@@ -79,11 +79,13 @@ namespace LagoVista.Uas.BaseStation
             XPlat.Core.Startup.Init(this, navigation);
             Startup.Init(serverInfo);
 
+
             navigation.Add<CalibrationViewModel, Views.Calibration.CalibrationView>();
             navigation.Add<UasDetailViewModel, Views.Uas.UasDetail>();
             navigation.Add<UasManagerViewModel, Views.Uas.UasManager>();
             navigation.Add<UasTypeManagerViewModel, Views.Uas.UasTypeManager>();
             navigation.Add<MainViewModel, Views.MainPage>();
+            navigation.Add<HudViewModel, Views.HudView>();
             navigation.Add<SplashViewModel, Views.SplashView>();
 
             navigation.Start<SplashViewModel>();

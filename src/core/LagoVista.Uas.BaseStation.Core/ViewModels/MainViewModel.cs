@@ -43,6 +43,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             StartDataStreamsCommand = new RelayCommand(() => _telemetryService.Start(Connections.Active.Uas, Connections.Active.Transport), CanDoConnectedStuff);
             StopDataStreamsCommand = new RelayCommand(() => _telemetryService.Stop(Connections.Active.Transport), CanDoConnectedStuff);
             BeginCalibrationCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<Calibration.CalibrationViewModel>(this), CanDoConnectedStuff);
+            FlyNowCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<HudViewModel>(this), CanDoConnectedStuff);
 
             Title = "UAS NuvIoT Connector";
 
@@ -140,6 +141,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             StartDataStreamsCommand.RaiseCanExecuteChanged();
             StopDataStreamsCommand.RaiseCanExecuteChanged();
             BeginCalibrationCommand.RaiseCanExecuteChanged();
+            FlyNowCommand.RaiseCanExecuteChanged();
 
             _heartBeatManager.Start(Connections.Active.Transport, TimeSpan.FromSeconds(1));
         }
@@ -154,6 +156,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             StartDataStreamsCommand.RaiseCanExecuteChanged();
             StopDataStreamsCommand.RaiseCanExecuteChanged();
             BeginCalibrationCommand.RaiseCanExecuteChanged();
+            FlyNowCommand.RaiseCanExecuteChanged();
         }
 
 
@@ -192,6 +195,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public RelayCommand StartDataStreamsCommand { get; }
         public RelayCommand StopDataStreamsCommand { get; }
         public RelayCommand BeginCalibrationCommand { get; }
+        public RelayCommand FlyNowCommand { get; }
 
         public IConnectedUasManager Connections { get; }
 

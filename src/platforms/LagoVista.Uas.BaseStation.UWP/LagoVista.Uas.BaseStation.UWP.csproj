@@ -96,6 +96,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Renderers\AttitudeIndicatorRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -235,6 +236,10 @@
     <ProjectReference Include="..\..\app\LagoVista.Uas.BaseStation\LagoVista.Uas.BaseStation.csproj">
       <Project>{c5024e79-4e27-4678-8b7b-f1f9e44ed854}</Project>
       <Name>LagoVista.Uas.BaseStation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\core\LagoVista.Uas.Core\LagoVista.Uas.Core.csproj">
+      <Project>{EC67C8ED-8772-4130-8C8A-9F17B45C1A06}</Project>
+      <Name>LagoVista.Uas.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
