@@ -133,6 +133,132 @@ namespace LagoVista.Uas.Core.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Acro.
+        /// </summary>
+        internal static string PX4Mode_Acro {
+            get {
+                return ResourceManager.GetString("PX4Mode_Acro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude Control.
+        /// </summary>
+        internal static string PX4Mode_AltCtl {
+            get {
+                return ResourceManager.GetString("PX4Mode_AltCtl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        internal static string PX4Mode_Auto {
+            get {
+                return ResourceManager.GetString("PX4Mode_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto: Ready.
+        /// </summary>
+        internal static string PX4Mode_AutoReady {
+            get {
+                return ResourceManager.GetString("PX4Mode_AutoReady", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto: Takeoff.
+        /// </summary>
+        internal static string PX4Mode_AutoTakeoff {
+            get {
+                return ResourceManager.GetString("PX4Mode_AutoTakeoff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto: Landing.
+        /// </summary>
+        internal static string PX4Mode_Landing {
+            get {
+                return ResourceManager.GetString("PX4Mode_Landing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loiter.
+        /// </summary>
+        internal static string PX4Mode_Loiter {
+            get {
+                return ResourceManager.GetString("PX4Mode_Loiter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        internal static string PX4Mode_Manual {
+            get {
+                return ResourceManager.GetString("PX4Mode_Manual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mission.
+        /// </summary>
+        internal static string PX4Mode_Mission {
+            get {
+                return ResourceManager.GetString("PX4Mode_Mission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offboard Control.
+        /// </summary>
+        internal static string PX4Mode_Offboard {
+            get {
+                return ResourceManager.GetString("PX4Mode_Offboard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position Control.
+        /// </summary>
+        internal static string PX4Mode_PoCtl {
+            get {
+                return ResourceManager.GetString("PX4Mode_PoCtl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rattitude.
+        /// </summary>
+        internal static string PX4Mode_Rattitude {
+            get {
+                return ResourceManager.GetString("PX4Mode_Rattitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RTL.
+        /// </summary>
+        internal static string PX4Mode_RTL {
+            get {
+                return ResourceManager.GetString("PX4Mode_RTL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stabilized.
+        /// </summary>
+        internal static string PX4Mode_Stabilized {
+            get {
+                return ResourceManager.GetString("PX4Mode_Stabilized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Acelerometer .
         /// </summary>
         internal static string Sensor_Accelerometer {
@@ -354,6 +480,60 @@ namespace LagoVista.Uas.Core.Resources {
         internal static string Sensor_YawPosition {
             get {
                 return ResourceManager.GetString("Sensor_YawPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Auto.
+        /// </summary>
+        internal static string TrackerMode_Auto {
+            get {
+                return ResourceManager.GetString("TrackerMode_Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initializing.
+        /// </summary>
+        internal static string TrackerMode_Initializing {
+            get {
+                return ResourceManager.GetString("TrackerMode_Initializing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        internal static string TrackerMode_Manual {
+            get {
+                return ResourceManager.GetString("TrackerMode_Manual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scan.
+        /// </summary>
+        internal static string TrackerMode_Scan {
+            get {
+                return ResourceManager.GetString("TrackerMode_Scan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Servo Test.
+        /// </summary>
+        internal static string TrackerMode_ServoTest {
+            get {
+                return ResourceManager.GetString("TrackerMode_ServoTest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop.
+        /// </summary>
+        internal static string TrackerMode_Stop {
+            get {
+                return ResourceManager.GetString("TrackerMode_Stop", resourceCulture);
             }
         }
     }

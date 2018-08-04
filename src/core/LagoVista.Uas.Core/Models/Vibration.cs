@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LagoVista.Uas.Core.Models
 {
-    public class Vibration : ModelBase
+    public class Vibration : GaugeBase
     {
         private float _x;
         public float X
@@ -61,13 +61,9 @@ namespace LagoVista.Uas.Core.Models
             Y = vibration.VibrationY;
             Z = vibration.VibrationZ;
             TimeStamp = DateTime.Now;
-        }
 
-        DateTime _timeStamp;
-        public DateTime TimeStamp
-        {
-            get { return _timeStamp; }
-            set { Set(ref _timeStamp, value); }
+            GaugeStatus = GaugeStatus.OK;
         }
+        
     }
 }

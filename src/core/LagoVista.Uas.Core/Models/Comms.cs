@@ -1,11 +1,12 @@
 ﻿using LagoVista.Core.Models;
+using LagoVista.Uas.Core.MavLink;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace LagoVista.Uas.Core.Models
 {
-    public class Comms : ModelBase
+    public class Comms : GaugeBase
     {
         private float _distanceToHome;
 
@@ -126,11 +127,24 @@ namespace LagoVista.Uas.Core.Models
             }
         }
 
-        public void Update(float distanceToHome)
+        public void Update(UasRadioStatus status, float distanceToHome)
         {
+            Noise = status.Noise;
+            RemoteNoise = status.Remnoise;
+            RSSI = status.Rssi;
+            RemoteRSSI = status.Remrssi;
+
+            LastRemoteRSSI = DateTime.Now;
+            LastRSSI = DateTime.Now;
+
+            TxBuffer = status.Txbuf;
+
             RaisePropertyChanged(nameof(RemoteSNRDb));
             RaisePropertyChanged(nameof(LocalSNRDb));
             RaisePropertyChanged(nameof(DistRSSIRemaining));
+
+            GaugeStatus = GaugeStatus.OK;
+            TimeStamp = DateTime.Now;
         }
     }
 }

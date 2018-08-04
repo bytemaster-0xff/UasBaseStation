@@ -216,4 +216,64 @@
   <data name="Err_VPos" xml:space="preserve">
     <value>EKF - Vertical Position Variance &gt; 1 -  [{0}]</value>
   </data>
+  <data name="PX4Mode_Acro" xml:space="preserve">
+    <value>Acro</value>
+  </data>
+  <data name="PX4Mode_AltCtl" xml:space="preserve">
+    <value>Altitude Control</value>
+  </data>
+  <data name="PX4Mode_Auto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="PX4Mode_AutoReady" xml:space="preserve">
+    <value>Auto: Ready</value>
+  </data>
+  <data name="PX4Mode_AutoTakeoff" xml:space="preserve">
+    <value>Auto: Takeoff</value>
+  </data>
+  <data name="PX4Mode_Landing" xml:space="preserve">
+    <value>Auto: Landing</value>
+  </data>
+  <data name="PX4Mode_Loiter" xml:space="preserve">
+    <value>Loiter</value>
+  </data>
+  <data name="PX4Mode_Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="PX4Mode_Mission" xml:space="preserve">
+    <value>Mission</value>
+  </data>
+  <data name="PX4Mode_Offboard" xml:space="preserve">
+    <value>Offboard Control</value>
+  </data>
+  <data name="PX4Mode_PoCtl" xml:space="preserve">
+    <value>Position Control</value>
+  </data>
+  <data name="PX4Mode_Rattitude" xml:space="preserve">
+    <value>Rattitude</value>
+  </data>
+  <data name="PX4Mode_RTL" xml:space="preserve">
+    <value>RTL</value>
+  </data>
+  <data name="PX4Mode_Stabilized" xml:space="preserve">
+    <value>Stabilized</value>
+  </data>
+  <data name="TrackerMode_Auto" xml:space="preserve">
+    <value>Auto</value>
+  </data>
+  <data name="TrackerMode_Initializing" xml:space="preserve">
+    <value>Initializing</value>
+  </data>
+  <data name="TrackerMode_Manual" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="TrackerMode_Scan" xml:space="preserve">
+    <value>Scan</value>
+  </data>
+  <data name="TrackerMode_ServoTest" xml:space="preserve">
+    <value>Servo Test</value>
+  </data>
+  <data name="TrackerMode_Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
 </root>

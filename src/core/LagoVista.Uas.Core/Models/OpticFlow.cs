@@ -40,6 +40,14 @@ namespace LagoVista.Uas.Core.Models
             set { Set(ref _rateX, value); }
         }
 
+        private float _groundDistance;
+        public float GroundDistance
+        {
+            get { return _groundDistance; }
+            set { Set(ref _groundDistance, value); }
+        }
+
+
         private float _rateY;
         public float RateY
         {
@@ -61,12 +69,15 @@ namespace LagoVista.Uas.Core.Models
             RateX = flow.FlowRateX;
             RateY = flow.FlowRateY;
             Quality = flow.Quality;
+            GroundDistance = flow.GroundDistance;
             ComponentX = flow.FlowCompMX;
             ComponentY = flow.FlowCompMY;
             TimeStamp = DateTime.Now;
 
+            if (Quality > 200) GaugeStatus = GaugeStatus.OK;
+            else if (Quality > 100) GaugeStatus = GaugeStatus.Warning;
+            else GaugeStatus = GaugeStatus.Error;
             //TODO: need to look at quality to determine error
-            GaugeStatus = GaugeStatus.OK;
         }
     }
 }

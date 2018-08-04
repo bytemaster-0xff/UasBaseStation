@@ -7,11 +7,18 @@ namespace LagoVista.Uas.Core
 {
     public class RCChannel : ModelBase
     {
-        public UInt16 _value;
-        public UInt16 Value
+        public short _value;
+        public short Value
         {
             get { return _value; }
             set { Set(ref _value, value); }
+        }
+
+        public UInt16 _rawValue;
+        public UInt16 RawValue
+        {
+            get { return _rawValue; }
+            set { Set(ref _rawValue, value); }
         }
     }
 }

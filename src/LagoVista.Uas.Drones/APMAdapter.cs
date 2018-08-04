@@ -64,6 +64,39 @@ namespace LagoVista.Uas.Drones
                     var ekfStatus = message as UasEkfStatusReport;
 
                     break;
+                case UasMessages.RcChannels:
+                    var rcRaw = message as UasRcChannels;
+                    uas.Channels[0].RawValue = rcRaw.Chan1Raw;
+                    uas.Channels[1].RawValue = rcRaw.Chan2Raw;
+                    uas.Channels[2].RawValue = rcRaw.Chan3Raw;
+                    uas.Channels[3].RawValue = rcRaw.Chan4Raw;
+                    uas.Channels[4].RawValue = rcRaw.Chan5Raw;
+                    uas.Channels[5].RawValue = rcRaw.Chan6Raw;
+                    uas.Channels[6].RawValue = rcRaw.Chan7Raw;
+                    uas.Channels[7].RawValue = rcRaw.Chan8Raw;
+
+                    uas.Channels[8].RawValue = rcRaw.Chan9Raw;
+                    uas.Channels[9].RawValue = rcRaw.Chan10Raw;
+                    uas.Channels[10].RawValue = rcRaw.Chan11Raw;
+                    uas.Channels[11].RawValue = rcRaw.Chan12Raw;
+                    uas.Channels[12].RawValue = rcRaw.Chan13Raw;
+                    uas.Channels[13].RawValue = rcRaw.Chan14Raw;
+                    uas.Channels[14].RawValue = rcRaw.Chan15Raw;
+                    uas.Channels[15].RawValue = rcRaw.Chan16Raw;
+                    break;
+
+                case UasMessages.RcChannelsScaled:
+                    var rc = message as UasRcChannelsScaled;
+                    uas.Channels[0].Value = rc.Chan1Scaled;
+                    uas.Channels[1].Value = rc.Chan2Scaled;
+                    uas.Channels[2].Value = rc.Chan3Scaled;
+                    uas.Channels[3].Value = rc.Chan4Scaled;
+                    uas.Channels[4].Value = rc.Chan5Scaled;
+                    uas.Channels[5].Value = rc.Chan6Scaled;
+                    uas.Channels[6].Value = rc.Chan7Scaled;
+                    uas.Channels[7].Value = rc.Chan8Scaled;
+                    break;
+
                 case UasMessages.VfrHud:
                     /* For fixed wing */
                     break;
