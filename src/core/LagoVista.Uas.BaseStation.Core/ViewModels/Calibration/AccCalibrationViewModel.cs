@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace LagoVista.Uas.BaseStation.Core.ViewModels.Calibration
 {
-    public class CalibrationViewModel : AppViewModelBase
+    public class AccCalibrationViewModel : AppViewModelBase
     {
         IConnectedUasManager _connectedUasManager;
-        public CalibrationViewModel(IConnectedUasManager connectedUasManager)
+        public AccCalibrationViewModel(IConnectedUasManager connectedUasManager)
         {
             _connectedUasManager = connectedUasManager;
             DoneCommand = new RelayCommand(Done, () => IsDone);

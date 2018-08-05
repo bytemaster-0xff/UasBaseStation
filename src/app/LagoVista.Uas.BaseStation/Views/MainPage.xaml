@@ -7,10 +7,12 @@
         xmlns:local="clr-namespace:Uas.BaseStation"
         LeftMenu="Menu"
         Title="NuvIoT UAS"
+        MinimumWidthRequest="1200"
+        MinimumHeightRequest="800"
         x:Class="LagoVista.Uas.BaseStation.Views.MainPage">
 
     <pge:LagoVistaContentPage.MainContent>
-        <Grid Margin="50">
+        <Grid Padding="25">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
@@ -26,7 +28,7 @@
                 <Label Text="Serial Ports" />
                 <Picker ItemsSource="{Binding Ports}" SelectedItem="{Binding SelectedPort, Mode=TwoWay}" ItemDisplayBinding="{Binding Name}"  />
                 <Button Text="{Binding ConnectMessage}" Command="{Binding OpenSerialPortCommand}"  />
-                <Button Text="Get Waypoints" Command="{Binding GetWaypointsCommand}"  />
+                <Button Text="Mission Planner" Command="{Binding ShowMissionPlannerCommand}"  />
                 <Button Text="Start Data Stream" Command="{Binding StartDataStreamsCommand}"  />
                 <Button Text="Stop Data Stream" Command="{Binding StopDataStreamsCommand}"  />
                 <Button Text="Begin Calibration" Command="{Binding BeginCalibrationCommand}"  />
@@ -47,7 +49,6 @@
                 <Label Text="{Binding Connections.Active.Uas.Attitude.Roll, StringFormat='{0:0.0}°'}" />
                 <Label Text="{Binding Connections.Active.Uas.Attitude.Yaw, StringFormat='{0:0.0}°'}" />
             </StackLayout>
-
 
             <ctl:MessagesList BindingContext="{Binding Connections.Active}" Grid.Row="1" />
             <ctl:StatusMessages BindingContext="{Binding Connections.Active}" Grid.Row="1" Grid.Column="1" />

@@ -45,6 +45,7 @@ namespace LagoVista.Uas.Core.MavLink
         private MavLinkAsyncWalker _mavLinkAsyncWalker = new MavLinkAsyncWalker();
         private ISerialPort _serialPort;
         private bool _isActive = true;
+        private CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 
         public SerialPortTransport(IDispatcherServices dispatcher) : base(dispatcher)
         {
@@ -75,15 +76,19 @@ namespace LagoVista.Uas.Core.MavLink
             var buffer = new byte[256];
             Task.Run(async () =>
             {
-                while (_serialPort != null)
+                while (_serialPort != null && _isActive)
                 {
-                    var bytesRead = await _serialPort.ReadAsync(buffer, 0, 256);
-                    if (bytesRead > 0)
+                    try
                     {
-                        var outputBuffer = buffer.Take(bytesRead);
-                        _receiveQueue.Enqueue(outputBuffer.ToArray());
-                        _receiveSignal.Set();
+                        var bytesRead = await _serialPort.ReadAsync(buffer, 0, 256, _cancellationTokenSource.Token);
+                        if (bytesRead > 0)
+                        {
+                            var outputBuffer = buffer.Take(bytesRead);
+                            _receiveQueue.Enqueue(outputBuffer.ToArray());
+                            _receiveSignal.Set();
+                        }
                     }
+                    catch (TaskCanceledException) {/* nop */}
                 }
             });
         }
@@ -154,6 +159,8 @@ namespace LagoVista.Uas.Core.MavLink
 
         public async Task CloseAsync()
         {
+            _isActive = false;
+            _cancellationTokenSource.Cancel();
             await _serialPort.CloseAsync();
             _serialPort.Dispose();
             _serialPort = null;

@@ -1,9 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using LagoVista.Core.Validation;
+using LagoVista.Uas.Core.Models;
+using System.Threading.Tasks;
 
 namespace LagoVista.Uas.Core
 {
     public interface IMissionPlanner
     {
-        Task GetWayPoints(IUas uas, ITransport link);
+        Task<InvokeResult<Mission>> GetWayPointsAsync(ConnectedUas uas);
     }
 }

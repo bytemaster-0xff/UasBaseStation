@@ -43,6 +43,7 @@ namespace LagoVista.Uas.BaseStation.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
                 Xamarin.Forms.Forms.Init(e);
+                Xamarin.FormsMaps.Init("s5miuLzzn4RuPyMXzOYF~pA3KRBwzLZ4JOHnyIaUAWA~AnoR9G-Mf6OR7_n8b6wVy_cd9wim48xfSp39TC31OlvLad6zT5Pf0XN35EPuEV5U");
 
                 LagoVista.Core.UWP.Startup.Init(this, rootFrame.Dispatcher, "a8d44f67-212b-4357-aea8-d55d44156c59");
 

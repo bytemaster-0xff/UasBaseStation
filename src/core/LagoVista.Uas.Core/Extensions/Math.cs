@@ -11,6 +11,11 @@ namespace LagoVista.Uas
             return (value * 180.0) / Math.PI;
         }
 
+        public static float ToLatLon(this int value)
+        {
+            return value / 10000000.0f;
+        }
+
         public static float ToDegrees(this float value)
         {
             return  Convert.ToSingle((value * 180.0f) / Math.PI);

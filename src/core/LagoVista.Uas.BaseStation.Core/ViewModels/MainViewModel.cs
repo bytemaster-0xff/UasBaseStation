@@ -39,10 +39,10 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
             //TelemetryLink.MessageParsed += _telemeteryLink_MessageParsed;
             OpenSerialPortCommand = new RelayCommand(HandleConnectClick, CanPressConnect);
-            GetWaypointsCommand = new RelayCommand(GetWaypoints, CanDoConnectedStuff);
+            ShowMissionPlannerCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<Missions.MissionPlannerViewModel>(this), CanDoConnectedStuff);
             StartDataStreamsCommand = new RelayCommand(() => _telemetryService.Start(Connections.Active.Uas, Connections.Active.Transport), CanDoConnectedStuff);
             StopDataStreamsCommand = new RelayCommand(() => _telemetryService.Stop(Connections.Active.Transport), CanDoConnectedStuff);
-            BeginCalibrationCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<Calibration.CalibrationViewModel>(this), CanDoConnectedStuff);
+            BeginCalibrationCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<Calibration.AccCalibrationViewModel>(this), CanDoConnectedStuff);
             FlyNowCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<HudViewModel>(this), CanDoConnectedStuff);
 
             Title = "UAS NuvIoT Connector";
@@ -122,12 +122,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
                 OpenSerialPort();
             }
         }
-
-        public async void GetWaypoints()
-        {
-            await _planner.GetWayPoints(Connections.Active.Uas, Connections.Active.Transport);
-        }
-
+       
         public async void OpenSerialPort()
         {
             SelectedPort.BaudRate = 115200;
@@ -137,7 +132,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             ConnectMessage = "Disconnect";
 
             OpenSerialPortCommand.RaiseCanExecuteChanged();
-            GetWaypointsCommand.RaiseCanExecuteChanged();
+            ShowMissionPlannerCommand.RaiseCanExecuteChanged();
             StartDataStreamsCommand.RaiseCanExecuteChanged();
             StopDataStreamsCommand.RaiseCanExecuteChanged();
             BeginCalibrationCommand.RaiseCanExecuteChanged();
@@ -148,11 +143,12 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public async void CloseSerialPort()
         {
+            _heartBeatManager.Stop();
             await (Connections.Active.Transport as SerialPortTransport).CloseAsync();
             ConnectMessage = "Connect";
 
             OpenSerialPortCommand.RaiseCanExecuteChanged();
-            GetWaypointsCommand.RaiseCanExecuteChanged();
+            ShowMissionPlannerCommand.RaiseCanExecuteChanged();
             StartDataStreamsCommand.RaiseCanExecuteChanged();
             StopDataStreamsCommand.RaiseCanExecuteChanged();
             BeginCalibrationCommand.RaiseCanExecuteChanged();
@@ -168,7 +164,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             {
                 Set(ref _serialPortInfo, value);
                 OpenSerialPortCommand.RaiseCanExecuteChanged();
-                GetWaypointsCommand.RaiseCanExecuteChanged();
+                ShowMissionPlannerCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -191,7 +187,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         { get; set; }
 
         public RelayCommand OpenSerialPortCommand { get; }
-        public RelayCommand GetWaypointsCommand { get; }
+        public RelayCommand ShowMissionPlannerCommand { get; }
         public RelayCommand StartDataStreamsCommand { get; }
         public RelayCommand StopDataStreamsCommand { get; }
         public RelayCommand BeginCalibrationCommand { get; }

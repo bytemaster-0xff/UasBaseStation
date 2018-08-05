@@ -4,7 +4,7 @@
         xmlns="http://xamarin.com/schemas/2014/forms"
         xmlns:ctl="clr-namespace:LagoVista.Uas.BaseStation.Controls"
         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-        x:Class="LagoVista.Uas.BaseStation.Views.Calibration.CalibrationView">
+        x:Class="LagoVista.Uas.BaseStation.Views.Calibration.AccCalibrationView">
     <pge:LagoVistaContentPage.MainContent>
         <Grid>
             <Grid.RowDefinitions>

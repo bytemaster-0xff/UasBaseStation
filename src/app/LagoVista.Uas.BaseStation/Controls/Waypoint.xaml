@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LagoVista.Uas.BaseStation.Controls.Waypoint">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    
+    <Label Text="{Binding Command}" Grid.Row="0" />
+    <Label Text="{Binding X}"  Grid.Row="1" />
+    <Label Text="{Binding Y}"  Grid.Row="2" />
+    <Label Text="{Binding Z}"  Grid.Row="3" />
+    <Label Text="{Binding Param1}"  Grid.Row="1" />
+    <Label Text="{Binding Param2}"  Grid.Row="2" />
+    <Label Text="{Binding Param3}"  Grid.Row="3" />
+    <Label Text="{Binding Param4}"  Grid.Row="3" />
+</Grid>

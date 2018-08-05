@@ -10,6 +10,7 @@ using LagoVista.Core.IOC;
 using LagoVista.Core.ViewModels;
 using LagoVista.Uas.BaseStation.Core.ViewModels;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Calibration;
+using LagoVista.Uas.BaseStation.Core.ViewModels.Missions;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.BaseStation.Views;
 using LagoVista.Uas.Core;
@@ -80,7 +81,10 @@ namespace LagoVista.Uas.BaseStation
             Startup.Init(serverInfo);
 
 
-            navigation.Add<CalibrationViewModel, Views.Calibration.CalibrationView>();
+
+            navigation.Add<CompassCalibrationViewModel, Views.Calibration.CompassCalibrationView>();
+            navigation.Add<AccCalibrationViewModel, Views.Calibration.AccCalibrationView>();
+            navigation.Add<MissionPlannerViewModel, Views.Missions.MissionPlannerView>();
             navigation.Add<UasDetailViewModel, Views.Uas.UasDetail>();
             navigation.Add<UasManagerViewModel, Views.Uas.UasManager>();
             navigation.Add<UasTypeManagerViewModel, Views.Uas.UasTypeManager>();

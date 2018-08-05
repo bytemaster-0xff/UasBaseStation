@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pge:LagoVistaContentPage  
+        xmlns:pge="clr-namespace:LagoVista.XPlat.Core;assembly=LagoVista.XPlat.Core"
+        xmlns="http://xamarin.com/schemas/2014/forms"
+        xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"       
+        Title="Mission Planner"
+        xmlns:ctl="clr-namespace:LagoVista.Uas.BaseStation.Controls"
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+        x:Class="LagoVista.Uas.BaseStation.Views.Missions.MissionPlannerView">
+    <ContentPage.Content>
+        <Grid x:Name="TopLevel">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="200" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="440" />
+                </Grid.ColumnDefinitions>
+            </Grid>
+            <maps:Map x:Name="MyMap"
+                IsShowingUser="true"
+                MapType="Hybrid" Grid.RowSpan="2" />
+            <ListView ItemsSource="{Binding Mission.Waypoints}" Grid.Column="1">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="160" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="60" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Text="{Binding Sequence}" x:Name="WaypointSequence" IsVisible="False" />
+
+                                <Label Text="{Binding Sequence}" HorizontalTextAlignment="End" />
+                                <Label Text="{Binding Command}" Grid.Column="1" />
+                                <Label Text="{Binding X}" Grid.Column="2" HorizontalTextAlignment="End" />
+                                <Label Text="{Binding Y}" Grid.Column="3" HorizontalTextAlignment="End" />
+                                <Label Text="{Binding Z}" Grid.Column="4" HorizontalTextAlignment="End" />
+                                <pge:IconButton IconKey="fa-arrow-down"  
+                                   Command="{Binding MoveDownCommand}" Grid.Column="5" CommandParameter="{Binding Source={x:Reference WaypointSequence}, Path=Text}"
+                                   BindingContext="{Binding Source={x:Reference TopLevel}, Path=BindingContext}"
+                                   TextColor="DarkGray" FontSize="20" BorderColor="Transparent" BorderWidth="0" Margin="0,3,0,0" />
+                                <pge:IconButton IconKey="fa-arrow-up"  
+                                   Command="{Binding MoveUpCommand}" Grid.Column="6" CommandParameter="{Binding Source={x:Reference WaypointSequence}, Path=Text}"
+                                   BindingContext="{Binding Source={x:Reference TopLevel}, Path=BindingContext}"
+                                   TextColor="DarkGray" FontSize="20" BorderColor="Transparent" BorderWidth="0" Margin="0,3,0,0" />
+                                <pge:IconButton IconKey="fa-pencil"  
+                                   Command="{Binding EditWaypointCommand}" Grid.Column="7" CommandParameter="{Binding Source={x:Reference WaypointSequence}, Path=Text}"
+                                   BindingContext="{Binding Source={x:Reference TopLevel}, Path=BindingContext}"
+                                   TextColor="DarkGray" FontSize="20" BorderColor="Transparent" BorderWidth="0" Margin="0,3,0,0" />
+                                <pge:IconButton IconKey="fa-trash-o"  
+                                   Command="{Binding RemovewWaypointCommand}" Grid.Column="8" CommandParameter="{Binding Source={x:Reference WaypointSequence}, Path=Text}"
+                                   BindingContext="{Binding Source={x:Reference TopLevel}, Path=BindingContext}"
+                                   TextColor="Red" FontSize="20" BorderColor="Transparent" BorderWidth="0" Margin="0,3,0,0" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                        
+                </ListView.ItemTemplate>
+            </ListView>
+            <ctl:Waypoint BindingContent="{Binding Waypoint}" Grid.Row="1" Grid.Column="1" />
+        </Grid>
+    </ContentPage.Content>
+</pge:LagoVistaContentPage>
