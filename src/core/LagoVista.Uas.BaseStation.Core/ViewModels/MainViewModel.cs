@@ -44,6 +44,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             StopDataStreamsCommand = new RelayCommand(() => _telemetryService.Stop(Connections.Active.Transport), CanDoConnectedStuff);
             BeginCalibrationCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<Calibration.AccCalibrationViewModel>(this), CanDoConnectedStuff);
             FlyNowCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<HudViewModel>(this), CanDoConnectedStuff);
+            MotorTestCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<Testing.MotorsTestViewModel>(this), CanDoConnectedStuff);
 
             Title = "UAS NuvIoT Connector";
 
@@ -125,7 +126,8 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
        
         public async void OpenSerialPort()
         {
-            SelectedPort.BaudRate = 115200;
+            //SelectedPort.BaudRate = 115200;
+            SelectedPort.BaudRate = 57600;
             var port = DeviceManager.CreateSerialPort(SelectedPort);
             Connections.Active.Transport.Initialize();
             await (Connections.Active.Transport as SerialPortTransport).OpenAsync(port);
@@ -137,6 +139,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             StopDataStreamsCommand.RaiseCanExecuteChanged();
             BeginCalibrationCommand.RaiseCanExecuteChanged();
             FlyNowCommand.RaiseCanExecuteChanged();
+            MotorTestCommand.RaiseCanExecuteChanged();
 
             _heartBeatManager.Start(Connections.Active.Transport, TimeSpan.FromSeconds(1));
         }
@@ -153,6 +156,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             StopDataStreamsCommand.RaiseCanExecuteChanged();
             BeginCalibrationCommand.RaiseCanExecuteChanged();
             FlyNowCommand.RaiseCanExecuteChanged();
+            MotorTestCommand.RaiseCanExecuteChanged();
         }
 
 
@@ -164,7 +168,6 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             {
                 Set(ref _serialPortInfo, value);
                 OpenSerialPortCommand.RaiseCanExecuteChanged();
-                ShowMissionPlannerCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -192,6 +195,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public RelayCommand StopDataStreamsCommand { get; }
         public RelayCommand BeginCalibrationCommand { get; }
         public RelayCommand FlyNowCommand { get; }
+        public RelayCommand MotorTestCommand { get; }
 
         public IConnectedUasManager Connections { get; }
 

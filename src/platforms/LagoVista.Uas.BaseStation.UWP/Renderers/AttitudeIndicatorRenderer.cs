@@ -1,12 +1,8 @@
 ﻿using LagoVista.Core.IOC;
-using LagoVista.Uas.BaseStation.Controls;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Media.Capture;
 using Windows.System.Display;
@@ -16,7 +12,6 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
-using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 
 
@@ -33,6 +28,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         MediaCapture _mediaCapture;
         Windows.UI.Xaml.Controls.Grid _aoaCircle;
         Windows.UI.Xaml.Controls.Grid _pageContainer;
+        DeviceInformationCollection _devices;
 
         Windows.UI.Xaml.Controls.TextBlock _heading;
         MapControl _mapControl;
@@ -57,7 +53,6 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _pageContainer.ColumnDefinitions.Add(new Windows.UI.Xaml.Controls.ColumnDefinition() { Width = new Windows.UI.Xaml.GridLength(640, Windows.UI.Xaml.GridUnitType.Pixel) });
             _pageContainer.ColumnDefinitions.Add(new Windows.UI.Xaml.Controls.ColumnDefinition() { Width = new Windows.UI.Xaml.GridLength(1, Windows.UI.Xaml.GridUnitType.Star) });
 
-            AddCapture();
             AddToolBar();
             RenderHud();
 
@@ -189,8 +184,8 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _aoaCircle.Children.Add(new Line()
             {
                 Stroke = _hudGreen,
-                StrokeThickness = 15,
-                Height = 15,
+                StrokeThickness = 10,
+                Height = 10,
                 Width = 300,
                 X1 = 0,
                 X2 = 300,
@@ -200,23 +195,19 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             hudContainer.Width = 640;
             hudContainer.Height = 480;
             hudContainer.Children.Add(_aoaCircle);
+            hudContainer.Background = new SolidColorBrush(Windows.UI.Colors.Black);
             hudContainer.Children.Add(_heading);
             hudContainer.SetValue(Windows.UI.Xaml.Controls.Grid.RowProperty, 0);
             hudContainer.SetValue(Windows.UI.Xaml.Controls.Grid.ColumnProperty, 1);
-            _pageContainer.Children.Add(hudContainer);
-        }
-
-        private void AddCapture()
-        {
             _captureElement = new CaptureElement();
             _captureElement.Width = 640;
             _captureElement.Height = 480;
             _captureElement.Visibility = Visibility.Collapsed;
-            _pageContainer.SetValue(Windows.UI.Xaml.Controls.Grid.ColumnProperty, 1);
-            _pageContainer.Children.Add(_captureElement);
-        }
+            hudContainer.Children.Add(_captureElement);
 
-        DeviceInformationCollection _devices;
+            _pageContainer.Children.Add(hudContainer);
+
+        }
 
         private async void GetDevices()
         {

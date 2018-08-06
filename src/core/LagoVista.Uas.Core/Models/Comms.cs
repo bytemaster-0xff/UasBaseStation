@@ -125,7 +125,7 @@ namespace LagoVista.Uas.Core.Models
 
                 return work;
             }
-        }
+        }       
 
         public void Update(UasRadioStatus status, float distanceToHome)
         {

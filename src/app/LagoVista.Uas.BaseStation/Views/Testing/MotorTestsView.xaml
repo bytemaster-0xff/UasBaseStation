@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pge:LagoVistaContentPage  
+    xmlns:pge="clr-namespace:LagoVista.XPlat.Core;assembly=LagoVista.XPlat.Core"
+ xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="LagoVista.Uas.BaseStation.Views.Testing.MotorTestsView">
+    <pge:LagoVistaContentPage.MainContent>
+        <Grid>
+            <StackLayout>
+                <Button Command="{Binding StartTestCommand}" Text="Start"/>
+                <Button Command="{Binding StopTestCommand}" Text="Stop"/>
+            </StackLayout>
+        </Grid>
+    </pge:LagoVistaContentPage.MainContent>
+</pge:LagoVistaContentPage>

@@ -31,6 +31,7 @@
                 <Button Text="Mission Planner" Command="{Binding ShowMissionPlannerCommand}"  />
                 <Button Text="Start Data Stream" Command="{Binding StartDataStreamsCommand}"  />
                 <Button Text="Stop Data Stream" Command="{Binding StopDataStreamsCommand}"  />
+                <Button Text="Begin Motor Test" Command="{Binding MotorTestCommand}"  />
                 <Button Text="Begin Calibration" Command="{Binding BeginCalibrationCommand}"  />
                 <Button Text="Fly Now" Command="{Binding FlyNowCommand}"  />
             </StackLayout>

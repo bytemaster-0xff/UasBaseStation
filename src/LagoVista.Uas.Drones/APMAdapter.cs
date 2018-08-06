@@ -28,6 +28,7 @@ namespace LagoVista.Uas.Drones
                 case UasMessages.PowerStatus: uas.PowerStatus.Update(message as UasPowerStatus); break;                
                 case UasMessages.Attitude: uas.Attitude.Update(message as UasAttitude); break;
                 case UasMessages.BatteryStatus: uas.Batteries.First().Update(message as UasBatteryStatus); break;
+                case UasMessages.RadioStatus: uas.Comms.Update(message as UasRadioStatus, 0); break;
 
                 case UasMessages.MagCalProgress:
                     /* Compass Calibration Progress  */
@@ -68,7 +69,10 @@ namespace LagoVista.Uas.Drones
                     uas.Channels[6].Value = rc.Chan7Scaled;
                     uas.Channels[7].Value = rc.Chan8Scaled;
                     break;
-
+                case UasMessages.Radio:
+                    var radio = message as UasRadio;
+                    break;
+                
                 case UasMessages.VfrHud:
                     /* For fixed wing */
                     break;

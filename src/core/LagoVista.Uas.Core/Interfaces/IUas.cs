@@ -51,5 +51,6 @@ namespace LagoVista.Uas.Core
         float AirSpeed { get; set; }
         float GroundSpeed { get; set; }
 
+        Comms Comms { get; }
     }
 }

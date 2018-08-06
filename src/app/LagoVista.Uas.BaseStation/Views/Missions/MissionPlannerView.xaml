@@ -68,7 +68,7 @@
                         
                 </ListView.ItemTemplate>
             </ListView>
-            <ctl:Waypoint BindingContent="{Binding Waypoint}" Grid.Row="1" Grid.Column="1" />
+            <ctl:Waypoint BindingContext="{Binding Waypoint}" Grid.Row="1" Grid.Column="1" />
         </Grid>
     </ContentPage.Content>
 </pge:LagoVistaContentPage>

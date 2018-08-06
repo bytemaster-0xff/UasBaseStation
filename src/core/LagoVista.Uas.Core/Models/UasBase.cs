@@ -29,6 +29,7 @@ namespace LagoVista.Uas.Core
             Attitude = new Attitude();
             FlightController = new FlightController();
             PowerStatus = new PowerStatus();
+            Comms = new Comms();
 
             Channels = new ObservableCollection<RCChannel>();
             for (var idx = 0; idx < 16; ++idx) Channels.Add(new RCChannel());
@@ -68,6 +69,7 @@ namespace LagoVista.Uas.Core
         public EKF EKFStatus { get; }
 
         public Attitude Attitude { get; }
+        public Comms Comms { get; }
 
         public SensorList Sensors { get; }
 

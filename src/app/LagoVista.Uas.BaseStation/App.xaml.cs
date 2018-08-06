@@ -11,6 +11,7 @@ using LagoVista.Core.ViewModels;
 using LagoVista.Uas.BaseStation.Core.ViewModels;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Calibration;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Missions;
+using LagoVista.Uas.BaseStation.Core.ViewModels.Testing;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.BaseStation.Views;
 using LagoVista.Uas.Core;
@@ -81,7 +82,7 @@ namespace LagoVista.Uas.BaseStation
             Startup.Init(serverInfo);
 
 
-
+            navigation.Add<MotorsTestViewModel, Views.Testing.MotorTestsView>();
             navigation.Add<CompassCalibrationViewModel, Views.Calibration.CompassCalibrationView>();
             navigation.Add<AccCalibrationViewModel, Views.Calibration.AccCalibrationView>();
             navigation.Add<MissionPlannerViewModel, Views.Missions.MissionPlannerView>();
