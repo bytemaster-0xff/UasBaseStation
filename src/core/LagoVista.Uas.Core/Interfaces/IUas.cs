@@ -4,11 +4,12 @@ using LagoVista.Uas.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Text;
 
 namespace LagoVista.Uas.Core
 {
-    public interface IUas
+    public interface IUas : INotifyPropertyChanged
     {
         EntityHeader DeviceConfiguration { get; }
         EntityHeader DeviceType { get; }

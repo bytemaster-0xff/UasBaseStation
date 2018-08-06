@@ -2,6 +2,8 @@
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
 using System.Linq;
+using LagoVista.Core;
+using System;
 
 namespace LagoVista.Uas.Drones
 {
@@ -19,7 +21,17 @@ namespace LagoVista.Uas.Drones
                     break;
                 case Core.MavLink.UasMessages.GpsRawInt:
                     uas.GPSs.First().Update(message as UasGpsRawInt);
-                    uas.CurrentLocation = uas.GPSs.First().Location;
+                    break;
+                case UasMessages.GlobalPositionInt:
+                    var pos = message as UasGlobalPositionInt;
+                    uas.CurrentLocation = new LagoVista.Core.Models.Geo.GeoLocation()
+                    {
+                        Altitude = pos.Alt / 1000.0f,
+                        Latitude = pos.Lat.ToLatLon(),
+                        Longitude = pos.Lon.ToLatLon(),
+                        LastUpdated = DateTime.Now.ToJSONString()
+                    };
+
                     break;
 
                 case UasMessages.SysStatus: uas.Sensors.Update(message as UasSysStatus); break;
