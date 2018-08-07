@@ -271,7 +271,36 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _rollTransform = new RotateTransform() { Angle = 0, CenterX = 240, CenterY = 240, };
             _compassTransform = new RotateTransform() { Angle = 0, CenterX = 240, CenterY = 240, };
 
-            _aoaCircle = new Windows.UI.Xaml.Controls.Grid() { Width = 480, Height = 480, RenderTransform = _rollTransform };
+            _aoaCircle = new Windows.UI.Xaml.Controls.Grid() { Width = 640, Height = 480, RenderTransform = _rollTransform };
+            _aoaCircle.SetValue(Grid.RowSpanProperty, 2);
+            _aoaCircle.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Star) });
+            _aoaCircle.RowDefinitions.Add(new RowDefinition() { Height = new GridLength(50, GridUnitType.Star) });
+            hudContainer.Children.Add(_aoaCircle);
+
+            _aoaCircle.Children.Add(new Rectangle()
+            {
+                Fill = new SolidColorBrush(Colors.Azure)
+            });
+
+            var bottomRect = new Rectangle()
+            {
+                Fill = new LinearGradientBrush(new GradientStopCollection()
+                {
+                    new GradientStop()
+                    {
+                         Color = Colors.LightGreen,
+                         Offset = 0
+                    },
+                    new GradientStop()
+                    {
+                        Color = Colors.DarkGreen,
+                        Offset = 1
+                    }
+                }, 90)
+            };
+
+            bottomRect.SetValue(Grid.RowProperty, 1);
+            _aoaCircle.Children.Add(bottomRect);
 
             var compass = CreateCompass();
             compass.VerticalAlignment = VerticalAlignment.Top;
@@ -295,6 +324,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             hudContainer.Children.Add(_altitude);
 
             _gps = new TextBlock();
+            _gps.SetValue(Grid.RowProperty, 1);
             _gps.FontSize = 28;
             _gps.Foreground = _hudGreen;
             _gps.VerticalAlignment = VerticalAlignment.Bottom;
@@ -303,20 +333,27 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _gps.TextAlignment = TextAlignment.Right;
             hudContainer.Children.Add(_gps);
 
-            _aoaCircle.Children.Add(new Line()
+            for (var idx = -90; idx <= 90; idx += 15)
             {
-                Stroke = _hudGreen,
-                StrokeThickness = 10,
-                Height = 10,
-                Width = 300,
-                X1 = 0,
-                X2 = 300,
-                RenderTransform = _pitchTransform
-            });
+                var len = (idx % 30 == 0) ? 120 : 90;
+                _aoaCircle.Children.Add(new Line()
+                {
+                    Stroke = _hudGreen,
+                    StrokeThickness = 2,
+                    Height = 180,
+                    Width = len,
+                    X1 = 0,
+                    X2 = len,
+                    Y1 = 0,
+                    Y2 = 0,
+                    Margin = new Thickness(0, idx * 5, 0,0),
+                    StrokeDashArray = new DoubleCollection() { 5, 2 },
+                    RenderTransform = _pitchTransform
+                });
+            }
 
             hudContainer.Width = 640;
             hudContainer.Height = 480;
-            hudContainer.Children.Add(_aoaCircle);
             hudContainer.Background = new SolidColorBrush(Windows.UI.Colors.Black);
             hudContainer.SetValue(Windows.UI.Xaml.Controls.Grid.RowProperty, 0);
             hudContainer.SetValue(Windows.UI.Xaml.Controls.Grid.ColumnProperty, 1);
