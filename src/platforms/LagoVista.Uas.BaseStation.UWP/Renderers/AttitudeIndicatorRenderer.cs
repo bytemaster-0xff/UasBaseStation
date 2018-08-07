@@ -2,6 +2,7 @@
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.Models;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Windows.Devices.Enumeration;
 using Windows.Media.Capture;
@@ -27,6 +28,8 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         TranslateTransform _altitudeTransform;
         RotateTransform _compassTransform;
 
+        Canvas _compass;
+
         CaptureElement _captureElement;
         DisplayRequest _displayRequest;
         MediaCapture _mediaCapture;
@@ -35,6 +38,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         DeviceInformationCollection _devices;
 
 
+        Windows.UI.Xaml.Controls.TextBlock _gps;
         Windows.UI.Xaml.Controls.TextBlock _battery;
         Windows.UI.Xaml.Controls.TextBlock _altitude;
         Windows.UI.Xaml.Controls.TextBlock _heading;
@@ -67,6 +71,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
 
             _mapControl = new MapControl();
             _mapControl.Width = 640;
+            _mapControl.MapServiceToken = "s5miuLzzn4RuPyMXzOYF~pA3KRBwzLZ4JOHnyIaUAWA~AnoR9G-Mf6OR7_n8b6wVy_cd9wim48xfSp39TC31OlvLad6zT5Pf0XN35EPuEV5U";
             _mapControl.SetValue(Windows.UI.Xaml.Controls.Grid.ColumnProperty, 1);
             _mapControl.SetValue(Windows.UI.Xaml.Controls.Grid.RowProperty, 1);
             _pageContainer.Children.Add(_mapControl);
@@ -117,7 +122,6 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         {
             if (_cameras.SelectedIndex > 0)
             {
-
                 var device = _devices[_cameras.SelectedIndex - 1];
 
                 var mediaInitSettings = new MediaCaptureInitializationSettings { VideoDeviceId = device.Id };
@@ -162,58 +166,94 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
 
         private Grid CreateCompass()
         {
-            var compass = new Grid()
-            { Width = 250, Height = 75, Clip = new RectangleGeometry() { Rect = new Windows.Foundation.Rect() { Height = 120, Width = 250 } } };
+            var compassContainer = new Grid()
+            {
+                Width = 200,
+                Height = 60,
+                Clip = new RectangleGeometry() { Rect = new Windows.Foundation.Rect() { Height = 60, Width = 250 } }
+            };
 
-            compass.Children.Add(new Ellipse()
+            _compass = new Canvas()
+            {
+                Width = 200,
+                Height = 200,
+                Margin = new Thickness(0, 0, 0, 0)
+            };
+
+            _compassTransform = new RotateTransform()
+            {
+                Angle = -90,
+                CenterX = 100,
+                CenterY = 100,
+            };
+
+            _compass.RenderTransform = _compassTransform;
+
+            _compass.Children.Add(new Ellipse()
             {
                 Stroke = _hudGreen,
                 StrokeThickness = 2,
                 Width = 200,
                 Height = 200,
-                Margin = new Thickness(0, 25, 0, 0),
             });
 
             for (var idx = 0; idx < 360; idx += 15)
             {
-                compass.Children.Add(new Line()
+                var line = new Line()
                 {
                     Stroke = _hudGreen,
                     StrokeThickness = 2,
-                    Height = 250,
-                    Width = 250,
-                    X1 = 125 + Math.Cos((idx * Math.PI) / 180.0f) * 80,
-                    Y1 = 125 + Math.Sin((idx * Math.PI) / 180.0f) * 80,
-                    X2 = 125 + Math.Cos((idx * Math.PI) / 180.0f) * 100,
-                    Y2 = 125 + Math.Sin((idx * Math.PI) / 180.0f) * 100,
-                    //                RenderTransform = new RotateTransform() { Angle = idx, CenterX = 125, CenterY = 125 }
-                });
+                    Height = 200,
+                    Width = 200,
+                    X1 = 100 + Math.Cos((idx * Math.PI) / 180.0f) * ((idx % 30 == 0) ? 93 : 80),
+                    Y1 = 100 + Math.Sin((idx * Math.PI) / 180.0f) * ((idx % 30 == 0) ? 93 : 80),
+                    X2 = 100 + Math.Cos((idx * Math.PI) / 180.0f) * 100,
+                    Y2 = 100 + Math.Sin((idx * Math.PI) / 180.0f) * 100,
+                };
+
+                Debug.WriteLine($"{idx} - {line.X1},{line.X2} - {line.Y1},{line.Y2}");
+
+                _compass.Children.Add(line);
 
                 if (idx % 30 == 0)
                 {
-                    compass.Children.Add(new TextBlock()
+                    var indicatorText = idx.ToString();
+                    var fontSize = 12;
+                    var top = 80;
+                    switch (idx)
                     {
-                        Text = idx.ToString(),
-                        FontSize = 10,
+                        case 0: indicatorText = "N"; fontSize = 14; top = 85; break;
+                        case 90: indicatorText = "E"; fontSize = 14; top = 85; break;
+                        case 180: indicatorText = "S"; fontSize = 14; top = 85; break;
+                        case 270: indicatorText = "W"; fontSize = 14; top = 85; break;
+                    }
+
+                    var txt = new TextBlock()
+                    {
+                        Text = indicatorText,
+                        FontSize = fontSize,
                         Width = 30,
-                        Height = 30,
-              //          Margin = new Thickness(-15, -15, 0, 0),
+                        Height = 20,
+                        Margin = new Thickness(-15, -10, 0, 0),
+
+                        TextAlignment = TextAlignment.Center,
                         Foreground = _hudGreen,
-                        RenderTransform = new CompositeTransform()
+                        RenderTransform = new RotateTransform()
                         {
-                            TranslateX = 125 + Math.Cos((idx * Math.PI) / 180.0f) * 75,
-                            TranslateY = 125 + Math.Sin((idx * Math.PI) / 180.0f) * 75,
-                            Rotation = idx + 90,
-                            //                      CenterX = 125,
-                            //                    CenterY = 125
-
+                            Angle = idx + 90,
+                            CenterX = 15,
+                            CenterY = 10,
                         }
+                    };
 
-                    });
+                    txt.SetValue(Canvas.LeftProperty, 100 + (Math.Cos((idx * Math.PI) / 180.0f) * 85));
+                    txt.SetValue(Canvas.TopProperty, 100 + (Math.Sin((idx * Math.PI) / 180.0f) * 85));
+                    _compass.Children.Add(txt);
                 }
             }
 
-            return compass;
+            compassContainer.Children.Add(_compass);
+            return compassContainer;
         }
 
         private void RenderHud()
@@ -237,12 +277,14 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             compass.VerticalAlignment = VerticalAlignment.Top;
             hudContainer.Children.Add(compass);
 
-
-            _heading = new TextBlock();
-            _heading.FontSize = 28;
-            _heading.Foreground = _hudGreen;
-            _heading.VerticalAlignment = VerticalAlignment.Top;
-            _heading.HorizontalAlignment = HorizontalAlignment.Center;
+            _heading = new TextBlock
+            {
+                FontSize = 20,
+                Foreground = _hudGreen,
+                Margin = new Thickness(0, 30, 0, 0),
+                VerticalAlignment = VerticalAlignment.Top,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
             hudContainer.Children.Add(_heading);
 
             _altitude = new TextBlock();
@@ -251,6 +293,15 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _altitude.VerticalAlignment = VerticalAlignment.Center;
             _altitude.HorizontalAlignment = HorizontalAlignment.Right;
             hudContainer.Children.Add(_altitude);
+
+            _gps = new TextBlock();
+            _gps.FontSize = 28;
+            _gps.Foreground = _hudGreen;
+            _gps.VerticalAlignment = VerticalAlignment.Bottom;
+            _gps.HorizontalAlignment = HorizontalAlignment.Right;
+            _gps.Margin = new Thickness(0, 0, 30, 0);
+            _gps.TextAlignment = TextAlignment.Right;
+            hudContainer.Children.Add(_gps);
 
             _aoaCircle.Children.Add(new Line()
             {
@@ -291,12 +342,23 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _uas = SLWIOC.Get<IConnectedUasManager>().Active.Uas;
             _uas.Attitude.PropertyChanged += Attitude_PropertyChanged;
             _uas.PropertyChanged += _uas_PropertyChanged;
+            _uas.GPSs.First().PropertyChanged += AttitudeIndicatorRenderer_PropertyChanged;
             _pageContainer.DataContext = _uas;
 
             base.OnElementChanged(e);
             Background = new SolidColorBrush(Colors.LightBlue);
 
             GetDevices();
+        }
+
+        private void AttitudeIndicatorRenderer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(GPS.HorizontalAccuracy):
+                    _gps.Text = _uas.GPSs.First().FixType;
+                    break;
+            }
         }
 
         private void _uas_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -316,8 +378,8 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             if (e.PropertyName == nameof(Attitude.Pitch)) _pitchTransform.Y = _uas.Attitude.Pitch * 3;
             if (e.PropertyName == nameof(Attitude.Yaw))
             {
-                _heading.Text = $"{_uas.Attitude.Yaw:0.}°";
-                _compassTransform.Angle = _uas.Attitude.Yaw;
+                _heading.Text = $"{_uas.Attitude.Yaw:0.0}°";
+                _compassTransform.Angle = 270 - _uas.Attitude.Yaw;
             }
 
             //if (e.PropertyName == nameof(Attitude.Pitch)) _aoaRotation.Angle = _iUas.Attitude.Roll;

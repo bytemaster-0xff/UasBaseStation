@@ -6,8 +6,20 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     x:Class="LagoVista.Uas.BaseStation.Views.HudView">
     <pge:LagoVistaContentPage.MainContent>
-        <Grid BackgroundColor="Beige">
-            <ctl:AttitudeIndicator BackgroundColor="Red" BindingContext="{Binding Connections.Active.Uas}" WidthRequest="640" HeightRequest="480" />
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="640" />
+                <ColumnDefinition Width="2*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="480" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="200" />
+            </Grid.RowDefinitions>
+            <ctl:AttitudeIndicator  BindingContext="{Binding Connections.Active.Uas}" WidthRequest="640" Grid.RowSpan="3"  Grid.Column="1" />
+            <Button Text="Arm" Command="{Binding ArmCommand}" WidthRequest="120" HeightRequest="120" />
+            <ctl:StatusMessages BindingContext="{Binding Connections.Active}" Grid.Row="2" Grid.Column="2" />
         </Grid>
     </pge:LagoVistaContentPage.MainContent>
 </pge:LagoVistaContentPage>

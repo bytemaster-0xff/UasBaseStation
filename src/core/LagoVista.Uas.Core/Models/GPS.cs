@@ -30,6 +30,14 @@ namespace LagoVista.Uas.Core.Models
             set { Set(ref _courseOverGround, value); }
         }
 
+
+        public string _fixType;
+        public string FixType
+        {
+            get { return _fixType; }
+            set { Set(ref _fixType, value); }
+        }
+
         public float _hdop;
         public float HDOP
         {

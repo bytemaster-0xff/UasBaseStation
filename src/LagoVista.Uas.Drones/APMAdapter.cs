@@ -81,6 +81,10 @@ namespace LagoVista.Uas.Drones
                     uas.Channels[6].Value = rc.Chan7Scaled;
                     uas.Channels[7].Value = rc.Chan8Scaled;
                     break;
+                case UasMessages.HighLatency:
+                    var hlm = message as UasHighLatency;
+                    uas.GPSs.First().FixType = ((GpsFixType)hlm.GpsFixType).ToString();
+                    break;
                 case UasMessages.Radio:
                     var radio = message as UasRadio;
                     break;
