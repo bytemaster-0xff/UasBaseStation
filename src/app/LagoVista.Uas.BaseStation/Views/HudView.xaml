@@ -17,7 +17,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="200" />
             </Grid.RowDefinitions>
-            <ctl:AttitudeIndicator  BindingContext="{Binding Connections.Active.Uas}" WidthRequest="640" Grid.RowSpan="3"  Grid.Column="1" />
+            <ctl:AttitudeIndicator  BindingContext="{Binding Connections.Active.Uas}" WidthRequest="640"  Grid.Column="1" />
             <Button Text="Arm" Command="{Binding ArmCommand}" WidthRequest="120" HeightRequest="120" />
             <ctl:StatusMessages BindingContext="{Binding Connections.Active}" Grid.Row="2" Grid.Column="2" />
         </Grid>
