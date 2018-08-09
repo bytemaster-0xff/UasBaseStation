@@ -1,20 +1,42 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ListView xmlns="http://xamarin.com/schemas/2014/forms" 
-          ItemsSource="{Binding Transport.StatusMessages}"
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
           x:Class="LagoVista.Uas.BaseStation.Controls.StatusMessages">
-    <ListView.ItemTemplate>
-        <DataTemplate>
-            <ViewCell>
-                <ViewCell.View>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <Label Text="{Binding  }" Grid.Column="0" />
-                    </Grid>
-                </ViewCell.View>
-            </ViewCell>
-        </DataTemplate>
-    </ListView.ItemTemplate>
-</ListView>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="160" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <ListView ItemsSource="{Binding Transport.PreArmMessages}" Grid.Row="1">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <ViewCell.View>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding  }" Grid.Column="0" />
+                        </Grid>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+    
+    <ListView ItemsSource="{Binding Transport.StatusMessages}" Grid.Row="1">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <ViewCell.View>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding  }" Grid.Column="0" />
+                        </Grid>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</Grid>

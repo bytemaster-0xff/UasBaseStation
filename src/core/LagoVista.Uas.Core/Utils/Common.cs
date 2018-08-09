@@ -36,7 +36,8 @@ namespace LagoVista.Uas.Core
         Ateryx,
         ArduTracker,
         Gymbal,
-        PX4
+        PX4,
+        Unknown
     }
     class Common
     {

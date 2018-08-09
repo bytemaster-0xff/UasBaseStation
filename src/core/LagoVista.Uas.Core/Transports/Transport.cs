@@ -60,13 +60,32 @@ namespace LagoVista.Uas.Core.MavLink
                 {
                     case UasMessages.Statustext:
                         var txt = System.Text.ASCIIEncoding.ASCII.GetString(e.Payload);
-                        var existingMessage = StatusMessages.Where(m => m.EndsWith(txt)).FirstOrDefault();
-                        if (existingMessage != null)
+                        if (txt.StartsWith("Prearm"))
                         {
-                            StatusMessages.Remove(existingMessage);
+                            var existingMessage = PreArmMessages.Where(m => m.Message == txt).FirstOrDefault();
+                            if (existingMessage != null)
+                            {
+                                PreArmMessages.Remove(existingMessage);
+                            }
+
+                            PreArmMessages.Insert(0, new StatusMessage(txt));
+                            var oldItems = PreArmMessages.Where(oldMsg => oldMsg.IsExpired).ToList();
+                            foreach (var itm in oldItems) PreArmMessages.Remove(itm);
+                        }
+                        else
+                        {
+                            var existingMessage = StatusMessages.Where(m => m.Message == txt).FirstOrDefault();
+                            if (existingMessage != null)
+                            {
+                                StatusMessages.Remove(existingMessage);
+                            }
+
+                            StatusMessages.Insert(0, new StatusMessage(txt));
+
+                            var oldItems = StatusMessages.Where(oldMsg => oldMsg.IsExpired).ToList();
+                            foreach (var itm in oldItems) StatusMessages.Remove(itm);
                         }
 
-                        StatusMessages.Insert(0, DateTime.Now.ToString() + " - " + txt);
                         break;
                     case UasMessages.Heartbeat:
                         var hb = e.Message as MavLink.UasHeartbeat;
@@ -165,8 +184,9 @@ namespace LagoVista.Uas.Core.MavLink
         }
 
         public ObservableCollection<MavLinkPacket> Messages { get; } = new ObservableCollection<MavLinkPacket>();
+        public ObservableCollection<StatusMessage> PreArmMessages { get; } = new ObservableCollection<StatusMessage>();
 
-        public ObservableCollection<String> StatusMessages { get; } = new ObservableCollection<String>();
+        public ObservableCollection<StatusMessage> StatusMessages { get; } = new ObservableCollection<StatusMessage>();
 
 
         private byte _systemId;        

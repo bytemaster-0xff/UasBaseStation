@@ -108,6 +108,7 @@ namespace LagoVista.Uas.Core.Models
 
         public void Update(UasHeartbeat hb)
         {
+
             MavlinkVersion = hb.MavlinkVersion;
         }
 
@@ -125,7 +126,7 @@ namespace LagoVista.Uas.Core.Models
         public void Update(UasHwstatus hwStatus)
         {
             I2CErrorCount = hwStatus.I2cerr;
-            BoardVoltage = hwStatus.Vcc;
+            BoardVoltage = hwStatus.Vcc / 1000.0f;
 
             TimeStamp = DateTime.Now;
             GaugeStatus = GaugeStatus.OK;

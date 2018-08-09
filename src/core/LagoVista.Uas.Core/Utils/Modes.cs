@@ -6,7 +6,7 @@ using System.Text;
 
 namespace LagoVista.Uas.Core.Utils
 {
-    class Modes
+    internal class Modes
     {
         public static List<KeyValuePair<int, string>> getModesList(Firmwares firmware)
         {

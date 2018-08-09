@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid 
+      xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="LagoVista.Uas.BaseStation.Controls.SystemStatus">
+
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="Auto" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100" />
+        <ColumnDefinition Width="100" />
+        <ColumnDefinition Width="100" />
+        <ColumnDefinition Width="100" />
+    </Grid.ColumnDefinitions>
+
+    <Label Text="Autopilot" />
+    <Label Text="{Binding Uas.SystemStatus.Autopilot}" Grid.Column="1" />
+
+    <Label Text="Firmware" Grid.Row="1" />
+    <Label Text="{Binding Uas.SystemStatus.Firmware}" Grid.Column="1" Grid.Row="1" />
+
+    <Label Text="Vehicle Type" Grid.Row="2" />
+    <Label Text="{Binding Uas.SystemStatus.Type}" Grid.Column="1" Grid.Row="2" />
+
+    <Label Text="Standby" Grid.Column="2" Grid.Row="0" />
+    <Label Text="{Binding Uas.SystemStatus.Active}" Grid.Column="3" Grid.Row="0" />
+
+    <Label Text="Active" Grid.Column="2" Grid.Row="1" />
+    <Label Text="{Binding Uas.SystemStatus.Active}" Grid.Column="3" Grid.Row="1" />
+
+    <Label Text="Armed" Grid.Column="2" Grid.Row="2" />
+    <Label Text="{Binding Uas.SystemStatus.Armed}" Grid.Column="3" Grid.Row="2" />
+
+    <Label Text="Manual" Grid.Column="2" Grid.Row="3" />
+    <Label Text="{Binding Uas.SystemStatus.Manual}" Grid.Column="3" Grid.Row="3" />
+
+    <Label Text="Stabilized" Grid.Column="2" Grid.Row="4" />
+    <Label Text="{Binding Uas.SystemStatus.Stabilized}" Grid.Column="3" Grid.Row="4" />
+
+    <Label Text="Guided" Grid.Column="2" Grid.Row="5" />
+    <Label Text="{Binding Uas.SystemStatus.Guided}" Grid.Column="3" Grid.Row="5" />
+
+    <Label Text="Autonomous" Grid.Column="2" Grid.Row="6" />
+    <Label Text="{Binding Uas.SystemStatus.Autonomous}" Grid.Column="3" Grid.Row="6" />
+
+    <Label Text="Custom" Grid.Column="2" Grid.Row="7" />
+    <Label Text="{Binding Uas.SystemStatus.Custom}" Grid.Column="3" Grid.Row="7" />
+</Grid>

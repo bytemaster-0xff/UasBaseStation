@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace LagoVista.Uas.BaseStation.Controls
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class StatusMessages : Grid
+	public partial class SystemStatus : Grid
 	{
-		public StatusMessages ()
+		public SystemStatus ()
 		{
 			InitializeComponent ();
 		}

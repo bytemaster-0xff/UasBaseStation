@@ -18,9 +18,9 @@
             </Grid.RowDefinitions>
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="33*" />
-                <ColumnDefinition Width="33*" />
-                <ColumnDefinition Width="33*" />
+                <ColumnDefinition Width="30*" />
+                <ColumnDefinition Width="30*" />
+                <ColumnDefinition Width="40*" />
             </Grid.ColumnDefinitions>
 
             <StackLayout >
@@ -39,9 +39,6 @@
                 <Label Text="{Binding Connections.Active.Transport.MessagesReceived}" />
                 <Label Text="{Binding Connections.Active.Transport.MessagesSent}"  />
                 <Label Text="{Binding Connections.Active.Transport.BytesReceived}"  />
-            </StackLayout>
-
-            <StackLayout  Grid.Column="2">
                 <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Longitude}" />
                 <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Latitude}" />
                 <Label Text="{Binding Connections.Active.Uas.CurrentLocation.Altitude}" />
@@ -50,9 +47,11 @@
                 <Label Text="{Binding Connections.Active.Uas.Attitude.Yaw, StringFormat='{0:0.0}°'}" />
             </StackLayout>
 
-            <ctl:MessagesList BindingContext="{Binding Connections.Active}" Grid.Row="1" />
-            <ctl:StatusMessages BindingContext="{Binding Connections.Active}" Grid.Row="1" Grid.Column="1" />
-            <ctl:SensorStatus BindingContext="{Binding Connections.Active}" Grid.Row="1" Grid.Column="2" />
+      
+            <ctl:SystemStatus   BindingContext="{Binding Connections.Active}" Grid.Column="2" />
+            <ctl:MessagesList   BindingContext="{Binding Connections.Active}" Grid.Row="1" />
+            <ctl:StatusMessages BindingContext="{Binding Connections.Active}" Grid.Row="1" Grid.Column="2" />
+            <ctl:SensorStatus   BindingContext="{Binding Connections.Active}" Grid.Row="1" Grid.Column="1" />
         </Grid>
     </pge:LagoVistaContentPage.MainContent>
 </pge:LagoVistaContentPage >
