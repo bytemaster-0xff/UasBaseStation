@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core.PlatformSupport;
+using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
 using System;
 
@@ -23,6 +24,10 @@ namespace LagoVista.Uas.Core.Services
             {
                 throw new Exception("Timer already started.");
             }
+
+            var versionRequest = new UasAutopilotVersionRequest();
+
+            _transport.SendMessage(versionRequest);
 
             _timer = _timerFactory.Create(interval);
             _timer.Tick += _timer_Tick;

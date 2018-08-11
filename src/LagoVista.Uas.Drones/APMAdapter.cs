@@ -33,7 +33,7 @@ namespace LagoVista.Uas.Drones
                     };
 
                     break;
-
+                
                 case UasMessages.SysStatus: uas.Sensors.Update(message as UasSysStatus); break;
                 case UasMessages.AutopilotVersion: uas.FlightController.Update(message as UasAutopilotVersion); break;
                 case UasMessages.Hwstatus: uas.FlightController.Update(message as UasHwstatus); break;

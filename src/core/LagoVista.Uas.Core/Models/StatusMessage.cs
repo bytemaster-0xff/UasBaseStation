@@ -24,5 +24,10 @@ namespace LagoVista.Uas.Core.Models
         {
             return $"{TimeStamp} - {Message}";
         }
+
+        public string Display
+        {
+            get { return $"{TimeStamp} - {Message}"; }
+        }
     }
 }

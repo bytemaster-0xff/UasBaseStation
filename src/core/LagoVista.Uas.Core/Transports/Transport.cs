@@ -60,7 +60,7 @@ namespace LagoVista.Uas.Core.MavLink
                 {
                     case UasMessages.Statustext:
                         var txt = System.Text.ASCIIEncoding.ASCII.GetString(e.Payload);
-                        if (txt.StartsWith("Prearm"))
+                        if (txt.ToLower().Contains("prearm"))
                         {
                             var existingMessage = PreArmMessages.Where(m => m.Message == txt).FirstOrDefault();
                             if (existingMessage != null)

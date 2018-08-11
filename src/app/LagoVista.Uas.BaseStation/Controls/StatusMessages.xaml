@@ -6,7 +6,8 @@
         <RowDefinition Height="160" />
         <RowDefinition Height="*" />
     </Grid.RowDefinitions>
-    <ListView ItemsSource="{Binding Transport.PreArmMessages}" Grid.Row="1">
+    <Label Text="Prearm" />
+    <ListView ItemsSource="{Binding Transport.PreArmMessages}" Margin="0,20,0,0" >
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -15,15 +16,16 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding  }" Grid.Column="0" />
+                            <Label Text="{Binding  Display}" Grid.Column="0" />
                         </Grid>
                     </ViewCell.View>
                 </ViewCell>
             </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
-    
-    <ListView ItemsSource="{Binding Transport.StatusMessages}" Grid.Row="1">
+
+    <Label Text="Status" Grid.Row="1" />
+    <ListView ItemsSource="{Binding Transport.StatusMessages}" Grid.Row="1" Margin="0,20,0,0">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <ViewCell>
@@ -32,7 +34,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Label Text="{Binding  }" Grid.Column="0" />
+                            <Label Text="{Binding Display}" Grid.Column="0" />
                         </Grid>
                     </ViewCell.View>
                 </ViewCell>

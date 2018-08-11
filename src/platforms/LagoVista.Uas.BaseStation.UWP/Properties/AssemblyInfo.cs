@@ -30,4 +30,5 @@ using Xamarin.Forms.Platform.UWP;
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: ComVisible(false)]
-[assembly: ExportRenderer(typeof(AttitudeIndicator), typeof(AttitudeIndicatorRenderer))] 
+[assembly: ExportRenderer(typeof(MapView), typeof(MapViewRenderer))]
+[assembly: ExportRenderer(typeof(AttitudeIndicator), typeof(AttitudeIndicatorRenderer))]

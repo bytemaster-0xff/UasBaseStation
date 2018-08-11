@@ -31,9 +31,9 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         public AttitudeIndicatorRenderer()
         {
             ArrangeNativeChildren = true;
-
   
             RenderHud();
+
             this.Height = 480;
             this.Width = 640;
          }

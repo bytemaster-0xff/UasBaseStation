@@ -37,7 +37,7 @@ namespace LagoVista.Uas.Core.Models
             new OnboardSensor(CoreResources.Sensor_DifferentialPressure, MavSysStatusSensor.DifferentialPressure),
             new OnboardSensor(CoreResources.Sensor_GeoFence, MavSysStatusSensor.MavSysStatusGeofence),
             new OnboardSensor(CoreResources.Sensor_GPS, MavSysStatusSensor.Gps),
-            new OnboardSensor(CoreResources.Sensor_GroundTruth, MavSysStatusSensor.ExternalGroundTruth),            
+            new OnboardSensor(CoreResources.Sensor_GroundTruth, MavSysStatusSensor.ExternalGroundTruth),
             new OnboardSensor(CoreResources.Sensor_Gyro, MavSysStatusSensor._3dGyro),
             new OnboardSensor(CoreResources.Sensor_Terrain, MavSysStatusSensor.MavSysStatusTerrain),
             new OnboardSensor(CoreResources.Sensor_Logging, MavSysStatusSensor.MavSysStatusLogging),
@@ -75,13 +75,13 @@ namespace LagoVista.Uas.Core.Models
         public void Update(UasSysStatus sysStatus)
         {
             var healthArray = new BitArray(new int[] { (int)sysStatus.OnboardControlSensorsHealth });
-            var enabledArray = new BitArray(new int[] { (int)sysStatus.OnboardControlSensorsHealth });
-            var presentArray = new BitArray(new int[] { (int)sysStatus.OnboardControlSensorsHealth });
+            var enabledArray = new BitArray(new int[] { (int)sysStatus.OnboardControlSensorsEnabled });
+            var presentArray = new BitArray(new int[] { (int)sysStatus.OnboardControlSensorsPresent });
 
             foreach (var onboardSensor in _onboardSensors)
             {
                 var sensor = Sensors.Where(sns => sns.SysStatusSensor == onboardSensor.Sensor).FirstOrDefault();
-                if(sensor == null)
+                if (sensor == null)
                 {
                     sensor = new Sensor(onboardSensor.Sensor, onboardSensor.Name);
                     Sensors.Add(sensor);
@@ -92,6 +92,8 @@ namespace LagoVista.Uas.Core.Models
                 sensor.Healthy = healthArray[ConvertValuetoBitmaskOffset(onboardSensor.Mask)];
                 sensor.TimeStamp = DateTime.Now;
             }
+
+            Sensors = new ObservableCollection<Sensor>(Sensors.OrderByDescending(snsr => snsr.Present));
         }
     }
 }

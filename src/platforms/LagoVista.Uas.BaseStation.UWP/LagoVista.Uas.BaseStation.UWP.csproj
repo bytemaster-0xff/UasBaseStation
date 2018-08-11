@@ -98,6 +98,7 @@
     <Compile Include="Controls\Compass.cs" />
     <Compile Include="Controls\GPSStatus.cs" />
     <Compile Include="Controls\HudControlBase.cs" />
+    <Compile Include="Renderers\MapViewRenderer.cs" />
     <Compile Include="Controls\VideoControl.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

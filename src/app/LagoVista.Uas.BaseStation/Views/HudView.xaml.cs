@@ -16,6 +16,6 @@ namespace LagoVista.Uas.BaseStation.Views
 		public HudView ()
 		{
 			InitializeComponent ();
-		}
+        }
 	}
 }

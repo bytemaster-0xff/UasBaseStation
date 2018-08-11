@@ -30,6 +30,9 @@
     <Label Text="Vehicle Type" Grid.Row="2" />
     <Label Text="{Binding Uas.SystemStatus.Type}" Grid.Column="1" Grid.Row="2" />
 
+    <Label Text="Version" Grid.Row="3" />
+    <Label Text="{Binding Uas.FlightController.FlightVersion}" Grid.Column="1" Grid.Row="3" />
+
     <Label Text="Standby" Grid.Column="2" Grid.Row="0" />
     <Label Text="{Binding Uas.SystemStatus.Active}" Grid.Column="3" Grid.Row="0" />
 

@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace LagoVista.Uas.BaseStation.Controls
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class SensorStatus : ListView
+	public partial class SensorStatus : Grid
 	{
 		public SensorStatus ()
 		{
