@@ -30,8 +30,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Controls
         SolidColorBrush _foregroundBrush = new SolidColorBrush(Colors.White);
         protected SolidColorBrush ForegroundBrush
         {
-            get { return _foregroundBrush; }
-           
+            get { return _foregroundBrush; }           
         }
     }
 }

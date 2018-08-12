@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+     xmlns:pge="clr-namespace:LagoVista.XPlat.Core;assembly=LagoVista.XPlat.Core"
+     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+     x:Class="LagoVista.Uas.BaseStation.Controls.MissionList"
+      x:Name="TopLevel">
+    <Label Text="Mission" />
+    <Label Text="{Binding Status}" Margin="0,30,0,0" />
+    <ListView ItemsSource="{Binding Waypoints}" Margin="0,60,0,0" SelectedItem="{Binding CurrentWaypoint, Mode=TwoWay}">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="160" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Text="{Binding Sequence}" x:Name="WaypointSequence" IsVisible="False" />
+
+                        <Label Text="{Binding Sequence}" HorizontalTextAlignment="End" />
+                        <Label Text="{Binding Command}" Grid.Column="1" />
+                        <Label Text="{Binding X}" Grid.Column="2" HorizontalTextAlignment="End" />
+                        <Label Text="{Binding Y}" Grid.Column="3" HorizontalTextAlignment="End" />
+                        <Label Text="{Binding Z}" Grid.Column="4" HorizontalTextAlignment="End" />
+                        <pge:IconButton IconKey="fa-arrow-down"  
+                            Command="{Binding MoveDownCommand}" Grid.Column="5" CommandParameter="{Binding Source={x:Reference WaypointSequence}, Path=Text}"
+                            BindingContext="{Binding Source={x:Reference TopLevel}, Path=BindingContext}"
+                            TextColor="DarkGray" FontSize="20" BorderColor="Transparent" BorderWidth="0" Margin="0,3,0,0" />
+                        <pge:IconButton IconKey="fa-arrow-up"  
+                            Command="{Binding MoveUpCommand}" Grid.Column="6" CommandParameter="{Binding Source={x:Reference WaypointSequence}, Path=Text}"
+                            BindingContext="{Binding Source={x:Reference TopLevel}, Path=BindingContext}"
+                            TextColor="DarkGray" FontSize="20" BorderColor="Transparent" BorderWidth="0" Margin="0,3,0,0" />
+                        <pge:IconButton IconKey="fa-pencil"  
+                            Command="{Binding EditWaypointCommand}" Grid.Column="7" CommandParameter="{Binding Source={x:Reference WaypointSequence}, Path=Text}"
+                            BindingContext="{Binding Source={x:Reference TopLevel}, Path=BindingContext}"
+                            TextColor="DarkGray" FontSize="20" BorderColor="Transparent" BorderWidth="0" Margin="0,3,0,0" />
+                        <pge:IconButton IconKey="fa-trash-o"  
+                            Command="{Binding RemovewWaypointCommand}" Grid.Column="8" CommandParameter="{Binding Source={x:Reference WaypointSequence}, Path=Text}"
+                            BindingContext="{Binding Source={x:Reference TopLevel}, Path=BindingContext}"
+                            TextColor="Red" FontSize="20" BorderColor="Transparent" BorderWidth="0" Margin="0,3,0,0" />
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</Grid>

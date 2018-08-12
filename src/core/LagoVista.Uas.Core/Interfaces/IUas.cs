@@ -51,5 +51,6 @@ namespace LagoVista.Uas.Core
         float GroundSpeed { get; set; }
 
         Comms Comms { get; }
+        GeoLocation HomeBaseLocation { get; }
     }
 }

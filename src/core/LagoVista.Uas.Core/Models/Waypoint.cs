@@ -34,8 +34,8 @@ namespace LagoVista.Uas.Core.Models
             {
                 Sequence = rec.Seq,
                 Frame = (MavFrame)rec.Frame,
-                X = rec.X.ToLatLon(),
-                Y = rec.Y.ToLatLon(),
+                X = rec.Y.ToLatLon(), // From Mav Link Lon comes on Y
+                Y = rec.X.ToLatLon(), // From Mav Link Lat comes in X
                 Z = rec.Z,
                 Param1 = rec.Param1,
                 Param2 = rec.Param2,

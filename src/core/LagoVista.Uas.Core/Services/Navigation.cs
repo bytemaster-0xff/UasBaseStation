@@ -2,9 +2,11 @@
 using LagoVista.Core.Models.Geo;
 using LagoVista.Core.ViewModels;
 using LagoVista.Uas.Core.MavLink;
+using LagoVista.Uas.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LagoVista.Uas.Core.Services
 {
@@ -20,7 +22,7 @@ namespace LagoVista.Uas.Core.Services
 
 
             ArmCommand = new RelayCommand(Arm);
-            DisarmCommand = new RelayCommand(Arm);
+            DisarmCommand = new RelayCommand(Disarm);
 
             TakeoffCommand = new RelayCommand(Takeoff);
             LandCommand = new RelayCommand(Land);
@@ -36,6 +38,12 @@ namespace LagoVista.Uas.Core.Services
         {
             var msg = UasCommands.MissionStart(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0,5);
             _connectedUasManager.Active.Transport.SendMessage(msg);
+        }
+
+        public override async Task InitAsync()
+        {
+            var result = await MissionPlanner.GetWayPointsAsync(_connectedUasManager.Active);
+            Mission = result.Result;
         }
 
         public void GoToLocation()
@@ -80,6 +88,12 @@ namespace LagoVista.Uas.Core.Services
             set { Set(ref _talepffAltitude, value); }
         }
 
+        Models.Mission _mission;
+        public Models.Mission Mission
+        {
+            get { return _mission; }
+            set { Set(ref _mission, value); }
+        }
 
         public RelayCommand ArmCommand { get; }
         public RelayCommand DisarmCommand { get; }

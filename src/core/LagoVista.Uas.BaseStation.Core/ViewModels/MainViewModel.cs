@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace LagoVista.Uas.BaseStation.Core.ViewModels
 {
-    public class MainViewModel : AppViewModelBase
+    public class MainViewModel : BaseViewModel
     {
         IMissionPlanner _planner;
         IHeartBeatManager _heartBeatManager;

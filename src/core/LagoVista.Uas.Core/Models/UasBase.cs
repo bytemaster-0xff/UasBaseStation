@@ -136,6 +136,13 @@ namespace LagoVista.Uas.Core
             set => Set(ref _groundSpeed, value);
         }
 
+        GeoLocation _homeBaseLocation;
+        public GeoLocation HomeBaseLocation
+        {
+            get => _homeBaseLocation;
+            set => Set(ref _homeBaseLocation, value);
+        }
+
         public FlightController FlightController { get; }
 
         public PowerStatus PowerStatus { get; }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LagoVista.Core.IOC;
+using LagoVista.Uas.Core.Interfaces;
+using System;
 using System.Diagnostics;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -39,6 +41,8 @@ namespace LagoVista.Uas.BaseStation.UWP
             if (rootFrame == null)
             {
                 rootFrame = new Frame();
+
+                SLWIOC.RegisterSingleton<ILocationProvider>(new Services.LocationProvider());
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 

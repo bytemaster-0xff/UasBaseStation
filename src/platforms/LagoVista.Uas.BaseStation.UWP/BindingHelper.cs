@@ -83,25 +83,20 @@ namespace LagoVista.Uas.BaseStation.UWP
             {
                 //TODO: This is is VERY hacky...but body is something like clt.PropertyName 
                 var regEx = new Regex(@"^Convert\(\w+\.(\w+),.+$");
-                var match = regEx.Match(dest.Body.ToString());
-                if(match.Success)
-                {
-                    PropertyName = match.Groups[1].Value;
-                }
-                else
-                {
-                    PropertyName = dest.Body.ToString().Split(".")[1];
-                }
+                var match = regEx.Match(source.Body.ToString());
+                PropertyName = (match.Success) ? match.Groups[1].Value : source.Body.ToString().Split(".")[1];
 
-                if(String.IsNullOrEmpty(PropertyName))
-                {
-                    throw new Exception($"Could not parse property name from {dest.Body.ToString()}");
-                }
-                
+                regEx = new Regex(@"^Convert\(\w+\.(\w+),.+$");
+                if (String.IsNullOrEmpty(PropertyName)) throw new Exception($"Could not parse source property name from {source.Body.ToString()}");
+
                 _sourceProperty = source.Compile();
 
+                match = regEx.Match(dest.Body.ToString());
+                var destProperty = (match.Success) ? match.Groups[1].Value : dest.Body.ToString().Split(".")[1];
+                if (String.IsNullOrEmpty(destProperty)) throw new Exception($"Could not parse distination property name from {dest.Body.ToString()}");
+
                 var destType = typeof(TBindingDestination);
-                _destPropertyInfo = destType.GetProperty(PropertyName);
+                _destPropertyInfo = destType.GetProperty(destProperty);
                 Update();
             }
 
