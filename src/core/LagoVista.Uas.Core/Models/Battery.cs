@@ -94,5 +94,13 @@ namespace LagoVista.Uas.Core.Models
 
             TimeStamp = DateTime.Now;
         }
+
+        public void Update(UasSysStatus sysStatus)
+        {
+            RemainingPercent = sysStatus.BatteryRemaining;
+            Voltage = sysStatus.VoltageBattery / 1000.0f;
+            Current = sysStatus.CurrentBattery;
+        }
+
     }
 }

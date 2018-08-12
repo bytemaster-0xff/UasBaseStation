@@ -92,12 +92,14 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindingHelper.cs" />
     <Compile Include="Controls\AltitudeIndicator.cs" />
     <Compile Include="Controls\AoACircle.cs" />
     <Compile Include="Controls\ArtificialHorizon.cs" />
     <Compile Include="Controls\Compass.cs" />
     <Compile Include="Controls\GPSStatus.cs" />
     <Compile Include="Controls\HudControlBase.cs" />
+    <Compile Include="Controls\SystemStatus.cs" />
     <Compile Include="Renderers\MapViewRenderer.cs" />
     <Compile Include="Controls\VideoControl.cs" />
     <Compile Include="MainPage.xaml.cs">

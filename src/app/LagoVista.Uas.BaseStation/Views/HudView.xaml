@@ -14,11 +14,16 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="480" />
-                <RowDefinition Height="20" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <ctl:AttitudeIndicator  BindingContext="{Binding Connections.Active.Uas}" WidthRequest="640" />
-            <Button Text="Arm" Command="{Binding ArmCommand}" WidthRequest="120" HeightRequest="120" Grid.Row="1" />
+            <StackLayout Orientation="Horizontal" Grid.Row="1">
+                <Button Text="Arm" Command="{Binding Navigation.ArmCommand}" WidthRequest="120" HeightRequest="120" Grid.Row="1" />
+                <Button Text="Disarm" Command="{Binding Navigation.DisarmCommand}" WidthRequest="120" HeightRequest="120" Grid.Row="1" />
+                <Button Text="Takeoff" Command="{Binding Navigation.TakeoffCommand}" WidthRequest="120" HeightRequest="120" Grid.Row="1" />
+                <Button Text="Land" Command="{Binding Navigation.LandCommand}" WidthRequest="120" HeightRequest="120" Grid.Row="1" />
+            </StackLayout>
             <ctl:StatusMessages BindingContext="{Binding Connections.Active}" Grid.Row="2" Grid.Column="0" />
             <ctl:MapView Grid.Column="1" Grid.RowSpan="3" />
         </Grid>

@@ -34,7 +34,10 @@ namespace LagoVista.Uas.Drones
 
                     break;
                 
-                case UasMessages.SysStatus: uas.Sensors.Update(message as UasSysStatus); break;
+                case UasMessages.SysStatus:
+                    uas.Batteries.First().Update(message as UasSysStatus);
+                    uas.Sensors.Update(message as UasSysStatus);
+                    break;
                 case UasMessages.AutopilotVersion: uas.FlightController.Update(message as UasAutopilotVersion); break;
                 case UasMessages.Hwstatus: uas.FlightController.Update(message as UasHwstatus); break;
                 case UasMessages.PowerStatus: uas.PowerStatus.Update(message as UasPowerStatus); break;                
@@ -69,7 +72,7 @@ namespace LagoVista.Uas.Drones
                     uas.Channels[14].RawValue = rcRaw.Chan15Raw;
                     uas.Channels[15].RawValue = rcRaw.Chan16Raw;
                     break;
-
+                case UasMessages.Rangefinder: uas.RangeFinder.Update(message as UasRangefinder); break;
                 case UasMessages.RcChannelsScaled:
                     var rc = message as UasRcChannelsScaled;
                     uas.Channels[0].Value = rc.Chan1Scaled;

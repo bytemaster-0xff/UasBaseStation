@@ -11,6 +11,11 @@ namespace LagoVista.Uas.BaseStation.UWP.Controls
 {
     public class HudControlBase : Grid
     {
+        public HudControlBase()
+        {
+
+        }
+
         Color _foreground = Colors.White;
         public Color Foreground
         {

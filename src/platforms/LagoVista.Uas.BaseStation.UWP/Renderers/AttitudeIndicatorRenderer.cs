@@ -1,4 +1,5 @@
 ﻿using LagoVista.Core.IOC;
+using LagoVista.Uas.BaseStation.UWP.Controls;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.Models;
 using System.Linq;
@@ -15,12 +16,15 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         RotateTransform _rollTransform;
         TranslateTransform _pitchTransform;
 
+        
+
         Controls.AltitudeIndicator _altitudeIndicator;
         Controls.Compass _compass;
         Controls.ArtificialHorizon _artificialHorizon;
         Controls.GPSStatus _gpsStatus;
         Controls.VideoControl _video;
         Controls.AoACircle _aoaCircle;
+        Controls.SystemStatus _systemStatus;
   
         IUas _uas;
      
@@ -45,6 +49,8 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             hudContainer.Width = 640;
             hudContainer.Height = 480;
 
+            
+
             _artificialHorizon = new Controls.ArtificialHorizon();
             hudContainer.Children.Add(_artificialHorizon);
 
@@ -62,6 +68,12 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _altitudeIndicator.HorizontalAlignment = HorizontalAlignment.Right;
             _altitudeIndicator.VerticalAlignment = VerticalAlignment.Center;
             hudContainer.Children.Add(_altitudeIndicator);
+
+            _systemStatus = new Controls.SystemStatus();
+            _systemStatus.Margin = new Thickness(0, 0, 0, 60);
+            _systemStatus.VerticalAlignment = VerticalAlignment.Bottom;
+            _systemStatus.HorizontalAlignment = HorizontalAlignment.Left;
+            hudContainer.Children.Add(_systemStatus);
 
             _aoaCircle = new Controls.AoACircle();
             hudContainer.Children.Add(_aoaCircle);
@@ -84,9 +96,25 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         {
             _uas = SLWIOC.Get<IConnectedUasManager>().Active.Uas;
             _uas.Attitude.PropertyChanged += Attitude_PropertyChanged;
-            _uas.PropertyChanged += _uas_PropertyChanged;
-            _uas.GPSs.First().PropertyChanged += AttitudeIndicatorRenderer_PropertyChanged;
             DataContext = _uas;
+
+            var gpsBindingHelper = new BindingHelper<GPSStatus>(_gpsStatus);
+            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.FixType, ctl=>ctl.FixType);
+            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.HDOP, ctl=>ctl.HDOP);
+            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.VDOP, ctl => ctl.VDOP);
+            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.SateliteCount, ctl=>ctl.SatCount);
+            
+            var sysStatusbindingHelper = new BindingHelper<Controls.SystemStatus>(_systemStatus);
+            sysStatusbindingHelper.Add(_uas.SystemStatus).For(mod => mod.Armed, ctl=>ctl.Armed);
+            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.Voltage, ctl=>ctl.BatteryVoltage);
+            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.RemainingPercent, ctl=>ctl.PercentRemaining);
+            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.TimeRemaining, ctl=>ctl.TimeRemaining);
+        
+            var altStatusbindingHelper = new BindingHelper<Controls.AltitudeIndicator>(_altitudeIndicator);
+            altStatusbindingHelper.Add(_uas).For(mod => mod.CurrentLocation, ctl=>ctl.Location);
+
+
+            //            _bindignHelper.Add(_uas.GPSs.First(), () => _gpsStatus.FixType, nameof(GPS.FixType));
 
             base.OnElementChanged(e);
             Background = new SolidColorBrush(Colors.LightBlue);
@@ -94,26 +122,6 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _video.GetDevices();
         }
 
-        private void AttitudeIndicatorRenderer_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case nameof(GPS.HorizontalAccuracy):
-                   // _gps.Text = _uas.GPSs.First().FixType;
-                    break;
-            }
-        }
-
-        private void _uas_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(IUas.CurrentLocation))
-            {
-                if (_uas.CurrentLocation != null)
-                {
-                    _altitudeIndicator.Altitude = _uas.CurrentLocation.Altitude;
-                }
-            }
-        }
 
         private void Attitude_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -123,16 +131,16 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
                 _rollTransform.Angle = _uas.Attitude.Roll;
                 _artificialHorizon.Roll = _uas.Attitude.Roll;
             }
-            if (e.PropertyName == nameof(Attitude.Pitch))
+            else if (e.PropertyName == nameof(Attitude.Pitch))
             {
                 _aoaCircle.Pitch = _uas.Attitude.Pitch;
                 _pitchTransform.Y = _uas.Attitude.Pitch * 3;
                 _artificialHorizon.Pitch = _uas.Attitude.Pitch;
             }
-            if (e.PropertyName == nameof(Attitude.Yaw))
+            else if (e.PropertyName == nameof(Attitude.Yaw))
             {
                 _compass.Heading = _uas.Attitude.Yaw;
-            }
+            }           
         }
 
         protected override void Dispose(bool disposing)

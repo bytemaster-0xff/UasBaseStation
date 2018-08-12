@@ -14,8 +14,6 @@ namespace LagoVista.Uas.Core
         EntityHeader DeviceConfiguration { get; }
         EntityHeader DeviceType { get; }
 
-        bool Armed { get; }
-
         ObservableCollection<DOF3Sensor> Acc { get; }
         ObservableCollection<DOF3Sensor> Gyro { get; }
         ObservableCollection<DOF3Sensor> Magnometer { get; }
@@ -39,7 +37,6 @@ namespace LagoVista.Uas.Core
 
         void Update(UasMessage msg);
 
-
         float AngleOfAttack { get; set; }
 
         Attitude Attitude { get; }
@@ -48,6 +45,7 @@ namespace LagoVista.Uas.Core
         byte SystemId { get; }
         byte ComponentId { get; }
 
+        RangeFinder RangeFinder { get; }
 
         float AirSpeed { get; set; }
         float GroundSpeed { get; set; }

@@ -29,6 +29,7 @@ namespace LagoVista.Uas.Core
             Attitude = new Attitude();
             FlightController = new FlightController();
             PowerStatus = new PowerStatus();
+            RangeFinder = new RangeFinder();
             Comms = new Comms();
 
             Channels = new ObservableCollection<RCChannel>();
@@ -81,20 +82,15 @@ namespace LagoVista.Uas.Core
 
         public SystemStatus SystemStatus { get; }
 
+        public RangeFinder RangeFinder { get; }
+
         GeoLocation _location;
         public GeoLocation Location
         {
             get { return _location; }
             set { Set(ref _location, value); }
         }
-
-        private bool _armed;
-        public bool Armed
-        {
-            get { return _armed; }
-            set { Set(ref _armed, value); }
-        }
-
+        
         public ObservableCollection<GPS> GPSs { get; }
 
         GeoLocation _homeLocation;

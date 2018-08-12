@@ -1,6 +1,7 @@
 ﻿using LagoVista.Uas.Core.MavLink;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace LagoVista.Uas.Core.Models
@@ -29,6 +30,8 @@ namespace LagoVista.Uas.Core.Models
             {
                 GaugeStatus = GaugeStatus.OK;
             }
+
+            Debug.WriteLine("Distaince " + Distance);
         }
 
     }

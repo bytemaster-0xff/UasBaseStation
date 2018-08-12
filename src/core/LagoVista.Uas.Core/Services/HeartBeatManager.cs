@@ -36,10 +36,12 @@ namespace LagoVista.Uas.Core.Services
 
         private void _timer_Tick(object sender, EventArgs e)
         {
+            _timer.Stop();
             foreach (var m in _uavState.GetHeartBeatObjects())
             {
                 _transport.SendMessage(m);
             }
+            _timer.Start();
         }
 
         public void Stop()

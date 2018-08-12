@@ -99,6 +99,8 @@ namespace LagoVista.Uas.Core.Models
             HDOP = gps.Eph;
             VDOP = gps.Epv;
 
+            FixType = ((GpsFixType)gps.FixType).ToString();
+
             Location = new GeoLocation()
             {
                 Latitude = gps.Lat / 10000000.0,

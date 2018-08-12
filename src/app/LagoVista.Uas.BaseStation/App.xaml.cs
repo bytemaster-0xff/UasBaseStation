@@ -67,7 +67,8 @@ namespace LagoVista.Uas.BaseStation
 
             SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
             SLWIOC.Register<IMissionPlanner, MissionPlanner>();
-            
+            SLWIOC.Register<Uas.Core.INavigation, Uas.Core.Services.Navigation>();
+
             SLWIOC.RegisterSingleton<IClientAppInfo>(clientAppInfo);
             SLWIOC.RegisterSingleton<IAppConfig>(new AppConfig());
             SLWIOC.RegisterSingleton<IConfigurationManager>(new ConfigurationManager());

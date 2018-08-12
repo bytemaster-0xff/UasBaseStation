@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LagoVista.Core.Models.Geo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,13 +32,28 @@ namespace LagoVista.Uas.BaseStation.UWP.Controls
                 StrokeThickness = 2,
                 HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right
             });
-            
+
         }
-        
+
 
         public double Altitude
         {
             set { _altitude.Text = $"{value:0.00}m"; }
+        }
+
+
+        GeoLocation _location;
+        public GeoLocation Location
+        {
+            get { return _location; }
+            set
+            {
+                _location = value;
+                if (_location != null)
+                {
+                    Altitude = _location.Altitude;
+                }
+            }
         }
     }
 }

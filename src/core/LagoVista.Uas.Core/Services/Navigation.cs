@@ -1,4 +1,6 @@
-﻿using LagoVista.Core.Models.Geo;
+﻿using LagoVista.Core.Commanding;
+using LagoVista.Core.Models.Geo;
+using LagoVista.Core.ViewModels;
 using LagoVista.Uas.Core.MavLink;
 using System;
 using System.Collections.Generic;
@@ -6,38 +8,85 @@ using System.Text;
 
 namespace LagoVista.Uas.Core.Services
 {
-    public class Navigation
+    public class Navigation : ViewModelBase, INavigation
     {
         IConnectedUasManager _connectedUasManager;
-        public Navigation(IConnectedUasManager connectUasManager)
+        IMissionPlanner missionPlanner;
+       
+        public Navigation(IConnectedUasManager connectUasManager, IMissionPlanner missionPlanner)
         {
             _connectedUasManager = connectUasManager;
+            MissionPlanner = missionPlanner;
+
+
+            ArmCommand = new RelayCommand(Arm);
+            DisarmCommand = new RelayCommand(Arm);
+
+            TakeoffCommand = new RelayCommand(Takeoff);
+            LandCommand = new RelayCommand(Land);
         }
 
-        public void Takeoff(float altitude)
+        public void Takeoff()
         {
-            UasCommands.NavTakeoff(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, float.NaN, 0, altitude);
+            var msg =  UasCommands.NavTakeoff(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, float.NaN, 0, TakeoffAltitude);
+            _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
-        public void GoToLocation(GeoLocation location)
+        public void StartMission()
         {
-            //      UasCommands.NavWaypoint()
+            var msg = UasCommands.MissionStart(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0,5);
+            _connectedUasManager.Active.Transport.SendMessage(msg);
+        }
+
+        public void GoToLocation()
+        {
+            
+        }
+
+        public void Arm()
+        {
+            var msg = UasCommands.ComponentArmDisarm(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 1);
+            _connectedUasManager.Active.Transport.SendMessage(msg);
+        }
+
+        public void Disarm()
+        {
+            var msg = UasCommands.ComponentArmDisarm(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 1);
+            _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
         public void Land()
         {
-            UasCommands.NavLandLocal(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, 0, 0, 0, 0, 0);
+            var msg = UasCommands.NavLandLocal(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, 0, 0, 0, 0, 0);
+            _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
         public void ReturnToHome()
         {
-            UasCommands.NavReturnToLaunch(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId);
+            var msg = UasCommands.NavReturnToLaunch(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId);
+            _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
         public void GetHomePosition()
         {
-            UasCommands.GetHomePosition(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, 0, 0, 0, 0, 0);
-
+            var msg = UasCommands.GetHomePosition(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, 0, 0, 0, 0, 0);
+            _connectedUasManager.Active.Transport.SendMessage(msg);
         }
+
+        private float _talepffAltitude = 2;
+        public float TakeoffAltitude
+        {
+            get { return _talepffAltitude; }
+            set { Set(ref _talepffAltitude, value); }
+        }
+
+
+        public RelayCommand ArmCommand { get; }
+        public RelayCommand DisarmCommand { get; }
+
+        public RelayCommand TakeoffCommand { get; }
+        public RelayCommand LandCommand { get; }
+
+        public IMissionPlanner MissionPlanner { get; }
     }
 }
