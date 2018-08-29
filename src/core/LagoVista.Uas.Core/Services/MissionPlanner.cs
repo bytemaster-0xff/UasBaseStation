@@ -39,5 +39,12 @@ namespace LagoVista.Uas.Core.Services
 
             return InvokeResult<Mission>.Create(mission);
         }
+
+        public Task<InvokeResult> UpdateWaypoints(ConnectedUas uas, Mission mission)
+        {
+            var msg = new UasMissionWritePartialList();
+            uas.Transport.SendMessage(msg);
+            return Task.FromResult(InvokeResult.Success);
+        }
     }
 }

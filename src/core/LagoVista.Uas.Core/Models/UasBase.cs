@@ -1,7 +1,6 @@
 ﻿using LagoVista.Core.Models;
 using LagoVista.Core.Models.Geo;
 using LagoVista.Uas.Core.Models;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace LagoVista.Uas.Core
@@ -31,6 +30,7 @@ namespace LagoVista.Uas.Core
             PowerStatus = new PowerStatus();
             RangeFinder = new RangeFinder();
             Comms = new Comms();
+            Camera = new Camera();
 
             Channels = new ObservableCollection<RCChannel>();
             for (var idx = 0; idx < 16; ++idx) Channels.Add(new RCChannel());
@@ -71,6 +71,8 @@ namespace LagoVista.Uas.Core
 
         public Attitude Attitude { get; }
         public Comms Comms { get; }
+
+        public Camera Camera { get; }
 
         public SensorList Sensors { get; }
 

@@ -14,6 +14,8 @@ using LagoVista.Core.IOC;
 using LagoVista.Uas.Core.Interfaces;
 using LagoVista.Uas.Core.Models;
 using System.Drawing;
+using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml;
 
 namespace LagoVista.Uas.BaseStation.UWP.Renderers
 {
@@ -21,19 +23,103 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
     {
         IUas _uas;
         MapControl _mapControl;
-        ILocationProvider _locationProvier;
 
         INavigation _navigation;
         Mission _mission;
+        MapIcon _draggedWaypoint;
+
+        MapPolyline _mapRoute;
+
+        MenuFlyout _mapContextMenu;
+        DateTime? _mapTapped;
+
+        List<BasicGeoposition> _waypointPaths;
 
         public MapViewRenderer()
         {
             ArrangeNativeChildren = true;
-            _mapControl = new MapControl();
-            _mapControl.Style = MapStyle.AerialWithRoads;
-            _mapControl.MapServiceToken = "s5miuLzzn4RuPyMXzOYF~pA3KRBwzLZ4JOHnyIaUAWA~AnoR9G-Mf6OR7_n8b6wVy_cd9wim48xfSp39TC31OlvLad6zT5Pf0XN35EPuEV5U";
+            _mapControl = new MapControl
+            {
+                Style = MapStyle.AerialWithRoads,
+                MapServiceToken = "s5miuLzzn4RuPyMXzOYF~pA3KRBwzLZ4JOHnyIaUAWA~AnoR9G-Mf6OR7_n8b6wVy_cd9wim48xfSp39TC31OlvLad6zT5Pf0XN35EPuEV5U"
+            };
             _mapControl.Loaded += _mapControl_Loaded;
+            _mapControl.PointerMoved += _mapControl_PointerMoved;
+            _mapControl.MapElementClick += _mapControl_MapElementClick;
+            _mapControl.MapRightTapped += _mapControl_MapRightTapped;
+            _mapControl.MapTapped += _mapControl_MapTapped;
             Children.Add(_mapControl);
+            AddContextMenu();
+        }
+
+        private void _mapControl_MapTapped(MapControl sender, MapInputEventArgs args)
+        {
+            if (_mapTapped.HasValue && _draggedWaypoint != null && (DateTime.Now - _mapTapped).Value > TimeSpan.FromMilliseconds(100))
+            {
+                _draggedWaypoint = null;
+                _mapTapped = null;
+            }
+        }
+
+        private void _mapControl_PointerMoved(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            if (_draggedWaypoint != null)
+            {
+                e.Handled = true;
+                var dragPosition = e.GetCurrentPoint(_mapControl).Position;
+
+                Geopoint point;
+                _mapControl.GetLocationFromOffset(dragPosition, out point);
+                _draggedWaypoint.Location = point;
+
+                var waypointIndex = Convert.ToInt32(_draggedWaypoint.Tag);
+                var idx = 0;
+
+                var newList = new List<BasicGeoposition>();
+
+                foreach (var path in _waypointPaths)
+                {
+                    if (idx++ == waypointIndex)
+                    {
+                        newList.Add(new BasicGeoposition
+                        {
+                            Latitude = point.Position.Latitude,
+                            Longitude = point.Position.Longitude
+                        });
+                    }
+                    else
+                    {
+                        newList.Add(path);
+                    }
+                }
+
+                _mapRoute.Path = new Geopath(newList);
+                _waypointPaths = newList;
+            }
+        }
+
+        private void _mapControl_MapElementClick(MapControl sender, MapElementClickEventArgs args)
+        {
+            _draggedWaypoint = args.MapElements.FirstOrDefault() as MapIcon;
+            _mapTapped = DateTime.Now;
+
+        }
+
+        void AddContextMenu()
+        {
+            _mapContextMenu = new MenuFlyout();
+            _mapContextMenu.Items.Add(new MenuFlyoutItem() { Text = "Option1 " });
+            _mapContextMenu.Items.Add(new MenuFlyoutItem() { Text = "Option2 " });
+            _mapContextMenu.Items.Add(new MenuFlyoutSeparator());
+            _mapContextMenu.Items.Add(new MenuFlyoutItem() { Text = "Option3 " });
+
+            _mapControl.ContextFlyout = _mapContextMenu;
+
+        }
+
+        private void _mapControl_MapRightTapped(MapControl sender, MapRightTappedEventArgs args)
+        {
+            _mapContextMenu.ShowAt(sender, new Windows.Foundation.Point(args.Position.X, args.Position.Y));
         }
 
         private void _mapControl_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
@@ -86,36 +172,55 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             {
                 if (_mission != null)
                 {
+                    /* disconnect the property changed handler from the prevous mission */
                     _mission.PropertyChanged -= _navigation_PropertyChanged;
                 }
-                _mission = _navigation.Mission;
-                _mission.PropertyChanged += _navigation_PropertyChanged;
 
-                var path = new List<BasicGeoposition>();
-                
-                foreach (var wp in _mission.Waypoints)
+                _mission = _navigation.Mission;
+
+                _mission.PropertyChanged += _navigation_PropertyChanged;
+            
+                if (_mission.Waypoints.Any())
                 {
-                    // get position
-                    if (wp.X != 0&& wp.Y != 0)
+                    _waypointPaths = new List<BasicGeoposition>();
+
+                    _mapRoute = new MapPolyline();
+                    _mapRoute.StrokeColor = Colors.Yellow;
+                    _mapRoute.StrokeThickness = 2;
+
+
+                    foreach (var wp in _mission.Waypoints)
                     {
-                        var position = new BasicGeoposition() { Latitude = wp.Y, Longitude = wp.X };
-                        path.Add(position);
-                        var myPoint = new Geopoint(position);
-                        var myPOI = new MapIcon { Location = myPoint, NormalizedAnchorPoint = new Windows.Foundation.Point(0.5f, 1.0f), Title = $"{wp.Sequence + 1}", ZIndex = 0 };
-                        // add to map and center it
-                        _mapControl.MapElements.Add(myPOI);
+                        // get position
+                        if (wp.X != 0 && wp.Y != 0)
+                        {
+                            var position = new BasicGeoposition() { Latitude = wp.Y, Longitude = wp.X };
+                            _waypointPaths.Add(position);
+                        }
                     }
+                    _mapRoute.Path = new Geopath(_waypointPaths);
+                    _mapControl.MapElements.Add(_mapRoute);
+
+                    var idx = 0;
+                    foreach (var wp in _mission.Waypoints)
+                    {
+                        if (wp.X != 0 && wp.Y != 0)
+                        {
+                            var position = new BasicGeoposition() { Latitude = wp.Y, Longitude = wp.X };
+
+                            var myPoint = new Geopoint(position);
+                            var waypointPin = new MapIcon { Location = myPoint, NormalizedAnchorPoint = new Windows.Foundation.Point(0.5f, 1.0f), Title = $"{wp.Sequence + 1}", ZIndex = 0 };
+                            waypointPin.Tag = idx++;
+                            _mapControl.MapElements.Add(waypointPin);
+
+                        }
+                    }
+
+
+                    _mapControl.Center = new Geopoint(new BasicGeoposition() { Latitude = _mission.Waypoints[0].Y, Longitude = _mission.Waypoints[0].X });
+                    _mapControl.ZoomLevel = 14;
                 }
 
-                _mapControl.Center = new Geopoint(new BasicGeoposition() { Latitude = _mission.Waypoints[0].Y, Longitude = _mission.Waypoints[0].X });
-                _mapControl.ZoomLevel = 14;
-
-                var mapPolyline = new MapPolyline();
-                mapPolyline.Path = new Geopath(path);
-                mapPolyline.StrokeColor = Colors.Yellow;
-                mapPolyline.StrokeThickness = 3;
-
-                _mapControl.MapElements.Add(mapPolyline);
             }
             else if (e.PropertyName == nameof(Mission.CurrentWaypoint))
             {

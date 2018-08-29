@@ -9,6 +9,13 @@ using System.Text;
 
 namespace LagoVista.Uas.Core
 {
+
+    public enum LandingGearPositions
+    {
+        Up,
+        Down
+    }
+
     public interface IUas : INotifyPropertyChanged
     {
         EntityHeader DeviceConfiguration { get; }
@@ -32,6 +39,8 @@ namespace LagoVista.Uas.Core
         ObservableCollection<ESC> ESCs { get; }
         SensorList Sensors { get; }
         PowerStatus PowerStatus { get; }
+
+        Camera Camera { get; }
 
         EKF EKFStatus { get; }
 

@@ -93,7 +93,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Services
         }
 
         private void _geoLocator_PositionChanged(Geolocator sender, PositionChangedEventArgs args)
-        {
+        {            
             CurrentLocation = new GeoLocation()
             {
                 Altitude = args.Position.Coordinate.Point.Position.Altitude,

@@ -7,5 +7,7 @@ namespace LagoVista.Uas.Core
     public interface IMissionPlanner
     {
         Task<InvokeResult<Mission>> GetWayPointsAsync(ConnectedUas uas);
+
+        Task<InvokeResult> UpdateWaypoints(ConnectedUas uas, Mission mission);
     }
 }

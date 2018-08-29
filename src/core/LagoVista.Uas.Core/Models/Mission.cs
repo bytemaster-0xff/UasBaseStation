@@ -25,9 +25,15 @@ namespace LagoVista.Uas.Core.Models
 
         public ObservableCollection<Waypoint> Waypoints { get; }
 
-        public void RemoveWaypoint()
+        public void RemoveWaypoint(Object seq)
         {
-
+            var waypointSequence = Convert.ToInt32(seq);
+            Waypoints.RemoveAt(waypointSequence);
+            ushort idx = 0;
+            foreach(var wp in Waypoints)
+            {
+                wp.Sequence = idx++;
+            }
         }
 
         public void EditWaypoint(Object seq)
@@ -43,13 +49,13 @@ namespace LagoVista.Uas.Core.Models
         }
 
 
-        public void MoveUp()
+        public void MoveUp(Object seq)
         {
 
         }
 
 
-        public void MoveDown()
+        public void MoveDown(Object seq)
         {
 
         }
