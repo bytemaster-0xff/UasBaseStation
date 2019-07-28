@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Client.Core" Version="1.2.438-alpha1729" />
-    <PackageReference Include="LagoVista.Client.Devices" Version="1.2.438-alpha1729" />
-    <PackageReference Include="LagoVista.Core" Version="2.1.439-beta1607" />
-    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.439-beta1607" />
-    <PackageReference Include="LagoVista.IoT.Deployment.Models" Version="2.1.439-beta1607" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" Version="2.1.439-beta1607" />
-    <PackageReference Include="LagoVista.IoT.DeviceManagement.Models" Version="2.1.439-beta1607" />
-    <PackageReference Include="LagoVista.MQTT" Version="1.2.438-alpha1754" />
-    <PackageReference Include="LagoVista.XPlat" Version="1.2.438-alpha1729" />
+    <PackageReference Include="LagoVista.Client.Core" Version="1.2.740-alpha1233" />
+    <PackageReference Include="LagoVista.Client.Devices" Version="1.2.740-alpha1233" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.713-beta1441" />
+    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.713-beta1441" />
+    <PackageReference Include="LagoVista.IoT.Deployment.Models" Version="2.1.713-beta1441" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" Version="2.1.713-beta1441" />
+    <PackageReference Include="LagoVista.IoT.DeviceManagement.Models" Version="2.1.713-beta1441" />
+    <PackageReference Include="LagoVista.MQTT" Version="1.2.740-alpha1236" />
+    <PackageReference Include="LagoVista.XPlat" Version="1.2.740-alpha1233" />
   </ItemGroup>
 
   <ItemGroup>

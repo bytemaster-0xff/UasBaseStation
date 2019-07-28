@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="1567ef2b-4bb4-4190-8e79-80bbe8103f4c" Publisher="CN=2bf98613-8523-4db9-9512-8f41d9f12a0e" Version="1.0.0.0" />
+  <Identity Name="com.software-logistics.nuviot" Publisher="CN=2bf98613-8523-4db9-9512-8f41d9f12a0e" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>LagoVista.Uas.BaseStation.UWP</DisplayName>
+    <DisplayName>Software Logistics UAS Base Station</DisplayName>
     <PublisherDisplayName>2bf98613-8523-4db9-9512-8f41d9f12a0e</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

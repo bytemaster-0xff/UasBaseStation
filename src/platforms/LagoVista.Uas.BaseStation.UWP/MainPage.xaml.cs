@@ -21,6 +21,8 @@ namespace LagoVista.Uas.BaseStation.UWP
         {
             this.InitializeComponent();
 
+            
+
             LoadApplication(new LagoVista.Uas.BaseStation.App());
         }
     }

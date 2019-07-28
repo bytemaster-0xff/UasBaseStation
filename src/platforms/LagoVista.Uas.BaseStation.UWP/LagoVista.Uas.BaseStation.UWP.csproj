@@ -11,8 +11,8 @@
     <AssemblyName>LagoVista.Uas.BaseStation.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.16299.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.16299.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.17763.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <FileAlignment>512</FileAlignment>
@@ -100,6 +100,7 @@
     <Compile Include="Controls\GPSStatus.cs" />
     <Compile Include="Controls\HudControlBase.cs" />
     <Compile Include="Controls\SystemStatus.cs" />
+    <Compile Include="Drone\DJIDrone.cs" />
     <Compile Include="Renderers\MapViewRenderer.cs" />
     <Compile Include="Controls\VideoControl.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -179,10 +180,31 @@
     <Content Include="Assets\Wide310x150Logo.scale-100.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
+    <Content Include="avcodec-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="avformat-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="avutil-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="DJIWindowsWrapper.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="libcrypto-1_1-x64.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="nuviot.png" />
     <Content Include="Properties\Default.rd.xml" />
+    <Content Include="pthread_dll-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="softwarelogistics.png" />
     <Content Include="splashbg.jpg" />
+    <Content Include="swscale-x64.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -196,54 +218,54 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LagoVista.Client.Core">
-      <Version>1.2.438-alpha1729</Version>
+      <Version>1.2.740-alpha1233</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core">
-      <Version>2.1.439-beta1607</Version>
+      <Version>2.1.713-beta1441</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core.Authentication">
-      <Version>2.1.439-beta1607</Version>
+      <Version>2.1.713-beta1441</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core.Networking">
-      <Version>2.1.439-beta1607</Version>
+      <Version>2.1.713-beta1441</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.Core.UWP">
-      <Version>1.2.438-alpha1729</Version>
+      <Version>1.2.740-alpha1233</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.IoT.Logging">
-      <Version>2.1.439-beta1607</Version>
+      <Version>2.1.713-beta1441</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.MQTT">
-      <Version>1.2.438-alpha1754</Version>
+      <Version>1.2.740-alpha1236</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.UserAdmin.Models">
-      <Version>2.1.439-beta1607</Version>
+      <Version>2.1.713-beta1441</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.UWP.UI">
-      <Version>1.2.438-alpha1729</Version>
+      <Version>1.2.740-alpha1233</Version>
     </PackageReference>
     <PackageReference Include="LagoVista.XPlat">
-      <Version>1.2.438-alpha1729</Version>
+      <Version>1.2.740-alpha1233</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter">
-      <Version>1.8.0</Version>
+      <Version>2.2.1-preview</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>1.8.0</Version>
+      <Version>2.2.1-preview</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>1.8.0</Version>
+      <Version>2.2.1-preview</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Push">
-      <Version>1.8.0</Version>
+      <Version>2.2.1-preview</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.2</Version>
+      <Version>12.0.2</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="3.1.0.637273" />
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.0-Preview1-26502-02" />
+    <PackageReference Include="Xamarin.Forms" Version="4.2.0.618605-pre2" />
+    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.2.8" />
     <PackageReference Include="Xamarin.Forms.Maps">
-      <Version>3.1.0.637273</Version>
+      <Version>4.2.0.618605-pre2</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +276,10 @@
     <ProjectReference Include="..\..\core\LagoVista.Uas.Core\LagoVista.Uas.Core.csproj">
       <Project>{EC67C8ED-8772-4130-8C8A-9F17B45C1A06}</Project>
       <Name>LagoVista.Uas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DJIVideoParser\DJIVideoParser.vcxproj">
+      <Project>{5f8b4a30-b8d1-46b5-be32-aee3c899e3bf}</Project>
+      <Name>DJIVideoParser</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +359,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Fonts\RobotoCondensed-Regular.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="DJIWindowsSDK">
+      <HintPath>..\..\..\libs\SDK dll x64\DJIWindowsSDK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DJIWindowsWrapper.winmd">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

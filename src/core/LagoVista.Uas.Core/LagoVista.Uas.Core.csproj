@@ -1,14 +1,14 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="2.1.439-beta1607" />
-    <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" Version="2.1.439-beta1607" />
-    <PackageReference Include="LagoVista.IoT.DeviceManagement.Models" Version="2.1.439-beta1607" />
-    <PackageReference Include="LagoVista.MQTT" Version="1.2.438-alpha1754" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.713-beta1441" />
+    <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" Version="2.1.713-beta1441" />
+    <PackageReference Include="LagoVista.IoT.DeviceManagement.Models" Version="2.1.713-beta1441" />
+    <PackageReference Include="LagoVista.MQTT" Version="1.2.740-alpha1236" />
   </ItemGroup>
 
   <ItemGroup>
