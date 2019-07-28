@@ -16,7 +16,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         RotateTransform _rollTransform;
         TranslateTransform _pitchTransform;
 
-        
+
 
         Controls.AltitudeIndicator _altitudeIndicator;
         Controls.Compass _compass;
@@ -25,9 +25,9 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         Controls.VideoControl _video;
         Controls.AoACircle _aoaCircle;
         Controls.SystemStatus _systemStatus;
-  
+
         IUas _uas;
-     
+
         SolidColorBrush _hudGreen = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 51, 255, 85));
         SolidColorBrush _hudWhite = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 255, 255));
         SolidColorBrush _hudColor = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 255, 255));
@@ -35,13 +35,13 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
         public AttitudeIndicatorRenderer()
         {
             ArrangeNativeChildren = true;
-  
+
             RenderHud();
 
             this.Height = 480;
             this.Width = 640;
-         }
-      
+        }
+
 
         private void RenderHud()
         {
@@ -49,7 +49,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             hudContainer.Width = 640;
             hudContainer.Height = 480;
 
-            
+
 
             _artificialHorizon = new Controls.ArtificialHorizon();
             hudContainer.Children.Add(_artificialHorizon);
@@ -63,7 +63,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             _compass = new Controls.Compass();
             _compass.VerticalAlignment = VerticalAlignment.Top;
             hudContainer.Children.Add(_compass);
-         
+
             _altitudeIndicator = new Controls.AltitudeIndicator();
             _altitudeIndicator.HorizontalAlignment = HorizontalAlignment.Right;
             _altitudeIndicator.VerticalAlignment = VerticalAlignment.Center;
@@ -99,19 +99,19 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
             DataContext = _uas;
 
             var gpsBindingHelper = new BindingHelper<GPSStatus>(_gpsStatus);
-            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.FixType, ctl=>ctl.FixType);
-            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.HDOP, ctl=>ctl.HDOP);
+            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.FixType, ctl => ctl.FixType);
+            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.HDOP, ctl => ctl.HDOP);
             gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.VDOP, ctl => ctl.VDOP);
-            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.SateliteCount, ctl=>ctl.SatCount);
-            
+            gpsBindingHelper.Add(_uas.GPSs.First()).For(mod => mod.SateliteCount, ctl => ctl.SatCount);
+
             var sysStatusbindingHelper = new BindingHelper<Controls.SystemStatus>(_systemStatus);
-            sysStatusbindingHelper.Add(_uas.SystemStatus).For(mod => mod.Armed, ctl=>ctl.Armed);
-            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.Voltage, ctl=>ctl.BatteryVoltage);
-            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.RemainingPercent, ctl=>ctl.PercentRemaining);
-            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.TimeRemaining, ctl=>ctl.TimeRemaining);
-        
+            sysStatusbindingHelper.Add(_uas.SystemStatus).For(mod => mod.Armed, ctl => ctl.Armed);
+            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.Voltage, ctl => ctl.BatteryVoltage);
+            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.RemainingPercent, ctl => ctl.PercentRemaining);
+            sysStatusbindingHelper.Add(_uas.Batteries.First()).For(mod => mod.TimeRemaining, ctl => ctl.TimeRemaining);
+
             var altStatusbindingHelper = new BindingHelper<Controls.AltitudeIndicator>(_altitudeIndicator);
-            altStatusbindingHelper.Add(_uas).For(mod => mod.CurrentLocation, ctl=>ctl.Location);
+            altStatusbindingHelper.Add(_uas).For(mod => mod.CurrentLocation, ctl => ctl.Location);
 
 
             //            _bindignHelper.Add(_uas.GPSs.First(), () => _gpsStatus.FixType, nameof(GPS.FixType));
@@ -125,22 +125,26 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
 
         private void Attitude_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(Attitude.Roll))
+            return;
+            Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
-                _aoaCircle.Roll = _uas.Attitude.Roll;
-                _rollTransform.Angle = _uas.Attitude.Roll;
-                _artificialHorizon.Roll = _uas.Attitude.Roll;
-            }
-            else if (e.PropertyName == nameof(Attitude.Pitch))
-            {
-                _aoaCircle.Pitch = _uas.Attitude.Pitch;
-                _pitchTransform.Y = _uas.Attitude.Pitch * 3;
-                _artificialHorizon.Pitch = _uas.Attitude.Pitch;
-            }
-            else if (e.PropertyName == nameof(Attitude.Yaw))
-            {
-                _compass.Heading = _uas.Attitude.Yaw;
-            }           
+                if (e.PropertyName == nameof(Attitude.Roll))
+                {
+                    _aoaCircle.Roll = _uas.Attitude.Roll;
+                    _rollTransform.Angle = _uas.Attitude.Roll;
+                    _artificialHorizon.Roll = _uas.Attitude.Roll;
+                }
+                else if (e.PropertyName == nameof(Attitude.Pitch))
+                {
+                    _aoaCircle.Pitch = _uas.Attitude.Pitch;
+                    _pitchTransform.Y = _uas.Attitude.Pitch * 3;
+                    _artificialHorizon.Pitch = _uas.Attitude.Pitch;
+                }
+                else if (e.PropertyName == nameof(Attitude.Yaw))
+                {
+                    _compass.Heading = _uas.Attitude.Yaw;
+                }
+            });
         }
 
         protected override void Dispose(bool disposing)

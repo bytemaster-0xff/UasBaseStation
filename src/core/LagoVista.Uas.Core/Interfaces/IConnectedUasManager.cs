@@ -8,8 +8,17 @@ namespace LagoVista.Uas.Core
 {
     public interface IConnectedUasManager
     {
-        ConnectedUas Active {get; set;}
-    
-        ObservableCollection<ConnectedUas> All { get; }
+        event EventHandler<IConnectedUas> DroneConnected;
+
+        event EventHandler<IConnectedUas> DroneDiconnected;
+
+        event EventHandler<IConnectedUas> ActiveDroneChanged;
+
+
+        IConnectedUas Active {get; }
+
+        void SetActive(IConnectedUas connectedUas);
+
+        ObservableCollection<IConnectedUas> All { get; }
     }
 }

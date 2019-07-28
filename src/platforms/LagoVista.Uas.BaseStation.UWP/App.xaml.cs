@@ -16,9 +16,6 @@ namespace LagoVista.Uas.BaseStation.UWP
     /// </summary>
     sealed partial class App : Application
     {
-        DJIDrone _djiDrone = new DJIDrone();
-
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -61,8 +58,6 @@ namespace LagoVista.Uas.BaseStation.UWP
                 }
 
                 Window.Current.Content = rootFrame;
-
-                _djiDrone.Init();
             }
 
             if (rootFrame.Content == null)

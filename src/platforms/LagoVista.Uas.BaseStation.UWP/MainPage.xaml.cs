@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LagoVista.Core.IOC;
+using LagoVista.Uas.BaseStation.UWP.Drone;
+using LagoVista.Uas.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,9 +24,10 @@ namespace LagoVista.Uas.BaseStation.UWP
         {
             this.InitializeComponent();
 
-            
-
             LoadApplication(new LagoVista.Uas.BaseStation.App());
+            var mgr = SLWIOC.Get<IConnectedUasManager>();
+
+            var _djiDrone = new DJIDrone(mgr);
         }
     }
 }

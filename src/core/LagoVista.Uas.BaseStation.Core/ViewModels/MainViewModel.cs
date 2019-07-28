@@ -30,12 +30,13 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
             Connections = connectedUasManager;
 
+            Connections.ActiveDroneChanged += Connections_ActiveDroneChanged;
+
             var transport = new SerialPortTransport(DispatcherServices);
 
-            Connections.Active = new ConnectedUas(new APM(null), transport);
-            Connections.All.Add(Connections.Active);
-
-            Connections.Active.Transport.OnMessageReceived += _telemeteryLink_MessageParsed;
+            //Connections.Active = new ConnectedUas(new APM(null), transport);
+            //Connections.All.Add(Connections.Active);
+            //Connections.Active.Transport.OnMessageReceived += _telemeteryLink_MessageParsed;
 
             //TelemetryLink.MessageParsed += _telemeteryLink_MessageParsed;
             OpenSerialPortCommand = new RelayCommand(HandleConnectClick, CanPressConnect);
@@ -89,6 +90,13 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
                     FontIconKey = "fa-sign-out"
                 }
             };
+
+            this.RefreshUI();
+        }
+
+        private void Connections_ActiveDroneChanged(object sender, IConnectedUas e)
+        {
+            RefreshUI();
         }
 
         private void _telemeteryLink_MessageParsed(object sender, UasMessage msg)
@@ -103,6 +111,11 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public bool CanDoConnectedStuff()
         {
+            if(Connections.Active == null)
+            {
+                return false;
+            }
+
             return Connections.Active.Transport.IsConnected;
         }
 
@@ -133,13 +146,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             await (Connections.Active.Transport as SerialPortTransport).OpenAsync(port);
             ConnectMessage = "Disconnect";
 
-            OpenSerialPortCommand.RaiseCanExecuteChanged();
-            ShowMissionPlannerCommand.RaiseCanExecuteChanged();
-            StartDataStreamsCommand.RaiseCanExecuteChanged();
-            StopDataStreamsCommand.RaiseCanExecuteChanged();
-            BeginCalibrationCommand.RaiseCanExecuteChanged();
-            FlyNowCommand.RaiseCanExecuteChanged();
-            MotorTestCommand.RaiseCanExecuteChanged();
+            RefreshUI();
 
             _heartBeatManager.Start(Connections.Active.Transport, TimeSpan.FromSeconds(1));
         }
@@ -149,7 +156,11 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             _heartBeatManager.Stop();
             await (Connections.Active.Transport as SerialPortTransport).CloseAsync();
             ConnectMessage = "Connect";
+            RefreshUI();
+        }
 
+        public void RefreshUI()
+        {
             OpenSerialPortCommand.RaiseCanExecuteChanged();
             ShowMissionPlannerCommand.RaiseCanExecuteChanged();
             StartDataStreamsCommand.RaiseCanExecuteChanged();
@@ -158,7 +169,6 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             FlyNowCommand.RaiseCanExecuteChanged();
             MotorTestCommand.RaiseCanExecuteChanged();
         }
-
 
         private SerialPortInfo _serialPortInfo;
         public SerialPortInfo SelectedPort
@@ -186,8 +196,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         }
 
 
-        public String Title
-        { get; set; }
+        public String Title { get; set; }
 
         public RelayCommand OpenSerialPortCommand { get; }
         public RelayCommand ShowMissionPlannerCommand { get; }
@@ -198,7 +207,5 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public RelayCommand MotorTestCommand { get; }
 
         public IConnectedUasManager Connections { get; }
-
-
     }
 }

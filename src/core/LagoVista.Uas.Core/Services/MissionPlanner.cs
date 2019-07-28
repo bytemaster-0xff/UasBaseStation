@@ -7,7 +7,7 @@ namespace LagoVista.Uas.Core.Services
 {
     public class MissionPlanner : IMissionPlanner
     {
-        public async Task<InvokeResult<Mission>> GetWayPointsAsync(ConnectedUas uas)
+        public async Task<InvokeResult<Mission>> GetWayPointsAsync(IConnectedUas uas)
         {
             var mission = new Mission();
 
@@ -40,7 +40,7 @@ namespace LagoVista.Uas.Core.Services
             return InvokeResult<Mission>.Create(mission);
         }
 
-        public Task<InvokeResult> UpdateWaypoints(ConnectedUas uas, Mission mission)
+        public Task<InvokeResult> UpdateWaypoints(IConnectedUas uas, Mission mission)
         {
             var msg = new UasMissionWritePartialList();
             uas.Transport.SendMessage(msg);

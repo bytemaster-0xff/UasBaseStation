@@ -4,7 +4,7 @@ using System.Text;
 
 namespace LagoVista.Uas.Core.Models
 {
-    public class ConnectedUas
+    public class ConnectedUas : IConnectedUas
     {
         public ConnectedUas(IUas uas, ITransport transport)
         {
@@ -14,5 +14,12 @@ namespace LagoVista.Uas.Core.Models
 
         public IUas Uas { get; }
         public ITransport Transport { get; }
+    }
+
+    public interface IConnectedUas
+    {
+        IUas Uas { get; }
+
+        ITransport Transport { get; }
     }
 }

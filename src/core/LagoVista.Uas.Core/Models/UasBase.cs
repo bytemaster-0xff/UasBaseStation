@@ -31,6 +31,7 @@ namespace LagoVista.Uas.Core
             RangeFinder = new RangeFinder();
             Comms = new Comms();
             Camera = new Camera();
+            Location = new GeoLocation();
 
             Channels = new ObservableCollection<RCChannel>();
             for (var idx = 0; idx < 16; ++idx) Channels.Add(new RCChannel());

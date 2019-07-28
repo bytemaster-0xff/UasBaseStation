@@ -82,7 +82,6 @@ namespace LagoVista.Uas.BaseStation
             XPlat.Core.Startup.Init(this, navigation);
             Startup.Init(serverInfo);
 
-
             navigation.Add<MotorsTestViewModel, Views.Testing.MotorTestsView>();
             navigation.Add<CompassCalibrationViewModel, Views.Calibration.CompassCalibrationView>();
             navigation.Add<AccCalibrationViewModel, Views.Calibration.AccCalibrationView>();

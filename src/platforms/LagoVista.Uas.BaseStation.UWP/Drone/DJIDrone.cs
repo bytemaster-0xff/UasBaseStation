@@ -1,17 +1,59 @@
 ﻿using DJI.WindowsSDK;
+using DJI.WindowsSDK.Components;
+using LagoVista.Uas.Core;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LagoVista.Uas.BaseStation.UWP.Drone
 {
-    public class DJIDrone
+    public class DJIDrone : UasBase
     {
+        ComponentManager _componentMgr;
+        IConnectedUasManager _mgr;
+        bool _inCheck;
+        Timer _timer;
+
+        Object _locker = new object();
+
+        public DJIDrone(IConnectedUasManager mgr) : base(null)
+        {
+            this._mgr = mgr ?? throw new ArgumentNullException(nameof(mgr));
+            this.Init();
+         //   _timer = new Timer(GetState, null, 100, 100);
+        }
+
+        private async void GetState(Object obj)
+        {
+            lock(_locker)
+            {
+                if (_inCheck)
+                    return;
+
+                _inCheck = true;
+            }
+
+            if(_componentMgr != null)
+            {
+                var sw = Stopwatch.StartNew();
+                /*var flightController = _componentMgr.GetFlightControllerHandler(0, 0);
+                   var velocity = await flightController.GetVelocityAsync();
+                   var attitude = await flightController.GetAttitudeAsync();
+                   var location = await flightController.GetAircraftLocationAsync();
+                   var percent = await _componentMgr.GetBatteryHandler(0, 0).GetChargeRemainingInPercentAsync();
+                   var batteryCapacity = await _componentMgr.GetBatteryHandler(0, 0).GetChargeRemainingAsync();*/
+                Debug.WriteLine(sw.Elapsed.TotalMilliseconds);
+            }
+
+            _inCheck = false;
+        }
+
         public void Init()
-        {            
+        {
             DJISDKManager.Instance.EnableDebugLogSystem();
             DJISDKManager.Instance.SDKRegistrationStateChanged += Instance_SDKRegistrationStateChanged;
             DJISDKManager.Instance.AircraftBindingStateChanged += Instance_AircraftBindingStateChanged;
@@ -23,12 +65,17 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
         {
             if (errorCode == SDKError.NO_ERROR)
             {
-                DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).VelocityChanged += DJIDrone_VelocityChanged;
+                this._componentMgr = DJISDKManager.Instance.ComponentManager;
+           /*     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).VelocityChanged += DJIDrone_VelocityChanged;
                 DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged += DJIDrone_AttitudeChanged;
                 DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AltitudeChanged += DJIDrone_AltitudeChanged;
                 DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AircraftLocationChanged += DJIDrone_AircraftLocationChanged;
-                DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).VoltageChanged += DJIDrone_VoltageChanged;
-                DJISDKManager.Instance.ComponentManager.GetProductHandler(0).ProductTypeChanged += DJIDrone_ProductTypeChanged;
+                DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).VoltageChanged += DJIDrone_VoltageChanged;*/
+           //     DJISDKManager.Instance.ComponentManager.GetProductHandler(0).ProductTypeChanged += DJIDrone_ProductTypeChanged;
+                if(_mgr.Active == null)
+                {
+                    _mgr.SetActive(new Core.Models.ConnectedUas(this, new DJITransport(this)));
+                }
                 Debug.WriteLine("Product Registered");
             }
             else
@@ -50,44 +97,77 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
         {
             if (state == AircraftBindingState.BOUND)
             {
-                
+                Debug.WriteLine("AIRCRAFT BOUND");
             }
+            else
+            {
+                Debug.WriteLine(state);
+            }
+
         }
 
         private void DJIDrone_VoltageChanged(object sender, IntMsg? value)
         {
-            if(value.HasValue)
-            {
+            return;
+
+            if (value.HasValue)
+            {     
                 Debug.WriteLine(value.Value.value);
             }
         }
 
         private void DJIDrone_AircraftLocationChanged(object sender, LocationCoordinate2D? value)
         {
+            return;
             if (value.HasValue)
             {
-                Debug.WriteLine(value.Value.latitude + " " + value.Value.longitude);
+                this.Location.Latitude = value.Value.latitude;
+                this.Location.Longitude = value.Value.longitude;
             }
         }
 
         private void DJIDrone_AltitudeChanged(object sender, DoubleMsg? value)
         {
-            
+
+            return;
+            this.RangeFinder.GaugeStatus = value.HasValue ? Core.Models.GaugeStatus.OK : Core.Models.GaugeStatus.Warning;
+            if (value.HasValue)
+            {
+                this.RangeFinder.Distance = Convert.ToSingle(value.Value.value);
+                this.Location.Altitude = Convert.ToSingle(value.Value.value);
+            }
         }
 
         private void DJIDrone_AttitudeChanged(object sender, Attitude? value)
         {
-            if(value.HasValue)
+            return;
+            if (value.HasValue)
             {
-                Debug.WriteLine(value.Value.yaw);
-                Debug.WriteLine(value.Value.pitch);
-                Debug.WriteLine(value.Value.roll);
+                this.Attitude.GaugeStatus = Core.Models.GaugeStatus.OK;
+                this.Attitude.Pitch = Convert.ToSingle(value.Value.pitch);
+                this.Attitude.Roll = Convert.ToSingle(value.Value.roll);
+                this.Attitude.Yaw = Convert.ToSingle(value.Value.yaw);
+            }
+            else
+            {
+                this.Attitude.GaugeStatus = Core.Models.GaugeStatus.Warning;
             }
         }
 
         private void DJIDrone_VelocityChanged(object sender, Velocity3D? value)
         {
-
+            return;
+            if (value.HasValue)
+            {
+                this.Attitude.GaugeStatus = Core.Models.GaugeStatus.OK;
+                this.Attitude.PitchSpeed = Convert.ToSingle(value.Value.x);
+                this.Attitude.RollSpeed = Convert.ToSingle(value.Value.y);
+                this.Attitude.YawSpeed = Convert.ToSingle(value.Value.z);
+            }
+            else
+            {
+                this.Attitude.GaugeStatus = Core.Models.GaugeStatus.Warning;
+            }
         }
     }
 }
