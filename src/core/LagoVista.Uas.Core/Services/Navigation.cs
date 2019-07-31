@@ -30,7 +30,7 @@ namespace LagoVista.Uas.Core.Services
 
         public void Takeoff()
         {
-            var msg =  UasCommands.NavTakeoff(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, float.NaN, 0, TakeoffAltitude);
+            var msg =  UasCommands.NavTakeoff(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, float.NaN, 0, TakeoffAltitude);            
             _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 

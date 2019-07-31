@@ -1,0 +1,34 @@
+﻿<Page
+    x:Class="LagoVista.Uas.BaseStation.App.MainPage"
+    xmlns:ctl="using:LagoVista.Uas.BaseStation.App.Controls"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LagoVista.Uas.BaseStation.App"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <ctl:VideoControl x:Name="AOAControl"  Width="640" Height="480" HorizontalAlignment="Left"  VerticalAlignment="Top"/>
+
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" >
+                <Button Content="Arm" Command="{Binding Navigation.ArmCommand}" Width="120" Height="60" />
+                <Button Content="Disarm" Command="{Binding Navigation.DisarmCommand}" Width="120" Height="60" />
+                <Button Content="Takeoff" Command="{Binding Navigation.TakeoffCommand}" Width="120" Height="60" />
+                <Button Content="Land" Command="{Binding Navigation.LandCommand}" Width="120" Height="60" />
+                <Button Content="Edit" Command="{Binding EditMissionCommand}" Width="120" Height="60" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Raise" Command="{Binding LandingGear.RaiseLandingGearCommand}" Width="120" Height="60" />
+                <Button Content="Lower" Command="{Binding LandingGear.LowerLandingGearCommand}" Width="120" Height="60" />
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Page>

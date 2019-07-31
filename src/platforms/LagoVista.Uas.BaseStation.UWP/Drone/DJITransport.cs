@@ -1,4 +1,5 @@
-﻿using LagoVista.Core.Validation;
+﻿using DJI.WindowsSDK;
+using LagoVista.Core.Validation;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
@@ -46,7 +47,7 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
         public async Task<InvokeResult<TMavlinkPacket>> RequestDataAsync<TMavlinkPacket>(UasMessage msg, UasMessages incomingMessageId, TimeSpan timeout) where TMavlinkPacket : class
         {
             await Task.Delay(1);
-            return InvokeResult<TMavlinkPacket>.FromError("Uknown");;
+            return InvokeResult<TMavlinkPacket>.FromError("Uknown"); ;
         }
 
         public async Task<InvokeResult<TMavlinkPacket>> RequestDataAsync<TMavlinkPacket>(UasMessage msg, UasMessages incomingMessageId) where TMavlinkPacket : class
@@ -57,7 +58,23 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
 
         public void SendMessage(UasMessage msg)
         {
+            switch (msg.MessageId)
+            {
+                case UasMessages.CommandLong:
+                    var cmd = msg as UasCommandLong;
+                    switch (cmd.Command)
+                    {
+                        case 22:
+                            DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).StartTakeoffAsync();
+                            break;
 
+                        case 23:
+                            DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).StartAutoLandingAsync();
+                            break;
+                    }
+
+                    break;
+            }
         }
 
         public async Task<InvokeResult<TMavlinkPacket>> WaitForMessageAsync<TMavlinkPacket>(UasMessages messageId, TimeSpan timeout) where TMavlinkPacket : class

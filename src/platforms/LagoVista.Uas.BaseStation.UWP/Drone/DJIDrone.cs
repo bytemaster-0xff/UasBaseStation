@@ -1,6 +1,7 @@
 ﻿using DJI.WindowsSDK;
 using DJI.WindowsSDK.Components;
 using LagoVista.Uas.Core;
+using LagoVista.Uas.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,41 +16,14 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
     {
         ComponentManager _componentMgr;
         IConnectedUasManager _mgr;
-        bool _inCheck;
-        Timer _timer;
-
-        Object _locker = new object();
 
         public DJIDrone(IConnectedUasManager mgr) : base(null)
         {
             this._mgr = mgr ?? throw new ArgumentNullException(nameof(mgr));
-            this.Init();
-         //   _timer = new Timer(GetState, null, 100, 100);
-        }
-
-        private async void GetState(Object obj)
-        {
-            lock(_locker)
+            Task.Run(() =>
             {
-                if (_inCheck)
-                    return;
-
-                _inCheck = true;
-            }
-
-            if(_componentMgr != null)
-            {
-                var sw = Stopwatch.StartNew();
-                /*var flightController = _componentMgr.GetFlightControllerHandler(0, 0);
-                   var velocity = await flightController.GetVelocityAsync();
-                   var attitude = await flightController.GetAttitudeAsync();
-                   var location = await flightController.GetAircraftLocationAsync();
-                   var percent = await _componentMgr.GetBatteryHandler(0, 0).GetChargeRemainingInPercentAsync();
-                   var batteryCapacity = await _componentMgr.GetBatteryHandler(0, 0).GetChargeRemainingAsync();*/
-                Debug.WriteLine(sw.Elapsed.TotalMilliseconds);
-            }
-
-            _inCheck = false;
+                this.Init();
+            });
         }
 
         public void Init()
@@ -65,13 +39,17 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
         {
             if (errorCode == SDKError.NO_ERROR)
             {
-                this._componentMgr = DJISDKManager.Instance.ComponentManager;
-           /*     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).VelocityChanged += DJIDrone_VelocityChanged;
-                DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged += DJIDrone_AttitudeChanged;
-                DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AltitudeChanged += DJIDrone_AltitudeChanged;
-                DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AircraftLocationChanged += DJIDrone_AircraftLocationChanged;
-                DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).VoltageChanged += DJIDrone_VoltageChanged;*/
-           //     DJISDKManager.Instance.ComponentManager.GetProductHandler(0).ProductTypeChanged += DJIDrone_ProductTypeChanged;
+                if (_componentMgr == null)
+                {
+                    this._componentMgr = DJISDKManager.Instance.ComponentManager;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).VelocityChanged += DJIDrone_VelocityChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged += DJIDrone_AttitudeChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AltitudeChanged += DJIDrone_AltitudeChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AircraftLocationChanged += DJIDrone_AircraftLocationChanged;
+                    DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).VoltageChanged += DJIDrone_VoltageChanged;
+                    DJISDKManager.Instance.ComponentManager.GetProductHandler(0).ProductTypeChanged += DJIDrone_ProductTypeChanged;
+                }
+
                 if(_mgr.Active == null)
                 {
                     _mgr.SetActive(new Core.Models.ConnectedUas(this, new DJITransport(this)));
@@ -108,17 +86,20 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
 
         private void DJIDrone_VoltageChanged(object sender, IntMsg? value)
         {
-            return;
-
             if (value.HasValue)
             {     
                 Debug.WriteLine(value.Value.value);
+                if(!this.Batteries.Any())
+                {
+                    var batt = new Battery();
+                }
+               
+                this.Batteries.First().Voltage = Convert.ToSingle(value.Value.value / 1000.0);
             }
         }
 
         private void DJIDrone_AircraftLocationChanged(object sender, LocationCoordinate2D? value)
         {
-            return;
             if (value.HasValue)
             {
                 this.Location.Latitude = value.Value.latitude;
@@ -128,8 +109,6 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
 
         private void DJIDrone_AltitudeChanged(object sender, DoubleMsg? value)
         {
-
-            return;
             this.RangeFinder.GaugeStatus = value.HasValue ? Core.Models.GaugeStatus.OK : Core.Models.GaugeStatus.Warning;
             if (value.HasValue)
             {
@@ -138,9 +117,8 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
             }
         }
 
-        private void DJIDrone_AttitudeChanged(object sender, Attitude? value)
+        private void DJIDrone_AttitudeChanged(object sender, DJI.WindowsSDK.Attitude? value)
         {
-            return;
             if (value.HasValue)
             {
                 this.Attitude.GaugeStatus = Core.Models.GaugeStatus.OK;
@@ -156,7 +134,6 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
 
         private void DJIDrone_VelocityChanged(object sender, Velocity3D? value)
         {
-            return;
             if (value.HasValue)
             {
                 this.Attitude.GaugeStatus = Core.Models.GaugeStatus.OK;

@@ -125,7 +125,6 @@ namespace LagoVista.Uas.BaseStation.UWP.Renderers
 
         private void Attitude_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            return;
             Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
             {
                 if (e.PropertyName == nameof(Attitude.Roll))

@@ -69,8 +69,11 @@ namespace LagoVista.Uas.BaseStation.UWP.Controls
             get { return _batteryVoltage; }
             set
             {
-                _batteryVoltage = value;
-                _batteryControl.Text = String.Format("Battery {0:0.00}V", _batteryVoltage);
+                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low,() =>
+                {
+                    _batteryVoltage = value;
+                    _batteryControl.Text = String.Format("Battery {0:0.00}V", _batteryVoltage);
+                });
             }
         }
 

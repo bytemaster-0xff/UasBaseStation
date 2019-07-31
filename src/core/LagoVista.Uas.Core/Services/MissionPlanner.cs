@@ -7,6 +7,13 @@ namespace LagoVista.Uas.Core.Services
 {
     public class MissionPlanner : IMissionPlanner
     {
+        private readonly IConnectedUasManager _uasMgr;
+
+        public MissionPlanner(IConnectedUasManager uasMgr)
+        {
+            this._uasMgr = uasMgr;
+        }
+
         public async Task<InvokeResult<Mission>> GetWayPointsAsync(IConnectedUas uas)
         {
             var mission = new Mission();
