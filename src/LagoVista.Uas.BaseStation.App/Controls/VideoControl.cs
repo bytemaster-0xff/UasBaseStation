@@ -23,7 +23,7 @@ namespace LagoVista.Uas.BaseStation.App.Controls
         DeviceInformationCollection _devices;
         MediaCapture _mediaCapture;
         DisplayRequest _displayRequest;
-        CaptureElement _captureElement;
+        //CaptureElement _captureElement;
         SwapChainPanel _swapChainPannel;
 
         public VideoControl()
@@ -57,11 +57,11 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             sp.HorizontalAlignment = HorizontalAlignment.Left;
             Children.Add(sp);
 
-            _captureElement = new CaptureElement();
+            /*_captureElement = new CaptureElement();
             _captureElement.Width = 640;
             _captureElement.Height = 480;
             _captureElement.Visibility = Visibility.Collapsed;
-            Children.Add(_captureElement);
+            Children.Add(_captureElement);*/
 
             _swapChainPannel = new SwapChainPanel();
             _swapChainPannel.Width = 640;
@@ -114,12 +114,13 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             _displayRequest.RequestActive();
             await _mediaCapture.InitializeAsync(mediaInitSettings);
 
+            /*
             _captureElement.Source = _mediaCapture;
             _captureElement.Visibility = Visibility.Visible;
 
             _captureElement.SetValue(Windows.UI.Xaml.Controls.Grid.RowProperty, 0);
             _captureElement.SetValue(Windows.UI.Xaml.Controls.Grid.ColumnProperty, 1);
-
+            */
             await _mediaCapture.StartPreviewAsync();
             _cameras.IsEnabled = false;
             _startVideo.IsEnabled = false;
@@ -178,7 +179,7 @@ namespace LagoVista.Uas.BaseStation.App.Controls
 
         private void _stopVideo_Click(object sender, RoutedEventArgs e)
         {
-            _captureElement.Visibility = Visibility.Collapsed;
+            //_captureElement.Visibility = Visibility.Collapsed;
             _cameras.IsEnabled = true;
             _startVideo.IsEnabled = true;
             _stopVideo.IsEnabled = false;
@@ -193,7 +194,7 @@ namespace LagoVista.Uas.BaseStation.App.Controls
                 _displayRequest = null;
             }
 
-            _captureElement.Source = null;
+            //_captureElement.Source = null;
 
             if (_mediaCapture != null)
             {
