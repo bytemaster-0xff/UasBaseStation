@@ -24,14 +24,21 @@
 
         <Grid Background="SteelBlue" Grid.Column="1">
             <Grid Grid.Column="1" >
-              <!--  <ctl:ArtificialHorizon Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" />
-               --> 
+                <!--  <ctl:ArtificialHorizon Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" />
+               -->
                 <ctl:VideoControl x:Name="AOAControl"  Width="640" Height="480" HorizontalAlignment="Center"  VerticalAlignment="Top"/>
-                <ctl:SystemStatus PercentRemaining="{Binding Path=UasMgr.Active.Uas.Battery.RemainingPercent, Mode=TwoWay}"  BatteryVoltage="{Binding Path=UasMgr.Active.Uas.Battery.Voltage, Mode=TwoWay}" />
+                <ctl:SystemStatus 
+                    Armed="{Binding Path=UasMgr.Active.Uas.SystemStatus.Armed, Mode=TwoWay}" 
+                    LowBattWarning="{Binding Path=UasMgr.Active.Uas.SystemStatus.LowBatteryWarning, Mode=TwoWay}" 
+                    CriticalBattWarning="{Binding Path=UasMgr.Active.Uas.SystemStatus.CriticalBatteryWarning, Mode=TwoWay}" 
+                    PercentRemaining="{Binding Path=UasMgr.Active.Uas.Battery.RemainingPercent, Mode=TwoWay}" 
+                    BatteryVoltage="{Binding Path=UasMgr.Active.Uas.Battery.Voltage, Mode=TwoWay}" 
+                    FlightTime="{Binding Path=UasMgr.Active.Uas.SystemStatus.FlightTime, Mode=TwoWay}"
+                    TimeRemaining="{Binding Path=UasMgr.Active.Uas.Battery.TimeRemaining, Mode=TwoWay}" />
                 <ctl:AoACircle Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" HorizontalAlignment="Center" />
                 <ctl:AltitudeIndicator Altitude="{Binding Path=UasMgr.Active.Uas.RangeFinder.Distance, Mode=TwoWay}" />
                 <ctl:Compass VerticalAlignment="Top" Heading="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" />
-                <ctl:GPSStatus VerticalAlignment="Center"   />
+                <ctl:GPSStatus  VerticalAlignment="Center"   />
             </Grid>
         </Grid>
 
@@ -52,166 +59,114 @@
 
             </StackPanel>
         </Grid>
-        
+
+        <Rectangle Grid.Row="2" Fill="LightGray" Grid.ColumnSpan="3" />
+
         <!-- flight state 6 pack -->
         <Grid Grid.Row="2" Grid.Column="1" x:Name="StateGrid" ColumnSpacing="6" RowSpacing="6">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="*"/>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Grid.Resources  >
+                <Style TargetType="controls:RadialGauge" x:Key="FlightGuage">
+                    <Setter Property="TickLength" Value="15"/>
+                    <Setter Property="TickWidth" Value="3"/>
+                    <Setter Property="TickBrush" Value="White"/>
+                    <Setter Property="ScalePadding" Value="0"/>
+                    <Setter Property="ScaleWidth" Value="1"/>
+                    <Setter Property="ScaleTickWidth" Value="0" />
+                    <Setter Property="ScaleBrush" Value="White"/>
+                    <Setter Property="ScaleTickBrush" Value="White"/>
+                    <Setter Property="FontSize" Value="64" />
+                    <Setter Property="NeedleBrush" Value="White"/>
+                    <Setter Property="NeedleWidth" Value="2"/>
+                    <Setter Property="StepSize" Value="0"/>
+                    <Setter Property="TrailBrush" Value="White" />
+                </Style>
 
-            <!-- first row -->
-            <!-- air speed -->
-            <Grid Grid.Row="0" Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!--Image Grid.RowSpan="3" Grid.Column="1" Source="Assets\gauge.png"/-->
-                <controls:RadialGauge Grid.RowSpan="3" Grid.Column="1" Margin="15"
-                    Minimum="0" MinAngle="20" Maximum="100" MaxAngle="340" StepSize="0"
-                    Value="{Binding Path=StateViewModel.State.AirSpeed.SpeedX}" 
-                    TickSpacing="10" TickLength="15" TickWidth="3" TickBrush="White"
-                    ScalePadding="0" ScaleWidth="3" ScaleBrush="White" ScaleTickBrush="White" ScaleTickWidth="0"
-                    TrailBrush="LimeGreen" NeedleBrush="White" NeedleWidth="2" />
-                <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Top">
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center">SPEED (cm/s)</TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Text="{Binding Path=StateViewModel.State.AirSpeed.SpeedX}"/>
-                    <!--<TextBlock Foreground="White" FontSize="10" HorizontalAlignment="Center">AC (cm/s/s)</TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" HorizontalAlignment="Center" Text="{Binding Path=StateViewModel.State.AirSpeed.AccelerationX}"/>-->
-                </StackPanel>
+                <Style TargetType="TextBlock" x:Key="GuageTitle">
+                    <Setter Property="VerticalAlignment" Value="Top" />
+                    <Setter Property="Margin" Value="0,10,0,0" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="FontSize" Value="12" />
+                </Style>
+
+                <Style TargetType="controls:RadialGauge" x:Key="Horizontal180" BasedOn="{StaticResource FlightGuage}">
+                    <Setter Property="MinAngle" Value="270"/>
+                    <Setter Property="MaxAngle" Value="90"/>
+                    <Setter Property="Margin" Value="0,30,0,0" />
+                    <Setter Property="Minimum" Value="-1000"/>
+                    <Setter Property="Maximum" Value="1000"/>
+                    <Setter Property="TickSpacing" Value="200"/>
+                </Style>
+                <Style TargetType="controls:RadialGauge" x:Key="Vertical180" BasedOn="{StaticResource FlightGuage}">
+                    <Setter Property="MinAngle" Value="0"/>
+                    <Setter Property="MaxAngle" Value="180"/>
+                    <Setter Property="Margin" Value="0,25,0,10" />
+                    <Setter Property="Minimum" Value="-1000"/>
+                    <Setter Property="Maximum" Value="1000"/>
+                    <Setter Property="TickSpacing" Value="200"/>
+                </Style>
+
+                <Style TargetType="Rectangle" x:Key="GaugeBackground" >
+                    <Setter Property="Margin" Value="5" />
+                    <Setter Property="Width" Value="120" />
+                    <Setter Property="Width" Value="120" />
+                    <Setter Property="Fill" Value="Black" />
+                    <Setter Property="Stroke" Value="Silver" />
+                    <Setter Property="StrokeThickness" Value="3" />
+                </Style>
+
+                <Style TargetType="TextBlock" x:Key="GaugeValue">
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="FontSize" Value="12" />
+                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                    <Setter Property="Margin" Value="0,0,0,20" />
+                </Style>
+
+            </Grid.Resources>
+
+            <Rectangle Grid.RowSpan="3" Grid.ColumnSpan="4" Fill="DarkOliveGreen" />
+
+
+            <Grid Grid.Row="1" Grid.Column="0" >
+                <Rectangle Style="{StaticResource GaugeBackground}" />
+                <TextBlock Text="Stick - Rudder" Style="{StaticResource GuageTitle}" />
+                <controls:RadialGauge Value="{Binding Path=FlightStickState.LeftX, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                <TextBlock Text="{Binding Path=FlightStickState.LeftX, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
             </Grid>
 
-            <!-- attitude indicator -->
-            <StackPanel Grid.Row="0" Grid.Column="1" Background="Silver">
-                <TextBlock>attitude indicator</TextBlock>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Width="120">ROLL</TextBlock>
-                    <TextBlock Text="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, FallbackValue=0.0}"></TextBlock>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Width="120">PITCH</TextBlock>
-                    <TextBlock Text="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, FallbackValue=0.0}"></TextBlock>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Width="120">YAW</TextBlock>
-                    <TextBlock Text="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, FallbackValue=0.0}"></TextBlock>
-                </StackPanel>
-            </StackPanel>
-
-            <!-- altitude indicator -->
-            <Grid Grid.Row="0" Grid.Column="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!--Image Grid.RowSpan="3" Grid.Column="1" Source="Assets\gauge.png"/-->
-                <controls:RadialGauge Grid.RowSpan="3" Grid.Column="1" Margin="15"
-                    Minimum="0" MinAngle="0" Maximum="1000" MaxAngle="330" StepSize="0"
-                    Value="{Binding Path=StateViewModel.State.Position.AltitudeAGLInCm, Mode=TwoWay}" 
-                    TickSpacing="50" TickLength="15" TickWidth="3" TickBrush="White"
-                    ScalePadding="0" ScaleWidth="3" ScaleBrush="White" ScaleTickBrush="White" ScaleTickWidth="0"
-                    TrailBrush="LimeGreen" NeedleBrush="White" NeedleWidth="2" />
-                <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Top">
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center">ALT (cm)</TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center" Text="{Binding Path=StateViewModel.State.Position.AltitudeAGLInCm}"></TextBlock>
-                    <!--<TextBlock>MSL (cm)</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.Position.AltitudeMSLInCm}"></TextBlock>-->
-                </StackPanel>
+            <Grid Grid.Row="1" Grid.Column="1" >
+                <Rectangle Style="{StaticResource GaugeBackground}" />
+                <TextBlock Text="Stick - Roll" Style="{StaticResource GuageTitle}" />
+                <controls:RadialGauge Value="{Binding Path=FlightStickState.RightX, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                <TextBlock Text="{Binding Path=FlightStickState.RightX, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
             </Grid>
 
-            <!-- second row -->
-            <!-- lateral speed/accel (turn coordinator) -->
-            <Grid Grid.Row="1" Grid.Column="0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!--Image Grid.RowSpan="3" Grid.Column="1" Source="Assets\gauge.png"/-->
-                <controls:RadialGauge Grid.RowSpan="3" Grid.Column="1" Margin="15"
-                    Minimum="-100" MinAngle="270" Maximum="100" MaxAngle="90" StepSize="0"
-                    Value="{Binding Path=StateViewModel.State.AirSpeed.SpeedY, Mode=TwoWay}" 
-                    TickSpacing="20" TickLength="15" TickWidth="3" TickBrush="White"
-                    ScalePadding="0" ScaleWidth="3" ScaleBrush="White" ScaleTickBrush="White" ScaleTickWidth="0"
-                    TrailBrush="White" NeedleBrush="White" NeedleWidth="2" />
-                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center">LAT SPD (cm/s)</TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center" Text="{Binding Path=StateViewModel.State.AirSpeed.SpeedY}"></TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center">TC (cm/s/s)</TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center" Text="{Binding Path=StateViewModel.State.AirSpeed.AccelerationZ}"></TextBlock>
-                </StackPanel>
+            <Grid Grid.Row="1" Grid.Column="2" >
+                <Rectangle Style="{StaticResource GaugeBackground}" />
+                <TextBlock Text="Stick - Throttle" Style="{StaticResource GuageTitle}" />
+                <controls:RadialGauge Value="{Binding Path=FlightStickState.LeftY, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
+                <TextBlock Text="{Binding Path=FlightStickState.LeftY, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
             </Grid>
 
-            <!-- heading indicator -->
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!--Image Grid.RowSpan="3" Grid.Column="1" Source="Assets\gauge.png"/-->
-                <controls:RadialGauge Grid.RowSpan="3" Grid.Column="1" Margin="15"
-                    Minimum="0" MinAngle="0" Maximum="360" MaxAngle="360" StepSize="0"
-                    Value="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" 
-                    TickSpacing="45" TickLength="15" TickWidth="3" TickBrush="White"
-                    ScalePadding="0" ScaleWidth="3" ScaleBrush="White" ScaleTickBrush="White" ScaleTickWidth="0"
-                    TrailBrush="White" NeedleBrush="White" NeedleWidth="2" />
-                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center">HDG (deg)</TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center" Text="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw}"></TextBlock>
-                </StackPanel>
+            <Grid Grid.Row="1" Grid.Column="3" >
+                <Rectangle Style="{StaticResource GaugeBackground}" />
+                <TextBlock Text="Stick - Pitch" Style="{StaticResource GuageTitle}" />
+                <controls:RadialGauge Value="{Binding Path=FlightStickState.RightY, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
+                <TextBlock Text="{Binding Path=FlightStickState.RightY, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
             </Grid>
 
-            <!-- vertical speed indicator BUG - VSI is showing data in reverse -->
-            <Grid Grid.Row="1" Grid.Column="3">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="3*"/>
-                    <RowDefinition Height="2*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <!--Image Grid.RowSpan="3" Grid.Column="1" Source="Assets\gauge.png"/-->
-                <controls:RadialGauge Grid.RowSpan="3" Grid.Column="1" Margin="15"
-                    Minimum="-100" MinAngle="180" Maximum="100" MaxAngle="360" StepSize="0"
-                    Value="{Binding Path=StateViewModel.State.AirSpeed.SpeedZ}" 
-                    TickSpacing="20" TickLength="15" TickWidth="3" TickBrush="White"
-                    ScalePadding="0" ScaleWidth="3" ScaleBrush="White" ScaleTickBrush="White" ScaleTickWidth="0"
-                    TrailBrush="White" NeedleBrush="White" NeedleWidth="2" />
-                <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center">VSI (cm/s)</TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center" Text="{Binding Path=StateViewModel.State.AirSpeed.SpeedZ}"></TextBlock>
-                    <TextBlock>ACEL (cm/s/s)</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.AirSpeed.AccelerationZ}"></TextBlock>
-                </StackPanel>
-            </Grid>
         </Grid>
 
 

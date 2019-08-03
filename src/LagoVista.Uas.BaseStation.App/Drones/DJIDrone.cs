@@ -51,8 +51,10 @@ namespace LagoVista.Uas.BaseStation.App.Drones
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AreMotorsOnChanged += DJIDrone_AreMotorsOnChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).CompassHasErrorChanged += DJIDrone_CompassHasErrorChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).FlightTimeInSecondsChanged += DJIDrone_FlightTimeInSecondsChanged;
-                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).IsLowBatteryWarningChanged += DJIDrone_IsLowBatteryWarningChanged; DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged += DJIDrone_AttitudeChanged;
-                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).IsSeriousLowBatteryWarningChanged += DJIDrone_IsSeriousLowBatteryWarningChanged; DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged += DJIDrone_AttitudeChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).IsLowBatteryWarningChanged += DJIDrone_IsLowBatteryWarningChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged += DJIDrone_AttitudeChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).IsSeriousLowBatteryWarningChanged += DJIDrone_IsSeriousLowBatteryWarningChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AttitudeChanged += DJIDrone_AttitudeChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).IsFlyingChanged += DJIDrone_IsFlyingChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AltitudeChanged += DJIDrone_AltitudeChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AircraftLocationChanged += DJIDrone_AircraftLocationChanged;
@@ -82,48 +84,47 @@ namespace LagoVista.Uas.BaseStation.App.Drones
 
         private void DJIDrone_SatelliteCountChanged(object sender, IntMsg? value)
         {
-            GPSs.First().SateliteCount = value.HasValue ? value.Value.value : 0;
+            RunOnUIThread(() => GPSs.First().SateliteCount = value.HasValue ? value.Value.value : 0);
         }
 
         private void DJIDrone_RemainingFlightTimeChanged(object sender, IntMsg? value)
         {
-            Battery.TimeRemaining = TimeSpan.FromSeconds(value.HasValue ? value.Value.value : 0);
+            RunOnUIThread(() => Battery.TimeRemaining = TimeSpan.FromSeconds(value.HasValue ? value.Value.value : 0)); 
         }
 
         private void DJIDrone_ChargeRemainingInPercentChanged(object sender, IntMsg? value)
         {
-            Battery.RemainingPercent = value.HasValue ? value.Value.value : 0;
+           RunOnUIThread(() => Battery.RemainingPercent = value.HasValue ? value.Value.value : 0);
         }
 
         private void DJIDrone_IsFlyingChanged(object sender, BoolMsg? value)
         {
-            SystemStatus.IsFlying = value.HasValue ? value.Value.value : false;
+            RunOnUIThread(() => SystemStatus.IsFlying = value.HasValue ? value.Value.value : false);
         }
 
         private void DJIDrone_IsSeriousLowBatteryWarningChanged(object sender, BoolMsg? value)
         {
-            SystemStatus.CriticalBatteryWarning = value.HasValue ? value.Value.value : false;
+            RunOnUIThread(() => SystemStatus.CriticalBatteryWarning = value.HasValue ? value.Value.value : false);
         }
 
         private void DJIDrone_IsLowBatteryWarningChanged(object sender, BoolMsg? value)
         {
-            SystemStatus.LowBatteryWarning = value.HasValue ? value.Value.value : false;
+            RunOnUIThread(() => SystemStatus.LowBatteryWarning = value.HasValue ? value.Value.value : false);
         }
 
         private void DJIDrone_FlightTimeInSecondsChanged(object sender, IntMsg? value)
         {
-            SystemStatus.FlightTime = value.HasValue ? TimeSpan.FromSeconds(value.Value.value) : TimeSpan.Zero;
-
+            RunOnUIThread(() => SystemStatus.FlightTime = value.HasValue ? TimeSpan.FromSeconds(value.Value.value / 10) : TimeSpan.Zero);
         }
 
         private void DJIDrone_CompassHasErrorChanged(object sender, BoolMsg? value)
         {
-            SystemStatus.CompassNeedsCaliabration = value.HasValue ? value.Value.value : false;
+            RunOnUIThread(() => SystemStatus.CompassNeedsCaliabration = value.HasValue ? value.Value.value : false);
         }
 
         private void DJIDrone_AreMotorsOnChanged(object sender, BoolMsg? value)
         {
-            SystemStatus.Armed = value.HasValue ? value.Value.value : false;
+            RunOnUIThread(() => SystemStatus.Armed = value.HasValue ? value.Value.value : false);
         }
 
         public async void RunOnUIThread(Action action)
@@ -158,18 +159,7 @@ namespace LagoVista.Uas.BaseStation.App.Drones
 
         private void DJIDrone_VoltageChanged(object sender, IntMsg? value)
         {
-            RunOnUIThread(() =>
-            {
-                if (value.HasValue)
-                {
-                    if (!this.Batteries.Any())
-                    {
-                        var batt = new Battery();
-                    }
-
-                    this.Batteries.First().Voltage = Convert.ToSingle(value.Value.value / 1000.0);
-                }
-            });
+            RunOnUIThread(() => this.Batteries.First().Voltage = value.HasValue ? Convert.ToSingle(value.Value.value / 1000.0) : 0);
         }
 
         private void DJIDrone_AircraftLocationChanged(object sender, LocationCoordinate2D? value)

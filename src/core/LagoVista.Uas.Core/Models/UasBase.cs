@@ -80,10 +80,7 @@ namespace LagoVista.Uas.Core
 
         public Battery Battery
         {
-            get
-            {
-                return Batteries.First();
-            }
+            get => Batteries.First();
         }
 
         public ObservableCollection<Battery> Batteries { get; }
@@ -101,6 +98,11 @@ namespace LagoVista.Uas.Core
         {
             get { return _location; }
             set { Set(ref _location, value); }
+        }
+
+        public GPS GSP
+        {
+            get => GPSs.First();
         }
 
         public ObservableCollection<GPS> GPSs { get; }

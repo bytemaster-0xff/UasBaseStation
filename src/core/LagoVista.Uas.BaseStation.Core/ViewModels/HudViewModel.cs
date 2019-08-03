@@ -3,6 +3,7 @@ using LagoVista.Client.Core.ViewModels;
 using LagoVista.Core.Commanding;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.Core;
+using LagoVista.Uas.Core.Controller;
 using LagoVista.Uas.Core.Interfaces;
 using LagoVista.Uas.Core.MavLink;
 
@@ -36,5 +37,12 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public IConnectedUasManager UasMgr { get;  }
 
         public RelayCommand EditMissionCommand { get; }
+
+        INiVekFlightStickState _flightStickState;
+        public INiVekFlightStickState FlightStickState
+        {
+            get => _flightStickState;
+            set => Set(ref _flightStickState, value);
+        }
     }
 }

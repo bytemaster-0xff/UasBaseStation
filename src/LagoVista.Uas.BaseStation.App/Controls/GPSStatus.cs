@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LagoVista.Uas.Core.Models;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -21,7 +22,7 @@ namespace LagoVista.Uas.BaseStation.App.Controls
 
             _gps = new TextBlock();
             _gps.Foreground = ForegroundBrush;
-            _gps.Text = "FIX: ??";
+            _gps.Text = "FIX: No Fix";
 
             _satCount = new TextBlock();
             _satCount.Foreground = ForegroundBrush;
@@ -30,10 +31,12 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             _hdop = new TextBlock();
             _hdop.Foreground = ForegroundBrush;
             _hdop.Text = "HDOP: ??";
+            _hdop.Visibility = Visibility.Collapsed;
 
             _vdop = new TextBlock();
             _vdop.Foreground = ForegroundBrush;
             _vdop.Text = "VDOP: ??";
+            _vdop.Visibility = Visibility.Collapsed;
 
             container.Children.Add(gpsLabel);
             container.Children.Add(_gps);
@@ -85,6 +88,44 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             {
                 SetValue(VDOPProperty, value);
                 RunOnUIThread(() => _vdop.Text = $"VDOP: {value:0.00}m");
+            }
+        }
+
+        public static DependencyProperty GPSProperty = DependencyProperty.Register(nameof(GPS), typeof(GPS), typeof(GPSStatus), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) => (obj as GPSStatus).GPS = value.NewValue as GPS)));
+        public GPS GPS
+        {
+            get => GetValue(GPSProperty) as GPS;
+            set
+            {
+                SetValue(GPSProperty, value);
+                RunOnUIThread(() =>
+                {
+                    if (!String.IsNullOrEmpty(value.FixType))
+                    {
+                        _satCount.Text = $"FIX: {value.FixType}";
+                    }
+
+                    _satCount.Text = $"SATS: {value.SateliteCount}";
+                    if (value.VDOP > 0)
+                    {
+                        _vdop.Text = $"VDOP: {value.VDOP}";
+                        _vdop.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        _vdop.Visibility = Visibility.Collapsed;
+                    }
+
+                    if (value.HDOP > 0)
+                    {
+                        _hdop.Text = $"HDOP: {value.HDOP}";
+                        _hdop.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        _hdop.Visibility = Visibility.Collapsed;
+                    }
+                });
             }
         }
     }

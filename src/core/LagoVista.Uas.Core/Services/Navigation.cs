@@ -14,7 +14,7 @@ namespace LagoVista.Uas.Core.Services
     {
         IConnectedUasManager _connectedUasManager;
         IMissionPlanner missionPlanner;
-       
+
         public Navigation(IConnectedUasManager connectUasManager, IMissionPlanner missionPlanner)
         {
             _connectedUasManager = connectUasManager;
@@ -30,13 +30,13 @@ namespace LagoVista.Uas.Core.Services
 
         public void Takeoff()
         {
-            var msg =  UasCommands.NavTakeoff(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, float.NaN, 0, TakeoffAltitude);            
+            var msg = UasCommands.NavTakeoff(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, float.NaN, 0, TakeoffAltitude);
             _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
         public void StartMission()
         {
-            var msg = UasCommands.MissionStart(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0,5);
+            var msg = UasCommands.MissionStart(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 5);
             _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
@@ -48,42 +48,60 @@ namespace LagoVista.Uas.Core.Services
 
         public void GoToLocation()
         {
-            
+
         }
 
-        public void SetVirtualJoystick(double throttle, double pitch, double roll, double yaw)
+        private void SendMessage(UasMessage msg)
+        {
+            if (_connectedUasManager.Active != null)
+            {
+                _connectedUasManager.Active.Transport.SendMessage(msg);
+            }
+        }
+
+        public void SetVirtualJoystick(short throttle, short pitch, short roll, short yaw)
         {
 
+            var msg = new UasManualControl()
+            {
+                R = yaw,
+                X = pitch,
+                Y = roll,
+                Z = throttle,
+
+            };
+
+            _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
         public void Arm()
         {
             var msg = UasCommands.ComponentArmDisarm(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 1);
-            _connectedUasManager.Active.Transport.SendMessage(msg);
+            SendMessage(msg);
         }
 
         public void Disarm()
         {
             var msg = UasCommands.ComponentArmDisarm(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 1);
-            _connectedUasManager.Active.Transport.SendMessage(msg);
+            SendMessage(msg);
         }
 
         public void Land()
         {
             var msg = UasCommands.NavLandLocal(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, 0, 0, 0, 0, 0);
-            _connectedUasManager.Active.Transport.SendMessage(msg);
+            SendMessage(msg);
         }
 
         public void ReturnToHome()
         {
             var msg = UasCommands.NavReturnToLaunch(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId);
-            _connectedUasManager.Active.Transport.SendMessage(msg);
+            SendMessage(msg);
         }
 
         public void GetHomePosition()
         {
             var msg = UasCommands.GetHomePosition(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, 0, 0, 0, 0, 0);
-            _connectedUasManager.Active.Transport.SendMessage(msg);
+            SendMessage(msg);
         }
 
         private float _talepffAltitude = 2;

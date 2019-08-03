@@ -61,18 +61,25 @@ namespace LagoVista.Uas.BaseStation.App.Drones
             switch (msg.MessageId)
             {
                 case UasMessages.CommandLong:
-                    var cmd = msg as UasCommandLong;
-                    switch (cmd.Command)
                     {
-                        case 22:
-                            DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).StartTakeoffAsync();
-                            break;
+                        var cmd = msg as UasCommandLong;
+                        switch (cmd.Command)
+                        {
+                            case 22:
+                                DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).StartTakeoffAsync();
+                                break;
 
-                        case 23:
-                            DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).StartAutoLandingAsync();
-                            break;
+                            case 23:
+                                DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).StartAutoLandingAsync();
+                                break;
+                        }
                     }
-
+                    break;
+                case UasMessages.ManualControl:
+                    {
+                        var cmd = msg as UasManualControl;
+                        DJISDKManager.Instance.VirtualRemoteController.UpdateJoystickValue(cmd.Z / 1000.0f, cmd.Y / 1000.0f, cmd.X / 1000.0f, cmd.R / 1000.0f);
+                    }
                     break;
             }
         }
