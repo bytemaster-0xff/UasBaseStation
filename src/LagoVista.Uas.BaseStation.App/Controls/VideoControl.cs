@@ -2,6 +2,7 @@
 using DJIVideoParser;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -134,9 +135,10 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             {
                 _videoParser = new DJIVideoParser.Parser();
                 _videoParser.Initialize(delegate (byte[] data)
-                {
+                {                 
                     //Note: This function must be called because we need DJI Windows SDK to help us to parse frame data.
-                    return DJISDKManager.Instance.VideoFeeder.ParseAssitantDecodingInfo(0, data);
+                    var result = DJISDKManager.Instance.VideoFeeder.ParseAssitantDecodingInfo(0, data);                    
+                    return result;
                 });
                 //Set the swapChainPanel to display and set the decoded data callback.
                 _videoParser.SetSurfaceAndVideoCallback(0, 0, _swapChainPannel, ReceiveDecodedData);
@@ -173,9 +175,10 @@ namespace LagoVista.Uas.BaseStation.App.Controls
         //raw data
         void OnVideoPush(VideoFeed sender, byte[] bytes)
         {
+            var sw = new Stopwatch();
             _videoParser.PushVideoData(0, 0, bytes, bytes.Length);
+            Debug.WriteLine($"TIme to Parse Data: {sw.Elapsed.TotalMilliseconds}");
         }
-
 
         private void _stopVideo_Click(object sender, RoutedEventArgs e)
         {

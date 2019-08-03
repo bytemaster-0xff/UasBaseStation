@@ -35,7 +35,6 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             _vdop.Foreground = ForegroundBrush;
             _vdop.Text = "VDOP: ??";
 
-
             container.Children.Add(gpsLabel);
             container.Children.Add(_gps);
             container.Children.Add(_satCount);
@@ -45,28 +44,48 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             Children.Add(container);
         }
 
+        public static DependencyProperty FixTypeProperty = DependencyProperty.Register(nameof(FixType), typeof(string), typeof(GPSStatus), new PropertyMetadata(default(string), new PropertyChangedCallback((obj, value) => (obj as GPSStatus).FixType = Convert.ToString(value.NewValue))));
         public String FixType
         {
-            get { return _gps.Text; }
-            set { _gps.Text = $"FIX : {value};"; }
+            get { return Convert.ToString(GetValue(FixTypeProperty)); }
+            set
+            {
+                SetValue(FixTypeProperty, value);
+                RunOnUIThread(() => _gps.Text = $"FIX : {value};");
+            }
         }
 
+        public static DependencyProperty SatCountProperty = DependencyProperty.Register(nameof(SatCount), typeof(int), typeof(GPSStatus), new PropertyMetadata(default(int), new PropertyChangedCallback((obj, value) => (obj as GPSStatus).SatCount = Convert.ToInt32(value.NewValue))));
         public int SatCount
         {
-            get { return 0; }
-            set { _satCount.Text = $"SATS: {value}"; }
+            get { return Convert.ToInt32(GetValue(SatCountProperty)); }
+            set
+            {
+                SetValue(SatCountProperty, value);
+                RunOnUIThread(() => _satCount.Text = $"SATS: {value}");
+            }
         }
 
-        public double HDOP
+        public static DependencyProperty HDOPProperty = DependencyProperty.Register(nameof(HDOP), typeof(float), typeof(GPSStatus), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) => (obj as GPSStatus).HDOP = Convert.ToSingle(value.NewValue))));
+        public float HDOP
         {
-            get { return 0; }
-            set { _hdop.Text = $"HDOP: {value:0.00}m"; }
+            get { return Convert.ToSingle(GetValue(HDOPProperty)); }
+            set
+            {
+                SetValue(HDOPProperty, value);
+                RunOnUIThread(() => _hdop.Text = $"HDOP: {value:0.00}m");
+            }
         }
 
-        public double VDOP
+        public static DependencyProperty VDOPProperty = DependencyProperty.Register(nameof(VDOP), typeof(float), typeof(GPSStatus), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) => (obj as GPSStatus).VDOP = Convert.ToSingle(value.NewValue))));
+        public float VDOP
         {
-            get { return 0; }
-            set { _vdop.Text = $"VDOP: {value:0.00}m"; }
+            get { return Convert.ToSingle(GetValue(VDOPProperty)); }
+            set
+            {
+                SetValue(VDOPProperty, value);
+                RunOnUIThread(() => _vdop.Text = $"VDOP: {value:0.00}m");
+            }
         }
     }
 }

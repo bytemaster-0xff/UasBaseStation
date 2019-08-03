@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
@@ -32,26 +33,31 @@ namespace LagoVista.Uas.BaseStation.App.Controls
                 StrokeThickness = 2,
                 HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right
             });
-
         }
 
-
-        public double Altitude
+        public static DependencyProperty AltitudeProperty = DependencyProperty.Register(nameof(Altitude), typeof(float), typeof(AltitudeIndicator), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) => (obj as AltitudeIndicator).Altitude = Convert.ToSingle(value.NewValue))));
+        public float Altitude
         {
-            set { _altitude.Text = $"{value:0.00}m"; }
-        }
-
-
-        GeoLocation _location;
-        public GeoLocation Location
-        {
-            get { return _location; }
+            get { return Convert.ToSingle(GetValue(AltitudeProperty)); }
             set
             {
-                _location = value;
-                if (_location != null)
+                SetValue(AltitudeProperty, value);
+                _altitude.Text = $"{value:0.00}m";
+            }
+        }
+
+
+        public static DependencyProperty LocationProperty = DependencyProperty.Register(nameof(Location), typeof(GeoLocation), typeof(AltitudeIndicator), new PropertyMetadata(default(GeoLocation), new PropertyChangedCallback((obj, value) => (obj as AltitudeIndicator).Location = value.NewValue as GeoLocation)));
+        public GeoLocation Location
+        {
+            get { return GetValue(LocationProperty) as GeoLocation; }
+            set
+            {
+                SetValue(LocationProperty, value);
+
+                if (value != null)
                 {
-                    Altitude = _location.Altitude;
+                    Altitude = Convert.ToSingle(value.Altitude);
                 }
             }
         }

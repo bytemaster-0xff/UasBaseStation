@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
@@ -34,17 +35,17 @@ namespace LagoVista.Uas.BaseStation.App.Controls
 
             _armedControl.Text = "DISARMED";
 
-            _batteryControl.Text = "Battery: ???";            
-            
+            _batteryControl.Text = "Battery: ???";
+
             _timeRemainingControl.Text = "TIME: -";
             _percentRemainingControl.Text = "PERCENT: -";
 
             container.Children.Add(_armedControl);
             container.Children.Add(new TextBlock()
             {
-                Text="Battery",
+                Text = "Battery",
                 Foreground = ForegroundBrush,
-                Margin = new Windows.UI.Xaml.Thickness(0,10,0,0)
+                Margin = new Windows.UI.Xaml.Thickness(0, 10, 0, 0)
             });
             container.Children.Add(_batteryControl);
             container.Children.Add(_percentRemainingControl);
@@ -52,50 +53,51 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             Children.Add(container);
         }
 
-        bool _armed;
+        public static DependencyProperty ArmedProperty = DependencyProperty.Register(nameof(Armed), typeof(bool), typeof(SystemStatus), new PropertyMetadata(default(bool), new PropertyChangedCallback((obj, value) => (obj as SystemStatus).Armed = Convert.ToBoolean(value.NewValue))));
         public bool Armed
         {
-            get { return _armed; }
+            get { return Convert.ToBoolean(GetValue(ArmedProperty)); }
             set
             {
-                _armed = value;
-                _armedControl.Text = value ? "ARMED" : "DISARMED";
+                SetValue(ArmedProperty, value);
+
+                RunOnUIThread(() => _armedControl.Text = value ? "ARMED" : "DISARMED");
             }
         }
 
-        double _batteryVoltage;
-        public double BatteryVoltage
+        public static DependencyProperty BatteryVoltageProperty = DependencyProperty.Register(nameof(BatteryVoltage), typeof(float), typeof(SystemStatus), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) => (obj as SystemStatus).BatteryVoltage = Convert.ToSingle(value.NewValue))));
+
+        public Single BatteryVoltage
         {
-            get { return _batteryVoltage; }
+            get { return Convert.ToSingle(GetValue(BatteryVoltageProperty)); }
             set
             {
-                Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low,() =>
-                {
-                    _batteryVoltage = value;
-                    _batteryControl.Text = String.Format("Battery {0:0.00}V", _batteryVoltage);
-                });
+                SetValue(BatteryVoltageProperty, value);
+
+                RunOnUIThread(() => _batteryControl.Text = String.Format("Battery {0:0.00}V", value));
             }
         }
 
-        double _percentRemaining;
-        public double PercentRemaining
+        public static DependencyProperty PercentRemainingProperty = DependencyProperty.Register(nameof(PercentRemaining), typeof(float), typeof(SystemStatus), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) => (obj as SystemStatus).PercentRemaining = Convert.ToSingle(value.NewValue))));
+        public Single PercentRemaining
         {
-            get { return _percentRemaining; }
+            get { return Convert.ToSingle(GetValue(PercentRemainingProperty)); }
             set
             {
-                _percentRemaining = value;
-                _percentRemainingControl.Text = String.Format("{0:0.0}%", _percentRemaining);
+                SetValue(PercentRemainingProperty, value);
+
+                RunOnUIThread(() => _percentRemainingControl.Text = String.Format("{0:0.0}%", value));
             }
         }
 
-        int _timeRemaining;
+        public static DependencyProperty TimeRemainingProperty = DependencyProperty.Register(nameof(TimeRemaining), typeof(float), typeof(SystemStatus), new PropertyMetadata(default(int), new PropertyChangedCallback((obj, value) => (obj as SystemStatus).TimeRemaining = Convert.ToInt32(value.NewValue))));
         public int TimeRemaining
         {
-            get { return _timeRemaining; }
+            get { return Convert.ToInt32(GetValue(TimeRemainingProperty)); }
             set
             {
-                _timeRemaining = value;
-                _timeRemainingControl.Text = String.Format("Time {0}", value);
+                SetValue(TimeRemainingProperty, value);
+                RunOnUIThread(() => _timeRemainingControl.Text = String.Format("Time {0}", value));
             }
         }
     }

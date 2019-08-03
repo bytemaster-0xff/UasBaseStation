@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
@@ -16,7 +17,7 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             _rollTransform = new RotateTransform()
             {
                 Angle = 0,
-                CenterX = 240,
+                CenterX = 320,
                 CenterY = 240
             };
 
@@ -52,27 +53,23 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             }
         }
 
-        double _roll;
-        public double Roll
+        public static readonly DependencyProperty RollProperty = DependencyProperty.Register(nameof(Roll), typeof(float), typeof(AoACircle), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) =>  (obj as AoACircle).Roll = Convert.ToSingle(value.NewValue))));
+
+        public float Roll
         {
-            get { return _roll; }
+            get { return Convert.ToSingle(GetValue(RollProperty)); }
             set
             {
-                _roll = value;
-                _rollTransform.Angle = Roll;
+                SetValue(RollProperty, value);
+                RunOnUIThread(() => _rollTransform.Angle = Roll);
             }
         }
 
-        double _pitch;
-        public double Pitch
+        public static readonly DependencyProperty PitchProperty = DependencyProperty.Register(nameof(Pitch), typeof(float), typeof(AoACircle), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) => (obj as AoACircle).Pitch = Convert.ToSingle(value.NewValue))));
+        public float Pitch
         {
-            get { return _pitch; }
-            set
-            {
-                _pitch = value;
-
-            }
+            get { return Convert.ToSingle(GetValue(PitchProperty)); }
+            set { SetValue(PitchProperty, value); }
         }
-
     }
 }

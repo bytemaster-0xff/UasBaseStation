@@ -30,7 +30,15 @@ namespace LagoVista.Uas.BaseStation.App.Controls
         SolidColorBrush _foregroundBrush = new SolidColorBrush(Colors.White);
         protected SolidColorBrush ForegroundBrush
         {
-            get { return _foregroundBrush; }           
+            get { return _foregroundBrush; }
+        }
+
+        public async void RunOnUIThread(Action action)
+        {
+            await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () =>
+             {
+                 action();
+             });
         }
     }
 }

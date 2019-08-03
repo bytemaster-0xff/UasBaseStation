@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 
 namespace LagoVista.Uas.BaseStation.App.Drones
 {
@@ -17,8 +19,11 @@ namespace LagoVista.Uas.BaseStation.App.Drones
         ComponentManager _componentMgr;
         IConnectedUasManager _mgr;
 
-        public DJIDrone(IConnectedUasManager mgr) : base(null)
+        private readonly CoreDispatcher _dispatcher;
+
+        public DJIDrone(IConnectedUasManager mgr, CoreDispatcher dispatcher) : base(null)
         {
+            this._dispatcher = dispatcher;
             this._mgr = mgr ?? throw new ArgumentNullException(nameof(mgr));
             Task.Run(() =>
             {
@@ -35,7 +40,7 @@ namespace LagoVista.Uas.BaseStation.App.Drones
             DJISDKManager.Instance.RegisterApp("96ddcaa937503c0d37e9cdd9");
         }
 
-        private void Instance_SDKRegistrationStateChanged(SDKRegistrationState state, SDKError errorCode)
+        private async void Instance_SDKRegistrationStateChanged(SDKRegistrationState state, SDKError errorCode)
         {
             if (errorCode == SDKError.NO_ERROR)
             {
@@ -50,23 +55,34 @@ namespace LagoVista.Uas.BaseStation.App.Drones
                     DJISDKManager.Instance.ComponentManager.GetProductHandler(0).ProductTypeChanged += DJIDrone_ProductTypeChanged;
                 }
 
-                if(_mgr.Active == null)
+                if (_mgr.Active == null)
                 {
-                    _mgr.SetActive(new ConnectedUas(this, new DJITransport(this)));
+                    await this._dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        _mgr.SetActive(new ConnectedUas(this, new DJITransport(this)));
+                    });
                 }
                 Debug.WriteLine("Product Registered");
             }
             else
             {
-                Debug.WriteLine(errorCode.ToString());
+                Debug.WriteLine("REG: " + errorCode.ToString());
             }
+        }
+
+        public async void RunOnUIThread(Action action)
+        {
+            await this._dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Low, () =>
+            {
+                action();
+            });
         }
 
         private void DJIDrone_ProductTypeChanged(object sender, ProductTypeMsg? value)
         {
             if (value.HasValue)
             {
-                Debug.WriteLine(value.Value.value.ToString());
+                Debug.WriteLine("PROD TYPE: " + value.Value.value.ToString());
             }
 
         }
@@ -86,65 +102,80 @@ namespace LagoVista.Uas.BaseStation.App.Drones
 
         private void DJIDrone_VoltageChanged(object sender, IntMsg? value)
         {
-            if (value.HasValue)
-            {     
-                Debug.WriteLine(value.Value.value);
-                if(!this.Batteries.Any())
+            RunOnUIThread(() =>
+            {
+                if (value.HasValue)
                 {
-                    var batt = new Battery();
+                    Debug.WriteLine(value.Value.value);
+                    if (!this.Batteries.Any())
+                    {
+                        var batt = new Battery();
+                    }
+
+                    this.Batteries.First().Voltage = Convert.ToSingle(value.Value.value / 1000.0);
                 }
-               
-                this.Batteries.First().Voltage = Convert.ToSingle(value.Value.value / 1000.0);
-            }
+            });
         }
 
         private void DJIDrone_AircraftLocationChanged(object sender, LocationCoordinate2D? value)
         {
-            if (value.HasValue)
+            RunOnUIThread(() =>
             {
-                this.Location.Latitude = value.Value.latitude;
-                this.Location.Longitude = value.Value.longitude;
-            }
+                if (value.HasValue)
+                {
+                    this.Location.Latitude = value.Value.latitude;
+                    this.Location.Longitude = value.Value.longitude;
+                }
+            });
         }
 
         private void DJIDrone_AltitudeChanged(object sender, DoubleMsg? value)
         {
-            this.RangeFinder.GaugeStatus = value.HasValue ? GaugeStatus.OK : GaugeStatus.Warning;
-            if (value.HasValue)
+            RunOnUIThread(() =>
             {
-                this.RangeFinder.Distance = Convert.ToSingle(value.Value.value);
-                this.Location.Altitude = Convert.ToSingle(value.Value.value);
-            }
+                this.RangeFinder.GaugeStatus = value.HasValue ? GaugeStatus.OK : GaugeStatus.Warning;
+                if (value.HasValue)
+                {
+                    this.RangeFinder.Distance = Convert.ToSingle(value.Value.value);
+                    this.Location.Altitude = Convert.ToSingle(value.Value.value);
+                }
+            });
         }
 
         private void DJIDrone_AttitudeChanged(object sender, DJI.WindowsSDK.Attitude? value)
         {
-            if (value.HasValue)
+            RunOnUIThread(() =>
             {
-                this.Attitude.GaugeStatus = GaugeStatus.OK;
-                this.Attitude.Pitch = Convert.ToSingle(value.Value.pitch);
-                this.Attitude.Roll = Convert.ToSingle(value.Value.roll);
-                this.Attitude.Yaw = Convert.ToSingle(value.Value.yaw);
-            }
-            else
-            {
-                this.Attitude.GaugeStatus = GaugeStatus.Warning;
-            }
+                if (value.HasValue)
+                {
+                    this.Attitude.GaugeStatus = GaugeStatus.OK;
+                    this.Attitude.Pitch = Convert.ToSingle(value.Value.pitch);
+                    this.Attitude.Roll = Convert.ToSingle(value.Value.roll);
+                    this.Attitude.Yaw = Convert.ToSingle(value.Value.yaw);
+                }
+                else
+                {
+                    this.Attitude.GaugeStatus = GaugeStatus.Warning;
+                }
+            });
         }
 
         private void DJIDrone_VelocityChanged(object sender, Velocity3D? value)
         {
-            if (value.HasValue)
+            RunOnUIThread(() =>
             {
-                this.Attitude.GaugeStatus = GaugeStatus.OK;
-                this.Attitude.PitchSpeed = Convert.ToSingle(value.Value.x);
-                this.Attitude.RollSpeed = Convert.ToSingle(value.Value.y);
-                this.Attitude.YawSpeed = Convert.ToSingle(value.Value.z);
-            }
-            else
-            {
-                this.Attitude.GaugeStatus = GaugeStatus.Warning;
-            }
+                if (value.HasValue)
+                {
+                    this.Attitude.GaugeStatus = GaugeStatus.OK;
+                    this.Attitude.PitchSpeed = Convert.ToSingle(value.Value.x);
+                    this.Attitude.RollSpeed = Convert.ToSingle(value.Value.y);
+                    this.Attitude.YawSpeed = Convert.ToSingle(value.Value.z);
+                }
+                else
+                {
+                    this.Attitude.GaugeStatus = GaugeStatus.Warning;
+                }
+            });
         }
     }
 }

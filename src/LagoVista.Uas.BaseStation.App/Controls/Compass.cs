@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -112,19 +107,20 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             Children.Add(_headingLabel);
             Children.Add(_compass);
         }
-        
 
-        double _heading;
-        public double Heading
+        public static DependencyProperty HeadingProperty = DependencyProperty.Register(nameof(Heading), typeof(float), typeof(Compass), new PropertyMetadata(default(float), new PropertyChangedCallback((obj, value) => (obj as Compass).Heading = Convert.ToSingle(value.NewValue))));
+        public Single Heading
         {
-            get { return _heading; }
+            get { return Convert.ToSingle(GetValue(HeadingProperty)); }
             set
             {
-                _heading = value;
-                _headingLabel.Text = $"{value:0.0}°";
-                _compassTransform.Angle = 270 - value;
+                SetValue(HeadingProperty, value);
+                RunOnUIThread(() =>
+                {
+                    _headingLabel.Text = $"{value:0.0}°";
+                    _compassTransform.Angle = 270 - value;
+                });
             }
         }
-
     }
 }

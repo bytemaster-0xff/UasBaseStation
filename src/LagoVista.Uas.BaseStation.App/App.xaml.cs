@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+﻿using LagoVista.Core.IOC;
+using LagoVista.Uas.BaseStation.App.Drones;
+using LagoVista.Uas.Core;
+using LagoVista.Uas.Core.Models;
+using LagoVista.Uas.Core.Services;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace LagoVista.Uas.BaseStation.App
@@ -30,7 +25,11 @@ namespace LagoVista.Uas.BaseStation.App
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+
         }
+
+        public static App Current { get; }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -59,6 +58,15 @@ namespace LagoVista.Uas.BaseStation.App
                 Window.Current.Content = rootFrame;
             }
 
+            var uasMgr = new ConnectedUasManager();
+            SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
+            SLWIOC.RegisterSingleton<IConnectedUasManager>(uasMgr);
+            SLWIOC.Register<IMissionPlanner, MissionPlanner>();
+            SLWIOC.RegisterSingleton<IConfigurationManager>(new ConfigurationManager());
+            SLWIOC.RegisterSingleton<ITelemetryService, TelemetryService>();
+
+            new DJIDrone(uasMgr, Window.Current.Dispatcher);
+
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
@@ -71,6 +79,8 @@ namespace LagoVista.Uas.BaseStation.App
                 // Ensure the current window is active
                 Window.Current.Activate();
             }
+
+
         }
 
         /// <summary>

@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
 namespace LagoVista.Uas.BaseStation.App.Controls
 {
-    public class ArtificialHorizon : Grid
+    public class ArtificialHorizon : HudControlBase
     {
         Polygon _sky;
         Polygon _ground;
@@ -67,6 +68,11 @@ namespace LagoVista.Uas.BaseStation.App.Controls
                 new Windows.Foundation.Point(0, 240),
             };
 
+            Clip = new RectangleGeometry()
+            {
+                Rect = new Rect(0, 0, 640, 580)
+            };
+
             Children.Add(_sky);
             Children.Add(_ground);
         }
@@ -95,32 +101,45 @@ namespace LagoVista.Uas.BaseStation.App.Controls
         {
             var pitch = 240 + Pitch * 5;
 
-            var y1 = pitch - (Math.Sin((_roll * Math.PI) / 180.0f) * 320);
-            var y2 = pitch + (Math.Sin((_roll * Math.PI) / 180.0f) * 320);
+            var y1 = pitch - (Math.Sin((Roll * Math.PI) / 180.0f) * 320);
+            var y2 = pitch + (Math.Sin((Roll * Math.PI) / 180.0f) * 320);
 
             P1 = new Point(0, y1);
             P2 = new Point(640, y2);
         }
 
-        private float _roll;
+        public static DependencyProperty RollProperty = DependencyProperty.Register(nameof(Roll), typeof(float), typeof(ArtificialHorizon), new PropertyMetadata(null, new PropertyChangedCallback(OnRollChanged)));
+
+        private static void OnRollChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            (obj as ArtificialHorizon).Roll = Convert.ToSingle(args.NewValue);
+        }
+
         public float Roll
         {
-            get { return _roll; }
+            get { return Convert.ToSingle(GetValue(RollProperty)); }
             set
             {
-                _roll = value;
-                SetHorizon();
+                SetValue(RollProperty, value);
+                RunOnUIThread(() => SetHorizon());
+
             }
         }
 
-        private float _pitch;
+        public static DependencyProperty PitchProperty = DependencyProperty.Register(nameof(Pitch), typeof(float), typeof(ArtificialHorizon), new PropertyMetadata(null, new PropertyChangedCallback(OnPitchChanged)));
+
+        private static void OnPitchChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            (obj as ArtificialHorizon).Pitch = Convert.ToSingle(args.NewValue);
+        }
+
         public float Pitch
         {
-            get { return _pitch; }
+            get { return Convert.ToSingle(GetValue(PitchProperty)); }
             set
             {
-                _pitch = value;
-                SetHorizon();
+                SetValue(PitchProperty, value);
+                RunOnUIThread(() => SetHorizon());
             }
         }
     }

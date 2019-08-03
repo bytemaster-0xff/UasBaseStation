@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="Black">
+    Background="SteelBlue">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -23,33 +23,37 @@
         </Grid.ColumnDefinitions>
 
         <Grid Background="SteelBlue" Grid.Column="1">
-            <Grid Grid.Column="1">
+            <Grid Grid.Column="1" >
+                <ctl:ArtificialHorizon Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" />
                 <ctl:VideoControl x:Name="AOAControl"  Width="640" Height="480" HorizontalAlignment="Center"  VerticalAlignment="Top"/>
-                <ctl:AoACircle  Width="640" Height="480" HorizontalAlignment="Center" />
-                <ctl:AltitudeIndicator />
-                <ctl:Compass VerticalAlignment="Top" />
+                <ctl:SystemStatus />
+                <ctl:AoACircle Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" HorizontalAlignment="Center" />
+                <ctl:AltitudeIndicator Altitude="{Binding Path=UasMgr.Active.Uas.RangeFinder.Distance, Mode=TwoWay}" />
+                <ctl:Compass VerticalAlignment="Top" Heading="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" />
+                <ctl:GPSStatus VerticalAlignment="Center" />
             </Grid>
         </Grid>
 
-        <StackPanel Grid.Row="2" Grid.Column="2" Background="White"  >
-            <StackPanel Orientation="Vertical"  >
-                <Button Content="Arm" Command="{Binding Navigation.ArmCommand}" Width="120" Height="60" />
-                <Button Content="Disarm" Command="{Binding Navigation.DisarmCommand}" Width="120" Height="60" />
-                <Button Content="Takeoff" Command="{Binding Navigation.TakeoffCommand}" Width="120" Height="60" />
-                <Button Content="Land" Command="{Binding Navigation.LandCommand}" Width="120" Height="60" />
-                <Button Content="Edit" Command="{Binding EditMissionCommand}" Width="120" Height="60" />
+        <Grid Grid.Row="2" Grid.Column="2" Background="White">
+            <StackPanel  HorizontalAlignment="Right" >
+                <StackPanel Orientation="Vertical"  >
+                    <Button Content="Arm" Command="{Binding Path=Navigation.ArmCommand}" Width="120" Height="60" />
+                    <Button Content="Disarm" Command="{Binding Navigation.DisarmCommand}" Width="120" Height="60" />
+                    <Button Content="Takeoff" Command="{Binding Navigation.TakeoffCommand}" Width="120" Height="60" />
+                    <Button Content="Land" Command="{Binding Navigation.LandCommand}" Width="120" Height="60" />
+                    <Button Content="Edit" Command="{Binding EditMissionCommand}" Width="120" Height="60" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" >
+                    <Button Content="Raise" Command="{Binding LandingGear.RaiseLandingGearCommand}" Width="120" Height="60" />
+                    <Button Content="Lower" Command="{Binding LandingGear.LowerLandingGearCommand}" Width="120" Height="60" />
+                </StackPanel>
+
             </StackPanel>
-            
-            <StackPanel Orientation="Horizontal" >
-                <Button Content="Raise" Command="{Binding LandingGear.RaiseLandingGearCommand}" Width="120" Height="60" />
-                <Button Content="Lower" Command="{Binding LandingGear.LowerLandingGearCommand}" Width="120" Height="60" />
-            </StackPanel>
-
-        </StackPanel>
-
-
+        </Grid>
+        
         <!-- flight state 6 pack -->
-        <Grid Grid.Row="2" Grid.Column="1" x:Name="StateGrid" Background="Black" ColumnSpacing="6" RowSpacing="6">
+        <Grid Grid.Row="2" Grid.Column="1" x:Name="StateGrid" ColumnSpacing="6" RowSpacing="6">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
@@ -89,19 +93,19 @@
             </Grid>
 
             <!-- attitude indicator -->
-            <StackPanel Grid.Row="0" Grid.Column="1">
+            <StackPanel Grid.Row="0" Grid.Column="1" Background="Silver">
                 <TextBlock>attitude indicator</TextBlock>
-                <StackPanel>
-                    <TextBlock>ROLL</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.Attitude.Roll}"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="120">ROLL</TextBlock>
+                    <TextBlock Text="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, FallbackValue=0.0}"></TextBlock>
                 </StackPanel>
-                <StackPanel>
-                    <TextBlock>PITCH</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.Attitude.Pitch}"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="120">PITCH</TextBlock>
+                    <TextBlock Text="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, FallbackValue=0.0}"></TextBlock>
                 </StackPanel>
-                <StackPanel>
-                    <TextBlock>YAW</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.Attitude.Yaw}"></TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Width="120">YAW</TextBlock>
+                    <TextBlock Text="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, FallbackValue=0.0}"></TextBlock>
                 </StackPanel>
             </StackPanel>
 
@@ -172,13 +176,13 @@
                 <!--Image Grid.RowSpan="3" Grid.Column="1" Source="Assets\gauge.png"/-->
                 <controls:RadialGauge Grid.RowSpan="3" Grid.Column="1" Margin="15"
                     Minimum="0" MinAngle="0" Maximum="360" MaxAngle="360" StepSize="0"
-                    Value="{Binding Path=StateViewModel.State.Position.Heading, Mode=TwoWay}" 
+                    Value="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" 
                     TickSpacing="45" TickLength="15" TickWidth="3" TickBrush="White"
                     ScalePadding="0" ScaleWidth="3" ScaleBrush="White" ScaleTickBrush="White" ScaleTickWidth="0"
                     TrailBrush="White" NeedleBrush="White" NeedleWidth="2" />
                 <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Top">
                     <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center">HDG (deg)</TextBlock>
-                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center" Text="{Binding Path=StateViewModel.State.Position.Heading}"></TextBlock>
+                    <TextBlock Foreground="White" FontSize="10" FontWeight="Bold"  HorizontalAlignment="Center" Text="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw}"></TextBlock>
                 </StackPanel>
             </Grid>
 

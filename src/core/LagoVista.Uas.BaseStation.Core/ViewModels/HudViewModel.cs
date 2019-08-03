@@ -18,6 +18,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             Connections = _connectedUasManager;
             LandingGear = new LandingGearViewModel(connectedUasManager);
             EditMissionCommand = new RelayCommand(()=> ViewModelNavigation.NavigateAsync<Missions.MissionPlannerViewModel>(this));
+            UasMgr = connectedUasManager;
         }
 
         public async override Task InitAsync()
@@ -31,6 +32,8 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public IConnectedUasManager Connections { get; }
 
         public INavigation Navigation { get; }
+
+        public IConnectedUasManager UasMgr { get;  }
 
         public RelayCommand EditMissionCommand { get; }
     }

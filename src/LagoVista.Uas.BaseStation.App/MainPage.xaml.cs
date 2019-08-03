@@ -1,5 +1,6 @@
 ﻿using LagoVista.Core.IOC;
 using LagoVista.Uas.BaseStation.App.Drones;
+using LagoVista.Uas.BaseStation.Core.ViewModels;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Services;
@@ -32,27 +33,17 @@ namespace LagoVista.Uas.BaseStation.App
         {
             base.OnNavigatedTo(e);
 
-            var uasMgr = new ConnectedUasManager();
-            SLWIOC.RegisterSingleton<IConnectedUasManager>(uasMgr);
-            SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
-            SLWIOC.Register<IMissionPlanner, MissionPlanner>();
-            SLWIOC.RegisterSingleton<IConfigurationManager>(new ConfigurationManager());
-            SLWIOC.RegisterSingleton<ITelemetryService, TelemetryService>();
-
-            var _djiDrone = new DJIDrone(uasMgr);
-            this.MissionPlanner = new MissionPlanner(uasMgr);
-
-            this.Navigation  = new LagoVista.Uas.Core.Services.Navigation(uasMgr, MissionPlanner);
+            var uasMgr = SLWIOC.Get<IConnectedUasManager>();
+            var missionPlanner = new MissionPlanner(uasMgr);
+            var navigation  = new LagoVista.Uas.Core.Services.Navigation(uasMgr, missionPlanner);
 
             AOAControl.GetDevices();
 
-            NotifyPropertyChanged(nameof(Navigation));
-            NotifyPropertyChanged(nameof(MissionPlanner));
-            DataContext = this;
+            DataContext = new HudViewModel(uasMgr, navigation);
+
+            NotifyPropertyChanged(nameof(ViewModel));
         }
 
-        public LagoVista.Uas.Core.Services.Navigation Navigation { get; private set; }
-
-        public MissionPlanner MissionPlanner { get; private set; }
+        public HudViewModel ViewModel { get; private set; }
     }
 }
