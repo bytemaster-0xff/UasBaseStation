@@ -51,6 +51,11 @@ namespace LagoVista.Uas.Core.Services
             
         }
 
+        public void SetVirtualJoystick(double throttle, double pitch, double roll, double yaw)
+        {
+
+        }
+
         public void Arm()
         {
             var msg = UasCommands.ComponentArmDisarm(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 1);

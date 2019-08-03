@@ -21,7 +21,7 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             _altitude = new TextBlock();
             _altitude.FontSize = 22;
             _altitude.VerticalAlignment = Windows.UI.Xaml.VerticalAlignment.Center;
-            _altitude.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Center;
+            _altitude.HorizontalAlignment = Windows.UI.Xaml.HorizontalAlignment.Right;
             _altitude.Foreground = ForegroundBrush;
             Children.Add(_altitude);
 

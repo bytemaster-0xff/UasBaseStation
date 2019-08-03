@@ -172,12 +172,12 @@ namespace LagoVista.Uas.BaseStation.App.Controls
         {
         }
 
+        System.DateTime _last = System.DateTime.Now;
+
         //raw data
         void OnVideoPush(VideoFeed sender, byte[] bytes)
         {
-            var sw = new Stopwatch();
             _videoParser.PushVideoData(0, 0, bytes, bytes.Length);
-            Debug.WriteLine($"TIme to Parse Data: {sw.Elapsed.TotalMilliseconds}");
         }
 
         private void _stopVideo_Click(object sender, RoutedEventArgs e)

@@ -94,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BindingHelper.cs" />
+    <Compile Include="Controller\GamePad.cs" />
     <Compile Include="Controls\AltitudeIndicator.cs" />
     <Compile Include="Controls\AoACircle.cs" />
     <Compile Include="Controls\ArtificialHorizon.cs" />

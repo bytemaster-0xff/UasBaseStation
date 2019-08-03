@@ -4,7 +4,8 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:uap4="http://schemas.microsoft.com/appx/manifest/uap/windows10/4"
+  IgnorableNamespaces="uap mp uap4">
 
   <Identity
     Name="com.software-logistics.nuviot"
@@ -45,5 +46,10 @@
 
   <Capabilities>
     <Capability Name="internetClient" />
+    <Capability Name="privateNetworkClientServer"/>
+    <uap4:Capability Name="offlineMapsManagement"/>
+    <Capability Name="internetClientServer"/>
+    <DeviceCapability Name="webcam"/>
+    <DeviceCapability Name="location"/>
   </Capabilities>
 </Package>

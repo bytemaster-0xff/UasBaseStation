@@ -2,6 +2,7 @@
 using LagoVista.Core.Models.Geo;
 using LagoVista.Uas.Core.Models;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace LagoVista.Uas.Core
 {
@@ -77,6 +78,14 @@ namespace LagoVista.Uas.Core
 
         public SensorList Sensors { get; }
 
+        public Battery Battery
+        {
+            get
+            {
+                return Batteries.First();
+            }
+        }
+
         public ObservableCollection<Battery> Batteries { get; }
 
         public ObservableCollection<RCChannel> Channels { get; }
@@ -93,7 +102,7 @@ namespace LagoVista.Uas.Core
             get { return _location; }
             set { Set(ref _location, value); }
         }
-        
+
         public ObservableCollection<GPS> GPSs { get; }
 
         GeoLocation _homeLocation;

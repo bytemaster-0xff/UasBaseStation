@@ -24,13 +24,14 @@
 
         <Grid Background="SteelBlue" Grid.Column="1">
             <Grid Grid.Column="1" >
-                <ctl:ArtificialHorizon Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" />
+              <!--  <ctl:ArtificialHorizon Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" />
+               --> 
                 <ctl:VideoControl x:Name="AOAControl"  Width="640" Height="480" HorizontalAlignment="Center"  VerticalAlignment="Top"/>
-                <ctl:SystemStatus />
+                <ctl:SystemStatus PercentRemaining="{Binding Path=UasMgr.Active.Uas.Battery.RemainingPercent, Mode=TwoWay}"  BatteryVoltage="{Binding Path=UasMgr.Active.Uas.Battery.Voltage, Mode=TwoWay}" />
                 <ctl:AoACircle Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" HorizontalAlignment="Center" />
                 <ctl:AltitudeIndicator Altitude="{Binding Path=UasMgr.Active.Uas.RangeFinder.Distance, Mode=TwoWay}" />
                 <ctl:Compass VerticalAlignment="Top" Heading="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" />
-                <ctl:GPSStatus VerticalAlignment="Center" />
+                <ctl:GPSStatus VerticalAlignment="Center"   />
             </Grid>
         </Grid>
 
@@ -211,37 +212,6 @@
                     <TextBlock Text="{Binding Path=StateViewModel.State.AirSpeed.AccelerationZ}"></TextBlock>
                 </StackPanel>
             </Grid>
-
-            <!--third row-->
-            <StackPanel Grid.Row="2" Grid.Column="0">
-                <TextBlock>hobbs meter</TextBlock>
-                <StackPanel>
-                    <TextBlock>MOTOR TIME (s)</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.HobbsMeter.MotorTimeInSeconds}"></TextBlock>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock>ESTIMATED TIME REMAINING (m)</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.HobbsMeter.FlightTimeRemainingInMinutes}"></TextBlock>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Grid.Row="2" Grid.Column="1">
-                <TextBlock>fuel (battery)</TextBlock>
-                <StackPanel>
-                    <TextBlock>% REMAINING</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.Battery.PercentRemaining}"></TextBlock>
-                </StackPanel>
-            </StackPanel>
-            <StackPanel Grid.Row="2" Grid.Column="3">
-                <TextBlock>temperature</TextBlock>
-                <StackPanel>
-                    <TextBlock>LOW (deg C)</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.Battery.TemperatureLowC}"></TextBlock>
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock>HIGH (deg C)</TextBlock>
-                    <TextBlock Text="{Binding Path=StateViewModel.State.Battery.TemperatureHighC}"></TextBlock>
-                </StackPanel>
-            </StackPanel>
         </Grid>
 
 

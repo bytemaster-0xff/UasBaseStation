@@ -61,7 +61,7 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             set
             {
                 SetValue(RollProperty, value);
-                RunOnUIThread(() => _rollTransform.Angle = Roll);
+                RunOnUIThread(() => _rollTransform.Angle = value);
             }
         }
 
@@ -69,7 +69,10 @@ namespace LagoVista.Uas.BaseStation.App.Controls
         public float Pitch
         {
             get { return Convert.ToSingle(GetValue(PitchProperty)); }
-            set { SetValue(PitchProperty, value); }
+            set {
+                SetValue(PitchProperty, value);
+                RunOnUIThread(() => _pitchTransform.Y = value);
+            }
         }
     }
 }

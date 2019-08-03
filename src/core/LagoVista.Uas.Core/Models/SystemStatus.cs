@@ -81,6 +81,13 @@ namespace LagoVista.Uas.Core.Models
             set { Set(ref _armed, value); }
         }
 
+        private bool _isFlying;
+        public bool IsFlying
+        {
+            get { return _isFlying; }
+            set { Set(ref _isFlying, value); }
+        }
+
         private bool _stabilized;
         public bool Stabilized
         {
@@ -122,6 +129,34 @@ namespace LagoVista.Uas.Core.Models
         {
             get { return _test; }
             set { Set(ref _test, value); }
+        }
+
+        private bool _compassNeedsCalibration = false;
+        public bool CompassNeedsCaliabration
+        {
+            get { return _compassNeedsCalibration; }
+            set { Set(ref _compassNeedsCalibration, value); }
+        }
+
+        private TimeSpan _flightTime = TimeSpan.Zero;
+        public TimeSpan FlightTime
+        {
+            get { return _flightTime; }
+            set { Set(ref _flightTime, value); }
+        }
+
+        private bool _lowBatteryWarning;
+        public bool LowBatteryWarning
+        {
+            get { return _lowBatteryWarning; }
+            set { Set(ref _lowBatteryWarning, value); }
+        }
+
+        private bool _criticalBatteryWarning;
+        public bool CriticalBatteryWarning
+        {
+            get { return _criticalBatteryWarning; }
+            set { Set(ref _criticalBatteryWarning, value); }
         }
 
         private string _customMode = String.Empty;

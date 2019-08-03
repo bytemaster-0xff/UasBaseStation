@@ -65,8 +65,8 @@ namespace LagoVista.Uas.Core.Models
             }
         }
 
-        int _timeRemaining;
-        public int TimeRemaining
+        TimeSpan _timeRemaining = TimeSpan.Zero;
+        public TimeSpan TimeRemaining
         {
             get { return _timeRemaining; }
             set
@@ -88,7 +88,7 @@ namespace LagoVista.Uas.Core.Models
             }
 
             Temperature = status.Temperature;
-            TimeRemaining = status.TimeRemaining;
+            TimeRemaining = TimeSpan.FromSeconds(status.TimeRemaining);
             UsedMAH = status.CurrentConsumed;
             RemainingPercent = status.BatteryRemaining;
 

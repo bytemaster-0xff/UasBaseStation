@@ -71,6 +71,9 @@ namespace LagoVista.Uas.BaseStation.UWP.Drone
                         case 23:
                             DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).StartAutoLandingAsync();
                             break;
+                        case 24:
+                            DJISDKManager.Instance.VirtualRemoteController.UpdateJoystickValue(0, 0, 0, 0);
+                            break;
                     }
 
                     break;
