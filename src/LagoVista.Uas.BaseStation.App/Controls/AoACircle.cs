@@ -3,7 +3,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 
-namespace LagoVista.Uas.BaseStation.App.Controls
+namespace LagoVista.Uas.BaseStation.ControlApp.Controls
 {
     public class AoACircle : HudControlBase
     {

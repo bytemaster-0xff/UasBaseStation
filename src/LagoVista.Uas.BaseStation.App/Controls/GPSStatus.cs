@@ -3,7 +3,7 @@ using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace LagoVista.Uas.BaseStation.App.Controls
+namespace LagoVista.Uas.BaseStation.ControlApp.Controls
 {
     public class GPSStatus : HudControlBase
     {

@@ -1,6 +1,6 @@
 ﻿using LagoVista.Core;
 using LagoVista.Core.IOC;
-using LagoVista.Uas.BaseStation.App.Drones;
+using LagoVista.Uas.BaseStation.ControlApp.Drones;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.FlightRecorder;
 using LagoVista.Uas.Core.Models;
@@ -13,7 +13,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
-namespace LagoVista.Uas.BaseStation.App
+namespace LagoVista.Uas.BaseStation.ControlApp
 {
     sealed partial class App : Application
     {
@@ -43,6 +43,8 @@ namespace LagoVista.Uas.BaseStation.App
             }
 
             var dispatcherService = new DispatcherService(Window.Current.Dispatcher);
+
+            this.DebugSettings.EnableFrameRateCounter = true;
 
             var uasMgr = new ConnectedUasManager();
             SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();

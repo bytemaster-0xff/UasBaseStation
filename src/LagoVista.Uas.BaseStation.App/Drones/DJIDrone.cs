@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 
-namespace LagoVista.Uas.BaseStation.App.Drones
+namespace LagoVista.Uas.BaseStation.ControlApp.Drones
 {
     public class DJIDrone : UasBase
     {
@@ -40,7 +40,7 @@ namespace LagoVista.Uas.BaseStation.App.Drones
             DJISDKManager.Instance.RegisterApp("96ddcaa937503c0d37e9cdd9");
         }
 
-        private async void Instance_SDKRegistrationStateChanged(SDKRegistrationState state, SDKError errorCode)
+        private void Instance_SDKRegistrationStateChanged(SDKRegistrationState state, SDKError errorCode)
         {
             if (errorCode == SDKError.NO_ERROR)
             {
@@ -66,15 +66,6 @@ namespace LagoVista.Uas.BaseStation.App.Drones
 
                     DJISDKManager.Instance.ComponentManager.GetProductHandler(0).ProductTypeChanged += DJIDrone_ProductTypeChanged;
                 }
-
-                if (_mgr.Active == null)
-                {
-                    await this._dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-                    {
-                        _mgr.SetActive(new ConnectedUas(this, new DJITransport(this)));
-                    });
-                }
-                Debug.WriteLine("Product Registered");
             }
             else
             {
@@ -135,10 +126,33 @@ namespace LagoVista.Uas.BaseStation.App.Drones
             });
         }
 
-        private void DJIDrone_ProductTypeChanged(object sender, ProductTypeMsg? value)
+        private async void DJIDrone_ProductTypeChanged(object sender, ProductTypeMsg? value)
         {
             if (value.HasValue)
             {
+                if (value.Value.value != ProductType.UNKNOWN &&
+                    value.Value.value != ProductType.UNRECOGNIZED)
+                {
+                    var sn = (await DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).GetSerialNumberAsync()).value;
+                    if (sn.HasValue)
+                    {
+                        this.UasSerialNumber = sn.Value.value;
+                    }
+                    
+                    var name = (await DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).GetAircraftNameAsync()).value;
+                    if(name.HasValue)
+                    {
+                        this.UasName = name.Value.value;
+                    }
+
+                    this.UasType = value.Value.value.ToString();
+                    RunOnUIThread(() => _mgr.SetActive(new ConnectedUas(this, new DJITransport(this))));
+                }
+                else
+                {
+
+                }
+
                 Debug.WriteLine("PROD TYPE: " + value.Value.value.ToString());
             }
 

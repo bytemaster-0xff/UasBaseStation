@@ -15,20 +15,20 @@ using LagoVista.Uas.Core.FlightRecorder;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace LagoVista.Uas.BaseStation.App
+namespace LagoVista.Uas.BaseStation.ControlApp
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page, INotifyPropertyChanged
     {
-        Timer _timer;
-        IConnectedUasManager _uasMgr;
         INavigation _navigation;
         IFlightRecorder _flightRecorder;
         Gamepad _xboxController;
         Controller.NiVekFlightStick _flightStick;
         HudViewModel _hudViewModel;
+
+        Timer _timer;
 
         RawGameController _tmFlightStick;
         RawGameController _throttle;
@@ -38,9 +38,9 @@ namespace LagoVista.Uas.BaseStation.App
             _flightStick = new Controller.NiVekFlightStick(Dispatcher);
             
             this.InitializeComponent();
-            _timer = new Timer(Timer_callBack, null, 100, 100);
 
             _flightRecorder = SLWIOC.Get<IFlightRecorder>();
+            _timer = new Timer(Timer_callBack, null, 100, 100);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -54,13 +54,10 @@ namespace LagoVista.Uas.BaseStation.App
         {
             base.OnNavigatedTo(e);
 
-            _uasMgr = SLWIOC.Get<IConnectedUasManager>();
-            var missionPlanner = new MissionPlanner(_uasMgr);
-            _navigation = new LagoVista.Uas.Core.Services.Navigation(_uasMgr, missionPlanner, _flightRecorder);
-
-            AOAControl.GetDevices();
-
-            _hudViewModel = new HudViewModel(_uasMgr, _navigation, _flightRecorder);
+            var uasMgr = SLWIOC.Get<IConnectedUasManager>();
+            var missionPlanner = new MissionPlanner(uasMgr);
+            _navigation = new LagoVista.Uas.Core.Services.Navigation(uasMgr, missionPlanner, _flightRecorder);            
+            _hudViewModel = new HudViewModel(uasMgr, _navigation, _flightRecorder);
             DataContext = _hudViewModel;
 
             NotifyPropertyChanged(nameof(ViewModel));
@@ -111,7 +108,6 @@ namespace LagoVista.Uas.BaseStation.App
                 if (_flightStick.State.IsConnected)
                 {
                     _navigation.SetVirtualJoystick(_flightStick.State.Throttle, _flightStick.State.Pitch, _flightStick.State.Rudder, _flightStick.State.Roll);
-                    //RunOnUIThread(() => _hudViewModel.FlightStickState = _flightStick.State);
                 }
             }
         }

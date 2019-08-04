@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace LagoVista.Uas.BaseStation.App.Controls
+namespace LagoVista.Uas.BaseStation.ControlApp.Controls
 {
     public class SystemStatus : HudControlBase
     {
@@ -26,22 +26,42 @@ namespace LagoVista.Uas.BaseStation.App.Controls
         {
             var container = new StackPanel();
 
-            _percentRemainingControl = new TextBlock();
-            _percentRemainingControl.Foreground = ForegroundBrush;
-            _timeRemainingControl = new TextBlock();
-            _timeRemainingControl.Foreground = ForegroundBrush;
-            _flightTime = new TextBlock();
-            _flightTime.Foreground = ForegroundBrush;
+            var fontFamily = new FontFamily("Consolas");
 
-            _batteryControl = new TextBlock();
-            _batteryControl.Foreground = ForegroundBrush;
-            _armedControl = new TextBlock();
+            _percentRemainingControl = new TextBlock
+            {
+                Foreground = ForegroundBrush,
+                FontSize = FontSize
+            };
 
+            _timeRemainingControl = new TextBlock
+            {
+                Foreground = ForegroundBrush,
+                FontSize = FontSize,
+                FontFamily = fontFamily
+            };
+
+            _flightTime = new TextBlock
+            {
+                Foreground = ForegroundBrush,
+                FontSize = FontSize,
+                FontFamily = fontFamily
+            };
+
+            _batteryControl = new TextBlock
+            {
+                FontSize = FontSize,
+                Foreground = ForegroundBrush,
+                FontFamily = fontFamily
+            };
+            
             _lowBatt = new TextBlock()
             {
                 Text = "Low Bat",
+                FontSize = 24,
                 Visibility = Visibility.Collapsed,
-                Foreground = new SolidColorBrush(Colors.Red)
+                Foreground = new SolidColorBrush(Colors.Red),
+                FontFamily = fontFamily,
             };
 
             _criticalBatt = new TextBlock()
@@ -49,13 +69,17 @@ namespace LagoVista.Uas.BaseStation.App.Controls
                 Text = "CRITICAL BATTERY",
                 Visibility = Visibility.Collapsed,
                 Foreground = new SolidColorBrush(Colors.Red),
-                FontSize = 64
+                FontSize = 36,
+                FontFamily = fontFamily,
             };
 
-            _armedControl.Foreground = new SolidColorBrush(Colors.Red);
-
-            _armedControl.Text = "DISARMED";
-            _armedControl.FontSize = 32;
+            _armedControl = new TextBlock
+            {
+                Foreground = new SolidColorBrush(Colors.Lime),
+                Text = "DISARMED",
+                FontSize = 24,
+                FontFamily = fontFamily,
+            };
 
             _batteryControl.Text = "Batt: ???";
             _percentRemainingControl.Text = "Batt: ???";
@@ -75,13 +99,14 @@ namespace LagoVista.Uas.BaseStation.App.Controls
             Children.Add(container);
         }
 
+        private bool _lastArmed = false;
         public static DependencyProperty ArmedProperty = DependencyProperty.Register(nameof(Armed), typeof(bool), typeof(SystemStatus), new PropertyMetadata(default(bool), new PropertyChangedCallback((obj, value) => (obj as SystemStatus).Armed = Convert.ToBoolean(value.NewValue))));
         public bool Armed
         {
             get { return Convert.ToBoolean(GetValue(ArmedProperty)); }
             set
             {
-                if (value != Armed)
+                if (value != _lastArmed)
                 {
                     SetValue(ArmedProperty, value);
 
@@ -96,10 +121,9 @@ namespace LagoVista.Uas.BaseStation.App.Controls
                         {
                             _armedControl.Text = "DISAMRED";
                             _armedControl.Foreground = new SolidColorBrush(Colors.Green);
-                        }
-
-                        _armedControl.Text = value ? "ARMED" : "DISARMED";
+                        }                        
                     });
+                    _lastArmed = value;
                 };
             }
         }
@@ -137,6 +161,13 @@ namespace LagoVista.Uas.BaseStation.App.Controls
                 SetValue(LowBattWarningProperty, value);
                 RunOnUIThread(() => _lowBatt.Visibility = value ? Visibility.Visible : Visibility.Collapsed);
             }
+        }
+
+        public static DependencyProperty FontSizeProperty = DependencyProperty.Register(nameof(FontSize), typeof(double), typeof(SystemStatus), new PropertyMetadata(14, new PropertyChangedCallback((obj, value) => (obj as SystemStatus).FontSize = Convert.ToDouble(value.NewValue))));
+        public double FontSize
+        {
+            get => Convert.ToDouble(GetValue(FontSizeProperty));
+            set => SetValue(FontSizeProperty, value);
         }
 
         public static DependencyProperty CriticalBattWarningProperty = DependencyProperty.Register(nameof(CriticalBattWarning), typeof(bool), typeof(SystemStatus), new PropertyMetadata(default(bool), new PropertyChangedCallback((obj, value) => (obj as SystemStatus).CriticalBattWarning = Convert.ToBoolean(value.NewValue))));

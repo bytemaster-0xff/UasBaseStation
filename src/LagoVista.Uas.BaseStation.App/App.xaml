@@ -1,7 +1,14 @@
 ﻿<Application
-    x:Class="LagoVista.Uas.BaseStation.App.App"
+    x:Class="LagoVista.Uas.BaseStation.ControlApp.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:LagoVista.Uas.BaseStation.App">
+    xmlns:cvts="using:LagoVista.Uas.BaseStation.ControlApp.Converters"
+    xmlns:local="using:LagoVista.Uas.BaseStation.ControlApp">
+    <Application.Resources>
+        <cvts:NotNullVisibilityConverters x:Key="NotNullVisibilityConverters" />
+        <cvts:NullVisibilityConverters x:Key="NullVisibilityConverters" />
+        <cvts:VisibilityConverters x:Key="VisibilityConverters" />
+        <cvts:InvertsVisibilityConverters x:Key="InvertsVisibilityConverters" />
+    </Application.Resources>
 
 </Application>

@@ -7,8 +7,8 @@
     <ProjectGuid>{46C428B0-9B16-4E41-A5CD-4F7465E44034}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LagoVista.Uas.BaseStation.App</RootNamespace>
-    <AssemblyName>LagoVista.Uas.BaseStation.App</AssemblyName>
+    <RootNamespace>LagoVista.Uas.BaseStation.ControlApp</RootNamespace>
+    <AssemblyName>LagoVista.Uas.BaseStation.ControlApp</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.17763.0</TargetPlatformVersion>
@@ -124,10 +124,14 @@
     <Compile Include="Controls\AoACircle.cs" />
     <Compile Include="Controls\ArtificialHorizon.cs" />
     <Compile Include="Controls\Compass.cs" />
+    <Compile Include="Controls\H264FPVView.cs" />
     <Compile Include="Controls\GPSStatus.cs" />
     <Compile Include="Controls\HudControlBase.cs" />
     <Compile Include="Controls\SystemStatus.cs" />
+    <Compile Include="Controls\FPVView.cs" />
     <Compile Include="Controls\VideoControl.cs" />
+    <Compile Include="Converters\NullValueConverters.cs" />
+    <Compile Include="Converters\VisibilityValueConverters.cs" />
     <Compile Include="Drones\DJIDrone.cs" />
     <Compile Include="Drones\DJITransport.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -183,7 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.0.4</Version>
+      <Version>6.2.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls">
       <Version>5.1.1</Version>
@@ -226,7 +230,6 @@
     <PackageReference Include="LagoVista.Core" Version="2.1.713-beta1441" />
     <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.713-beta1441" />
     <PackageReference Include="LagoVista.MQTT" Version="1.2.740-alpha1236" />
-    <PackageReference Include="LagoVista.XPlat" Version="1.2.740-alpha1233" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

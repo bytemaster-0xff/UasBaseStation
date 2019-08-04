@@ -7,7 +7,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 
-namespace LagoVista.Uas.BaseStation.App.Controls
+namespace LagoVista.Uas.BaseStation.ControlApp.Controls
 {
     public class HudControlBase : Grid
     {

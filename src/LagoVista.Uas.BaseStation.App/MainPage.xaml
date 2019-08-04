@@ -1,9 +1,9 @@
 ﻿<Page
-    x:Class="LagoVista.Uas.BaseStation.App.MainPage"
-    xmlns:ctl="using:LagoVista.Uas.BaseStation.App.Controls"
+    x:Class="LagoVista.Uas.BaseStation.ControlApp.MainPage"
+    xmlns:ctl="using:LagoVista.Uas.BaseStation.ControlApp.Controls"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:LagoVista.Uas.BaseStation.App"
+    xmlns:local="using:LagoVista.Uas.BaseStation.ControlApp"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -11,23 +11,29 @@
     Background="SteelBlue">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="120" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+        <Grid Visibility="{Binding UasMgr.Active, Converter={StaticResource NullVisibilityConverters}}">
+            <TextBlock Text="Waiting for UAS" Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-100,0,0" />
 
-        <Grid Background="SteelBlue" Grid.Column="1">
-            <Grid Grid.Column="1" >
-                <!--  <ctl:ArtificialHorizon Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" />
+            <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Width="50" Height="50" IsActive="True" Margin="0,100,0,0" />
+        </Grid>
+        <Grid Visibility="{Binding UasMgr.Active, Converter={StaticResource NotNullVisibilityConverters}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="480" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="640" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Background="SteelBlue" Grid.Column="1">
+                <Grid Grid.Column="1" >
+                    <!--  <ctl:ArtificialHorizon Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" />
                -->
-                <ctl:VideoControl x:Name="AOAControl"  Width="640" Height="480" HorizontalAlignment="Center"  VerticalAlignment="Top"/>
-                <ctl:SystemStatus 
+                    <ctl:FPVView  />
+                    <ctl:H264FPVView x:Name="DJIVIdeo"  />
+                    <ctl:SystemStatus Foreground="Lime" FontSize="20" VerticalAlignment="Bottom"                                     
                     Armed="{Binding Path=UasMgr.Active.Uas.SystemStatus.Armed, Mode=TwoWay}" 
                     LowBattWarning="{Binding Path=UasMgr.Active.Uas.SystemStatus.LowBatteryWarning, Mode=TwoWay}" 
                     CriticalBattWarning="{Binding Path=UasMgr.Active.Uas.SystemStatus.CriticalBatteryWarning, Mode=TwoWay}" 
@@ -35,151 +41,170 @@
                     BatteryVoltage="{Binding Path=UasMgr.Active.Uas.Battery.Voltage, Mode=TwoWay}" 
                     FlightTime="{Binding Path=UasMgr.Active.Uas.SystemStatus.FlightTime, Mode=TwoWay}"
                     TimeRemaining="{Binding Path=UasMgr.Active.Uas.Battery.TimeRemaining, Mode=TwoWay}" />
-                <ctl:AoACircle Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" HorizontalAlignment="Center" />
-                <ctl:AltitudeIndicator Altitude="{Binding Path=UasMgr.Active.Uas.RangeFinder.Distance, Mode=TwoWay}" />
-                <ctl:Compass VerticalAlignment="Top" Heading="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" />
-                <ctl:GPSStatus  VerticalAlignment="Center"   />
-            </Grid>
-        </Grid>
-
-        <Grid Grid.Row="2" Grid.Column="2" Background="White">
-            <StackPanel  HorizontalAlignment="Right" >
-                <StackPanel Orientation="Vertical"  >
-                    <Button Content="Arm" Command="{Binding Path=Navigation.ArmCommand}" Width="120" Height="60" />
-                    <Button Content="Disarm" Command="{Binding Navigation.DisarmCommand}" Width="120" Height="60" />
-                    <Button Content="Takeoff" Command="{Binding Navigation.TakeoffCommand}" Width="120" Height="60" />
-                    <Button Content="Land" Command="{Binding Navigation.LandCommand}" Width="120" Height="60" />
-                    <Button Content="Edit" Command="{Binding EditMissionCommand}" Width="120" Height="60" />
-                </StackPanel>
-
-                <StackPanel Orientation="Horizontal" >
-                    <Button Content="Raise" Command="{Binding LandingGear.RaiseLandingGearCommand}" Width="120" Height="60" />
-                    <Button Content="Lower" Command="{Binding LandingGear.LowerLandingGearCommand}" Width="120" Height="60" />
-                </StackPanel>
-
-            </StackPanel>
-        </Grid>
-
-        <Rectangle Grid.Row="2" Fill="LightGray" Grid.ColumnSpan="3" />
-
-        <!-- flight state 6 pack -->
-        <Grid Grid.Row="2" Grid.Column="1" x:Name="StateGrid" ColumnSpacing="6" RowSpacing="6">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid.Resources  >
-                <Style TargetType="controls:RadialGauge" x:Key="FlightGuage">
-                    <Setter Property="TickLength" Value="15"/>
-                    <Setter Property="TickWidth" Value="3"/>
-                    <Setter Property="TickBrush" Value="White"/>
-                    <Setter Property="ScalePadding" Value="0"/>
-                    <Setter Property="ScaleWidth" Value="1"/>
-                    <Setter Property="ScaleTickWidth" Value="0" />
-                    <Setter Property="ScaleBrush" Value="White"/>
-                    <Setter Property="ScaleTickBrush" Value="White"/>
-                    <Setter Property="FontSize" Value="64" />
-                    <Setter Property="NeedleBrush" Value="White"/>
-                    <Setter Property="NeedleWidth" Value="2"/>
-                    <Setter Property="StepSize" Value="0"/>
-                    <Setter Property="TrailBrush" Value="White" />
-                </Style>
-
-                <Style TargetType="TextBlock" x:Key="GuageTitle">
-                    <Setter Property="VerticalAlignment" Value="Top" />
-                    <Setter Property="Margin" Value="0,10,0,0" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="FontSize" Value="12" />
-                </Style>
-
-                <Style TargetType="controls:RadialGauge" x:Key="Horizontal180" BasedOn="{StaticResource FlightGuage}">
-                    <Setter Property="MinAngle" Value="270"/>
-                    <Setter Property="MaxAngle" Value="90"/>
-                    <Setter Property="Margin" Value="0,30,0,0" />
-                    <Setter Property="Minimum" Value="-1000"/>
-                    <Setter Property="Maximum" Value="1000"/>
-                    <Setter Property="TickSpacing" Value="200"/>
-                </Style>
-                <Style TargetType="controls:RadialGauge" x:Key="Vertical180" BasedOn="{StaticResource FlightGuage}">
-                    <Setter Property="MinAngle" Value="0"/>
-                    <Setter Property="MaxAngle" Value="180"/>
-                    <Setter Property="Margin" Value="0,25,0,10" />
-                    <Setter Property="Minimum" Value="-1000"/>
-                    <Setter Property="Maximum" Value="1000"/>
-                    <Setter Property="TickSpacing" Value="200"/>
-                </Style>
-
-                <Style TargetType="Rectangle" x:Key="GaugeBackground" >
-                    <Setter Property="Margin" Value="5" />
-                    <Setter Property="Width" Value="120" />
-                    <Setter Property="Width" Value="120" />
-                    <Setter Property="Fill" Value="Black" />
-                    <Setter Property="Stroke" Value="Silver" />
-                    <Setter Property="StrokeThickness" Value="3" />
-                </Style>
-
-                <Style TargetType="TextBlock" x:Key="GaugeValue">
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="FontSize" Value="12" />
-                    <Setter Property="VerticalAlignment" Value="Bottom" />
-                    <Setter Property="Margin" Value="0,0,0,20" />
-                </Style>
-
-            </Grid.Resources>
-
-            <Rectangle Grid.RowSpan="3" Grid.ColumnSpan="4" Fill="DarkOliveGreen" />
-
-
-            <Grid Grid.Row="1" Grid.Column="0" >
-                <Rectangle Style="{StaticResource GaugeBackground}" />
-                <TextBlock Text="Stick - Rudder" Style="{StaticResource GuageTitle}" />
-                <controls:RadialGauge Value="{Binding Path=FlightStickState.Rudder, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
-                <TextBlock Text="{Binding Path=FlightStickState.Rudder, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                    <ctl:AoACircle Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" HorizontalAlignment="Center" Foreground="Lime" />
+                    <ctl:AltitudeIndicator Altitude="{Binding Path=UasMgr.Active.Uas.RangeFinder.Distance, Mode=TwoWay}" Foreground="Lime" />
+                    <ctl:Compass Foreground="Lime" VerticalAlignment="Top" Heading="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" Margin="0,20,0,0" />
+                    <ctl:GPSStatus  VerticalAlignment="Center" Foreground="Lime"  />
+                </Grid>
             </Grid>
 
-            <Grid Grid.Row="1" Grid.Column="1" >
-                <Rectangle Style="{StaticResource GaugeBackground}" />
-                <TextBlock Text="Stick - Roll" Style="{StaticResource GuageTitle}" />
-                <controls:RadialGauge Value="{Binding Path=FlightStickState.Roll, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
-                <TextBlock Text="{Binding Path=FlightStickState.Roll, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
-            </Grid>
-
-            <Grid Grid.Row="1" Grid.Column="2" >
-                <Rectangle Style="{StaticResource GaugeBackground}" />
-                <TextBlock Text="Stick - Throttle" Style="{StaticResource GuageTitle}" />
-
-                <controls:RadialGauge Value="{Binding Path=FlightStickState.Throttle, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
-                <TextBlock Text="{Binding Path=FlightStickState.Throttle, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
-                <TextBlock Text="Hold" Style="{StaticResource GaugeValue}" Margin="0,0,60,50"  />
-                <TextBlock Text="{Binding Path=FlightStickState.AltitudeHold, FallbackValue=false}" Margin="0,0,60,30" Style="{StaticResource GaugeValue}" />
-            </Grid>
-
-            <Grid Grid.Row="1" Grid.Column="3" >
-                <Rectangle Style="{StaticResource GaugeBackground}" />
-                <TextBlock Text="Stick - Pitch" Style="{StaticResource GuageTitle}" />
-                <controls:RadialGauge Value="{Binding Path=FlightStickState.Pitch, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
-                <TextBlock Text="{Binding Path=FlightStickState.Pitch, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
-            </Grid>
-
-        </Grid>
-
-        <ListBox ItemsSource="{Binding FlightRecorder}" Grid.Row="2" Grid.Column="0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding EventName}"/>
+            <Grid Grid.Row="2" Grid.Column="2" Background="White">
+                <StackPanel  HorizontalAlignment="Right" >
+                    <StackPanel Orientation="Vertical"  >
+                        <Button Content="Arm" Command="{Binding Path=Navigation.ArmCommand}" Width="120" Height="60" />
+                        <Button Content="Disarm" Command="{Binding Navigation.DisarmCommand}" Width="120" Height="60" />
+                        <Button Content="Takeoff" Command="{Binding Navigation.TakeoffCommand}" Width="120" Height="60" />
+                        <Button Content="Land" Command="{Binding Navigation.LandCommand}" Width="120" Height="60" />
+                        <Button Content="Edit" Command="{Binding EditMissionCommand}" Width="120" Height="60" />
                     </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Content="Raise" Command="{Binding LandingGear.RaiseLandingGearCommand}" Width="120" Height="60" />
+                        <Button Content="Lower" Command="{Binding LandingGear.LowerLandingGearCommand}" Width="120" Height="60" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+
+            <Rectangle Grid.Row="2" Fill="LightGray" Grid.ColumnSpan="3" />
+
+            <!-- flight state 6 pack -->
+            <Grid Grid.Row="2" Grid.Column="1" x:Name="StateGrid" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="160"/>
+                    <RowDefinition Height="160" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="160"/>
+                </Grid.ColumnDefinitions>
+                <Grid.Resources  >
+                    <Style TargetType="controls:RadialGauge" x:Key="FlightGuage">
+                        <Setter Property="TickLength" Value="15"/>
+                        <Setter Property="TickWidth" Value="3"/>
+                        <Setter Property="Width" Value="100" />
+                        <Setter Property="Height" Value="100" />
+                        <Setter Property="TickBrush" Value="White"/>
+                        <Setter Property="ScalePadding" Value="0"/>
+                        <Setter Property="ScaleWidth" Value="1"/>
+                        <Setter Property="ScaleTickWidth" Value="0" />
+                        <Setter Property="ScaleBrush" Value="White"/>
+                        <Setter Property="ScaleTickBrush" Value="White"/>
+                        <Setter Property="FontSize" Value="64" />
+                        <Setter Property="NeedleBrush" Value="Red"/>
+                        <Setter Property="NeedleWidth" Value="4"/>
+                        <Setter Property="StepSize" Value="0"/>
+                        <Setter Property="TrailBrush" Value="White" />
+                    </Style>
+
+                    <Style TargetType="TextBlock" x:Key="GuageTitle">
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                        <Setter Property="Margin" Value="0,20,0,0" />
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontSize" Value="12" />
+                    </Style>
+
+                    <Style TargetType="controls:RadialGauge" x:Key="Horizontal180" BasedOn="{StaticResource FlightGuage}">
+                        <Setter Property="MinAngle" Value="270"/>
+                        <Setter Property="MaxAngle" Value="90"/>
+                        <Setter Property="Margin" Value="0,30,0,0" />
+                        <Setter Property="Minimum" Value="-1000"/>
+                        <Setter Property="Maximum" Value="1000"/>
+                        <Setter Property="TickSpacing" Value="200"/>
+                    </Style>
+                    <Style TargetType="controls:RadialGauge" x:Key="Vertical180" BasedOn="{StaticResource FlightGuage}">
+                        <Setter Property="MinAngle" Value="0"/>
+                        <Setter Property="MaxAngle" Value="180"/>
+                        <Setter Property="Margin" Value="0,0,0,20" />
+                        <Setter Property="Minimum" Value="-1000"/>
+                        <Setter Property="Maximum" Value="1000"/>
+                        <Setter Property="TickSpacing" Value="200"/>
+                    </Style>
+
+                    <Style TargetType="Rectangle" x:Key="GaugeBackground" >
+                        <Setter Property="Margin" Value="5" />
+                        <Setter Property="Width" Value="140" />
+                        <Setter Property="Height" Value="140" />
+                        <Setter Property="Fill" Value="Black" />
+                        <Setter Property="Stroke" Value="Silver" />
+                        <Setter Property="StrokeThickness" Value="3" />
+                    </Style>
+
+                    <Style TargetType="TextBlock" x:Key="GaugeValue">
+                        <Setter Property="HorizontalAlignment" Value="Center" />
+                        <Setter Property="Foreground" Value="White" />
+                        <Setter Property="FontSize" Value="12" />
+                        <Setter Property="VerticalAlignment" Value="Bottom" />
+                        <Setter Property="Margin" Value="0,0,0,30" />
+                    </Style>
+
+                </Grid.Resources>
+
+                <Rectangle Grid.RowSpan="3" Grid.ColumnSpan="4" Fill="DarkOliveGreen" />
+
+                <ctl:VideoControl Grid.Row="0" Grid.Column="2" />
+
+                <StackPanel Grid.Row="0" Grid.Column="0">
+                    <Button  Content="CameraOn" Command="{Binding ElementName=DJIVIdeo, Path=StartVideoCommand}"/>
+                    <Button  Content="CameraOff" Command="{Binding ElementName=DJIVIdeo, Path=StopVideoCommand}" />
+                </StackPanel>
+
+                <Grid Width="160" Height="160" Margin="0" Grid.Row="1" Grid.Column="0" >
+                    <Rectangle Style="{StaticResource GaugeBackground}" />
+                    <TextBlock Text="Stick - Rudder" Style="{StaticResource GuageTitle}" />
+                    <controls:RadialGauge Value="{Binding Path=FlightStickState.Rudder, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.Rudder, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="1" >
+                    <Rectangle Style="{StaticResource GaugeBackground}" />
+                    <TextBlock Text="Stick - Roll" Style="{StaticResource GuageTitle}" />
+                    <controls:RadialGauge Value="{Binding Path=FlightStickState.Roll, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.Roll, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="2" >
+                    <Rectangle Style="{StaticResource GaugeBackground}" />
+                    <TextBlock Text="Stick - Throttle" Style="{StaticResource GuageTitle}" />
+
+                    <controls:RadialGauge Value="{Binding Path=FlightStickState.Throttle, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.Throttle, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                    <TextBlock Text="Hold" Style="{StaticResource GaugeValue}" Margin="0,0,60,50"  />
+                    <TextBlock Text="{Binding Path=FlightStickState.AltitudeHold, FallbackValue=false}" Margin="0,0,60,30" Style="{StaticResource GaugeValue}" />
+                </Grid>
+
+                <Grid Grid.Row="1" Grid.Column="3" >
+                    <Rectangle Style="{StaticResource GaugeBackground}" />
+                    <TextBlock Text="Stick - Pitch" Style="{StaticResource GuageTitle}" />
+                    <controls:RadialGauge Value="{Binding Path=FlightStickState.Pitch, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.Pitch, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="2" Grid.Column="0" Background="Black">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <TextBlock Text="{Binding UasMgr.Active.Uas.UasName}" Foreground="LimeGreen" FontFamily="Consolas" />
+                    <TextBlock Text="{Binding UasMgr.Active.Uas.UasType}" Foreground="LimeGreen" FontFamily="Consolas" />
+                    <TextBlock Text="{Binding UasMgr.Active.Uas.UasSerialNumber}" Foreground="LimeGreen" FontFamily="Consolas" />
+                </StackPanel>
+                <ListBox ItemsSource="{Binding FlightRecorder}" Grid.Row="1" Background="Black" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding TimeStamp}" Foreground="Green" FontFamily="Consolas"/>
+                                <TextBlock Text="{Binding EventName}" HorizontalAlignment="Right" Foreground="Green" FontFamily="Consolas"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>

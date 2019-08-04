@@ -9,7 +9,7 @@ using LagoVista.Uas.Core.Controller;
 using System.Diagnostics;
 using Windows.UI.Core;
 
-namespace LagoVista.Uas.BaseStation.App.Controller
+namespace LagoVista.Uas.BaseStation.ControlApp.Controller
 {
     public class NiVekFlightStick : ModelBase
     {
@@ -367,8 +367,7 @@ namespace LagoVista.Uas.BaseStation.App.Controller
                 TakeOff = buttons[1],
                 Land = buttons[3],
                 Roll = Normalize(axis[0]),
-                Pitch = Normalize(axis[1]),
-                Rudder = Normalize(axis[2]),
+                Pitch = Normalize(axis[1]),              
             };
 
             TriggerEvents(currentState);
@@ -379,7 +378,6 @@ namespace LagoVista.Uas.BaseStation.App.Controller
                 _state.Land = currentState.Land;
                 _state.Roll = currentState.Roll;
                 _state.Pitch = currentState.Pitch;
-                _state.Rudder = currentState.Rudder;
 
                 _state.IsConnected = true;
             });
@@ -421,7 +419,7 @@ namespace LagoVista.Uas.BaseStation.App.Controller
                 EndManualCameraControl = buttons[9],
                 CameraGimbleX = Normalize(axis[0]),
                 CameraGimbleY = Normalize(axis[1]),
-                Rudder = Normalize(axis[3] + -axis[4]),
+                Rudder = Normalize(axis[6]),
 
             };
 
@@ -440,6 +438,7 @@ namespace LagoVista.Uas.BaseStation.App.Controller
             {
                 _state.AltitudeHold = currentState.AltitudeHold;
                 _state.Throttle = currentState.Throttle;
+                _state.Rudder = currentState.Rudder;
                 _state.CameraGimbleX = currentState.CameraGimbleX;
                 _state.CameraGimbleY = currentState.CameraGimbleY;
                 _state.BegingManualCameraControl = currentState.BegingManualCameraControl;

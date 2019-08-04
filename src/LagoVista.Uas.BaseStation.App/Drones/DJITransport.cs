@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LagoVista.Uas.BaseStation.App.Drones
+namespace LagoVista.Uas.BaseStation.ControlApp.Drones
 {
     public class DJITransport : ITransport
     {

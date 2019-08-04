@@ -157,6 +157,10 @@ namespace LagoVista.Uas.Core
             set => Set(ref _homeBaseLocation, value);
         }
 
+        public string UasSerialNumber { get; set; }
+        public string UasName { get; set; }
+        public string UasType { get; set; }
+
         public FlightController FlightController { get; }
 
         public PowerStatus PowerStatus { get; }

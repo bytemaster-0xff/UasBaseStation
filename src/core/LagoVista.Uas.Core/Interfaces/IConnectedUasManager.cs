@@ -18,7 +18,6 @@ namespace LagoVista.Uas.Core
         IConnectedUas Active {get; }
 
         void SetActive(IConnectedUas connectedUas);
-
         ObservableCollection<IConnectedUas> All { get; }
     }
 }
