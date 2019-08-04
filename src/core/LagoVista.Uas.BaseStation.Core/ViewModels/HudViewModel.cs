@@ -4,15 +4,16 @@ using LagoVista.Core.Commanding;
 using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.Controller;
+using LagoVista.Uas.Core.FlightRecorder;
 using LagoVista.Uas.Core.Interfaces;
-using LagoVista.Uas.Core.MavLink;
 
 namespace LagoVista.Uas.BaseStation.Core.ViewModels
 {
     public class HudViewModel : AppViewModelBase, INavigationProvider
     {
-        IConnectedUasManager _connectedUasManager;
-        public HudViewModel(IConnectedUasManager connectedUasManager, INavigation navigation)
+        private readonly IConnectedUasManager _connectedUasManager;
+
+        public HudViewModel(IConnectedUasManager connectedUasManager, INavigation navigation, IFlightRecorder flightRecorder)
         {
             Navigation = navigation;
             _connectedUasManager = connectedUasManager;
@@ -20,6 +21,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             LandingGear = new LandingGearViewModel(connectedUasManager);
             EditMissionCommand = new RelayCommand(()=> ViewModelNavigation.NavigateAsync<Missions.MissionPlannerViewModel>(this));
             UasMgr = connectedUasManager;
+            FlightRecorder = flightRecorder;
         }
 
         public async override Task InitAsync()
@@ -33,6 +35,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public IConnectedUasManager Connections { get; }
 
         public INavigation Navigation { get; }
+        public IFlightRecorder FlightRecorder { get; }
 
         public IConnectedUasManager UasMgr { get;  }
 

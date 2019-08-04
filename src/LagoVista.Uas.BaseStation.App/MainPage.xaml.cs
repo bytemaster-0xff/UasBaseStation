@@ -10,6 +10,8 @@ using Windows.UI.Xaml.Navigation;
 using System.Threading;
 using Windows.Gaming.Input;
 using System;
+using System.Diagnostics;
+using LagoVista.Uas.Core.FlightRecorder;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -23,17 +25,23 @@ namespace LagoVista.Uas.BaseStation.App
         Timer _timer;
         IConnectedUasManager _uasMgr;
         INavigation _navigation;
+        IFlightRecorder _flightRecorder;
         Gamepad _xboxController;
-        Controller.NiVekFlightStick _flightStick = new Controller.NiVekFlightStick();
+        Controller.NiVekFlightStick _flightStick;
         HudViewModel _hudViewModel;
+
+        RawGameController _tmFlightStick;
+        RawGameController _throttle;
 
         public MainPage()
         {
+            _flightStick = new Controller.NiVekFlightStick(Dispatcher);
+            
             this.InitializeComponent();
-            _timer = new Timer(Timer_callBack, null, 50, 50);
-            _flightStick.ButtonStateChanged += _gamePad_ButtonStateChanged;
-        }
+            _timer = new Timer(Timer_callBack, null, 100, 100);
 
+            _flightRecorder = SLWIOC.Get<IFlightRecorder>();
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -48,42 +56,62 @@ namespace LagoVista.Uas.BaseStation.App
 
             _uasMgr = SLWIOC.Get<IConnectedUasManager>();
             var missionPlanner = new MissionPlanner(_uasMgr);
-            _navigation = new LagoVista.Uas.Core.Services.Navigation(_uasMgr, missionPlanner);
+            _navigation = new LagoVista.Uas.Core.Services.Navigation(_uasMgr, missionPlanner, _flightRecorder);
 
             AOAControl.GetDevices();
 
-            _hudViewModel = new HudViewModel(_uasMgr, _navigation);
+            _hudViewModel = new HudViewModel(_uasMgr, _navigation, _flightRecorder);
             DataContext = _hudViewModel;
 
             NotifyPropertyChanged(nameof(ViewModel));
 
-            Windows.Gaming.Input.Gamepad.GamepadAdded += Gamepad_GamepadAdded;
-            Windows.Gaming.Input.FlightStick.FlightStickAdded += FlightStick_FlightStickAdded;
+            _flightStick.StartMission += (s, a) => _navigation.StartMission();
+            _flightStick.TakeOff += (s, a) => _navigation.Takeoff();
+            _flightStick.Land += (s, a) => _navigation.Land();
+            _flightStick.ReturnToHome += (s, a) => _navigation.ReturnToHome();
+            _hudViewModel.FlightStickState = _flightStick.State;
+
+            Gamepad.GamepadAdded += Gamepad_GamepadAdded;
+            RawGameController.RawGameControllerAdded += RawGameController_RawGameControllerAdded;
         }
 
-
-        private void _gamePad_ButtonStateChanged(object sender, Controller.NiVekFlightStick.ButtonStateChangedEventArgs e)
+        private void RawGameController_RawGameControllerAdded(object sender, RawGameController e)
         {
-            switch(e.Button)
+            switch (e.HardwareVendorId)
             {
-                case Controller.NiVekFlightStick.GamePadButtons.A:
-                    _navigation.Takeoff();
+                case 0x44f:
+                    switch (e.HardwareProductId)
+                    {
+                        case 0xB10A: _tmFlightStick = e; break;
+                        case 0xB687: _throttle = e; break;
+                    }
                     break;
-                case Controller.NiVekFlightStick.GamePadButtons.B:
-                    _navigation.Land();
-                    break;
+
             }
         }
 
         private void Timer_callBack(object obj)
         {
-            if (_flightStick != null && _xboxController != null)
+            if (_flightStick != null)
             {
-                _flightStick.Refresh(_xboxController);
+                if (_tmFlightStick != null)
+                {
+                    _flightStick.RefreshFromThrustMaster1600(_tmFlightStick);
+
+                    if (_throttle != null)
+                    {
+                        _flightStick.RefreshFromThrustMasterThrottle(_throttle);
+                    }
+                }
+                else if (_xboxController != null)
+                {
+                    _flightStick.RefreshFromXBox(_xboxController);
+                }
+
                 if (_flightStick.State.IsConnected)
                 {
-                    _navigation.SetVirtualJoystick(_flightStick.State.LeftY, _flightStick.State.RightY, _flightStick.State.LeftX, _flightStick.State.RightX);
-                    RunOnUIThread(() => _hudViewModel.FlightStickState = _flightStick.State);
+                    _navigation.SetVirtualJoystick(_flightStick.State.Throttle, _flightStick.State.Pitch, _flightStick.State.Rudder, _flightStick.State.Roll);
+                    //RunOnUIThread(() => _hudViewModel.FlightStickState = _flightStick.State);
                 }
             }
         }
@@ -94,11 +122,6 @@ namespace LagoVista.Uas.BaseStation.App
             {
                 action();
             });
-        }
-
-        private void FlightStick_FlightStickAdded(object sender, Windows.Gaming.Input.FlightStick e)
-        {
-            var fs = e;
         }
 
         private void Gamepad_GamepadAdded(object sender, Windows.Gaming.Input.Gamepad e)

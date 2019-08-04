@@ -1,6 +1,7 @@
 ﻿using LagoVista.Core.Commanding;
 using LagoVista.Core.Models.Geo;
 using LagoVista.Core.ViewModels;
+using LagoVista.Uas.Core.FlightRecorder;
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
 using System;
@@ -14,10 +15,12 @@ namespace LagoVista.Uas.Core.Services
     {
         IConnectedUasManager _connectedUasManager;
         IMissionPlanner missionPlanner;
+        IFlightRecorder _flightRecorder;
 
-        public Navigation(IConnectedUasManager connectUasManager, IMissionPlanner missionPlanner)
+        public Navigation(IConnectedUasManager connectUasManager, IMissionPlanner missionPlanner, IFlightRecorder flightRecorder)
         {
             _connectedUasManager = connectUasManager;
+            _flightRecorder = flightRecorder;
             MissionPlanner = missionPlanner;
 
 
@@ -26,18 +29,6 @@ namespace LagoVista.Uas.Core.Services
 
             TakeoffCommand = new RelayCommand(Takeoff);
             LandCommand = new RelayCommand(Land);
-        }
-
-        public void Takeoff()
-        {
-            var msg = UasCommands.NavTakeoff(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, float.NaN, 0, TakeoffAltitude);
-            _connectedUasManager.Active.Transport.SendMessage(msg);
-        }
-
-        public void StartMission()
-        {
-            var msg = UasCommands.MissionStart(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 5);
-            _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
         public override async Task InitAsync()
@@ -71,29 +62,47 @@ namespace LagoVista.Uas.Core.Services
 
             };
 
+            SendMessage(msg);
+        }
+
+        public void Takeoff()
+        {
+            _flightRecorder.Publish("Take off");
+            var msg = UasCommands.NavTakeoff(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, float.NaN, 0, TakeoffAltitude);
+            _connectedUasManager.Active.Transport.SendMessage(msg);
+        }
+
+        public void StartMission()
+        {
+            _flightRecorder.Publish("Start Mission");
+            var msg = UasCommands.MissionStart(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 5);
             _connectedUasManager.Active.Transport.SendMessage(msg);
         }
 
         public void Arm()
         {
+            _flightRecorder.Publish("Arm");
             var msg = UasCommands.ComponentArmDisarm(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 1);
             SendMessage(msg);
         }
 
         public void Disarm()
         {
+            _flightRecorder.Publish("Disarm");
             var msg = UasCommands.ComponentArmDisarm(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 1);
             SendMessage(msg);
         }
 
         public void Land()
         {
+            _flightRecorder.Publish("Land");
             var msg = UasCommands.NavLandLocal(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId, 0, 0, 0, 0, 0, 0, 0);
             SendMessage(msg);
         }
 
         public void ReturnToHome()
         {
+            _flightRecorder.Publish("Return Home");
             var msg = UasCommands.NavReturnToLaunch(_connectedUasManager.Active.Uas.SystemId, _connectedUasManager.Active.Uas.ComponentId);
             SendMessage(msg);
         }

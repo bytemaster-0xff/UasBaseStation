@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Windows.Gaming.Input;
 using LagoVista.Uas.Core.Controller;
 using System.Diagnostics;
+using Windows.UI.Core;
 
 namespace LagoVista.Uas.BaseStation.App.Controller
 {
@@ -47,7 +48,7 @@ namespace LagoVista.Uas.BaseStation.App.Controller
             }
 
             private bool _start;
-            public bool Start
+            public bool StartMission
             {
                 get => _start;
                 set => Set(ref _start, value);
@@ -89,7 +90,7 @@ namespace LagoVista.Uas.BaseStation.App.Controller
             }
 
             private bool _a;
-            public bool A
+            public bool TakeOff
             {
                 get => _a;
                 set => Set(ref _a, value);
@@ -97,21 +98,28 @@ namespace LagoVista.Uas.BaseStation.App.Controller
 
 
             private bool _b;
-            public bool B
+            public bool Land
             {
                 get => _b;
                 set => Set(ref _b, value);
             }
 
+            private bool _returnToHome;
+            public bool ReturnToHome
+            {
+                get => _returnToHome;
+                set => Set(ref _returnToHome, value);
+            }
+
             private bool _x;
-            public bool X
+            public bool NextWaypoint
             {
                 get => _x;
                 set => Set(ref _x, value);
             }
 
             private bool _y;
-            public bool Y
+            public bool PreviousWaypoint
             {
                 get => _y;
                 set => Set(ref _y, value);
@@ -126,28 +134,28 @@ namespace LagoVista.Uas.BaseStation.App.Controller
             }
 
             private short _leftX;
-            public short LeftX
+            public short Rudder
             {
                 get => _leftX;
                 set => Set(ref _leftX, value);
             }
 
             private short _leftY;
-            public short LeftY
+            public short Throttle
             {
                 get => _leftY;
                 set => Set(ref _leftY, value);
             }
 
             private short _rightX;
-            public short RightX
+            public short Roll
             {
                 get => _rightX;
                 set => Set(ref _rightX, value);
             }
 
             private short _rightY;
-            public short RightY
+            public short Pitch
             {
                 get => _rightY;
                 set => Set(ref _rightY, value);
@@ -168,21 +176,76 @@ namespace LagoVista.Uas.BaseStation.App.Controller
             }
 
             public bool IsConnected { get; set; }
-        }
 
-        public static NiVekFlightStick Empty
-        {
-            get
+            private short _cameraGimbleX;
+            public short CameraGimbleX
             {
-                return new NiVekFlightStick()
+                get => _cameraGimbleX;
+                set => Set(ref _cameraGimbleX, value);
+            }
+
+            private short _cameraGimbleY;
+            public short CameraGimbleY
+            {
+                get => _cameraGimbleY;
+                set => Set(ref _cameraGimbleY, value);
+            }
+
+            private bool _beginManualCameraControl;
+            public bool BegingManualCameraControl
+            {
+                get => _beginManualCameraControl;
+                set => Set(ref _beginManualCameraControl, value);
+            }
+
+            private bool _endManualCameraControl;
+            public bool EndManualCameraControl
+            {
+                get => _endManualCameraControl;
+                set => Set(ref _endManualCameraControl, value);
+            }
+
+            private bool _endMission;
+            public bool EndMission
+            {
+                get => _endMission;
+                set => Set(ref _endMission, value);
+            }
+
+            private bool _puaseMission;
+            public bool PauseMission
+            {
+                get => _puaseMission;
+                set => Set(ref _puaseMission, value);
+            }
+
+            private bool _altitudeHold;
+            public bool AltitudeHold
+            {
+                get => _altitudeHold;
+                set => Set(ref _altitudeHold, value);
+            }
+
+
+            private bool _continueMission;
+            public bool ContinueMission
+            {
+                get => _continueMission;
+                set => Set(ref _continueMission, value);
+            }
+
+
+            public static NiVekFlightStickState Empty
+            {
+                get
                 {
-                    _state = new NiVekFlightStickState()
+                    return new NiVekFlightStickState()
                     {
+                        AltitudeHold = true,
                         DPad = new NiVekFlightStickState.DPAD(),
                         IsConnected = false,
-
-                    }
-                };
+                    };
+                }
             }
         }
 
@@ -225,116 +288,250 @@ namespace LagoVista.Uas.BaseStation.App.Controller
         }
 
 
-        NiVekFlightStickState _state = new NiVekFlightStickState();
+        private readonly CoreDispatcher _dispatcher;
+        private readonly NiVekFlightStickState _state = new NiVekFlightStickState();
 
         public NiVekFlightStickState State
         {
             get => _state;
-            set => Set(ref _state, value);
         }
 
-        public event EventHandler<ButtonStateChangedEventArgs> ButtonStateChanged;
-
-        public NiVekFlightStick()
+        public NiVekFlightStick(CoreDispatcher dispatcher)
         {
+            this._state = NiVekFlightStickState.Empty;
+            this._dispatcher = dispatcher;
+
             // _tpTimer = ThreadPoolTimer.CreatePeriodicTimer(_timer_Tick, TimeSpan.FromMilliseconds(20));
         }
 
-        void RaiseButtonChangedEvent(GamePadButtons button, ButtonState newState)
-        {
-            if (ButtonStateChanged != null)
-                ButtonStateChanged(this, new ButtonStateChangedEventArgs() { Button = button, ButtonState = newState });
-        }
+        private double? _thottleOffset = null;
 
-        public void Refresh(Gamepad gamePad)
+        public event EventHandler StartMission;
+        public event EventHandler NextWaypoint;
+        public event EventHandler PreviousWaypoint;
+        public event EventHandler PauseMission;
+        public event EventHandler ContinueMission;
+        public event EventHandler EndMission;
+
+        public event EventHandler TakeOff;
+        public event EventHandler ReturnToHome;
+        public event EventHandler Land;
+        public event EventHandler BeginManualCameraControl;
+        public event EventHandler EndManualCameraControl;
+
+        private void TriggerEvents(NiVekFlightStickState currentState)
         {
-            if (gamePad == null)
+            if (_state == null)
             {
-                State = NiVekFlightStick.Empty.State;
                 return;
             }
 
-            try
+            if (currentState.BegingManualCameraControl && !_state.BegingManualCameraControl)
             {
-                var state = gamePad.GetCurrentReading();
+                BeginManualCameraControl?.Invoke(this, null);
+                currentState.CameraGimbleX = 0;
+                currentState.CameraGimbleY = 0;
+            }
 
-                var currentState = new NiVekFlightStickState
-                {
-                    A = (state.Buttons & GamepadButtons.A) == GamepadButtons.A,
-                    B = (state.Buttons & GamepadButtons.B) == GamepadButtons.B,
-                    X = (state.Buttons & GamepadButtons.X) == GamepadButtons.X,
-                    Y = (state.Buttons & GamepadButtons.Y) == GamepadButtons.Y,
-                    LeftShoulder = (state.Buttons & GamepadButtons.LeftShoulder) == GamepadButtons.LeftShoulder,
-                    RightShoulder = (state.Buttons & GamepadButtons.RightShoulder) == GamepadButtons.RightShoulder,
-                    LeftTrigger = (state.LeftTrigger > -100 && state.LeftTrigger < 100) ? Convert.ToInt16(0) : Convert.ToInt16(state.LeftTrigger * 1000),
-                    RightTrigger = (state.RightTrigger > -100 && state.RightTrigger < 100) ? Convert.ToInt16(0) : Convert.ToInt16(state.RightTrigger * 1000),
-                    Start = (state.Buttons & GamepadButtons.View) == GamepadButtons.View,
-                    Back = (state.Buttons & GamepadButtons.Menu) == GamepadButtons.Menu,
-                    LeftX = (state.LeftThumbstickX > -.10 && state.LeftThumbstickX < .1) ? Convert.ToInt16(0) : Convert.ToInt16(state.LeftThumbstickX * 1000),
-                    LeftY = (state.LeftThumbstickY > -.10 && state.LeftThumbstickY < .1) ? Convert.ToInt16(0) : Convert.ToInt16(state.LeftThumbstickY * 1000),
-                    RightX = (state.RightThumbstickX > -.10 && state.RightThumbstickX < .1) ? Convert.ToInt16(0) : Convert.ToInt16(state.RightThumbstickX * 1000),
-                    RightY = (state.RightThumbstickY > -.10 && state.RightThumbstickY < .1) ? Convert.ToInt16(0) : Convert.ToInt16(state.RightThumbstickY * 1000)
-                };
+            if (currentState.EndManualCameraControl && !_state.EndManualCameraControl)
+            {
+                EndManualCameraControl?.Invoke(this, null);
+                currentState.CameraGimbleX = 0;
+                currentState.CameraGimbleY = 0;
+            }
 
-                currentState.DPad.Down = (state.Buttons & GamepadButtons.View) == GamepadButtons.View;
-                currentState.DPad.Up = (state.Buttons & GamepadButtons.View) == GamepadButtons.View;
-                currentState.DPad.Left = (state.Buttons & GamepadButtons.View) == GamepadButtons.View;
-                currentState.DPad.Right = (state.Buttons & GamepadButtons.View) == GamepadButtons.View;
+            if (currentState.TakeOff && !_state.TakeOff)
+            {
+                TakeOff?.Invoke(this, null);
+            }
 
+            if (currentState.ReturnToHome && !_state.ReturnToHome) ReturnToHome?.Invoke(this, null);
+            if (currentState.Land && !_state.Land) Land?.Invoke(this, null);
+            if (currentState.NextWaypoint && !_state.NextWaypoint) NextWaypoint?.Invoke(this, null);
+            if (currentState.PreviousWaypoint && !_state.PreviousWaypoint) PreviousWaypoint?.Invoke(this, null);
+            if (currentState.StartMission && !_state.StartMission) StartMission?.Invoke(this, null);
+            if (currentState.PauseMission && !_state.PauseMission) PauseMission?.Invoke(this, null);
+            if (currentState.ContinueMission && !_state.ContinueMission) ContinueMission?.Invoke(this, null);
+            if (currentState.EndMission && !_state.EndMission) EndMission?.Invoke(this, null);
+        }
 
-                if (_state != null)
-                {
-                    if (currentState.A != _state.A)
-                        RaiseButtonChangedEvent(GamePadButtons.A, currentState.A ? ButtonState.Pressed : ButtonState.Released);
+        public void RefreshFromThrustMaster1600(RawGameController rawGC)
+        {
+            var axis = new double[rawGC.AxisCount];
+            var switches = new GameControllerSwitchPosition[rawGC.SwitchCount];
+            var buttons = new bool[rawGC.ButtonCount];
+            rawGC.GetCurrentReading(buttons, switches, axis);
 
-                    if (currentState.B != _state.B)
-                        RaiseButtonChangedEvent(GamePadButtons.B, currentState.B ? ButtonState.Pressed : ButtonState.Released);
+            var currentState = new NiVekFlightStickState
+            {
+                TakeOff = buttons[1],
+                Land = buttons[3],
+                Roll = Normalize(axis[0]),
+                Pitch = Normalize(axis[1]),
+                Rudder = Normalize(axis[2]),
+            };
 
-                    if (currentState.X != _state.X)
-                        RaiseButtonChangedEvent(GamePadButtons.X, currentState.X ? ButtonState.Pressed : ButtonState.Released);
+            TriggerEvents(currentState);
 
-                    if (currentState.Y != _state.Y)
-                        RaiseButtonChangedEvent(GamePadButtons.Y, currentState.Y ? ButtonState.Pressed : ButtonState.Released);
+            RunOnUIThread(() =>
+            {
+                _state.TakeOff = currentState.TakeOff;
+                _state.Land = currentState.Land;
+                _state.Roll = currentState.Roll;
+                _state.Pitch = currentState.Pitch;
+                _state.Rudder = currentState.Rudder;
 
-                    if (currentState.Back != _state.Back)
-                        RaiseButtonChangedEvent(GamePadButtons.Back, currentState.Back ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.Start != _state.Start)
-                        RaiseButtonChangedEvent(GamePadButtons.Start, currentState.Start ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.DPad.Down != _state.DPad.Down)
-                        RaiseButtonChangedEvent(GamePadButtons.DPADDown, currentState.DPad.Down ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.DPad.Left != _state.DPad.Left)
-                        RaiseButtonChangedEvent(GamePadButtons.DPADLeft, currentState.DPad.Left ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.DPad.Right != _state.DPad.Right)
-                        RaiseButtonChangedEvent(GamePadButtons.DPADRight, currentState.DPad.Right ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.DPad.Up != _state.DPad.Up)
-                        RaiseButtonChangedEvent(GamePadButtons.DPADUp, currentState.DPad.Up ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.LeftShoulder != _state.LeftShoulder)
-                        RaiseButtonChangedEvent(GamePadButtons.LeftShoulder, currentState.LeftShoulder ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.RightShoulder != _state.RightShoulder)
-                        RaiseButtonChangedEvent(GamePadButtons.RightShoulder, currentState.RightShoulder ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.LeftThumb != _state.LeftThumb)
-                        RaiseButtonChangedEvent(GamePadButtons.LeftThumb, currentState.LeftThumb ? ButtonState.Pressed : ButtonState.Released);
-
-                    if (currentState.RightThumb != _state.RightThumb)
-                        RaiseButtonChangedEvent(GamePadButtons.RightThumb, currentState.RightThumb ? ButtonState.Pressed : ButtonState.Released);
-                }
-
-                _state = currentState;
                 _state.IsConnected = true;
+            });
+        }
 
-            }
-            catch (Exception)
+        private short Normalize(double value, double center = 0.5, short min = -1000, short max = 1000)
+        {
+            value = value - center;
+
+            var deadZoneClearedValue = (value > -.025 && value < .025) ? 0 : value;
+            return Convert.ToInt16(deadZoneClearedValue * (max - min));
+        }
+
+        private async void RunOnUIThread(Action action)
+        {
+            await this._dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+           {
+               action();
+           });
+        }
+
+
+        public void RefreshFromThrustMasterThrottle(RawGameController rawGC)
+        {
+            var axis = new double[rawGC.AxisCount];
+            var switches = new GameControllerSwitchPosition[rawGC.SwitchCount];
+            var buttons = new bool[rawGC.ButtonCount];
+            rawGC.GetCurrentReading(buttons, switches, axis);
+
+            var leftRudder = axis[3];
+            var rightRidder = axis[4];
+
+            var cameraX = axis[0];
+            var cameraY = axis[1];
+
+            var currentState = new NiVekFlightStickState
             {
-                _state.IsConnected = false;
+                BegingManualCameraControl = buttons[7],
+                EndManualCameraControl = buttons[9],
+                CameraGimbleX = Normalize(axis[0]),
+                CameraGimbleY = Normalize(axis[1]),
+                Rudder = Normalize(axis[3] + -axis[4]),
+
+            };
+
+            if (buttons[1] && !_state.AltitudeHold)
+                currentState.AltitudeHold = true;
+            else if (buttons[2] && _state.AltitudeHold)
+                currentState.AltitudeHold = false;
+            else
+                currentState.AltitudeHold = _state.AltitudeHold;
+
+            currentState.Throttle = currentState.AltitudeHold ? Normalize(axis[5]) : Normalize(axis[2], 0, 0, 1000);
+
+            TriggerEvents(currentState);
+
+            RunOnUIThread(() =>
+            {
+                _state.AltitudeHold = currentState.AltitudeHold;
+                _state.Throttle = currentState.Throttle;
+                _state.CameraGimbleX = currentState.CameraGimbleX;
+                _state.CameraGimbleY = currentState.CameraGimbleY;
+                _state.BegingManualCameraControl = currentState.BegingManualCameraControl;
+                _state.EndManualCameraControl = currentState.EndManualCameraControl;
+
+                _state.IsConnected = true;
+            });
+        }
+
+        public void RefreshFromXBox(Gamepad gamePad)
+        {
+            if (gamePad == null)
+            {
+                return;
             }
+
+            var state = gamePad.GetCurrentReading();
+
+            var currentState = new NiVekFlightStickState
+            {
+                TakeOff = (state.Buttons & GamepadButtons.A) == GamepadButtons.A,
+                StartMission = (state.Buttons & GamepadButtons.View) == GamepadButtons.View,
+                Land = (state.Buttons & GamepadButtons.B) == GamepadButtons.B,
+                NextWaypoint = (state.Buttons & GamepadButtons.X) == GamepadButtons.X,
+                PreviousWaypoint = (state.Buttons & GamepadButtons.Y) == GamepadButtons.Y,
+                EndMission = (state.Buttons & GamepadButtons.Menu) == GamepadButtons.Menu,
+
+                Rudder = (state.LeftThumbstickX > -.10 && state.LeftThumbstickX < .1) ? Convert.ToInt16(0) : Convert.ToInt16(state.LeftThumbstickX * 1000),
+                Throttle = (state.LeftThumbstickY > -.10 && state.LeftThumbstickY < .1) ? Convert.ToInt16(0) : Convert.ToInt16(state.LeftThumbstickY * 1000),
+                Roll = (state.RightThumbstickX > -.10 && state.RightThumbstickX < .1) ? Convert.ToInt16(0) : Convert.ToInt16(state.RightThumbstickX * 1000),
+                Pitch = (state.RightThumbstickY > -.10 && state.RightThumbstickY < .1) ? Convert.ToInt16(0) : Convert.ToInt16(state.RightThumbstickY * 1000),
+
+                LeftTrigger = (state.LeftTrigger > -100 && state.LeftTrigger < 100) ? Convert.ToInt16(0) : Convert.ToInt16(state.LeftTrigger * 1000),
+                RightTrigger = (state.RightTrigger > -100 && state.RightTrigger < 100) ? Convert.ToInt16(0) : Convert.ToInt16(state.RightTrigger * 1000),
+                LeftShoulder = (state.Buttons & GamepadButtons.LeftShoulder) == GamepadButtons.LeftShoulder,
+                RightShoulder = (state.Buttons & GamepadButtons.RightShoulder) == GamepadButtons.RightShoulder,
+            };
+
+            currentState.DPad.Down = (state.Buttons & GamepadButtons.View) == GamepadButtons.View;
+            currentState.DPad.Up = (state.Buttons & GamepadButtons.View) == GamepadButtons.View;
+            currentState.DPad.Left = (state.Buttons & GamepadButtons.View) == GamepadButtons.View;
+            currentState.DPad.Right = (state.Buttons & GamepadButtons.View) == GamepadButtons.View;
+
+            RunOnUIThread(() =>
+            {
+                TriggerEvents(currentState);
+
+                _state.TakeOff = currentState.TakeOff;
+                _state.Land = currentState.Land;
+                _state.Roll = currentState.Roll;
+                _state.Pitch = currentState.Pitch;
+                _state.Rudder = currentState.Rudder;
+                _state.Throttle = currentState.Throttle;
+
+                _state.IsConnected = true;
+            });
+        }
+
+
+
+        private void WriteGC(String name, RawGameController gc)
+        {
+            Debug.WriteLine(name);
+
+            var axis = new double[gc.AxisCount];
+            var switches = new GameControllerSwitchPosition[gc.SwitchCount];
+            var buttons = new bool[gc.ButtonCount];
+            gc.GetCurrentReading(buttons, switches, axis);
+            for (var idx = 0; idx < buttons.Length; ++idx)
+            {
+                var btn = buttons[idx];
+                Debug.Write($"{idx}. {btn} ");
+            }
+
+            Debug.WriteLine(String.Empty);
+
+            for (var idx = 0; idx < axis.Length; ++idx)
+            {
+                var axs = axis[idx];
+                Debug.Write($"{idx}. {axs} ");
+            }
+
+            Debug.WriteLine(String.Empty);
+
+            for (var idx = 0; idx < switches.Length; ++idx)
+            {
+                var sw = switches[idx];
+                Debug.Write($"{idx}. {sw}");
+            }
+
+            Debug.WriteLine(String.Empty);
+            Debug.WriteLine(String.Empty);
         }
     }
 }

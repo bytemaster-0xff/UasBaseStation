@@ -18,6 +18,8 @@ namespace LagoVista.Uas.Core
         void Land();
         void ReturnToHome();
         void GetHomePosition();
+        void StartMission();
+
         Mission Mission { get; set; }
 
         void SetVirtualJoystick(short throttle, short pitch, short roll, short yaw);

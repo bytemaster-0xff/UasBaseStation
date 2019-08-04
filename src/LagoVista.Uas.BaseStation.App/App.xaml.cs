@@ -1,11 +1,14 @@
-﻿using LagoVista.Core.IOC;
+﻿using LagoVista.Core;
+using LagoVista.Core.IOC;
 using LagoVista.Uas.BaseStation.App.Drones;
 using LagoVista.Uas.Core;
+using LagoVista.Uas.Core.FlightRecorder;
 using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Services;
 using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -39,12 +42,16 @@ namespace LagoVista.Uas.BaseStation.App
                 Window.Current.Content = rootFrame;
             }
 
+            var dispatcherService = new DispatcherService(Window.Current.Dispatcher);
+
             var uasMgr = new ConnectedUasManager();
             SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
             SLWIOC.RegisterSingleton<IConnectedUasManager>(uasMgr);
             SLWIOC.Register<IMissionPlanner, MissionPlanner>();
             SLWIOC.RegisterSingleton<IConfigurationManager>(new ConfigurationManager());
+            SLWIOC.RegisterSingleton<IDispatcherServices>(dispatcherService);
             SLWIOC.RegisterSingleton<ITelemetryService, TelemetryService>();
+            SLWIOC.RegisterSingleton<IFlightRecorder>(new FlightRecorder(dispatcherService));
 
             new DJIDrone(uasMgr, Window.Current.Dispatcher);
 
@@ -69,6 +76,23 @@ namespace LagoVista.Uas.BaseStation.App
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+    }
+
+    public class DispatcherService : IDispatcherServices
+    {
+        CoreDispatcher _dispatcher;
+        public DispatcherService(CoreDispatcher dispatcher)
+        {
+            this._dispatcher = dispatcher;
+        }
+
+        public async void Invoke(Action action)
+        {
+            await this._dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                action();
+            });
         }
     }
 }

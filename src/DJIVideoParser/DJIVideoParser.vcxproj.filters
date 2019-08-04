@@ -40,6 +40,7 @@
     <ClCompile Include="RenderSurface\Renderer\CalibrationVideoFeedRenderer\CalibrationDataSource.cpp">
       <Filter>RenderSurface\Renderer\CalibrationVideoFeedRenderer</Filter>
     </ClCompile>
+    <ClCompile Include="GamePad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -68,6 +69,7 @@
     <ClInclude Include="RenderSurface\Renderer\CalibrationVideoFeedRenderer\CalibrationVideoFeedRenderer.h">
       <Filter>RenderSurface\Renderer\CalibrationVideoFeedRenderer</Filter>
     </ClInclude>
+    <ClInclude Include="GamePad.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="..\djiuwpsample\package.appxmanifest" />

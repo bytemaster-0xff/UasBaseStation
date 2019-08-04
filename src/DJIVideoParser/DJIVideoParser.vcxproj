@@ -216,6 +216,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GamePad.h" />
     <ClInclude Include="h264_Decoder.h" />
     <ClInclude Include="modulemediator.h" />
     <ClInclude Include="pch.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="VideoWrapper.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GamePad.cpp" />
     <ClCompile Include="h264_Decoder.cpp" />
     <ClCompile Include="modulemediator.cpp" />
     <ClCompile Include="pch.cpp">

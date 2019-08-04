@@ -119,7 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controller\NiVekFlightStick.cs" />
+    <Compile Include="Controller\NivekFlightStick.cs" />
     <Compile Include="Controls\AltitudeIndicator.cs" />
     <Compile Include="Controls\AoACircle.cs" />
     <Compile Include="Controls\ArtificialHorizon.cs" />

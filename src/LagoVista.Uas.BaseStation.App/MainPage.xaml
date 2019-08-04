@@ -142,33 +142,44 @@
             <Grid Grid.Row="1" Grid.Column="0" >
                 <Rectangle Style="{StaticResource GaugeBackground}" />
                 <TextBlock Text="Stick - Rudder" Style="{StaticResource GuageTitle}" />
-                <controls:RadialGauge Value="{Binding Path=FlightStickState.LeftX, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
-                <TextBlock Text="{Binding Path=FlightStickState.LeftX, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                <controls:RadialGauge Value="{Binding Path=FlightStickState.Rudder, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                <TextBlock Text="{Binding Path=FlightStickState.Rudder, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="1" >
                 <Rectangle Style="{StaticResource GaugeBackground}" />
                 <TextBlock Text="Stick - Roll" Style="{StaticResource GuageTitle}" />
-                <controls:RadialGauge Value="{Binding Path=FlightStickState.RightX, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
-                <TextBlock Text="{Binding Path=FlightStickState.RightX, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                <controls:RadialGauge Value="{Binding Path=FlightStickState.Roll, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                <TextBlock Text="{Binding Path=FlightStickState.Roll, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="2" >
                 <Rectangle Style="{StaticResource GaugeBackground}" />
                 <TextBlock Text="Stick - Throttle" Style="{StaticResource GuageTitle}" />
-                <controls:RadialGauge Value="{Binding Path=FlightStickState.LeftY, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
-                <TextBlock Text="{Binding Path=FlightStickState.LeftY, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+
+                <controls:RadialGauge Value="{Binding Path=FlightStickState.Throttle, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
+                <TextBlock Text="{Binding Path=FlightStickState.Throttle, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                <TextBlock Text="Hold" Style="{StaticResource GaugeValue}" Margin="0,0,60,50"  />
+                <TextBlock Text="{Binding Path=FlightStickState.AltitudeHold, FallbackValue=false}" Margin="0,0,60,30" Style="{StaticResource GaugeValue}" />
             </Grid>
 
             <Grid Grid.Row="1" Grid.Column="3" >
                 <Rectangle Style="{StaticResource GaugeBackground}" />
                 <TextBlock Text="Stick - Pitch" Style="{StaticResource GuageTitle}" />
-                <controls:RadialGauge Value="{Binding Path=FlightStickState.RightY, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
-                <TextBlock Text="{Binding Path=FlightStickState.RightY, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                <controls:RadialGauge Value="{Binding Path=FlightStickState.Pitch, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
+                <TextBlock Text="{Binding Path=FlightStickState.Pitch, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
             </Grid>
 
         </Grid>
 
-
+        <ListBox ItemsSource="{Binding FlightRecorder}" Grid.Row="2" Grid.Column="0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding EventName}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Page>
