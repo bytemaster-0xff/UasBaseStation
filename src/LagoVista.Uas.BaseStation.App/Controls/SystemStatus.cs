@@ -120,7 +120,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controls
                         else
                         {
                             _armedControl.Text = "DISAMRED";
-                            _armedControl.Foreground = new SolidColorBrush(Colors.Green);
+                            _armedControl.Foreground = new SolidColorBrush(Colors.Lime);
                         }                        
                     });
                     _lastArmed = value;

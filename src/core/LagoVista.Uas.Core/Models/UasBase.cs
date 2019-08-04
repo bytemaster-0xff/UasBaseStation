@@ -100,7 +100,14 @@ namespace LagoVista.Uas.Core
             set { Set(ref _location, value); }
         }
 
-        public GPS GSP
+        private bool _hasLocation = false;
+        public bool HasLocation
+        {
+            get { return _hasLocation; }
+            set { Set(ref _hasLocation, value); }
+        }
+
+        public GPS GPS
         {
             get => GPSs.First();
         }

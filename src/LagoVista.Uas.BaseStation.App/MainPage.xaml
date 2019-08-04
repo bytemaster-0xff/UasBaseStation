@@ -7,6 +7,7 @@
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d"
     Background="SteelBlue">
 
@@ -44,7 +45,8 @@
                     <ctl:AoACircle Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" HorizontalAlignment="Center" Foreground="Lime" />
                     <ctl:AltitudeIndicator Altitude="{Binding Path=UasMgr.Active.Uas.RangeFinder.Distance, Mode=TwoWay}" Foreground="Lime" />
                     <ctl:Compass Foreground="Lime" VerticalAlignment="Top" Heading="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" Margin="0,20,0,0" />
-                    <ctl:GPSStatus  VerticalAlignment="Center" Foreground="Lime"  />
+                    <ctl:GPSStatus  SatCount="{Binding Path=UasMgr.Active.Uas.GPS.SateliteCount}" 
+                        VerticalAlignment="Center" Foreground="Lime"  />
                 </Grid>
             </Grid>
 
@@ -205,6 +207,14 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
+
+            <maps:MapControl Visibility="{Binding UasMgr.Active.Uas.HasLocation, Converter={StaticResource VisibilityConverters}}"
+                Grid.Row="1" Grid.Column="2" ZoomLevel="22" Style="Aerial"
+                Center="{Binding UasMgr.Active.Uas.Location, Converter={StaticResource GeoLocationConverter}, Mode=TwoWay}"
+                MapServiceToken="s5miuLzzn4RuPyMXzOYF~pA3KRBwzLZ4JOHnyIaUAWA~AnoR9G-Mf6OR7_n8b6wVy_cd9wim48xfSp39TC31OlvLad6zT5Pf0XN35EPuEV5U"  />
+
+            <TextBlock Text="No GPS Lock" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center"  VerticalAlignment="Center"
+                     Visibility="{Binding UasMgr.Active.Uas.HasLocation, Converter={StaticResource InvertsVisibilityConverters}}" />
         </Grid>
     </Grid>
 </Page>

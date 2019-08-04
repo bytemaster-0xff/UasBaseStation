@@ -130,6 +130,7 @@
     <Compile Include="Controls\SystemStatus.cs" />
     <Compile Include="Controls\FPVView.cs" />
     <Compile Include="Controls\VideoControl.cs" />
+    <Compile Include="Converters\GeoLocationConverter.cs" />
     <Compile Include="Converters\NullValueConverters.cs" />
     <Compile Include="Converters\VisibilityValueConverters.cs" />
     <Compile Include="Drones\DJIDrone.cs" />

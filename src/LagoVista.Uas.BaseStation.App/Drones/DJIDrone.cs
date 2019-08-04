@@ -59,7 +59,8 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AltitudeChanged += DJIDrone_AltitudeChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AircraftLocationChanged += DJIDrone_AircraftLocationChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).SatelliteCountChanged += DJIDrone_SatelliteCountChanged;
-              
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).GPSSignalLevelChanged += DJIDrone_GPSSignalLevelChanged;
+
                     DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).VoltageChanged += DJIDrone_VoltageChanged;
                     DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).ChargeRemainingInPercentChanged += DJIDrone_ChargeRemainingInPercentChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).RemainingFlightTimeChanged += DJIDrone_RemainingFlightTimeChanged;
@@ -73,6 +74,11 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
             }
         }
 
+        private void DJIDrone_GPSSignalLevelChanged(object sender, FCGPSSignalLevelMsg? value)
+        {
+            
+        }
+
         private void DJIDrone_SatelliteCountChanged(object sender, IntMsg? value)
         {
             RunOnUIThread(() => GPSs.First().SateliteCount = value.HasValue ? value.Value.value : 0);
@@ -80,12 +86,12 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
 
         private void DJIDrone_RemainingFlightTimeChanged(object sender, IntMsg? value)
         {
-            RunOnUIThread(() => Battery.TimeRemaining = TimeSpan.FromSeconds(value.HasValue ? value.Value.value : 0)); 
+            RunOnUIThread(() => Battery.TimeRemaining = TimeSpan.FromSeconds(value.HasValue ? value.Value.value : 0));
         }
 
         private void DJIDrone_ChargeRemainingInPercentChanged(object sender, IntMsg? value)
         {
-           RunOnUIThread(() => Battery.RemainingPercent = value.HasValue ? value.Value.value : 0);
+            RunOnUIThread(() => Battery.RemainingPercent = value.HasValue ? value.Value.value : 0);
         }
 
         private void DJIDrone_IsFlyingChanged(object sender, BoolMsg? value)
@@ -138,9 +144,9 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                     {
                         this.UasSerialNumber = sn.Value.value;
                     }
-                    
+
                     var name = (await DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).GetAircraftNameAsync()).value;
-                    if(name.HasValue)
+                    if (name.HasValue)
                     {
                         this.UasName = name.Value.value;
                     }
@@ -182,8 +188,19 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
             {
                 if (value.HasValue)
                 {
-                    this.Location.Latitude = value.Value.latitude;
-                    this.Location.Longitude = value.Value.longitude;
+                    if (Math.Abs(value.Value.latitude) > 0.5)
+                    {
+                        this.HasLocation = true;
+                        this.Location = new LagoVista.Core.Models.Geo.GeoLocation()
+                        {
+                            Latitude = value.Value.latitude,
+                            Longitude = value.Value.longitude
+                        };
+                    }
+                    else
+                    {
+                        this.HasLocation = false;
+                    }
                 }
             });
         }
@@ -196,7 +213,10 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                 {
                     this.RangeFinder.GaugeStatus = value.HasValue ? GaugeStatus.OK : GaugeStatus.Warning;
                     this.RangeFinder.Distance = Convert.ToSingle(value.Value.value);
-                    this.Location.Altitude = Convert.ToSingle(value.Value.value);
+                    if (this.Location != null)
+                    {
+                        this.Location.Altitude = Convert.ToSingle(value.Value.value);
+                    }
                 }
             });
         }

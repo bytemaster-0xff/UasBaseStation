@@ -367,7 +367,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
                 TakeOff = buttons[1],
                 Land = buttons[3],
                 Roll = Normalize(axis[0]),
-                Pitch = Normalize(axis[1]),              
+                Pitch = Convert.ToInt16(-Normalize(axis[1])),              
             };
 
             TriggerEvents(currentState);
@@ -419,7 +419,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
                 EndManualCameraControl = buttons[9],
                 CameraGimbleX = Normalize(axis[0]),
                 CameraGimbleY = Normalize(axis[1]),
-                Rudder = Normalize(axis[6]),
+                Rudder = Convert.ToInt16(-Normalize(axis[6])),
 
             };
 

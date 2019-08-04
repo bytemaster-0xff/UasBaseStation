@@ -58,6 +58,19 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controls
             }
         }
 
+        public static DependencyProperty HasFixProperty = DependencyProperty.Register(nameof(HasFix), typeof(string), typeof(bool), new PropertyMetadata(default(Boolean), new PropertyChangedCallback((obj, value) => (obj as GPSStatus).HasFix = Convert.ToBoolean(value.NewValue))));
+        public bool HasFix
+        {
+            get { return Convert.ToBoolean(GetValue(HasFixProperty)); }
+            set
+            {
+                SetValue(HasFixProperty, value);
+
+                var fixMessage = value ? "Fix" : "No Fix";
+                RunOnUIThread(() => _gps.Text = $"FIX {fixMessage}");
+            }
+        }
+
         public static DependencyProperty SatCountProperty = DependencyProperty.Register(nameof(SatCount), typeof(int), typeof(GPSStatus), new PropertyMetadata(default(int), new PropertyChangedCallback((obj, value) => (obj as GPSStatus).SatCount = Convert.ToInt32(value.NewValue))));
         public int SatCount
         {
