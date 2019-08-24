@@ -64,6 +64,8 @@ std::string CalibrationDataSource::GetSensorName()
 {
 	switch (m_sensor)
 	{
+	case DeviceCameraSensor::telloSensor:
+		return "tellocam";
 	case DeviceCameraSensor::imx283:
 		return "imx283";
 	case DeviceCameraSensor::imx477:

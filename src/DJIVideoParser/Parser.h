@@ -3,6 +3,7 @@
 namespace DJIVideoParser
 {
 	public enum class AircraftCameraType : int {
+		Tello,
 		Mavic2Pro,
 		Mavic2Zoom,
 		Others

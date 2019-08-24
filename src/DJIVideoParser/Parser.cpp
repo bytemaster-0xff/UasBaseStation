@@ -117,6 +117,7 @@ void DJIVideoParser::Parser::SetCameraSensor(AircraftCameraType sensor)
 
 	static std::map<AircraftCameraType, DeviceCameraSensor> map = 
 	{
+		{ AircraftCameraType::Tello, DeviceCameraSensor::telloSensor },
 		{ AircraftCameraType::Mavic2Pro, DeviceCameraSensor::imx283 },
 		{ AircraftCameraType::Mavic2Zoom, DeviceCameraSensor::imx477 },
 		{ AircraftCameraType::Others, DeviceCameraSensor::Unknown },

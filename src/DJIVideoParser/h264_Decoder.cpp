@@ -25,6 +25,8 @@ static bool s_is_init_ffmpeg = false;
 
 #define PIX_FMT_FORMAT PIX_FMT_RGBA
 
+//#define PIX_FMT_FORMAT PIX_FMT_RGB24
+
 #define  HEAD_SIZE 12
 
 h264_Decoder::h264_Decoder()

@@ -60,10 +60,11 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AircraftLocationChanged += DJIDrone_AircraftLocationChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).SatelliteCountChanged += DJIDrone_SatelliteCountChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).GPSSignalLevelChanged += DJIDrone_GPSSignalLevelChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).RemainingFlightTimeChanged += DJIDrone_RemainingFlightTimeChanged;                    
 
                     DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).VoltageChanged += DJIDrone_VoltageChanged;
                     DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).ChargeRemainingInPercentChanged += DJIDrone_ChargeRemainingInPercentChanged;
-                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).RemainingFlightTimeChanged += DJIDrone_RemainingFlightTimeChanged;
+                    
 
                     DJISDKManager.Instance.ComponentManager.GetProductHandler(0).ProductTypeChanged += DJIDrone_ProductTypeChanged;
                 }
@@ -153,6 +154,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
 
                     this.UasType = value.Value.value.ToString();
                     RunOnUIThread(() => _mgr.SetActive(new ConnectedUas(this, new DJITransport(this))));
+                    await DJISDKManager.Instance.ComponentManager.GetGimbalHandler(0, 0).CalibrateGimbalAsync();
                 }
                 else
                 {
@@ -166,15 +168,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
 
         private void Instance_AircraftBindingStateChanged(AircraftBindingState state)
         {
-            if (state == AircraftBindingState.BOUND)
-            {
-                Debug.WriteLine("AIRCRAFT BOUND");
-            }
-            else
-            {
-                Debug.WriteLine(state);
-            }
-
+            Debug.WriteLine($"AIRCRAFT STATE: {state}");
         }
 
         private void DJIDrone_VoltageChanged(object sender, IntMsg? value)

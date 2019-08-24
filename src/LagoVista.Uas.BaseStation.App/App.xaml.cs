@@ -56,6 +56,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp
             SLWIOC.RegisterSingleton<IFlightRecorder>(new FlightRecorder(dispatcherService));
 
             new DJIDrone(uasMgr, Window.Current.Dispatcher);
+            //new TelloDrone(uasMgr, Window.Current.Dispatcher);
 
             if (e.PrelaunchActivated == false)
             {

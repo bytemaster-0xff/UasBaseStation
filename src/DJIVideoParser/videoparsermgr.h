@@ -44,6 +44,7 @@ namespace dji
 		protected:
 			void FreeMap();
 		private:
+			std::int8_t m_sendCount;
 			std::string m_source_path;
 			ParserMap m_map_parser;
 			std::recursive_mutex m_mutex_map_parser;

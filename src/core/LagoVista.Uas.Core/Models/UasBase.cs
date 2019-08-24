@@ -157,6 +157,20 @@ namespace LagoVista.Uas.Core
             set => Set(ref _groundSpeed, value);
         }
 
+        private int _temperatureHigh;
+        public int TemperatureHigh
+        {
+            get => _temperatureHigh; 
+            set => Set(ref _temperatureHigh, value);
+        }
+
+        private int _temperatureLow;
+        public int TemperatureLow
+        {
+            get => _temperatureLow;
+            set => Set(ref _temperatureLow, value);
+        }
+
         GeoLocation _homeBaseLocation;
         public GeoLocation HomeBaseLocation
         {

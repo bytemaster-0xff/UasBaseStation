@@ -1,0 +1,37 @@
+﻿namespace Tello
+{
+    public enum Commands
+    {
+        EnterSdkMode,
+        Takeoff,
+        Land,
+        Stop,
+        StartVideo,
+        StopVideo,
+        EmergencyStop,
+        Up,
+        Down,
+        Left,
+        Right,
+        Forward,
+        Back,
+        ClockwiseTurn,
+        CounterClockwiseTurn,
+        Flip,
+        Go,
+        Curve,
+        SetSpeed,
+        SetRemoteControl,
+        SetWiFiPassword,
+        //SetMissionPadOn,
+        //SetMissionPadOff,
+        //SetMissionPadDirection,
+        SetStationMode,
+        GetSpeed,
+        GetBattery,
+        GetTime,
+        GetWIFISnr,
+        GetSdkVersion,
+        GetSerialNumber,
+    }
+}

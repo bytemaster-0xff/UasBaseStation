@@ -13,7 +13,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
     {
         private readonly IConnectedUasManager _connectedUasManager;
 
-        public HudViewModel(IConnectedUasManager connectedUasManager, INavigation navigation, IFlightRecorder flightRecorder)
+        public HudViewModel(IConnectedUasManager connectedUasManager, INavigation navigation, IFlightRecorder flightRecorder, INiVekFlightStickState flightStickState)
         {
             Navigation = navigation;
             _connectedUasManager = connectedUasManager;
@@ -22,6 +22,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             EditMissionCommand = new RelayCommand(()=> ViewModelNavigation.NavigateAsync<Missions.MissionPlannerViewModel>(this));
             UasMgr = connectedUasManager;
             FlightRecorder = flightRecorder;
+            FlightStickState = flightStickState;
         }
 
         public async override Task InitAsync()
@@ -41,11 +42,12 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public RelayCommand EditMissionCommand { get; }
 
-        INiVekFlightStickState _flightStickState;
-        public INiVekFlightStickState FlightStickState
+        
+        public INiVekFlightStickState FlightStickState { get; }
+
+        public void RaiseIt()
         {
-            get => _flightStickState;
-            set => Set(ref _flightStickState, value);
+            this.RaisePropertyChanged(nameof(FlightStickState));
         }
     }
 }

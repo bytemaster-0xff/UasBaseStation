@@ -75,6 +75,12 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                         }
                     }
                     break;
+                case UasMessages.GimbalControl:
+                    DJISDKManager.Instance.ComponentManager.GetGimbalHandler(0, 0).RotateByAngleAsync(new GimbalAngleRotation()
+                    {
+                         
+                    });
+                    break;
                 case UasMessages.ManualControl:
                     {
                         var cmd = msg as UasManualControl;

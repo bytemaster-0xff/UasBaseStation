@@ -24,7 +24,11 @@ namespace LagoVista.Uas.Core
         ObservableCollection<DOF3Sensor> Acc { get; }
         ObservableCollection<DOF3Sensor> Gyro { get; }
         ObservableCollection<DOF3Sensor> Magnometer { get; }
+        GPS GPS { get; }
+        bool HasLocation { get; }
+
         ObservableCollection<GPS> GPSs { get; }
+        Battery Battery { get; }
         ObservableCollection<Battery> Batteries { get; }
 
         GeoLocation HomeLocation { get; set; }
@@ -61,5 +65,13 @@ namespace LagoVista.Uas.Core
 
         Comms Comms { get; }
         GeoLocation HomeBaseLocation { get; }
+        GeoLocation Location { get; set; }
+
+        String UasName { get; }
+        String UasType { get; }
+        String UasSerialNumber { get; }
+
+        int TemperatureHigh { get; set; }
+        int TemperatureLow { get; set; }
     }
 }

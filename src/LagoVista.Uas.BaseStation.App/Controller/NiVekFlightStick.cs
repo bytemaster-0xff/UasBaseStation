@@ -244,6 +244,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
                         AltitudeHold = true,
                         DPad = new NiVekFlightStickState.DPAD(),
                         IsConnected = false,
+                        Rudder = -250,
                     };
                 }
             }
@@ -289,19 +290,13 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
 
 
         private readonly CoreDispatcher _dispatcher;
-        private readonly NiVekFlightStickState _state = new NiVekFlightStickState();
 
-        public NiVekFlightStickState State
-        {
-            get => _state;
-        }
+        public NiVekFlightStickState State { get; }
 
         public NiVekFlightStick(CoreDispatcher dispatcher)
         {
-            this._state = NiVekFlightStickState.Empty;
+            State = NiVekFlightStickState.Empty;
             this._dispatcher = dispatcher;
-
-            // _tpTimer = ThreadPoolTimer.CreatePeriodicTimer(_timer_Tick, TimeSpan.FromMilliseconds(20));
         }
 
         private double? _thottleOffset = null;
@@ -321,46 +316,48 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
 
         private void TriggerEvents(NiVekFlightStickState currentState)
         {
-            if (_state == null)
+            if (State == null)
             {
                 return;
             }
 
-            if (currentState.BegingManualCameraControl && !_state.BegingManualCameraControl)
+            if (currentState.BegingManualCameraControl && !State.BegingManualCameraControl)
             {
                 BeginManualCameraControl?.Invoke(this, null);
                 currentState.CameraGimbleX = 0;
                 currentState.CameraGimbleY = 0;
             }
 
-            if (currentState.EndManualCameraControl && !_state.EndManualCameraControl)
+            if (currentState.EndManualCameraControl && !State.EndManualCameraControl)
             {
                 EndManualCameraControl?.Invoke(this, null);
                 currentState.CameraGimbleX = 0;
                 currentState.CameraGimbleY = 0;
             }
 
-            if (currentState.TakeOff && !_state.TakeOff)
+            if (currentState.TakeOff && !State.TakeOff)
             {
                 TakeOff?.Invoke(this, null);
             }
 
-            if (currentState.ReturnToHome && !_state.ReturnToHome) ReturnToHome?.Invoke(this, null);
-            if (currentState.Land && !_state.Land) Land?.Invoke(this, null);
-            if (currentState.NextWaypoint && !_state.NextWaypoint) NextWaypoint?.Invoke(this, null);
-            if (currentState.PreviousWaypoint && !_state.PreviousWaypoint) PreviousWaypoint?.Invoke(this, null);
-            if (currentState.StartMission && !_state.StartMission) StartMission?.Invoke(this, null);
-            if (currentState.PauseMission && !_state.PauseMission) PauseMission?.Invoke(this, null);
-            if (currentState.ContinueMission && !_state.ContinueMission) ContinueMission?.Invoke(this, null);
-            if (currentState.EndMission && !_state.EndMission) EndMission?.Invoke(this, null);
+            if (currentState.ReturnToHome && !State.ReturnToHome) ReturnToHome?.Invoke(this, null);
+            if (currentState.Land && !State.Land) Land?.Invoke(this, null);
+            if (currentState.NextWaypoint && !State.NextWaypoint) NextWaypoint?.Invoke(this, null);
+            if (currentState.PreviousWaypoint && !State.PreviousWaypoint) PreviousWaypoint?.Invoke(this, null);
+            if (currentState.StartMission && !State.StartMission) StartMission?.Invoke(this, null);
+            if (currentState.PauseMission && !State.PauseMission) PauseMission?.Invoke(this, null);
+            if (currentState.ContinueMission && !State.ContinueMission) ContinueMission?.Invoke(this, null);
+            if (currentState.EndMission && !State.EndMission) EndMission?.Invoke(this, null);
         }
 
-        public void RefreshFromThrustMaster1600(RawGameController rawGC)
+        public bool RefreshFromThrustMaster1600(RawGameController rawGC)
         {
             var axis = new double[rawGC.AxisCount];
             var switches = new GameControllerSwitchPosition[rawGC.SwitchCount];
             var buttons = new bool[rawGC.ButtonCount];
-            rawGC.GetCurrentReading(buttons, switches, axis);
+
+            /// ts is when the stick was read, if it wasn't read the value will be zero, this happens when the stick hasn't been moved.
+            var ts = rawGC.GetCurrentReading(buttons, switches, axis);
 
             var currentState = new NiVekFlightStickState
             {
@@ -370,17 +367,29 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
                 Pitch = Convert.ToInt16(-Normalize(axis[1])),              
             };
 
-            TriggerEvents(currentState);
-
-            RunOnUIThread(() =>
+            if (ts != 0 && (State.TakeOff != currentState.TakeOff ||
+               State.Land != currentState.Land ||
+               State.Roll != currentState.Roll ||
+               State.Pitch != currentState.Pitch))
             {
-                _state.TakeOff = currentState.TakeOff;
-                _state.Land = currentState.Land;
-                _state.Roll = currentState.Roll;
-                _state.Pitch = currentState.Pitch;
 
-                _state.IsConnected = true;
-            });
+                TriggerEvents(currentState);
+
+                RunOnUIThread(() =>
+                {
+                    State.TakeOff = currentState.TakeOff;
+                    State.Land = currentState.Land;
+                    State.Roll = currentState.Roll;
+                    State.Pitch = currentState.Pitch;
+
+                    State.IsConnected = true;
+                });
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private short Normalize(double value, double center = 0.5, short min = -1000, short max = 1000)
@@ -400,12 +409,14 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
         }
 
 
-        public void RefreshFromThrustMasterThrottle(RawGameController rawGC)
+        public bool RefreshFromThrustMasterThrottle(RawGameController rawGC)
         {
             var axis = new double[rawGC.AxisCount];
             var switches = new GameControllerSwitchPosition[rawGC.SwitchCount];
             var buttons = new bool[rawGC.ButtonCount];
-            rawGC.GetCurrentReading(buttons, switches, axis);
+
+            /// ts is when the stick was read, if it wasn't read the value will be zero, this happens when the stick hasn't been moved.
+            var ts = rawGC.GetCurrentReading(buttons, switches, axis);
 
             var leftRudder = axis[3];
             var rightRidder = axis[4];
@@ -423,29 +434,44 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
 
             };
 
-            if (buttons[1] && !_state.AltitudeHold)
+            if (buttons[1] && !State.AltitudeHold)
                 currentState.AltitudeHold = true;
-            else if (buttons[2] && _state.AltitudeHold)
+            else if (buttons[2] && State.AltitudeHold)
                 currentState.AltitudeHold = false;
             else
-                currentState.AltitudeHold = _state.AltitudeHold;
+                currentState.AltitudeHold = State.AltitudeHold;
 
             currentState.Throttle = currentState.AltitudeHold ? Normalize(axis[5]) : Normalize(axis[2], 0, 0, 1000);
 
-            TriggerEvents(currentState);
-
-            RunOnUIThread(() =>
+            if (ts != 0 && (State.AltitudeHold != currentState.AltitudeHold ||
+               State.Throttle != currentState.Throttle ||
+               State.Rudder != currentState.Rudder ||
+               State.CameraGimbleX != currentState.CameraGimbleX ||
+               State.CameraGimbleY != currentState.CameraGimbleY ||
+               State.BegingManualCameraControl != currentState.BegingManualCameraControl ||
+                State.EndManualCameraControl != currentState.EndManualCameraControl))
             {
-                _state.AltitudeHold = currentState.AltitudeHold;
-                _state.Throttle = currentState.Throttle;
-                _state.Rudder = currentState.Rudder;
-                _state.CameraGimbleX = currentState.CameraGimbleX;
-                _state.CameraGimbleY = currentState.CameraGimbleY;
-                _state.BegingManualCameraControl = currentState.BegingManualCameraControl;
-                _state.EndManualCameraControl = currentState.EndManualCameraControl;
+                TriggerEvents(currentState);
 
-                _state.IsConnected = true;
-            });
+                RunOnUIThread(() =>
+                {
+                    State.AltitudeHold = currentState.AltitudeHold;
+                    State.Throttle = currentState.Throttle;
+                    State.Rudder = currentState.Rudder;
+                    State.CameraGimbleX = currentState.CameraGimbleX;
+                    State.CameraGimbleY = currentState.CameraGimbleY;
+                    State.BegingManualCameraControl = currentState.BegingManualCameraControl;
+                    State.EndManualCameraControl = currentState.EndManualCameraControl;
+
+                    State.IsConnected = true;
+                });
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public void RefreshFromXBox(Gamepad gamePad)
@@ -486,14 +512,14 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
             {
                 TriggerEvents(currentState);
 
-                _state.TakeOff = currentState.TakeOff;
-                _state.Land = currentState.Land;
-                _state.Roll = currentState.Roll;
-                _state.Pitch = currentState.Pitch;
-                _state.Rudder = currentState.Rudder;
-                _state.Throttle = currentState.Throttle;
+                State.TakeOff = currentState.TakeOff;
+                State.Land = currentState.Land;
+                State.Roll = currentState.Roll;
+                State.Pitch = currentState.Pitch;
+                State.Rudder = currentState.Rudder;
+                State.Throttle = currentState.Throttle;
 
-                _state.IsConnected = true;
+                State.IsConnected = true;
             });
         }
 

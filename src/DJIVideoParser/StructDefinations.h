@@ -5,6 +5,7 @@
 
 enum class DeviceCameraSensor
 {
+	telloSensor,
 	imx283,
 	imx477,
 	Unknown

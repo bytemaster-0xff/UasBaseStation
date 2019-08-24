@@ -135,6 +135,8 @@
     <Compile Include="Converters\VisibilityValueConverters.cs" />
     <Compile Include="Drones\DJIDrone.cs" />
     <Compile Include="Drones\DJITransport.cs" />
+    <Compile Include="Drones\TelloDrone.cs" />
+    <Compile Include="Drones\TelloTransport.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -214,6 +216,22 @@
     <ProjectReference Include="..\LagoVista.Uas.Drones\LagoVista.Uas.Drones.csproj">
       <Project>{3e51b430-335e-4513-85c1-65393c192391}</Project>
       <Name>LagoVista.Uas.Drones</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tello\Messenger.Udp\Messenger.Udp.csproj">
+      <Project>{b5fa1171-0f04-4d2f-b039-20c4a346c011}</Project>
+      <Name>Messenger.Udp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tello\Messenger\Messenger.csproj">
+      <Project>{42dc6dad-3a06-4864-b40b-a2970b7c7cf5}</Project>
+      <Name>Messenger</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tello\Tello.Controller\Tello.Controller.csproj">
+      <Project>{c92a429d-3a56-49b4-a217-47ab1ae9969a}</Project>
+      <Name>Tello.Controller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tello\Tello\Tello.csproj">
+      <Project>{beb7c361-26dc-470a-a7bf-c3e61f72481b}</Project>
+      <Name>Tello</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

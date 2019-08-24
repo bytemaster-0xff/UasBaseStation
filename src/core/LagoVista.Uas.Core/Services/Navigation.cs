@@ -50,6 +50,8 @@ namespace LagoVista.Uas.Core.Services
             }
         }
 
+        UasManualControl _msg;
+
         public void SetVirtualJoystick(short throttle, short pitch, short roll, short yaw)
         {
 
@@ -62,7 +64,11 @@ namespace LagoVista.Uas.Core.Services
 
             };
 
-            SendMessage(msg);
+            if (_msg == null || (_msg.X != pitch || _msg.Y != roll || _msg.Z != throttle || _msg.R != yaw))
+            {
+                SendMessage(msg);
+                _msg = msg;
+            }
         }
 
         public void Takeoff()

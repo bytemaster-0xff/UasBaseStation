@@ -40,6 +40,11 @@ namespace LagoVista.Uas.BaseStation.ControlApp
             this.InitializeComponent();
 
             _flightRecorder = SLWIOC.Get<IFlightRecorder>();
+
+            var uasMgr = SLWIOC.Get<IConnectedUasManager>();
+            var missionPlanner = new MissionPlanner(uasMgr);
+            _navigation = new LagoVista.Uas.Core.Services.Navigation(uasMgr, missionPlanner, _flightRecorder);
+            _hudViewModel = new HudViewModel(uasMgr, _navigation, _flightRecorder, _flightStick.State);
             _timer = new Timer(Timer_callBack, null, 100, 100);
         }
 
@@ -53,23 +58,16 @@ namespace LagoVista.Uas.BaseStation.ControlApp
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-
-            var uasMgr = SLWIOC.Get<IConnectedUasManager>();
-            var missionPlanner = new MissionPlanner(uasMgr);
-            _navigation = new LagoVista.Uas.Core.Services.Navigation(uasMgr, missionPlanner, _flightRecorder);            
-            _hudViewModel = new HudViewModel(uasMgr, _navigation, _flightRecorder);
-            DataContext = _hudViewModel;
-
-            NotifyPropertyChanged(nameof(ViewModel));
-
+            
             _flightStick.StartMission += (s, a) => _navigation.StartMission();
             _flightStick.TakeOff += (s, a) => _navigation.Takeoff();
             _flightStick.Land += (s, a) => _navigation.Land();
             _flightStick.ReturnToHome += (s, a) => _navigation.ReturnToHome();
-            _hudViewModel.FlightStickState = _flightStick.State;
 
             Gamepad.GamepadAdded += Gamepad_GamepadAdded;
             RawGameController.RawGameControllerAdded += RawGameController_RawGameControllerAdded;
+
+            NotifyPropertyChanged(nameof(ViewModel));            
         }
 
         private void RawGameController_RawGameControllerAdded(object sender, RawGameController e)
@@ -83,9 +81,10 @@ namespace LagoVista.Uas.BaseStation.ControlApp
                         case 0xB687: _throttle = e; break;
                     }
                     break;
-
             }
         }
+
+        public HudViewModel ViewModel => _hudViewModel;
 
         private void Timer_callBack(object obj)
         {
@@ -93,11 +92,16 @@ namespace LagoVista.Uas.BaseStation.ControlApp
             {
                 if (_tmFlightStick != null)
                 {
-                    _flightStick.RefreshFromThrustMaster1600(_tmFlightStick);
+                    var changed = _flightStick.RefreshFromThrustMaster1600(_tmFlightStick);
 
                     if (_throttle != null)
                     {
-                        _flightStick.RefreshFromThrustMasterThrottle(_throttle);
+                        changed |= _flightStick.RefreshFromThrustMasterThrottle(_throttle);
+                    }
+
+                    if (changed)
+                    {
+                        RunOnUIThread(() => ViewModel.RaiseIt());
                     }
                 }
                 else if (_xboxController != null)
@@ -107,7 +111,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp
 
                 if (_flightStick.State.IsConnected)
                 {
-                    _navigation.SetVirtualJoystick(_flightStick.State.Throttle, _flightStick.State.Pitch, _flightStick.State.Rudder, _flightStick.State.Roll);
+                    _navigation.SetVirtualJoystick(_flightStick.State.Throttle, _flightStick.State.Pitch, Convert.ToInt16(_flightStick.State.Rudder), _flightStick.State.Roll);                    
                 }
             }
         }
@@ -124,7 +128,5 @@ namespace LagoVista.Uas.BaseStation.ControlApp
         {
             this._xboxController = e;
         }
-
-        public HudViewModel ViewModel { get; private set; }
     }
 }

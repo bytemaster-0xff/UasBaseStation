@@ -10,6 +10,7 @@ namespace dji
 
 		VideoParserMgr::VideoParserMgr()
 		{
+			this->m_sendCount = 0;
 		}
 
 		VideoParserMgr::~VideoParserMgr()
@@ -17,7 +18,7 @@ namespace dji
 
 		}
 
-		bool VideoParserMgr::Initialize(const std::string & source_path, std::function<DJIDecodingAssistInfo(uint8_t* data, int length)> decoding_assist_info_parser)
+		bool VideoParserMgr::Initialize(const std::string& source_path, std::function<DJIDecodingAssistInfo(uint8_t* data, int length)> decoding_assist_info_parser)
 		{
 			m_source_path = source_path;
 			m_decoding_assist_info_parser = decoding_assist_info_parser;
@@ -87,9 +88,9 @@ namespace dji
 		void VideoParserMgr::FreeMap()
 		{
 			std::lock_guard<std::recursive_mutex> lock(m_mutex_map_parser);
-			for (auto &kv : m_map_parser)
+			for (auto& kv : m_map_parser)
 			{
-				for (auto &pkv : kv.second)
+				for (auto& pkv : kv.second)
 				{
 					pkv.second->Uninitialize();
 					pkv.second = nullptr;
@@ -104,15 +105,15 @@ namespace dji
 			m_render_surface->UpdateDeviceCameraSensor(sensor);
 		}
 
-		bool VideoParserMgr::SetWindow(int product_id, int component_index, std::function<void(uint8_t *data, int width, int height)> func, Windows::UI::Xaml::Controls::SwapChainPanel^ swap_chain_panel)
+		bool VideoParserMgr::SetWindow(int product_id, int component_index, std::function<void(uint8_t* data, int width, int height)> func, Windows::UI::Xaml::Controls::SwapChainPanel^ swap_chain_panel)
 		{
 
 			if (m_swap_chain_panel != swap_chain_panel)
 			{
 				if (m_swap_chain_panel)
 					m_render_surface->Uninitialize();
-				 m_swap_chain_panel = swap_chain_panel;
-				 if (swap_chain_panel)
+				m_swap_chain_panel = swap_chain_panel;
+				if (swap_chain_panel)
 					m_render_surface->Initialize(m_source_path, swap_chain_panel);
 			}
 
@@ -159,29 +160,29 @@ namespace dji
 				wrapper = video_parser->GetVideoWrapper();
 
 			}
-			wrapper->SetVideoFrameCallBack([this, func](uint8_t *data, int width, int height, const DJIDecodingAssistInfo& assistant_info)
-			{
-					if(func)
+			wrapper->SetVideoFrameCallBack([this, func](uint8_t* data, int width, int height, const DJIDecodingAssistInfo& assistant_info)
+				{
+					if (func)
 						func(data, width, height);
 					int actual_size = width * height * 4;
-					std::shared_ptr<uint8_t> shared_data = std::shared_ptr<uint8_t>(new uint8_t[actual_size], [](uint8_t *data) {delete[] data;});
+					std::shared_ptr<uint8_t> shared_data = std::shared_ptr<uint8_t>(new uint8_t[actual_size], [](uint8_t* data) {delete[] data; });
 					memcpy(shared_data.get(), data, actual_size);
-					if (m_render_surface->Ready())
+					if (m_render_surface->Ready())// && m_sendCount++ == 2)
 					{
-						this->m_swap_chain_panel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Normal,
+						this->m_swap_chain_panel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Low,
 							ref new Windows::UI::Core::DispatchedHandler([assistant_info, this, shared_data, width, height]
-						{
-							//TODO: maybe lock
-							if (!m_render_surface->Ready())
-								return;
+								{
+										//TODO: maybe lock
+									if (!m_render_surface->Ready())
+										return;
 
-							m_render_surface->SetVideoInfo(assistant_info.fov_state, assistant_info.lut_idx);
-							m_render_surface->RenderRGBImageData(shared_data.get(), width, height);
-						}));
+									m_render_surface->SetVideoInfo(assistant_info.fov_state, assistant_info.lut_idx);
+									m_render_surface->RenderRGBImageData(shared_data.get(), width, height);
+									//shared_data.get();
+									m_sendCount = 0;
+								}));
 					}
-
-
-			});
+				});
 
 
 			return true;
