@@ -13,9 +13,15 @@
 
     <Grid>
         <Grid Visibility="{x:Bind Path=ViewModel.UasMgr.Active, Converter={StaticResource NullVisibilityConverters}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
             <TextBlock Text="Waiting for UAS" Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-100,0,0" />
-
             <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Width="50" Height="50" IsActive="True" Margin="0,100,0,0" />
+            
+            
+            
         </Grid>
         <Grid Visibility="{x:Bind Path=ViewModel.UasMgr.Active, Converter={StaticResource NotNullVisibilityConverters}}">
             <Grid.RowDefinitions>
@@ -30,7 +36,6 @@
 
             <TextBlock Text="{x:Bind Path=ViewModel.UasMgr.Active.Uas.TemperatureHigh, Mode=TwoWay, FallbackValue=1}"  Foreground="Wheat"  FontSize="128"  />
             <TextBlock Text="{x:Bind Path=ViewModel.UasMgr.Active.Uas.TemperatureLow, Mode=TwoWay, FallbackValue=2}"  Foreground="Wheat"  FontSize="128" Margin="0,150,0,0" />
-
 
             <Grid Background="SteelBlue" Grid.Column="1">
                 <Grid Grid.Column="1" >
