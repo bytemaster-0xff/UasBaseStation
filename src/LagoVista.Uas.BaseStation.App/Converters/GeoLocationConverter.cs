@@ -14,12 +14,15 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Converters
         {
             if(value is LagoVista.Core.Models.Geo.GeoLocation local)
             {
-                return new Geopoint(new BasicGeoposition()
+                if (local.Latitude.HasValue && local.Longitude.HasValue && local.Altitude.HasValue)
                 {
-                    Latitude = local.Latitude,
-                    Longitude = local.Longitude,
-                    Altitude = local.Altitude,
-                });
+                    return new Geopoint(new BasicGeoposition()
+                    {
+                        Latitude = local.Latitude.Value,
+                        Longitude = local.Longitude.Value,
+                        Altitude = local.Altitude.Value,
+                    });
+                }
             }
 
             return null;

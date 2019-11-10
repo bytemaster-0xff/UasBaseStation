@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Core" Version="2.1.906-beta1142" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.907-beta0629" />
     <PackageReference Include="LagoVista.IoT.DeviceAdmin.Models" Version="2.1.906-beta0929" />
     <PackageReference Include="LagoVista.IoT.DeviceManagement.Models" Version="2.1.906-beta0929" />
     <PackageReference Include="LagoVista.MQTT" Version="1.2.740-alpha1236" />

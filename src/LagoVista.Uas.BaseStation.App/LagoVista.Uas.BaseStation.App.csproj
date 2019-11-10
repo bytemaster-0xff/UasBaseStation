@@ -144,6 +144,7 @@
     <Compile Include="Network\WiFiConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UwpAppConfig.cs" />
+    <Compile Include="UWPDeviceInfo.cs" />
     <Compile Include="Views\DroneConnectView.xaml.cs">
       <DependentUpon>DroneConnectView.xaml</DependentUpon>
     </Compile>
@@ -279,9 +280,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Client.Core" Version="1.2.906-alpha1852" />
-    <PackageReference Include="LagoVista.Core" Version="2.1.906-beta1142" />
-    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.906-beta1142" />
+    <PackageReference Include="LagoVista.Client.Core" Version="1.2.907-alpha0704" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.907-beta0629" />
+    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.907-beta0629" />
     <PackageReference Include="LagoVista.MQTT" Version="1.2.740-alpha1236" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

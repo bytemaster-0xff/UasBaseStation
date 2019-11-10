@@ -50,8 +50,8 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
         {
             RunOnUIThread(() =>
             {
-                this.Location.Latitude = e.Position.X;
-                this.Location.Longitude = e.Position.Y;
+
+                this.Location = new LagoVista.Core.Models.Geo.GeoLocation(e.Position.X, e.Position.Y);
                 this.Attitude.Yaw = e.Position.Heading;
             });
         }

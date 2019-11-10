@@ -9,6 +9,7 @@ using LagoVista.Client.Core.ViewModels;
 using LagoVista.Client.Core.ViewModels.Auth;
 using LagoVista.Core;
 using LagoVista.Core.Authentication.Interfaces;
+using LagoVista.Core.Geo;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.IOC;
 using LagoVista.Core.PlatformSupport;
@@ -20,6 +21,7 @@ using LagoVista.Uas.BaseStation.ControlApp.Views;
 using LagoVista.Uas.BaseStation.Core.ViewModels;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.FlightRecorder;
+using LagoVista.Uas.Core.Interfaces;
 using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Services;
 using LagoVista.XPlat.Core.Services;
@@ -55,24 +57,28 @@ namespace LagoVista.Uas.BaseStation.ControlApp
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 #if ENV_STAGE
+            var mobileCenterKey = "d3f162da-76c5-4880-b19c-7a038d6af46f";
             var serverInfo = new ServerInfo()
             {
                 SSL = true,
                 RootUrl = "api.nuviot.com",
             };
 #elif ENV_DEV
+            var mobileCenterKey = "d3f162da-76c5-4880-b19c-7a038d6af46f";
             var serverInfo = new ServerInfo()
             {
                 SSL = true,
                 RootUrl = "dev-api.nuviot.com",
             };
 #elif ENV_LOCALDEV
+            var mobileCenterKey = "d3f162da-76c5-4880-b19c-7a038d6af46f";
             var serverInfo = new ServerInfo()
             {
                 SSL = false,
                 RootUrl = "localhost:5001",
             };
 #elif ENV_MASTER
+            var mobileCenterKey = "d3f162da-76c5-4880-b19c-7a038d6af46f";
             var serverInfo = new ServerInfo()
             {
                 SSL = true,
@@ -99,30 +105,26 @@ namespace LagoVista.Uas.BaseStation.ControlApp
 
             var dispatcherService = new DispatcherService(Window.Current.Dispatcher);
 
-            this.DebugSettings.EnableFrameRateCounter = true;
+            this.DebugSettings.EnableFrameRateCounter = false;
 
             var uasMgr = new ConnectedUasManager();
-
-            SLWIOC.RegisterSingleton<ILogger>(new AppCenterLogger("d3f162da-76c5-4880-b19c-7a038d6af46f"));
+            
             SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
             SLWIOC.RegisterSingleton<IConnectedUasManager>(uasMgr);
             SLWIOC.Register<IMissionPlanner, MissionPlanner>();
             SLWIOC.RegisterSingleton<IConfigurationManager>(new ConfigurationManager());
-            SLWIOC.RegisterSingleton<IDispatcherServices>(dispatcherService);
             SLWIOC.RegisterSingleton<ITelemetryService, TelemetryService>();
-            SLWIOC.RegisterSingleton<INetworkService, NetworkService>();
-            SLWIOC.RegisterSingleton<IPopupServices, LagoVista.Core.UWP.Services.PopupsService>();
             SLWIOC.RegisterSingleton<IFlightRecorder>(new FlightRecorder(dispatcherService));
 
             SLWIOC.RegisterSingleton<IClientAppInfo>(new ClientAppInfo());
             SLWIOC.RegisterSingleton<IAppConfig>(new UwpAppConfig());
             
+            SLWIOC.RegisterSingleton<IDeviceInfo>(new UWPDeviceInfo());
             
-            SLWIOC.RegisterSingleton<IDeviceInfo>(new DeviceInfo());
-            SLWIOC.RegisterSingleton<IStorageService, StorageService>();
+
+            LagoVista.Core.UWP.Startup.Init(this, rootFrame.Dispatcher, mobileCenterKey);
 
             Startup.Init(serverInfo);
-
 
             var navigation = new LagoVista.UWP.UI.Navigation();
             navigation.Initialize(rootFrame);
@@ -132,7 +134,6 @@ namespace LagoVista.Uas.BaseStation.ControlApp
             navigation.Add<DroneConnectViewModel, DroneConnectView>();
 
             SLWIOC.Register<IViewModelNavigation>(navigation);
-
 
             //new DJIDrone(uasMgr, Window.Current.Dispatcher);
             new TelloDrone(uasMgr, Window.Current.Dispatcher);

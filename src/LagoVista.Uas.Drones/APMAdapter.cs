@@ -24,14 +24,7 @@ namespace LagoVista.Uas.Drones
                     break;
                 case UasMessages.GlobalPositionInt:
                     var pos = message as UasGlobalPositionInt;
-                    uas.CurrentLocation = new LagoVista.Core.Models.Geo.GeoLocation()
-                    {
-                        Altitude = pos.Alt / 1000.0f,
-                        Latitude = pos.Lat.ToLatLon(),
-                        Longitude = pos.Lon.ToLatLon(),
-                        LastUpdated = DateTime.Now.ToJSONString()
-                    };
-
+                    uas.CurrentLocation = new LagoVista.Core.Models.Geo.GeoLocation(pos.Lat.ToLatLon(), pos.Lon.ToLatLon(), pos.Alt / 1000f);
                     break;
                 
                 case UasMessages.SysStatus:

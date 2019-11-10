@@ -22,7 +22,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp
 
         public string WebAddress { get; set; }
 
-        public string AppName => "TelloXam";
+        public string AppName => "UAV Base Station";
 
         public string AppLogo => "appicon.png";
 

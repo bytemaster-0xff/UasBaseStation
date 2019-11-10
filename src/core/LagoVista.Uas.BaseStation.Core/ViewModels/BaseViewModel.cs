@@ -1,4 +1,5 @@
 ﻿using LagoVista.Client.Core.ViewModels;
+using LagoVista.Core.Geo;
 using LagoVista.Core.IOC;
 using LagoVista.Uas.Core.Interfaces;
 using System;
@@ -10,9 +11,9 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 {
     public class BaseViewModel : AppViewModelBase
     {
-        public ILocationProvider LocationProvider
+        public IGeoLocator LocationProvider
         {
-            get => SLWIOC.Get<ILocationProvider>();
+            get => SLWIOC.Get<IGeoLocator>();
         }
 
         public override async Task InitAsync()

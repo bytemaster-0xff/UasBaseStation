@@ -58,11 +58,7 @@ namespace LagoVista.Uas.Core.Models
             CurrentHeight = terrain.CurrentHeight;
             TerrainHeight = terrain.TerrainHeight;
             Spacing = terrain.Spacing;
-            Location = new GeoLocation()
-            {
-                Latitude = terrain.Lat / 10000.0,
-                Longitude = terrain.Lon / 10000.0,
-            };
+            Location = new GeoLocation(terrain.Lat.ToLatLon(), terrain.Lon.ToLatLon());
 
             GaugeStatus = GaugeStatus.OK;
             TimeStamp = DateTime.Now;            

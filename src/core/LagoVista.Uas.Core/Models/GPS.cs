@@ -101,20 +101,12 @@ namespace LagoVista.Uas.Core.Models
 
             FixType = ((GpsFixType)gps.FixType).ToString();
 
-            Location = new GeoLocation()
-            {
-                Latitude = gps.Lat / 10000000.0,
-                Longitude = gps.Lon / 10000000.0
-            };
+            Location = new GeoLocation(gps.Lat.ToLatLon(), gps.Lon.ToLatLon());
         }
      
         public void Update(UasGps2Raw gps)
         {
-            Location = new GeoLocation()
-            {
-                Latitude = gps.Lat / 10000000.0,
-                Longitude = gps.Lon / 10000000.0
-            };
+            Location = new GeoLocation(gps.Lat.ToLatLon(), gps.Lon.ToLatLon());
 
             SateliteCount = gps.SatellitesVisible;
             CourseOverGround = gps.Cog;

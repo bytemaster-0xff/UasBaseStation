@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock Text="SPLASH!" />
-        <Button Command="{Binding LoginCommand}" Content="Login"></Button>
+        <TextBlock Text="UAV Base Station" />
+        <Button Command="{Binding LoginCommand}" Content="Login" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,30" Width="120"></Button>
     </Grid>
 </pge:LagoVistaPage>

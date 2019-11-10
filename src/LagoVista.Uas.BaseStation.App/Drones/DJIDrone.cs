@@ -185,11 +185,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                     if (Math.Abs(value.Value.latitude) > 0.5)
                     {
                         this.HasLocation = true;
-                        this.Location = new LagoVista.Core.Models.Geo.GeoLocation()
-                        {
-                            Latitude = value.Value.latitude,
-                            Longitude = value.Value.longitude
-                        };
+                        this.Location = new LagoVista.Core.Models.Geo.GeoLocation(value.Value.latitude, value.Value.longitude);
                     }
                     else
                     {
@@ -207,9 +203,10 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                 {
                     this.RangeFinder.GaugeStatus = value.HasValue ? GaugeStatus.OK : GaugeStatus.Warning;
                     this.RangeFinder.Distance = Convert.ToSingle(value.Value.value);
-                    if (this.Location != null)
+
+                    if (this.Location != null && this.Location.Longitude.HasValue && this.Location.Latitude.HasValue)
                     {
-                        this.Location.Altitude = Convert.ToSingle(value.Value.value);
+                        this.Location  = new LagoVista.Core.Models.Geo.GeoLocation(this.Location.Latitude.Value, this.Location.Longitude.Value, Convert.ToSingle(value.Value.value));
                     }
                 }
             });
