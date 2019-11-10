@@ -13,7 +13,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <Grid Visibility="{x:Bind Path=ViewModel.UasMgr.Active, Converter={StaticResource NullVisibilityConverters}}">
+        <Grid Visibility="{Binding UasMgr.Active, Converter={StaticResource NullVisibilityConverters}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -21,7 +21,7 @@
             <TextBlock Text="Waiting for UAS" Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-100,0,0" />
             <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Width="50" Height="50" IsActive="True" Margin="0,100,0,0" />
         </Grid>
-        <Grid Visibility="{x:Bind Path=ViewModel.UasMgr.Active, Converter={StaticResource NotNullVisibilityConverters}}">
+        <Grid Visibility="{Binding Path=UasMgr.Active, Converter={StaticResource NotNullVisibilityConverters}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="480" />
                 <RowDefinition Height="*" />
@@ -32,27 +32,27 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="{x:Bind Path=ViewModel.UasMgr.Active.Uas.TemperatureHigh, Mode=TwoWay, FallbackValue=1}"  Foreground="Wheat"  FontSize="128"  />
-            <TextBlock Text="{x:Bind Path=ViewModel.UasMgr.Active.Uas.TemperatureLow, Mode=TwoWay, FallbackValue=2}"  Foreground="Wheat"  FontSize="128" Margin="0,150,0,0" />
+            <TextBlock Text="{Binding Path=UasMgr.Active.Uas.TemperatureHigh, Mode=TwoWay, FallbackValue=1}"  Foreground="Wheat"  FontSize="128"  />
+            <TextBlock Text="{Binding Path=UasMgr.Active.Uas.TemperatureLow, Mode=TwoWay, FallbackValue=2}"  Foreground="Wheat"  FontSize="128" Margin="0,150,0,0" />
 
             <Grid Background="SteelBlue" Grid.Column="1">
                 <Grid Grid.Column="1" >
                     <!--  <ctl:ArtificialHorizon Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" />
                -->
                     <ctl:FPVView  />
-                    <ctl:H264FPVView x:Name="DJIVIdeo" Uas="{x:Bind Path=ViewModel.UasMgr.Active.Uas, Mode=OneWay}"  />
+                    <ctl:H264FPVView x:Name="DJIVIdeo" Uas="{Binding Path=UasMgr.Active.Uas, Mode=OneWay}"  />
                     <ctl:SystemStatus Foreground="Lime" FontSize="20" VerticalAlignment="Bottom"                                     
-                            Armed="{x:Bind Path=ViewModel.UasMgr.Active.Uas.SystemStatus.Armed, Mode=TwoWay}" 
-                            FlightTime="{Binding Path=ViewModel.UasMgr.Active.Uas.SystemStatus.FlightTime, Mode=TwoWay}"
-                            LowBattWarning="{x:Bind Path=ViewModel.UasMgr.Active.Uas.SystemStatus.LowBatteryWarning, Mode=TwoWay}" 
-                            CriticalBattWarning="{x:Bind Path=ViewModel.UasMgr.Active.Uas.SystemStatus.CriticalBatteryWarning, Mode=TwoWay}"                                       
-                            BatteryVoltage="{x:Bind Path=ViewModel.UasMgr.Active.Uas.Battery.Voltage, Mode=TwoWay}"                                                                   
-                            PercentRemaining="{x:Bind Path=ViewModel.UasMgr.Active.Uas.Battery.RemainingPercent, Mode=TwoWay}"                             
-                            TimeRemaining="{x:Bind Path=ViewModel.UasMgr.Active.Uas.Battery.TimeRemaining, Mode=TwoWay}" />
-                    <ctl:AoACircle Roll="{x:Bind Path=ViewModel.UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{x:Bind Path=ViewModel.UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" HorizontalAlignment="Center" Foreground="Lime" />
-                    <ctl:AltitudeIndicator Altitude="{x:Bind Path=ViewModel.UasMgr.Active.Uas.RangeFinder.Distance, Mode=TwoWay}" Foreground="Lime" />
-                    <ctl:Compass Foreground="Lime" VerticalAlignment="Top" Heading="{x:Bind Path=ViewModel.UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" Margin="0,20,0,0" />
-                    <ctl:GPSStatus  SatCount="{x:Bind Path=ViewModel.UasMgr.Active.Uas.GPS.SateliteCount}" VerticalAlignment="Center" Foreground="Lime"  />
+                            Armed="{Binding Path=UasMgr.Active.Uas.SystemStatus.Armed, Mode=TwoWay}" 
+                            FlightTime="{Binding Path=UasMgr.Active.Uas.SystemStatus.FlightTime, Mode=TwoWay}"
+                            LowBattWarning="{Binding Path=UasMgr.Active.Uas.SystemStatus.LowBatteryWarning, Mode=TwoWay}" 
+                            CriticalBattWarning="{Binding Path=UasMgr.Active.Uas.SystemStatus.CriticalBatteryWarning, Mode=TwoWay}"                                       
+                            BatteryVoltage="{Binding Path=UasMgr.Active.Uas.Battery.Voltage, Mode=TwoWay}"                                                                   
+                            PercentRemaining="{Binding Path=UasMgr.Active.Uas.Battery.RemainingPercent, Mode=TwoWay}"                             
+                            TimeRemaining="{Binding Path=UasMgr.Active.Uas.Battery.TimeRemaining, Mode=TwoWay}" />
+                    <ctl:AoACircle Roll="{Binding Path=UasMgr.Active.Uas.Attitude.Roll, Mode=TwoWay}" Pitch="{Binding Path=UasMgr.Active.Uas.Attitude.Pitch, Mode=TwoWay}"  Width="640" Height="480" HorizontalAlignment="Center" Foreground="Lime" />
+                    <ctl:AltitudeIndicator Altitude="{Binding Path=UasMgr.Active.Uas.RangeFinder.Distance, Mode=TwoWay}" Foreground="Lime" />
+                    <ctl:Compass Foreground="Lime" VerticalAlignment="Top" Heading="{Binding Path=UasMgr.Active.Uas.Attitude.Yaw, Mode=TwoWay}" Margin="0,20,0,0" />
+                    <ctl:GPSStatus  SatCount="{Binding Path=UasMgr.Active.Uas.GPS.SateliteCount}" VerticalAlignment="Center" Foreground="Lime"  />
                 </Grid>
             </Grid>
             <!-- flight state 6 pack -->
@@ -143,32 +143,32 @@
                 <Grid Width="160" Height="160" Margin="0" Grid.Row="1" Grid.Column="0" >
                     <Rectangle Style="{StaticResource GaugeBackground}" />
                     <TextBlock Text="Stick - Rudder" Style="{StaticResource GuageTitle}" />
-                    <controls:RadialGauge Value="{x:Bind ViewModel.FlightStickState.Rudder, Mode=OneWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
-                    <TextBlock Text="{x:Bind Path=ViewModel.FlightStickState.Rudder, Mode=OneWay, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
+                    <controls:RadialGauge Value="{Binding FlightStickState.Rudder, Mode=OneWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.Rudder, Mode=OneWay, FallbackValue=30}" Style="{StaticResource GaugeValue}" />
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="1" >
                     <Rectangle Style="{StaticResource GaugeBackground}" />
                     <TextBlock Text="Stick - Roll" Style="{StaticResource GuageTitle}" />
-                    <controls:RadialGauge Value="{x:Bind Path=ViewModel.FlightStickState.Roll, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
-                    <TextBlock Text="{x:Bind Path=ViewModel.FlightStickState.Roll, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
+                    <controls:RadialGauge Value="{Binding ViewModel.FlightStickState.Roll, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.Roll, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="2" >
                     <Rectangle Style="{StaticResource GaugeBackground}" />
                     <TextBlock Text="Stick - Throttle" Style="{StaticResource GuageTitle}" />
 
-                    <controls:RadialGauge Value="{x:Bind Path=ViewModel.FlightStickState.Throttle, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
-                    <TextBlock Text="{x:Bind Path=ViewModel.FlightStickState.Throttle, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
+                    <controls:RadialGauge Value="{Binding Path=FlightStickState.Throttle, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
+                    <TextBlock Text="{Binding Path=ViewModel.FlightStickState.Throttle, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
                     <TextBlock Text="Hold" Style="{StaticResource GaugeValue}" Margin="0,0,60,50"  />
-                    <TextBlock Text="{x:Bind Path=ViewModel.FlightStickState.AltitudeHold, FallbackValue=false, Mode=OneWay}" Margin="0,0,60,30" Style="{StaticResource GaugeValue}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.AltitudeHold, FallbackValue=false, Mode=OneWay}" Margin="0,0,60,30" Style="{StaticResource GaugeValue}" />
                 </Grid>
 
                 <Grid Grid.Row="1" Grid.Column="3" >
                     <Rectangle Style="{StaticResource GaugeBackground}" />
                     <TextBlock Text="Stick - Pitch" Style="{StaticResource GuageTitle}" />
-                    <controls:RadialGauge Value="{x:Bind Path=ViewModel.FlightStickState.Pitch, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
-                    <TextBlock Text="{x:Bind Path=ViewModel.FlightStickState.Pitch, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
+                    <controls:RadialGauge Value="{Binding Path=FlightStickState.Pitch, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.Pitch, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
                 </Grid>
             </Grid>
 
@@ -178,11 +178,11 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel>
-                    <TextBlock Text="{x:Bind ViewModel.UasMgr.Active.Uas.UasName}" Foreground="LimeGreen" FontFamily="Consolas" />
-                    <TextBlock Text="{x:Bind ViewModel.UasMgr.Active.Uas.UasType}" Foreground="LimeGreen" FontFamily="Consolas" />
-                    <TextBlock Text="{x:Bind ViewModel.UasMgr.Active.Uas.UasSerialNumber}" Foreground="LimeGreen" FontFamily="Consolas" />
+                    <TextBlock Text="{Binding UasMgr.Active.Uas.UasName}" Foreground="LimeGreen" FontFamily="Consolas" />
+                    <TextBlock Text="{Binding UasMgr.Active.Uas.UasType}" Foreground="LimeGreen" FontFamily="Consolas" />
+                    <TextBlock Text="{Binding UasMgr.Active.Uas.UasSerialNumber}" Foreground="LimeGreen" FontFamily="Consolas" />
                 </StackPanel>
-                <ListBox ItemsSource="{x:Bind Path=ViewModel.FlightRecorder}" Grid.Row="1" Background="Black" >
+                <ListBox ItemsSource="{Binding Path=FlightRecorder}" Grid.Row="1" Background="Black" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -194,13 +194,13 @@
                 </ListBox>
             </Grid>
 
-            <maps:MapControl Visibility="{x:Bind Path=ViewModel.UasMgr.Active.Uas.HasLocation, Converter={StaticResource VisibilityConverters}}"
+            <maps:MapControl Visibility="{Binding Path=UasMgr.Active.Uas.HasLocation, Converter={StaticResource VisibilityConverters}}"
                 Grid.Row="1" Grid.Column="2" ZoomLevel="22" Style="Aerial"
-                Center="{x:Bind Path=ViewModel.UasMgr.Active.Uas.Location, Converter={StaticResource GeoLocationConverter}, Mode=TwoWay}"
+                Center="{Binding Path=UasMgr.Active.Uas.Location, Converter={StaticResource GeoLocationConverter}, Mode=TwoWay}"
                 MapServiceToken="s5miuLzzn4RuPyMXzOYF~pA3KRBwzLZ4JOHnyIaUAWA~AnoR9G-Mf6OR7_n8b6wVy_cd9wim48xfSp39TC31OlvLad6zT5Pf0XN35EPuEV5U"  />
 
             <TextBlock Text="No GPS Lock" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center"  VerticalAlignment="Center"
-                     Visibility="{x:Bind Path=ViewModel.UasMgr.Active.Uas.HasLocation, Converter={StaticResource InvertsVisibilityConverters}}" />
+                     Visibility="{Binding Path=UasMgr.Active.Uas.HasLocation, Converter={StaticResource InvertsVisibilityConverters}}" />
         </Grid>
     </Grid>
 </pge:LagoVistaPage>

@@ -280,7 +280,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="LagoVista.Client.Core" Version="1.2.907-alpha0806" />
+    <PackageReference Include="LagoVista.Client.Core" Version="1.2.907-alpha1126" />
     <PackageReference Include="LagoVista.Core" Version="2.1.907-beta0754" />
     <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.907-beta0754" />
     <PackageReference Include="LagoVista.MQTT" Version="1.2.740-alpha1236" />
