@@ -19,9 +19,6 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Waiting for UAS" Foreground="White" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,-100,0,0" />
             <ProgressRing HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Width="50" Height="50" IsActive="True" Margin="0,100,0,0" />
-            
-            
-            
         </Grid>
         <Grid Visibility="{x:Bind Path=ViewModel.UasMgr.Active, Converter={StaticResource NotNullVisibilityConverters}}">
             <Grid.RowDefinitions>

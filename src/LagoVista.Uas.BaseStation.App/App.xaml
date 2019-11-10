@@ -10,6 +10,7 @@
         <cvts:VisibilityConverters x:Key="VisibilityConverters" />
         <cvts:InvertsVisibilityConverters x:Key="InvertsVisibilityConverters" />
         <cvts:GeoLocationConverter x:Key="GeoLocationConverter" />
+        <cvts:NotNullEnabledConverter x:Key="NotNullEnabledConverter" />
     </Application.Resources>
 
 </Application>

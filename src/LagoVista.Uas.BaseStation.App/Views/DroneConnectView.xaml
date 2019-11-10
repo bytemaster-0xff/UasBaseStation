@@ -30,48 +30,72 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <StackPanel Grid.Row="2" Grid.Column="0">
-            <TextBlock Text="APM/Mavlink" />
-            <ListBox ItemsSource="{Binding SerialPorts}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>    
-            </ListBox>
-        </StackPanel>
-
-        <StackPanel Grid.Row="2" Grid.Column="1">
-            <TextBlock Text="DJI Mavic Air" />
-            <ListBox ItemsSource="{Binding Networks}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Ssid}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-
-        <StackPanel Grid.Row="3" Grid.Column="0">
-            <TextBlock Text="Tello" />
-            <ListBox ItemsSource="{Binding Networks}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Ssid}" />
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </StackPanel>
-
-        <StackPanel Grid.Row="3" Grid.Column="1">
-            <TextBlock Text="DJI Mavic Pro" />
-            <ListBox ItemsSource="{Binding SerialPorts}">
+        <Grid Grid.Row="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="APM/Mavlink"  FontSize="24"/>
+            <ListBox ItemsSource="{Binding SerialPorts}" Grid.Row="1" SelectedItem="{Binding ApmSerialPort, Mode=TwoWay}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-        </StackPanel>
+            <Button Command="{Binding ConnectAPMCommand}" IsEnabled="{Binding ApmSerialPort, Converter={StaticResource NotNullEnabledConverter}}" Content="Connect" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" />
+        </Grid>
+
+        <Grid Grid.Row="2" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="DJI Mavic Air" FontSize="24" />
+            <ListBox ItemsSource="{Binding Networks}" Grid.Row="1" SelectedItem="{Binding MavicAirSSID, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Ssid}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding ConnectMavicAirCommand}" IsEnabled="{Binding MavicAirSSID, Converter={StaticResource NotNullEnabledConverter}}" Content="Connect" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" />
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="Tello"  FontSize="24"/>
+            <ListBox ItemsSource="{Binding Networks}" Grid.Row="1" SelectedItem="{Binding TelloSSID, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Ssid}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding ConnectTelloCommand}" IsEnabled="{Binding TelloSSID, Converter={StaticResource NotNullEnabledConverter}}" Content="Connect" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" />
+        </Grid>
+
+        <Grid Grid.Row="3" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="DJI Mavic Pro" FontSize="24" />
+            <ListBox ItemsSource="{Binding SerialPorts}" Grid.Row="1" SelectedItem="{Binding MavicProSerialPort, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <Button Command="{Binding ConnectMavicProCommand}" IsEnabled="{Binding MavicProSerialPort, Converter={StaticResource NotNullEnabledConverter}}" Content="Connect" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" />
+        </Grid>
     </Grid>
 </pge:LagoVistaPage>

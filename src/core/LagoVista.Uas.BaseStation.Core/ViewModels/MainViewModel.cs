@@ -9,8 +9,6 @@ using LagoVista.Uas.BaseStation.Core.ViewModels.Uas;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
-using LagoVista.Uas.Core.Services;
-using LagoVista.Uas.Drones;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

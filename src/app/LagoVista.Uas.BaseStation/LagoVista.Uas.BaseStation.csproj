@@ -1,15 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LagoVista.Client.Core" Version="1.2.907-alpha0704" />
-    <PackageReference Include="LagoVista.Core" Version="2.1.907-beta0629" />
-    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.907-beta0629" />
+    <PackageReference Include="LagoVista.Client.Core" Version="1.2.907-alpha0806" />
+    <PackageReference Include="LagoVista.Core" Version="2.1.907-beta0754" />
+    <PackageReference Include="LagoVista.Core.Authentication" Version="2.1.907-beta0754" />
     <PackageReference Include="LagoVista.MQTT" Version="1.2.740-alpha1236" />
-    <PackageReference Include="LagoVista.XPlat" Version="1.2.907-alpha0704" />
+    <PackageReference Include="LagoVista.XPlat" Version="1.2.907-alpha0806" />
     <PackageReference Include="Microsoft.AppCenter" Version="2.5.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.5.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.5.0" />

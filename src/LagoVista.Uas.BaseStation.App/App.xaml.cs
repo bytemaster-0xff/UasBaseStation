@@ -2,32 +2,24 @@
 #define ENV_MASTER
 
 using LagoVista.Client.Core;
-using LagoVista.Client.Core.Auth;
 using LagoVista.Client.Core.Models;
-using LagoVista.Client.Core.Net;
 using LagoVista.Client.Core.ViewModels;
 using LagoVista.Client.Core.ViewModels.Auth;
 using LagoVista.Core;
-using LagoVista.Core.Authentication.Interfaces;
-using LagoVista.Core.Geo;
 using LagoVista.Core.Interfaces;
 using LagoVista.Core.IOC;
 using LagoVista.Core.PlatformSupport;
-using LagoVista.Core.UWP.Loggers;
-using LagoVista.Core.UWP.Services;
 using LagoVista.Core.ViewModels;
+using LagoVista.Uas.BaseStation.ControlApp.Controller;
 using LagoVista.Uas.BaseStation.ControlApp.Drones;
 using LagoVista.Uas.BaseStation.ControlApp.Views;
 using LagoVista.Uas.BaseStation.Core.ViewModels;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.FlightRecorder;
-using LagoVista.Uas.Core.Interfaces;
 using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Services;
-using LagoVista.XPlat.Core.Services;
 using System;
 using System.Diagnostics;
-using System.Net.Http;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
@@ -39,6 +31,8 @@ namespace LagoVista.Uas.BaseStation.ControlApp
 {
     sealed partial class App : Application
     {
+        FlightStickService _flightStickService;
+
         public App()
         {
             this.InitializeComponent();
@@ -108,7 +102,11 @@ namespace LagoVista.Uas.BaseStation.ControlApp
             this.DebugSettings.EnableFrameRateCounter = false;
 
             var uasMgr = new ConnectedUasManager();
-            
+
+
+            var flightStick = new Controller.NiVekFlightStick(rootFrame.Dispatcher);
+
+            SLWIOC.Register<INiVekFlightStick>(flightStick);
             SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
             SLWIOC.RegisterSingleton<IConnectedUasManager>(uasMgr);
             SLWIOC.Register<IMissionPlanner, MissionPlanner>();
@@ -118,9 +116,8 @@ namespace LagoVista.Uas.BaseStation.ControlApp
 
             SLWIOC.RegisterSingleton<IClientAppInfo>(new ClientAppInfo());
             SLWIOC.RegisterSingleton<IAppConfig>(new UwpAppConfig());
-            
             SLWIOC.RegisterSingleton<IDeviceInfo>(new UWPDeviceInfo());
-            
+            SLWIOC.RegisterSingleton<INavigation,LagoVista.Uas.Core.Services.Navigation>();
 
             LagoVista.Core.UWP.Startup.Init(this, rootFrame.Dispatcher, mobileCenterKey);
 
@@ -131,7 +128,10 @@ namespace LagoVista.Uas.BaseStation.ControlApp
 
             navigation.Add<SplashViewModel, SplashView>();
             navigation.Add<LoginViewModel, LoginView>();
+            navigation.Add<FlightViewModel, FlightView>();
             navigation.Add<DroneConnectViewModel, DroneConnectView>();
+
+            _flightStickService = new FlightStickService(flightStick, rootFrame.Dispatcher, SLWIOC.Get<INavigation>());
 
             SLWIOC.Register<IViewModelNavigation>(navigation);
 

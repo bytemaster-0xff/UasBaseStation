@@ -10,12 +10,14 @@
         short Roll { get; set; }
         short Pitch { get; set; }
         bool BegingManualCameraControl { get; set; }
+        bool EndManualCameraControl { get; set; }
         short CameraGimbleX { get; set; }
         short CameraGimbleY { get; set; }
         bool EndMission { get; set; }
         bool PauseMission { get; set; }
         bool ContinueMission { get; set; }
         bool StartMission { get; set; }
+        bool ReturnToHome { get; set; }
         bool NextWaypoint { get; set; }
         bool PreviousWaypoint { get; set; }
         bool AltitudeHold { get; set; }

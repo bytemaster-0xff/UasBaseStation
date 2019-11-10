@@ -1,4 +1,5 @@
-﻿using LagoVista.UWP.UI;
+﻿using LagoVista.Uas.BaseStation.Core.ViewModels;
+using LagoVista.UWP.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,5 +28,12 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Views
         {
             this.InitializeComponent();
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+        }
+
+        public new FlightViewModel ViewModel => base.ViewModel as FlightViewModel;
     }
 }

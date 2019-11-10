@@ -1,17 +1,14 @@
 ﻿using LagoVista.Core.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Gaming.Input;
 using LagoVista.Uas.Core.Controller;
 using System.Diagnostics;
 using Windows.UI.Core;
+using LagoVista.Uas.Core;
 
 namespace LagoVista.Uas.BaseStation.ControlApp.Controller
 {
-    public class NiVekFlightStick : ModelBase
+    public class NiVekFlightStick : ModelBase, INiVekFlightStick
     {
         public class NiVekFlightStickState : ModelBase, INiVekFlightStickState
         {
@@ -235,7 +232,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
             }
 
 
-            public static NiVekFlightStickState Empty
+            public static INiVekFlightStickState Empty
             {
                 get
                 {
@@ -291,7 +288,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
 
         private readonly CoreDispatcher _dispatcher;
 
-        public NiVekFlightStickState State { get; }
+        public INiVekFlightStickState State { get; }
 
         public NiVekFlightStick(CoreDispatcher dispatcher)
         {
@@ -301,6 +298,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
 
         private double? _thottleOffset = null;
 
+        public event EventHandler<INiVekFlightStickState> StateUpdated;
         public event EventHandler StartMission;
         public event EventHandler NextWaypoint;
         public event EventHandler PreviousWaypoint;
@@ -350,6 +348,11 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
             if (currentState.EndMission && !State.EndMission) EndMission?.Invoke(this, null);
         }
 
+        public void InvokeStateUpdated()
+        {
+            StateUpdated?.Invoke(this, State);
+        }
+
         public bool RefreshFromThrustMaster1600(RawGameController rawGC)
         {
             var axis = new double[rawGC.AxisCount];
@@ -364,7 +367,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controller
                 TakeOff = buttons[1],
                 Land = buttons[3],
                 Roll = Normalize(axis[0]),
-                Pitch = Convert.ToInt16(-Normalize(axis[1])),              
+                Pitch = Convert.ToInt16(-Normalize(axis[1])),
             };
 
             if (ts != 0 && (State.TakeOff != currentState.TakeOff ||
