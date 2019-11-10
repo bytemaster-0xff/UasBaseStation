@@ -1,11 +1,31 @@
-﻿using LagoVista.Core;
+﻿//#define ENV_DEV
+#define ENV_MASTER
+
+using LagoVista.Client.Core;
+using LagoVista.Client.Core.Auth;
+using LagoVista.Client.Core.Models;
+using LagoVista.Client.Core.Net;
+using LagoVista.Client.Core.ViewModels;
+using LagoVista.Client.Core.ViewModels.Auth;
+using LagoVista.Core;
+using LagoVista.Core.Authentication.Interfaces;
+using LagoVista.Core.Interfaces;
 using LagoVista.Core.IOC;
+using LagoVista.Core.PlatformSupport;
+using LagoVista.Core.UWP.Loggers;
+using LagoVista.Core.UWP.Services;
+using LagoVista.Core.ViewModels;
 using LagoVista.Uas.BaseStation.ControlApp.Drones;
+using LagoVista.Uas.BaseStation.ControlApp.Views;
+using LagoVista.Uas.BaseStation.Core.ViewModels;
 using LagoVista.Uas.Core;
 using LagoVista.Uas.Core.FlightRecorder;
 using LagoVista.Uas.Core.Models;
 using LagoVista.Uas.Core.Services;
+using LagoVista.XPlat.Core.Services;
 using System;
+using System.Diagnostics;
+using System.Net.Http;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
@@ -21,11 +41,46 @@ namespace LagoVista.Uas.BaseStation.ControlApp
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            UnhandledException += (sender, e) =>
+            {
+                Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.Exception.StackTrace);
+
+                if (global::System.Diagnostics.Debugger.IsAttached) global::System.Diagnostics.Debugger.Break();
+            };
+
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+#if ENV_STAGE
+            var serverInfo = new ServerInfo()
+            {
+                SSL = true,
+                RootUrl = "api.nuviot.com",
+            };
+#elif ENV_DEV
+            var serverInfo = new ServerInfo()
+            {
+                SSL = true,
+                RootUrl = "dev-api.nuviot.com",
+            };
+#elif ENV_LOCALDEV
+            var serverInfo = new ServerInfo()
+            {
+                SSL = false,
+                RootUrl = "localhost:5001",
+            };
+#elif ENV_MASTER
+            var serverInfo = new ServerInfo()
+            {
+                SSL = true,
+                RootUrl = "api.nuviot.com",
+            };
+#endif
+
+            var rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null)
             {
@@ -47,13 +102,37 @@ namespace LagoVista.Uas.BaseStation.ControlApp
             this.DebugSettings.EnableFrameRateCounter = true;
 
             var uasMgr = new ConnectedUasManager();
+
+            SLWIOC.RegisterSingleton<ILogger>(new AppCenterLogger("d3f162da-76c5-4880-b19c-7a038d6af46f"));
             SLWIOC.Register<IHeartBeatManager, HeartBeatManager>();
             SLWIOC.RegisterSingleton<IConnectedUasManager>(uasMgr);
             SLWIOC.Register<IMissionPlanner, MissionPlanner>();
             SLWIOC.RegisterSingleton<IConfigurationManager>(new ConfigurationManager());
             SLWIOC.RegisterSingleton<IDispatcherServices>(dispatcherService);
             SLWIOC.RegisterSingleton<ITelemetryService, TelemetryService>();
+            SLWIOC.RegisterSingleton<INetworkService, NetworkService>();
+            SLWIOC.RegisterSingleton<IPopupServices, LagoVista.Core.UWP.Services.PopupsService>();
             SLWIOC.RegisterSingleton<IFlightRecorder>(new FlightRecorder(dispatcherService));
+
+            SLWIOC.RegisterSingleton<IClientAppInfo>(new ClientAppInfo());
+            SLWIOC.RegisterSingleton<IAppConfig>(new UwpAppConfig());
+            
+            
+            SLWIOC.RegisterSingleton<IDeviceInfo>(new DeviceInfo());
+            SLWIOC.RegisterSingleton<IStorageService, StorageService>();
+
+            Startup.Init(serverInfo);
+
+
+            var navigation = new LagoVista.UWP.UI.Navigation();
+            navigation.Initialize(rootFrame);
+
+            navigation.Add<SplashViewModel, SplashView>();
+            navigation.Add<LoginViewModel, LoginView>();
+            navigation.Add<DroneConnectViewModel, DroneConnectView>();
+
+            SLWIOC.Register<IViewModelNavigation>(navigation);
+
 
             //new DJIDrone(uasMgr, Window.Current.Dispatcher);
             new TelloDrone(uasMgr, Window.Current.Dispatcher);
@@ -62,7 +141,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp
             {
                 if (rootFrame.Content == null)
                 {
-                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    navigation.Navigate<SplashViewModel>();
                 }
 
                 Window.Current.Activate();

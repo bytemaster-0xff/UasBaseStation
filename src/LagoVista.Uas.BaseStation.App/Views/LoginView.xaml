@@ -1,0 +1,21 @@
+﻿<pge:LagoVistaPage
+    x:Class="LagoVista.Uas.BaseStation.ControlApp.Views.LoginView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LagoVista.Uas.BaseStation.ControlApp.Views"
+    xmlns:pge="using:LagoVista.UWP.UI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <StackPanel Margin="50" Width="300">
+        <TextBlock Text="Email"   FontWeight="Bold" />
+        <TextBox Text="{Binding EmailAddress, Mode=TwoWay}" PlaceholderText ="please enter your email address"  Margin="0,0,0,10" />
+
+        <TextBlock Text="Password"  FontWeight="Bold" />
+        <PasswordBox Password="{Binding Password, Mode=TwoWay}"  PlaceholderText="please enter your password" Margin="0,0,0,10"  />
+
+        <Button Command="{Binding LoginCommand}"  Content="Login"  Margin="0,0,0,20" />
+    </StackPanel>
+</pge:LagoVistaPage>
