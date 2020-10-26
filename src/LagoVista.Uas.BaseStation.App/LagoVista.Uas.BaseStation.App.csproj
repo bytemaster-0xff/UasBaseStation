@@ -136,6 +136,7 @@
     <Compile Include="Converters\NullValueConverters.cs" />
     <Compile Include="Converters\VisibilityValueConverters.cs" />
     <Compile Include="Drones\DJIDrone.cs" />
+    <Compile Include="Drones\DJIServices\CameraManager.cs" />
     <Compile Include="Drones\DJITransport.cs" />
     <Compile Include="Drones\TelloDrone.cs" />
     <Compile Include="Drones\TelloTransport.cs" />

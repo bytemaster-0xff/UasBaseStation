@@ -1,9 +1,5 @@
-﻿using LagoVista.Core.Models.Geo;
-using LagoVista.Uas.Core.Models;
-using System;
-using System.Collections.Generic;
+﻿using LagoVista.Uas.Core.Models;
 using System.ComponentModel;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LagoVista.Uas.Core

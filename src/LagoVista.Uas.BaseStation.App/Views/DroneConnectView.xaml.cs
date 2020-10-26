@@ -1,4 +1,7 @@
-﻿using LagoVista.UWP.UI;
+﻿using LagoVista.Core.ViewModels;
+using LagoVista.Uas.BaseStation.Core.ViewModels;
+using LagoVista.Uas.Core.Models;
+using LagoVista.UWP.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,6 +29,32 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Views
         public DroneConnectView()
         {
             this.InitializeComponent();
+        }
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var vm = ViewModel as DroneConnectViewModel;
+            var result = await vm.WiFiNetworkService.ConnectAsync(vm.MavicAirSSID);
+            if(result.Successful)
+            {
+                var drone = new Drones.DJIDrone(vm.ConnectedUasMgr, this.Dispatcher);
+                var transport = new Drones.DJITransport(drone);
+                vm.ConnectedUasMgr.SetActive(new ConnectedUas(drone, transport));
+                vm.ConnectedUasMgr.Active.Transport.Initialize();
+
+                var args = new ViewModelLaunchArgs()
+                {
+                    ParentViewModel = vm,
+                    LaunchType = LaunchTypes.View,
+                    ViewModelType = typeof(FlightViewModel),
+                };
+
+                await vm.ViewModelNavigation.NavigateAsync(args);
+            }
+            else
+            {
+                await vm.Popups.ShowAsync($"Could not connect to {vm.MavicAirSSID}");
+            }
         }
     }
 }

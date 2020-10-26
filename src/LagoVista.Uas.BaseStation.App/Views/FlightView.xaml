@@ -136,8 +136,10 @@
                 <ctl:VideoControl Grid.Row="0" Grid.Column="2" />
 
                 <StackPanel Grid.Row="0" Grid.Column="0">
-                    <Button  Content="CameraOn" Command="{Binding ElementName=DJIVIdeo, Path=StartVideoCommand}"/>
-                    <Button  Content="CameraOff" Command="{Binding ElementName=DJIVIdeo, Path=StopVideoCommand}" />
+                    <TextBlock Text="Camera" />
+                    <Button  Content="On" Command="{Binding ElementName=DJIVIdeo, Path=StartVideoCommand}"/>
+                    <Button  Content="Off" Command="{Binding ElementName=DJIVIdeo, Path=StopVideoCommand}" />
+                    <Button  Content="Calibrate" Command="{Binding CalibrateGimbleCommand}" />
                 </StackPanel>
 
                 <Grid Width="160" Height="160" Margin="0" Grid.Row="1" Grid.Column="0" >
@@ -150,7 +152,7 @@
                 <Grid Grid.Row="1" Grid.Column="1" >
                     <Rectangle Style="{StaticResource GaugeBackground}" />
                     <TextBlock Text="Stick - Roll" Style="{StaticResource GuageTitle}" />
-                    <controls:RadialGauge Value="{Binding ViewModel.FlightStickState.Roll, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
+                    <controls:RadialGauge Value="{Binding FlightStickState.Roll, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Horizontal180}" />
                     <TextBlock Text="{Binding Path=FlightStickState.Roll, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
                 </Grid>
 
@@ -159,7 +161,7 @@
                     <TextBlock Text="Stick - Throttle" Style="{StaticResource GuageTitle}" />
 
                     <controls:RadialGauge Value="{Binding Path=FlightStickState.Throttle, Mode=TwoWay}" VerticalAlignment="Bottom" ValueStringFormat="'{0}def'" Style="{StaticResource Vertical180}" />
-                    <TextBlock Text="{Binding Path=ViewModel.FlightStickState.Throttle, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
+                    <TextBlock Text="{Binding Path=FlightStickState.Throttle, FallbackValue=30, Mode=OneWay}" Style="{StaticResource GaugeValue}" />
                     <TextBlock Text="Hold" Style="{StaticResource GaugeValue}" Margin="0,0,60,50"  />
                     <TextBlock Text="{Binding Path=FlightStickState.AltitudeHold, FallbackValue=false, Mode=OneWay}" Margin="0,0,60,30" Style="{StaticResource GaugeValue}" />
                 </Grid>

@@ -60,6 +60,7 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
         {
             switch (msg.MessageId)
             {
+
                 case UasMessages.CommandLong:
                     {
                         var cmd = msg as UasCommandLong;
@@ -76,10 +77,14 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                     }
                     break;
                 case UasMessages.GimbalControl:
-                    DJISDKManager.Instance.ComponentManager.GetGimbalHandler(0, 0).RotateByAngleAsync(new GimbalAngleRotation()
                     {
-                         
-                    });
+                        var cmd = msg as UasGimbalControl;
+                        DJISDKManager.Instance.ComponentManager.GetGimbalHandler(0, 0).RotateByAngleAsync(new GimbalAngleRotation()
+                        {
+
+                        });
+                    }
+
                     break;
                 case UasMessages.ManualControl:
                     {

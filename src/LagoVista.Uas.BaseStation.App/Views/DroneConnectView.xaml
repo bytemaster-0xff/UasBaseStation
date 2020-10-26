@@ -61,7 +61,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Command="{Binding ConnectMavicAirCommand}" IsEnabled="{Binding MavicAirSSID, Converter={StaticResource NotNullEnabledConverter}}" Content="Connect" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" />
+            <Button Command="{Binding ConnectMavicAirCommand}" IsEnabled="{Binding MavicAirSSID, Converter={StaticResource NotNullEnabledConverter}}" Content="Connect" Grid.Row="2" HorizontalAlignment="Stretch" Margin="10" Click="Button_Click" />
         </Grid>
 
         <Grid Grid.Row="3" Grid.Column="0">

@@ -167,7 +167,7 @@ namespace dji
 					int actual_size = width * height * 4;
 					std::shared_ptr<uint8_t> shared_data = std::shared_ptr<uint8_t>(new uint8_t[actual_size], [](uint8_t* data) {delete[] data; });
 					memcpy(shared_data.get(), data, actual_size);
-					if (m_render_surface->Ready())// && m_sendCount++ == 2)
+					if (m_render_surface->Ready() && m_sendCount++ == 5)
 					{
 						this->m_swap_chain_panel->Dispatcher->RunAsync(Windows::UI::Core::CoreDispatcherPriority::Low,
 							ref new Windows::UI::Core::DispatchedHandler([assistant_info, this, shared_data, width, height]

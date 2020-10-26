@@ -18,10 +18,23 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
             Connections = _connectedUasManager;
             LandingGear = new LandingGearViewModel(connectedUasManager);
             EditMissionCommand = new RelayCommand(() => ViewModelNavigation.NavigateAsync<Missions.MissionPlannerViewModel>(this));
+            CalibrateGimbleCommand = new RelayCommand(() => UasMgr.Active.Uas.Camera.Calibrate());
             UasMgr = connectedUasManager;
             FlightRecorder = flightRecorder;
             FlightStickState = flightStick.State;
             flightStick.StateUpdated += FlightStick_StateUpdated;
+            flightStick.TakeOff += FlightStick_TakeOff;
+            flightStick.Land += FlightStick_Land;            
+        }
+
+        private void FlightStick_Land(object sender, System.EventArgs e)
+        {
+            this.Navigation.Land();
+        }
+
+        private void FlightStick_TakeOff(object sender, System.EventArgs e)
+        {            
+            this.Navigation.Takeoff();
         }
 
         private void FlightStick_StateUpdated(object sender, INiVekFlightStickState e)
@@ -45,6 +58,8 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
         public IConnectedUasManager UasMgr { get; }
 
         public RelayCommand EditMissionCommand { get; }
+
+        public RelayCommand CalibrateGimbleCommand { get; }
 
 
         public INiVekFlightStickState FlightStickState { get; }

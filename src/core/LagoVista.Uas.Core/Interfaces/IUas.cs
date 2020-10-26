@@ -44,7 +44,7 @@ namespace LagoVista.Uas.Core
         SensorList Sensors { get; }
         PowerStatus PowerStatus { get; }
 
-        Camera Camera { get; }
+        ICameraManager Camera { get; }
 
         EKF EKFStatus { get; }
 

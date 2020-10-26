@@ -129,7 +129,11 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         }
 
-        public void ConnectMavicPro()
+        public IConnectedUasManager ConnectedUasMgr => _connectedUasManager;
+
+        public IWiFiNetworksService WiFiNetworkService => _networkService;
+
+        public async void ConnectMavicPro()
         {
 
         }
@@ -156,7 +160,7 @@ namespace LagoVista.Uas.BaseStation.Core.ViewModels
 
         public void ConnectMavicAir()
         {
-
+            
         }
 
         public RelayCommand ConnectAPMCommand { get; }

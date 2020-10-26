@@ -23,6 +23,8 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
 
         public DJIDrone(IConnectedUasManager mgr, CoreDispatcher dispatcher) : base(null)
         {
+            Camera = new DJIServices.CameraManager();
+
             this._dispatcher = dispatcher;
             this._mgr = mgr ?? throw new ArgumentNullException(nameof(mgr));
             Task.Run(() =>
@@ -60,12 +62,14 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).AircraftLocationChanged += DJIDrone_AircraftLocationChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).SatelliteCountChanged += DJIDrone_SatelliteCountChanged;
                     DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).GPSSignalLevelChanged += DJIDrone_GPSSignalLevelChanged;
-                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).RemainingFlightTimeChanged += DJIDrone_RemainingFlightTimeChanged;                    
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).RemainingFlightTimeChanged += DJIDrone_RemainingFlightTimeChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightControllerHandler(0, 0).IsLandingConfirmationNeededChanged += DJIDrone_IsLandingConfirmationNeededChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightAssistantHandler(0, 0).IsAscentLimitedByObstacleChanged += DJIDrone_IsAscentLimitedByObstacleChanged;
+                    DJISDKManager.Instance.ComponentManager.GetFlightAssistantHandler(0, 0).VissionDetectionStateChanged += DJIDrone_VissionDetectionStateChanged;
 
                     DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).VoltageChanged += DJIDrone_VoltageChanged;
                     DJISDKManager.Instance.ComponentManager.GetBatteryHandler(0, 0).ChargeRemainingInPercentChanged += DJIDrone_ChargeRemainingInPercentChanged;
                     
-
                     DJISDKManager.Instance.ComponentManager.GetProductHandler(0).ProductTypeChanged += DJIDrone_ProductTypeChanged;
                 }
             }
@@ -73,6 +77,29 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Drones
             {
                 Debug.WriteLine("REG: " + errorCode.ToString());
             }
+        }
+
+        private void DJIDrone_VissionDetectionStateChanged(object sender, VissionDetectionState? value)
+        {
+            if (value.HasValue)
+            {
+                var position = "?";
+                position = value.Value.position.ToString();
+                foreach (var sector in value.Value.detectionSectors)
+                {
+                    Debug.WriteLine("Distance " + position + " " + sector.obstacleDistanceInMeters + " " + sector.warningLevel);
+                }
+            }
+        }
+
+        private void DJIDrone_IsAscentLimitedByObstacleChanged(object sender, BoolMsg? value)
+        {
+            
+        }
+
+        private void DJIDrone_IsLandingConfirmationNeededChanged(object sender, BoolMsg? value)
+        {
+            
         }
 
         private void DJIDrone_GPSSignalLevelChanged(object sender, FCGPSSignalLevelMsg? value)

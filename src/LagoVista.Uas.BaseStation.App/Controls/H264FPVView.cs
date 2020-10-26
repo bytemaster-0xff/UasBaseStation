@@ -60,13 +60,16 @@ namespace LagoVista.Uas.BaseStation.ControlApp.Controls
 
         public void StopVideo()
         {
-            if(_videoParser != null)
+            if (_videoParser != null)
             {
                 DJISDKManager.Instance.VideoFeeder.GetPrimaryVideoFeed(0).VideoDataUpdated -= OnVideoPush;
                 _videoParser = null;
             }
 
-            _telloDrone.Tello.Controller.StopVideo();
+            if (_telloDrone != null)
+            { 
+                _telloDrone.Tello.Controller.StopVideo();
+            }
         }
 
         void ReceiveDecodedData(byte[] data, int width, int height)

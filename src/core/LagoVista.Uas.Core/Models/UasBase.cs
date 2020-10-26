@@ -31,7 +31,6 @@ namespace LagoVista.Uas.Core
             PowerStatus = new PowerStatus();
             RangeFinder = new RangeFinder();
             Comms = new Comms();
-            Camera = new Camera();
             Location = new GeoLocation();
 
             Channels = new ObservableCollection<RCChannel>();
@@ -74,7 +73,7 @@ namespace LagoVista.Uas.Core
         public Attitude Attitude { get; }
         public Comms Comms { get; }
 
-        public Camera Camera { get; }
+        public ICameraManager Camera { get; protected set; }
 
         public SensorList Sensors { get; }
 

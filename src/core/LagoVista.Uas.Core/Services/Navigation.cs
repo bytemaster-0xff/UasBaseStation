@@ -6,12 +6,14 @@ using LagoVista.Uas.Core.MavLink;
 using LagoVista.Uas.Core.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LagoVista.Uas.Core.Services
 {
-    public class Navigation : ViewModelBase, INavigation
+    public class Navigation : INavigation, INotifyPropertyChanged
     {
         IConnectedUasManager _connectedUasManager;
         IMissionPlanner missionPlanner;
@@ -31,7 +33,13 @@ namespace LagoVista.Uas.Core.Services
             LandCommand = new RelayCommand(Land);
         }
 
-        public override async Task InitAsync()
+        private void RaisePropertyChanged([CallerMemberName] string memberName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+        }
+
+
+        public async Task InitAsync()
         {
             var result = await MissionPlanner.GetWayPointsAsync(_connectedUasManager.Active);
             Mission = result.Result;
@@ -61,7 +69,6 @@ namespace LagoVista.Uas.Core.Services
                 X = pitch,
                 Y = roll,
                 Z = throttle,
-
             };
 
             if (_msg == null || (_msg.X != pitch || _msg.Y != roll || _msg.Z != throttle || _msg.R != yaw))
@@ -119,18 +126,29 @@ namespace LagoVista.Uas.Core.Services
             SendMessage(msg);
         }
 
-        private float _talepffAltitude = 2;
+        private float _takeOffAltitiude = 2;
         public float TakeoffAltitude
         {
-            get { return _talepffAltitude; }
-            set { Set(ref _talepffAltitude, value); }
+            get { return _takeOffAltitiude; }
+            set
+            {
+                _takeOffAltitiude = value;
+                RaisePropertyChanged();
+            }
         }
 
         Models.Mission _mission;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public Models.Mission Mission
         {
             get { return _mission; }
-            set { Set(ref _mission, value); }
+            set
+            {
+                _mission = value;
+                RaisePropertyChanged();
+            }
         }
 
         public RelayCommand ArmCommand { get; }
